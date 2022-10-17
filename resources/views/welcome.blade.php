@@ -86,7 +86,7 @@
                                                 type="text"
                                                 placeholder="What are you look for"
                                                 class="form-control"
-                                                name="title"
+                                                name="titl"
                                             />
                                         </div>
                                     </li>
