@@ -28,16 +28,21 @@ class TransactionsController extends Controller
         //check what type of job 
         if($request->type == 'service') {
             $job = ServicesProposal::where('id', $request->id)->with('service', 'freelancer', 'employer')->first();
+            
             $job_data = [
                 'title' => $job->service->name,
                 'cost' => $job->service->cost,
+                'job_type' => $request->type,
+                'job_id' => $job->id,
+                'from_id' => $job->buyer_id,
+                'to_id' => $job->seller_id
             ];
         }
 
         if($request->type == 'project') {
 
         }
-        dd($job_data);
+        // dd($job_data);
 
         return view('checkout.pay-job', compact('job_data'));
     }

@@ -9,6 +9,7 @@ use App\Models\ServiceCategory;
 use App\Models\Skill;
 use App\Models\Project;
 use App\Models\Employer;
+use App\Models\EmployerPackage;
 use Carbon\Carbon;
 
 class ProjectsController extends Controller
@@ -132,6 +133,8 @@ class ProjectsController extends Controller
             'english_level' => $request->english_level,
             'skills' => json_encode($request->skills),
             'location' => $request->location,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'project_type' => $request->project_type,
         ]);
 
@@ -196,7 +199,7 @@ class ProjectsController extends Controller
 
         // Get the current created projects of user
         $current_user_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->count();
-        $current_user_featured_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->where('type', 'featured')->count();
+        $current_user_featured_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->where('project_type', 'featured')->count();
         
         if($current_user_projects == $purchased_plan->total_projects) return true;
 

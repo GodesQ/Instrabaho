@@ -12,7 +12,7 @@
                                     <div class="card-title">Payment Information</div>
                                     <div class="border-bottom d-flex justify-content-between align-items-center px-2">
                                         <h4>Job Type</h4>
-                                        <h5 class="font-weight-bold">Service</h5>
+                                        <h5 class="font-weight-bold text-uppercase">{{ $job_data['job_type'] }}</h5>
                                     </div>
                                     <div class="border-bottom d-flex justify-content-between align-items-center px-2 my-2">
                                         <h4>Date</h4>
@@ -78,10 +78,28 @@
                                 <div class="card-body">
                                     <div class="card-title">Summary</div>
                                     <div class="container-fluid">
-                                        <h4 class="d-flex justify-content-between align-items-center font-weight-normal">
-                                            {{ $job_data['title'] }}
-                                        </h4>
+                                        <div class="d-flex justify-content-between align-items-center font-weight-normal">
+                                            <h5 class="font-weight-bold">Title :</h5>
+                                            <h4>{{ $job_data['title'] }}</h4>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center font-weight-normal">
+                                            <h5 class="font-weight-bold">Sub Total :</h5>
+                                            <h4>₱ <span>{{ number_format($job_data['cost'], 2) }}</span></h4>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center font-weight-normal">
+                                            <h5 class="font-weight-bold">Payment Method :</h5>
+                                            <h4 class="payment_method_display"></h4>
+                                        </div>
+                                        <hr>
+                                        <div class="d-flex justify-content-between align-items-center font-weight-normal">
+                                            <h5 class="font-weight-bold">Total :</h5>
+                                            <h4>₱ {{ number_format($job_data['cost'], 2) }}</h4>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-primary float-right" type="submit">Pay</button>
+                                    <a class="btn btn-secondary float-right mx-50" href="/">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -91,3 +109,9 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+
+    </script>
+@endpush

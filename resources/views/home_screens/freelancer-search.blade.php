@@ -259,9 +259,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="fr3-product-icons">
-                                        <div class="features-star"> <i class="fa fa-star" aria-hidden="true"></i></div>
-                                    </div>
+                                         
                                     </div>
                                 </div>
                             @empty
