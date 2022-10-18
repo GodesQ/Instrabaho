@@ -1,6 +1,23 @@
 @extends('layout.user-layout')
 
 @section('content')
+
+@if(Session::get('success'))
+    @push('scripts')
+        <script>
+            toastr.success("{{ Session::get('success') }}", 'Sucess');
+        </script>
+    @endpush
+@endif
+
+@if(Session::get('fail'))
+    @push('scripts')
+        <script>
+            toastr.error("{{ Session::get('fail') }}", 'Error');
+        </script>
+    @endpush
+@endif
+
     <div class="row grouped-multiple-statistics-card">
         <div class="col-12">
             <div class="card">

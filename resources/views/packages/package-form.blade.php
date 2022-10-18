@@ -8,6 +8,12 @@
         </script>
     @endpush
 @endif
+<style>
+    #map-canvas {
+        height: 400px;
+        width: 100%;
+    }
+</style>
 <section class="fr-list-product bg-img">
     <div class="container">
        <div class="row">
@@ -77,7 +83,38 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-label font-weight-bold my-50">Address</div>
+                                            <input type="text" name="complete_address" id="map-search" class="form-control controls" value="{{ $user->address }}">
+                                            <br>
+                                            <button class="btn btn-primary" type="button" id="get-current-location">Get Current Location</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="map-canvas"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group d-none">
+                                            <div class="form-label font-weight-bold my-50">Latitude</div>
+                                            <input type="text" name="latitude" value="{{ $user->latitude }}" class="form-control latitude">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group d-none">
+                                            <div class="form-label font-weight-bold my-50">Longitude</div>
+                                            <input type="text" name="longitude" class="form-control longitude" value="{{ $user->longitude }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="form-label font-weight-bold my-50">
                                             Street address 
@@ -121,7 +158,7 @@
                                         <input type="text" name="postal_code" class="form-control">
                                         <span class="danger text-danger">@error('postal_code'){{ $message }}@enderror</span>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="form-label font-weight-bold my-50">
@@ -226,4 +263,6 @@
         </form>
     </div>
  </section>
+<script src="../../../js/user-location.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection

@@ -123,7 +123,7 @@
                     <div id="map-canvas"></div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row d-none">
                 <div class="col-md-6">
                     <div class="form-group d-none">
                         <div class="form-label font-weight-bold my-50">Latitude</div>
