@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('daily_update:package_expiration')->everyTwoMinutes();
+        $schedule->command('daily_update:package_expiration')->everyMinute();
     }
 
     /**

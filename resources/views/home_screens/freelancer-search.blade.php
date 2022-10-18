@@ -67,14 +67,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <div class="form-label font-weight-bold my-50">Latitude</div>
-                                                <input type="text" name="latitude" value="{{ $queries['latitude'] }}" class="form-control latitude">
+                                                <!-- <div class="form-label font-weight-bold my-50">Latitude</div> -->
+                                                <input type="hidden" name="latitude" value="{{ $queries['latitude'] }}" class="form-control latitude">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <div class="form-label font-weight-bold my-50">Longitude</div>
-                                                <input type="text" name="longitude" class="form-control longitude" value="{{ $queries['longitude'] }}">
+                                                <!-- <div class="form-label font-weight-bold my-50">Longitude</div> -->
+                                                <input type="hidden" name="longitude" class="form-control longitude" value="{{ $queries['longitude'] }}">
                                             </div>
                                         </div>
                                     </div>
