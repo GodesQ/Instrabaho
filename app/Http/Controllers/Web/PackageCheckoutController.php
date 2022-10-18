@@ -11,6 +11,11 @@ use App\Models\FreelancePackage;
 use App\Models\EmployerPackage;
 use App\Models\Freelancer;
 use App\Models\Employer;
+use App\Models\UserWallet;
+use App\Models\User;
+use App\Models\Transaction;
+use App\Models\Invoice;
+use App\Models\InvoiceItem;
 
 class PackageCheckoutController extends Controller
 {

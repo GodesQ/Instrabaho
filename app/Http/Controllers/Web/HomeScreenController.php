@@ -71,15 +71,25 @@ class HomeScreenController extends Controller
         $price_min = $request->input('price-min');
         $price_max = $request->input('price-max');
         $my_range = $request->input('my_range');
+        $address = $request->input('address');
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
         $type = $request->input('type');
 
-        $projects = Project::when($title, function ($q) use ($title) {
+        $projects = Project::select('*')->when($title, function ($q) use ($title) {
             return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%');
         })
         ->when($categories, function ($q) use ($categories) {
             if($categories[0]) {
                 return $q->whereIn('category_id', $categories);
             }
+        })
+        ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . ")) 
+            * cos(radians(projects.latitude)) 
+            * cos(radians(projects.longitude) - radians(" . $longitude . ")) 
+            + sin(radians(" .$latitude. "))     
+            * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
         })
         ->when($type, function ($q) use ($type) {
             return $q->where('project_type', $type);
@@ -98,6 +108,9 @@ class HomeScreenController extends Controller
             'categories' => $categories,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'address' => $address,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
             'my_range' => $my_range,
             'type' => $type,
         ];

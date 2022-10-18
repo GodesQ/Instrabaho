@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="container-fluid my-2">
-                <button class="btn btn-outline-secondary">Cancel Service</button>
+                <button type="button" class="btn btn-secondary">Cancel Service</button>
                 @if(session()->get('role') == 'employer')
                     @if($purchased_service == 'approved')
                         <button class="btn btn-secondary">Move to Next Status</button>

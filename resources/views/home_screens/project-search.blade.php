@@ -18,6 +18,13 @@
    @endpush
 @endif
 
+<style>
+   #map-canvas {
+       height: 200px;
+       width: 100%;
+   }
+</style>
+
 <section class="fr-list-product bg-img">
     <div class="container">
        <div class="row">
@@ -79,6 +86,40 @@
                             </div>
                          </div>
                       </div>
+                      <div class="panel panel-default">
+                        <div class="panel-heading active"> <a role="button" class="collapsed" data-bs-toggle="collapse" href="#freelancer-location">Location </a> </div>
+                        <div id="freelancer-location" class="panel-collapse collapse show" role="tabpanel">
+                            <div class="panel-body" tabindex="7">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-label font-weight-bold my-50">Address</div>
+                                            <input type="text" name="address" id="map-search" class="form-control controls" value="{{ $queries['address'] }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="map-canvas"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <!-- <div class="form-label font-weight-bold my-50">Latitude</div> -->
+                                            <input type="hidden" name="latitude" value="{{ $queries['latitude'] }}" class="form-control latitude">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <!-- <div class="form-label font-weight-bold my-50">Longitude</div> -->
+                                            <input type="hidden" name="longitude" class="form-control longitude" value="{{ $queries['longitude'] }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                       <div class="panel panel-default">
                          <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#price-widget"> Price </a> </div>
                          <div id="price-widget" class="panel-collapse collapse show" role="tabpanel">
@@ -183,16 +224,20 @@
                                 <div class="fr-right-list">
                                     <ul>
                                         <li>
-                                            <p class="heading">Proposals</p>
+                                            <p class="heading font-weight-bold">Proposals</p>
                                             <span>1 Received </span>
                                         </li>
                                         <li>
-                                            <p class="heading">Location</p>
+                                            <p class="heading font-weight-bold">Location</p>
                                             <span>{{ $project->location }}</span>
                                         </li>
+                                        <li>
+                                             <p class="heading font-weight-bold">Distance</p>
+                                             <span>{{ number_format($project->distance, 2) }} km</span>
+                                       </li>
                                     </ul>
                                 </div>
-                                <div class="fr-right-bid">
+                                <div class="fr-right-bid" style="width: 30%;">
                                     <ul>
                                         <li><a href="/project/{{ $project->id }}#fr-bid-form" class="btn btn-theme"> Send Proposal </a></li>
                                     </ul>
@@ -217,4 +262,6 @@
        </div>
     </div>
  </section>
+ <script src="../../../js/user-location.js"></script>
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection

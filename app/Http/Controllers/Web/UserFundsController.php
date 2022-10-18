@@ -51,7 +51,7 @@ class UserFundsController extends Controller
             $invoice_code = strtoupper(Str::random(8));
 
             // Create Invoice
-            $create_invoice = Invoice::create([
+            $invoice = Invoice::create([
                 'invoice_name' => 'Deposit',
                 'date_issue' => Carbon::now(),
                 'due_date' => Carbon::now()->addDays(5),
@@ -64,7 +64,7 @@ class UserFundsController extends Controller
             
             // Create Invoice Item
             $create_invoice_item = InvoiceItem::create([
-                'invoice_id' => $create_invoice,
+                'invoice_id' => $invoice,
                 'item' => 'Deposit Amount in Wallet',
                 'quantity' => 1,
                 'amount' => $request->amount
@@ -91,9 +91,10 @@ class UserFundsController extends Controller
             ];
     
             $merchant_account = [
-                'merchantid' => 'DL4A6CGDMSGODESQDI',
-                'password'   => 'SysepAgnccMFCHP'
+                'merchantid' => env('DRAGON_PAY_MERCHANTID'),
+                'password'   => env('DRAGON_PAY_MERCHANTKEY')
             ];
+            
             // Initialize Dragonpay
             $dragonpay = new Dragonpay($merchant_account);
             $dragonpay->setParameters($parameters)->away();
