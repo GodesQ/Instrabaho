@@ -123,15 +123,15 @@
                     <div id="map-canvas"></div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row d-none">
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group d-none">
                         <div class="form-label font-weight-bold my-50">Latitude</div>
                         <input type="text" name="latitude" value="{{ $freelancer->latitude }}" class="form-control latitude">
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group d-none">
                         <div class="form-label font-weight-bold my-50">Longitude</div>
                         <input type="text" name="longitude" class="form-control longitude" value="{{ $freelancer->longitude }}">
                     </div>

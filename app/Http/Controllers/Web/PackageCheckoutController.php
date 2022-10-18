@@ -25,11 +25,7 @@ class PackageCheckoutController extends Controller
 
     public function store_package_checkout(Request $request) {
         $request->validate([
-            'country' => 'required',
-            "street_address" => 'required',
-            "city" => 'required',
-            "postal_code" => 'required',
-            "state" => 'required',
+            "complete_address" => 'required',
         ]);
 
         // Check if the current package is expired
@@ -43,7 +39,7 @@ class PackageCheckoutController extends Controller
 
         switch ($request->payment_type) {
             case 'test':
-                $data = $request->except('_token', 'package_id');
+                $data = $request->except('_token', 'package_id', 'latitude', 'longitude');
                 $checkout_id = PackageCheckout::insertGetId($data);
                 PackageCheckout::where('id', $checkout_id)->update([
                     'created_at' => Carbon::now()

@@ -71,6 +71,8 @@ class ProjectsController extends Controller
             'english_level' => $request->english_level,
             'skills' => json_encode($request->skills),
             'location' => $request->location,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'project_type' => $request->project_type,
             'expiration_date' => $employer->package_date_expiration,
         ]);
