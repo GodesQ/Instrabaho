@@ -9,7 +9,7 @@
                 <li class="{{ $purchased_service->status == 'completed' ? 'active' : null }}">Completed</li>
             </ul>
         </div>
-        <div class="container">
+        <div class="card container mt-2">
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6">
@@ -69,12 +69,14 @@
                 </div>
             </div>
             <div class="container-fluid my-2">
-                <button type="button" class="btn btn-secondary">Cancel Service</button>
-                @if(session()->get('role') == 'employer')
-                    @if($purchased_service == 'approved')
-                        <button class="btn btn-secondary">Move to Next Status</button>
-                    @else
-                        <a href="/pay_job/service/{{ $purchased_service->id }}" class="btn btn-primary">Set to Complete</a>
+                @if($purchased_service->status == 'compeleted')
+                    <button type="button" class="btn btn-secondary">Cancel Service</button>
+                    @if(session()->get('role') == 'employer')
+                        @if($purchased_service == 'approved')
+                            <button class="btn btn-secondary">Move to Next Status</button>
+                        @else
+                            <a href="/pay_job/service/{{ $purchased_service->id }}" class="btn btn-primary">Set to Complete & Pay Job</a>
+                        @endif
                     @endif
                 @endif
             </div>
@@ -259,7 +261,10 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="linkOpt2" aria-labelledby="linkOpt-tab2" role="tabpanel">
-                    
+                    <div class="d-flex justify-content center align-items-center flex-column card p-2" style="width: 100% !important;">
+                        <img src="../../../images/icons/no_data_found.png" alt="" style="width: 300px;" class="img-fluid">
+                        <h3 class="font-weight-bold text-primary">No Details Found</h3>
+                    </div>
                 </div>
             </div>
         </div>

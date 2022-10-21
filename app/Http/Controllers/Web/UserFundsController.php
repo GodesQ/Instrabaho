@@ -15,12 +15,15 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Crazymeeks\Foundation\PaymentGateway\Dragonpay;
 use Crazymeeks\Foundation\PaymentGateway\Dragonpay\Token;
+use Ixudra\Curl\Facades\Curl;
 
 class UserFundsController extends Controller
 {
     public function user_funds() {
         $user = User::where('id', session()->get('id'))->with('wallet')->first();
-        $transactions = Transaction::where('to_id', session()->get('id'))->cursorPaginate(10);
+        // dd(session()->get('id'));
+        $transactions = Transaction::where('from_id', session()->get('id'))->orWhere('to_id', session()->get('id'))->cursorPaginate(10);
+        // dd($transactions);
         return view('funds.funds', compact('user', 'transactions'));
     }
 

@@ -44,6 +44,7 @@ class PackageCheckoutController extends Controller
 
         switch ($request->payment_type) {
             case 'test':
+                
                 $data = $request->except('_token', 'package_id', 'latitude', 'longitude');
                 $checkout_id = PackageCheckout::insertGetId($data);
                 PackageCheckout::where('id', $checkout_id)->update([
