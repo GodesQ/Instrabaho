@@ -66,6 +66,40 @@
                          </div>
                       </div>
                       <div class="panel panel-default">
+                        <div class="panel-heading active"> <a role="button" class="collapsed" data-bs-toggle="collapse" href="#freelancer-location">Location </a> </div>
+                        <div id="freelancer-location" class="panel-collapse collapse show" role="tabpanel">
+                           <div class="panel-body" tabindex="7">
+                              <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="form-group">
+                                          <div class="form-label font-weight-bold my-50">Address</div>
+                                          <input type="text" name="address" id="map-search" class="form-control controls" value="{{ $queries['address'] }}">
+                                       </div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-md-12">
+                                       <div id="map-canvas"></div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-md-6">
+                                       <div class="form-group">
+                                          <!-- <div class="form-label font-weight-bold my-50">Latitude</div> -->
+                                          <input type="hidden" name="latitude" value="{{ $queries['latitude'] }}" class="form-control latitude">
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="form-group">
+                                          <!-- <div class="form-label font-weight-bold my-50">Longitude</div> -->
+                                          <input type="hidden" name="longitude" class="form-control longitude" value="{{ $queries['longitude'] }}">
+                                       </div>
+                                    </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                      <div class="panel panel-default">
                          <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#category-widget"> Search by category </a> </div>
                          <div id="category-widget" class="panel-collapse collapse show" role="tabpanel">
                             <div class="panel-body" tabindex="2">
@@ -86,40 +120,6 @@
                             </div>
                          </div>
                       </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading active"> <a role="button" class="collapsed" data-bs-toggle="collapse" href="#freelancer-location">Location </a> </div>
-                        <div id="freelancer-location" class="panel-collapse collapse show" role="tabpanel">
-                            <div class="panel-body" tabindex="7">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="form-label font-weight-bold my-50">Address</div>
-                                            <input type="text" name="address" id="map-search" class="form-control controls" value="{{ $queries['address'] }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div id="map-canvas"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <!-- <div class="form-label font-weight-bold my-50">Latitude</div> -->
-                                            <input type="hidden" name="latitude" value="{{ $queries['latitude'] }}" class="form-control latitude">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <!-- <div class="form-label font-weight-bold my-50">Longitude</div> -->
-                                            <input type="hidden" name="longitude" class="form-control longitude" value="{{ $queries['longitude'] }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                       <div class="panel panel-default">
                          <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#price-widget"> Price </a> </div>
                          <div id="price-widget" class="panel-collapse collapse show" role="tabpanel">
@@ -225,21 +225,24 @@
                                     <ul>
                                         <li>
                                             <p class="heading font-weight-bold">Proposals</p>
-                                            <span>1 Received </span>
+                                            <span>1 Received</span>
                                         </li>
                                         <li>
                                             <p class="heading font-weight-bold">Location</p>
                                             <span>{{ $project->location }}</span>
                                         </li>
-                                        <li>
-                                             <p class="heading font-weight-bold">Distance</p>
-                                             <span>{{ number_format($project->distance, 2) }} km</span>
-                                       </li>
+                                        @if($project->distance)
+                                          <li>
+                                                <p class="heading font-weight-bold">Distance</p>
+                                                <span>{{ number_format($project->distance, 2) }} km</span>
+                                          </li>
+                                       @endif
                                     </ul>
                                 </div>
                                 <div class="fr-right-bid" style="width: 30%;">
                                     <ul>
-                                        <li><a href="/project/{{ $project->id }}#fr-bid-form" class="btn btn-theme"> Send Proposal </a></li>
+                                       <li><a href="/project/{{ $project->id }}" class="btn btn-theme btn-theme-secondary">View Project</a></li>
+                                       <li><a href="/project/{{ $project->id }}#fr-bid-form" class="btn btn-theme"> Send Proposal </a></li>
                                     </ul>
                                 </div>
                             </div>

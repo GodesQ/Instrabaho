@@ -170,10 +170,10 @@ Route::middleware([WebAuth::class])->group( function () {
     Route::get('/user_fund', [UserFundsController::class, 'user_funds'])->name('user_funds');
     Route::post('/deposit', [UserFundsController::class, 'deposit'])->name('deposit');
     
-    Route::get('/pay_job/{type}/{id}', [TransactionsController::class, 'pay_job'])->name('pay_job');
+    Route::get('/pay_job/{type}/{id}', [TransactionsController::class, 'view_pay_job'])->name('view_pay_job');
+    Route::post('/pay_job', [TransactionsController::class, 'pay_job'])->name('pay_job');
 
     Route::get('/transaction-message', [TransactionsController::class, 'transaction_messaage'])->name('transaction_messaage');
-    Route::post('/transaction-postback',  [TransactionsController::class, 'postback_transaction'])->name('postback_transaction');
-
-    Route::view('/test', 'misc.test');
+    Route::post('/transaction-message',  [TransactionsController::class, 'postback_transaction'])->name('postback_transaction');
+    Route::get('/check_status',  [TransactionsController::class, 'check_status'])->name('check_status');
 });
