@@ -66,7 +66,7 @@
             </li>
             <li  class="{{ Request::path() == 'user_fund' ? 'active' : '' }} nav-item">
                 <a href="/user_fund"><i class="feather icon-file"></i>
-                    <span class="menu-title" data-i18n="Fund Deposit & Invoices">Funds, Deposit & Invoices</span>
+                    <span class="menu-title" data-i18n="Fund Deposit & Transactions">Funds, Deposit & Transactions</span>
                 </a>
             </li>
             <li class=" nav-item">

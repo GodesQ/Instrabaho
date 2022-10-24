@@ -16,26 +16,35 @@
                     <form action="">
                         <div data-repeater-item="">
                             <div class="row">
-                                <div class="form-group mb-1 col-sm-12 col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group text-right">
+                                        <button type="button" class="btn btn-danger" data-repeater-delete=""> <i class="feather icon-x"></i> Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group mb-1 col-sm-12 col-md-6">
                                     <label for="email-addr">Project</label>
                                     <br>
                                     <input type="text" class="form-control" id="pass" name="project[]" placeholder="Project Name">
                                 </div>
-                                <div class="form-group mb-1 col-sm-12 col-md-3">
+                                <div class="form-group mb-1 col-sm-12 col-md-6">
                                     <label for="pass">Date</label>
                                     <br>
                                     <input type="date" class="form-control" id="pass" name="project_date[]" placeholder="Date">
                                 </div>
-                                <div class="form-group mb-1 col-sm-12 col-md-3">
+                                <div class="form-group mb-1 col-sm-12 col-md-6">
+                                    <label for="pass">Link <span>(optional)</span></label>
+                                    <br>
+                                    <input type="url" class="form-control" id="pass" name="project_link[]" placeholder="link url">
+                                </div>
+                                <div class="form-group mb-1 col-sm-12 col-md-6">
                                     <label for="pass">Image</label>
                                     <br>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="project_image[]" id="inputGroupFile01">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
-                                </div>
-                                <div class="form-group col-sm-12 col-md-2 text-center mt-2">
-                                    <button type="button" class="btn btn-danger" data-repeater-delete=""> <i class="feather icon-x"></i> Delete</button>
                                 </div>
                             </div>
                             <hr>

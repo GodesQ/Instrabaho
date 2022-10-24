@@ -30,7 +30,7 @@ class SaveProjectController extends Controller
         if(!$project) return back()->with('fail', "This Project or Employer doesn't exist.");
 
         // check if the user already save the project
-        $saved_project_exist = SaveProject('project_id', $project_id)->where('follower_id', $freelancerExist->id)->exists();
+        $saved_project_exist = SaveProject::where('project_id', $project_id)->where('follower_id', $freelancerExist->id)->exists();
         if($saved_project_exist) return back()->with('fail', 'You are already follow this project');
         
         $create = SaveProject::create([

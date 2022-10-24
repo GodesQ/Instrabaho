@@ -212,7 +212,14 @@
                         <div class="card-body">
                             <fieldset class="mb-3 d-flex justify-content-between align-items-center">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment_type" value="test" id="customRadio1" checked>
+                                    <input type="radio" class="custom-control-input" name="payment_type" value="paid_by_wallet" id="customRadio8" checked>
+                                    <label class="custom-control-label" for="customRadio8">Paid By Wallet</label>
+                                </div>
+                            </fieldset>
+                            <hr>
+                            <fieldset class="mb-3 d-flex justify-content-between align-items-center">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="payment_type" value="test" id="customRadio1">
                                     <label class="custom-control-label" for="customRadio1">Sample Payment</label>
                                 </div>
                             </fieldset>

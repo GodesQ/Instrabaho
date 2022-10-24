@@ -172,19 +172,23 @@
                                     </div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right p-3" style="width: 300px;">
-									<a href="/" class="container">
+									<!-- <a href="/" class="container">
 										<h6 class="h6 text-black-50">Wallet Funds</h6>
 										<h3 class="text-primary">₱ 1000.00</h3>
+									</a> -->
+									<a href="/dashboard" class="dropdown-item" style="color: #000000 !important;">
+										<i class="fa fa-home"></i> Dashboard
 									</a>
-									<hr>
-									<a href="/dashboard" class="dropdown-item my-4" style="color: #000000 !important;">
-										Dashboard
+                                    <a href="" class="dropdown-item" style="color: #000000 !important;">
+										<i class="fa fa-user"></i> Edit Profile
 									</a>
-									<a href="" class="dropdown-item my-4" style="color: #000000 !important;">
-										Edit Profile
-									</a>
-									<a href="/logout" class="dropdown-item my-4" style="color: #000000 !important;">
-										Logout
+                                    @if(Session::get('role') == 'employer')
+                                        <a class="dropdown-item" href="/change_login" style="color: #000000 !important;"><i class="feather icon-log-in"></i> Login as Freelancer</a>
+                                    @else
+                                        <a class="dropdown-item" href="/change_login" style="color: #000000 !important;"><i class="feather icon-log-in"></i> Login as Employer</a>
+                                    @endif
+									<a href="/logout" class="dropdown-item" style="color: #000000 !important;">
+										<i class="feather icon-log-out"></i> Logout
 									</a>
                                 </div>
                             </li>

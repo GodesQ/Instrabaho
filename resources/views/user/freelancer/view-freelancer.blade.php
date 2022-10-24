@@ -22,7 +22,7 @@
 	@if($freelancer->user->cover_image)
 		<img width="100%" height="250" style="object-fit: cover; object-position: center;" src="../../../images/user/cover/{{ $freelancer->user->cover_image }}" alt="">
 	@else
-		<img width="100%" height="250" style="object-fit: cover; object-position: center;" src="../../../images/bg-image/freelancer-bg.jpeg" alt="">
+		<img width="100%" height="250" style="object-fit: cover; object-position: center;" src="../../../images/bg-image/default-cover.png" alt="">
 	@endif
 </section>
 		<section class="fr-hero-detail style-1">

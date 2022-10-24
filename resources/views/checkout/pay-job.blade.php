@@ -39,6 +39,14 @@
                                                 <ul class="list-group">
                                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                                         <fieldset>
+                                                            <input type="radio" name="payment_method" class="payment_method mr-2" value="pay_using_wallet" id="input-radio-20">
+                                                            <label for="input-radio-20">Pay using your Wallet</label>
+                                                        </fieldset>
+                                                        <!-- <img src="../../../images/logo/gcash-logo.png" style="width: 50px;"> -->
+                                                    </li>
+                                                    <hr>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <fieldset>
                                                             <input type="radio" name="payment_method" class="payment_method mr-2" value="gcash" id="input-radio-14">
                                                             <label for="input-radio-14">G CASH</label>
                                                         </fieldset>
@@ -132,6 +140,10 @@
     <script>
         $('input[type=radio][name=payment_method]').click(function() {
             switch (this.value) {
+                case 'pay_using_wallet':
+                    $('.payment_method_display').text('Pay using wallet');
+                    break;
+
                 case 'gcash':
                     $('.payment_method_display').text('GCASH');
                     break;

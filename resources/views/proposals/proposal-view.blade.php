@@ -58,21 +58,26 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-md-8 col-lg-9">
-                                        <a href="" class="btn btn-secondary">View Profile</a>
+                                    <div class="col-md-6 col-lg-7">
+                                        <a href="/freelancer/{{ $proposal->freelancer->user->id }}" class="btn btn-secondary">View Profile</a>
                                     </div>
                                     @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
                                         <div class="col-md-2 col-lg-2">
                                             <select name="status" id="" class="form-control select2" onchange="updateStatus(this)">
                                                 <option {{ $proposal->status == 'pending' ? 'selected' : null }} value="pending">For Approval</option>
                                                 <option {{ $proposal->status == 'approved' ? 'selected' : null }} value="approved">Approved</option>
-                                                <option {{ $proposal->status == 'completed' ? 'selected' : null }} value="completed">Completed</option>
                                                 <option {{ $proposal->status == 'cancel' ? 'selected' : null }} value="cancel">Cancel</option>
                                             </select>
                                         </div>
-                                        <div class="col-lg-1 col-md-2">
-                                            <a href="" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
-                                        </div>
+                                        @if($proposal->status == 'approved')
+                                            <div class="col-lg-3 col-md-3">
+                                                <a href="/pay_job/project/{{ $proposal->id }}" class="btn btn-primary">Set to Complete & Pay Job</a>
+                                            </div>
+                                        @endif
+                                    @else
+                                        <span class="col-lg-2 badge badge-primary d-flex justify-content-center align-items-center">Status : 
+                                            <span class="font-weight-bold text-uppercase">{{ $proposal->status }}</span>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -157,7 +162,7 @@
                                             </div>
                                             <div class="col-md-12 my-1 p-2 rounded" style="background:#f3f5f8;">
                                                 <div class="font-weight-bold">Cover Letter :
-                                                    <span class="font-weight-normal mx-50">{{ $proposal->cover_letter }}</span>
+                                                    <span class="font-weight-normal mx-50">@php echo nl2br($proposal->cover_letter); @endphp</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -251,10 +256,10 @@
                     data: {
                         proposal_id : '{{ $proposal->id }}',
                         status : e.value,
+                        project_id : '{{ $proposal->project_id }}',
                         _token: '{{ csrf_token()}}'
                     },
                     success: function (response) {
-                        console.log(response);
                         if(response.status == 201) {
                             Swal.fire(
                                 "Update!",

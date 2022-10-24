@@ -40,7 +40,9 @@
                                             </td>
                                         </tr>
                                     @empty
-
+                                        <tr>
+                                            <td>No Record Found</td>
+                                        </tr>
                                     @endforelse
                                 </tbody>
                             </table>
