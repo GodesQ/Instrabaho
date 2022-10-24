@@ -9,7 +9,12 @@
         </script>
     @endpush
 @endif
-
+<style>
+    #map-canvas {
+        height: 300px;
+        width: 100%;
+    }
+</style>
 <div class="page-wrapper">
     <div class="page-header">
         <div class="page-content">
@@ -70,9 +75,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="form-label font-weight-bold my-1">Location</div>
-                                        <input type="text" name="location" class="form-control" id="">
-                                        <span class="danger text-danger">@error('location'){{ $message }}@enderror</span>
+                                        <div class="form-label font-weight-bold my-1">Type</div>
+                                        <select name="type" id="" class="select2 form-control">
+                                            <option value="simple">Simple</option>
+                                            <option value="featured">Featured</option>>
+                                        </select>
+                                        <span class="danger text-danger">@error('type'){{ $message }}@enderror</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -96,16 +104,27 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="form-label font-weight-bold my-1">Type</div>
-                                        <select name="type" id="" class="select2 form-control">
-                                            <option value="simple">Simple</option>
-                                            <option value="featured">Featured</option>>
-                                        </select>
-                                        <span class="danger text-danger">@error('type'){{ $message }}@enderror</span>
+                                        <div class="form-label font-weight-bold my-50">Address</div>
+                                        <input type="text" name="location" id="map-search" class="form-control controls" value="">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div id="map-canvas"></div>
+                                    </div>
+                                    <div class="col-md-6 d-none">
+                                        <div class="form-group d-none">
+                                            <div class="form-label font-weight-bold my-50">Latitude</div>
+                                            <input type="text" name="latitude" value="" class="form-control latitude">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6d-none">
+                                        <div class="form-group d-none">
+                                            <div class="form-label font-weight-bold my-50">Longitude</div>
+                                            <input type="text" name="longitude" class="form-control longitude" value="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-footer float-right">
+                            <div class="form-footer float-right my-2">
                                 <button type="submit" class="btn btn-solid btn-primary">Create</button>
                             </div>
                         </div>
@@ -115,6 +134,8 @@
         </div>
     </div>
 </div>
+<script src="../../../js/user-location.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection
 
 @push('scripts')

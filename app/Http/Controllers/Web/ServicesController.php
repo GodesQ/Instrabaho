@@ -30,7 +30,6 @@ class ServicesController extends Controller
     }
 
     public function store(Request $request) {
-
         //check if the current plan is exceed in limit
         if($this->checkAvailableService($request->type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
         
@@ -40,6 +39,8 @@ class ServicesController extends Controller
             'english_level' => 'required',
             'service_category' => 'required',
             'location' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'description' => 'required',
             'type' => 'required',
             'attachment' => 'required|max:2048',
@@ -63,6 +64,8 @@ class ServicesController extends Controller
             'english_level' => $request->english_level,
             'service_category' => $request->service_category,
             'location' => $request->location,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'description' => $request->description,
             'type' => $request->type,
             'attachments' => $json_images,

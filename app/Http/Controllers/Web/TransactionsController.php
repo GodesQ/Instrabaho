@@ -72,13 +72,14 @@ class TransactionsController extends Controller
         }
 
         if($request->type == 'project') {
+            $job = ProjectProposal::where('id', $request->id)->with('project', 'freelancer', 'employer')->first();
             $job_data = [
-                'title' => $job->service->name,
-                'cost' => $job->service->cost,
+                'title' => $job->project->title,
+                'cost' => $job->project->cost,
                 'job_type' => $request->type,
                 'job_id' => $job->id,
-                'from_id' => $job->buyer_id,
-                'to_id' => $job->seller_id
+                'from_id' => $job->employer_id,
+                'to_id' => $job->freelancer_id
             ];
         }
         return view('checkout.pay-job', compact('job_data', 'user'));
@@ -160,7 +161,7 @@ class TransactionsController extends Controller
         // Create Invoice Item
         $create_invoice_item = InvoiceItem::create([
             'invoice_id' => $invoice,
-            'item' => $request->job_type == 'service' ? $services_proposal->service->name : $services_proposal->project->title,
+            'item' => $request->job_type == 'service' ? $services_proposal->service->name : $project_proposal->project->title,
             'quantity' => 1,
             'deduction' => $request->system_deduction,
             'amount' => $request->total
@@ -187,22 +188,37 @@ class TransactionsController extends Controller
         if($services_proposal) {
             $services_proposal->status = 'completed';
             $services_proposal->save();
+        } else {
+            $project_proposal->status = 'completed';
+            $project_proposal->save();
         }
         
-        return redirect('/transaction_message')->with('success', 'Success Sending Payment');
+        return redirect('/transaction-message')->with('success', 'Success Sending Payment');
+    }
+
+    private function PayJoBUsingWallet() {
+        
     }
 
     private function DeductToEmployer($employer_wallet, $employer, $job_cost) {
         // deduct job cost in employer
-        $update_wallet = UserWallet::where('user_id', $employer->user->id)->update([
-            'user_id' => $employer->user->id,
-            'amount' =>  $employer_wallet->amount - $job_cost,
-        ]);
+        if($employer_wallet->amount >= $job_cost) {
+            $update_wallet = UserWallet::where('user_id', $employer->user->id)->update([
+                'user_id' => $employer->user->id,
+                'amount' =>  $employer_wallet->amount - $job_cost,
+            ]);
+        } else {
+            return back()->with('fail', "The amount of your wallet will not less than to the job cost.");
+        }
 
         if($update_wallet) {
             return ['status' => true, 'message' => "The Service Payment has been successfully deduct to employer"];
         } else {
             return ['status' => false, 'message' => "Oops! The wallet doesn't update. Please Try Again"];
         }
+    }
+
+    public function paid_by_wallet_message(Request $request) {
+        return view('transaction_messages.success');
     }
 }

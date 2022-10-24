@@ -175,10 +175,7 @@
                                  <div class="form-group">
                                     <label>Attachments</label>
                                     <div class="input-group">
-                                       <div class="custom-file">
-                                          <input type="file" class="custom-file-input" name="attachments[]" id="inputGroupFile01">
-                                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                       </div>
+                                       <input type="file" class="form-control" name="attachments[]" id="inputGroupFile01">
                                        <div class="input-group-prepend">
                                           <div class="input-group-text"><i class="fa fa-image"></i></div>
                                        </div>

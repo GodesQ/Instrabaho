@@ -26,15 +26,25 @@ class HomeScreenController extends Controller
         $price_min = $request->input('price-min');
         $price_max = $request->input('price-max');
         $my_range = $request->input('my_range');
+        $address = $request->input('address');
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
         $type = $request->input('type');
 
-        $services = Service::when($title, function ($q) use ($title) {
+        $services = Service::select('*')->when($title, function ($q) use ($title) {
             return $q->where(DB::raw('lower(name)'), 'like', '%' . strtolower($title) . '%');
         })
         ->when($categories, function ($q) use ($categories) {
             if($categories[0]) {
                 return $q->whereIn('service_category', $categories);
             }
+        })
+        ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . ")) 
+            * cos(radians(services.latitude)) 
+            * cos(radians(services.longitude) - radians(" . $longitude . ")) 
+            + sin(radians(" .$latitude. "))     
+            * sin(radians(services.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
         })
         ->when($type, function ($q) use ($type) {
             return $q->where('type', $type);
@@ -53,9 +63,13 @@ class HomeScreenController extends Controller
             'categories' => $categories,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'address' => $address,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
             'my_range' => $my_range,
             'type' => $type,
         ];
+        
         return view('home_screens.service-search', compact('services', 'service_categories', 'queries'));
     }
 
@@ -76,7 +90,11 @@ class HomeScreenController extends Controller
         $longitude = $request->input('longitude');
         $type = $request->input('type');
 
-        $projects = Project::select('*')->when($title, function ($q) use ($title) {
+        $projects = Project::select('*')
+        ->where('expiration_date', '>' , Carbon::now())
+        ->where('isExpired', 0)
+        ->orWhereNull('status')
+        ->when($title, function ($q) use ($title) {
             return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%');
         })
         ->when($categories, function ($q) use ($categories) {
@@ -98,11 +116,12 @@ class HomeScreenController extends Controller
             $range = explode(';', $my_range);
             return $q->whereBetween('cost', [$range[0], $range[1]]);
         })
-        ->where('expiration_date', '>' , Carbon::now())
         ->with('category', 'employer')
         ->cursorPaginate(10);
-        $service_categories = ServiceCategory::all();
 
+        $service_categories = ServiceCategory::all();
+        // dd($projects);
+        
         $queries = [
             'title' => $title,
             'categories' => $categories,

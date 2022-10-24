@@ -171,6 +171,7 @@ class ProjectsController extends Controller
     }
 
     public function destroy(Request $request) {
+        dd($request->all());
         $project = Project::where('id', $request->id)->first();
         $project_images = json_decode($project->attachments);
         

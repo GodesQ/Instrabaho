@@ -30,7 +30,6 @@
                                         </td>
                                         <td>
                                             <a href="/project_proposal_information/{{ $completed_project->id }}" class="btn btn-md btn-primary"><i class="fa fa-eye"></i></a>
-                                            <a href="" class="btn btn-md btn-danger"><i class="feather icon-x"></i> Cancel Project</a>
                                         </td>
                                     </tr>
                                 @empty

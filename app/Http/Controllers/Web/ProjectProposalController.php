@@ -9,6 +9,7 @@ use App\Models\ProjectProposal;
 use App\Models\Freelancer;
 use App\Models\Employer;
 use App\Models\Project;
+use Carbon\Carbon;
 
 use Yajra\DataTables\Facades\DataTables;
 
@@ -45,6 +46,7 @@ class ProjectProposalController extends Controller
             'address' => $request->address,
             'cover_letter' => $request->cover_letter,
             'project_cost_type' => 'Fixed',
+            'status' => 'pending',
             'attachments' => $json_images
         ]);
 
@@ -55,13 +57,17 @@ class ProjectProposalController extends Controller
 
     public function proposals_for_employers() {
         $employer = Employer::where('user_id', session()->get('id'))->first();
-        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'pending')->with('employer', 'freelancer', 'project')->paginate('10');
+        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'pending')->with('employer', 'freelancer', 'project')->whereHas('project', function($query) {
+            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+        })->cursorPaginate(10);
         return view('proposals.employer-proposals', compact('proposals'));
     }
 
     public function proposals_for_freelancers() {
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'pending')->with('employer', 'freelancer', 'project')->paginate('10');
+        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'pending')->with('employer', 'freelancer', 'project')->whereHas('project', function($query) {
+            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+        })->cursorPaginate(10);
         return view('proposals.freelancer-proposals', compact('proposals'));
     }
 
@@ -88,6 +94,14 @@ class ProjectProposalController extends Controller
             'status' => $request->status
         ]);
 
+        $project_id = $request->project_id;
+
+        if($request->status == 'approved') {
+            $update_project = Project::where('id', $project_id)->update([
+                'status' => $request->status,
+            ]);
+        }
+
         if($update) {
             return response()->json([
                 'status' => 201,
@@ -107,12 +121,18 @@ class ProjectProposalController extends Controller
             $ongoing_projects = ProjectProposal::where('freelancer_id', $freelancer->id)
             ->where('status', 'approved')
             ->with('project')
+            ->whereHas('project', function($query) {
+                $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+            })
             ->cursorPaginate(10);
         } else {
             $employer = Employer::where('user_id', session()->get('id'))->first();
             $ongoing_projects = ProjectProposal::where('employer_id', $employer->id)
             ->where('status', 'approved')
             ->with('project')
+            ->whereHas('project', function($query) {
+                $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+            })
             ->cursorPaginate(10);
         }
 

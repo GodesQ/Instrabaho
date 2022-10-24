@@ -127,7 +127,7 @@ Route::middleware([WebAuth::class])->group( function () {
         Route::get('/edit_project/{id}', [ProjectsController::class, 'edit'])->name('edit_project');
         Route::post('/update_project', [ProjectsController::class, 'update'])->name('update_project')->middleware('plan.expiration');
         Route::get('/remove_project_image/{id}/{key_id}', [ProjectsController::class, 'remove_project_image'])->name('remove_project_image')->middleware('plan.expiration');
-        Route::get('/destroy_project', [ProjectsController::class, 'destroy'])->name('destroy_project'); 
+        Route::get('/destroy_project/{id}', [ProjectsController::class, 'destroy'])->name('destroy_project'); 
 
         Route::get('/followed_freelancer', [FollowFreelancerController::class, 'followed_freelancer'])->name('followed_freelancer');
         Route::get('/proposal_lists/employer', [ProjectProposalController::class, 'proposals_for_employers'])->name('proposals_for_employers');
@@ -176,4 +176,6 @@ Route::middleware([WebAuth::class])->group( function () {
     Route::get('/transaction-message', [TransactionsController::class, 'transaction_messaage'])->name('transaction_messaage');
     Route::post('/transaction-message',  [TransactionsController::class, 'postback_transaction'])->name('postback_transaction');
     Route::get('/check_status',  [TransactionsController::class, 'check_status'])->name('check_status');
+
+    Route::get('/transaction_details/paid_by_wallet', [TransactionsController::class, 'paid_by_wallet_message'])->name('transaction_paid_by_wallet');
 });

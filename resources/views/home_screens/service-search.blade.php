@@ -1,6 +1,12 @@
 @extends('layout.layout')
 
 @section('content')
+<style>
+   #map-canvas {
+       height: 200px;
+       width: 100%;
+   }
+</style>
 <section class="fr-list-product bg-img">
    <div class="container">
       <div class="row">
@@ -68,6 +74,40 @@
                            <div class="panel-body" tabindex="1">
                               <div class="form-group">
                                  <input type="text" class="form-control" value="{{ $queries['title'] }}" name="title" placeholder="What are you looking for" value="">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="panel panel-default">
+                        <div class="panel-heading active"> <a role="button" class="collapsed" data-bs-toggle="collapse" href="#freelancer-location">Location </a> </div>
+                        <div id="freelancer-location" class="panel-collapse collapse show" role="tabpanel">
+                           <div class="panel-body" tabindex="7">
+                              <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="form-group">
+                                          <div class="form-label font-weight-bold my-50">Address</div>
+                                          <input type="text" name="address" id="map-search" class="form-control controls" value="{{ $queries['address'] }}">
+                                       </div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-md-12">
+                                       <div id="map-canvas"></div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-md-6">
+                                       <div class="form-group">
+                                          <!-- <div class="form-label font-weight-bold my-50">Latitude</div> -->
+                                          <input type="hidden" name="latitude" value="{{ $queries['latitude'] }}" class="form-control latitude">
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="form-group">
+                                          <!-- <div class="form-label font-weight-bold my-50">Longitude</div> -->
+                                          <input type="hidden" name="longitude" class="form-control longitude" value="{{ $queries['longitude'] }}">
+                                       </div>
+                                    </div>
                               </div>
                            </div>
                         </div>
@@ -173,6 +213,9 @@
                                  </a>
                                  <p>Starting From<span class="style-6"><span class="currency">₱ </span><span class="price">{{ number_format($service->cost, 2) }}</span></span></p>
                                  <div class="fr-top-grid"> <a href=""><img src="img/freelancers-imgs/deo-profile.jpg" alt="" class="img-fluid"></a></div>
+                                 @if($service->distance)
+                                    <p>Distance <span class="style-6"><span class="price">{{ number_format($service->distance, 2) }} k/m</span></span></p>
+                                 @endif
                               </div>
                            </div>
                         </a>
@@ -194,4 +237,6 @@
       </div>
    </div>
 </section>
+<script src="../../../js/user-location.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection

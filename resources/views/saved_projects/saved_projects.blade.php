@@ -21,7 +21,7 @@
                                 @php $saved_project->project->getSkills() @endphp
                                 <div>
                                     @foreach($saved_project->project->skills_name as $skill)
-                                        <div class="badge badge-warning p-50">{{ $skill->skill_name }}</div>
+                                        <div class="badge badge-warning p-50 my-25">{{ $skill->skill_name }}</div>
                                     @endforeach
                                 </div>
                                 <div style="font-size: 12px; color: gray;" class="my-1">{!! substr($saved_project->project->description, 0, 150) . '...' !!}</div>

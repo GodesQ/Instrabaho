@@ -65,7 +65,7 @@
                             </div>
                          </div>
                       </div>
-                      <div class="panel panel-default">
+                     <div class="panel panel-default">
                         <div class="panel-heading active"> <a role="button" class="collapsed" data-bs-toggle="collapse" href="#freelancer-location">Location </a> </div>
                         <div id="freelancer-location" class="panel-collapse collapse show" role="tabpanel">
                            <div class="panel-body" tabindex="7">
