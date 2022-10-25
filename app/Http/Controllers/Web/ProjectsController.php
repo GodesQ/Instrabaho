@@ -19,13 +19,13 @@ class ProjectsController extends Controller
         $user_id = session()->get('id');
         $employer = Employer::where('user_id', $user_id)->first();
         $projects = Project::where('employer_id', $employer->id)->where('expiration_date', '>=' , Carbon::now())->latest('id')->cursorPaginate(10);
-        return view('projects.projects', compact('projects'));
+        return view('UserAuthScreens.projects.projects', compact('projects'));
     }
 
     public function create() {
         $categories = ServiceCategory::all();
         $skills = Skill::all();
-        return view('projects.create-project', compact('categories', 'skills'));
+        return view('UserAuthScreens.projects.create-project', compact('categories', 'skills'));
     }
 
     public function store(Request $request) {
@@ -88,7 +88,7 @@ class ProjectsController extends Controller
         $categories = ServiceCategory::all();
         $skills = Skill::all();
         $project_images = json_decode($project->attachments);
-        return view('projects.edit-project', compact('project', 'categories', 'skills', 'project_images'));
+        return view('UserAuthScreens.projects.edit-project', compact('project', 'categories', 'skills', 'project_images'));
     }
 
     public function update(Request $request) {

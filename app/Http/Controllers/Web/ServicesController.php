@@ -21,12 +21,12 @@ class ServicesController extends Controller
         $user_id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $user_id)->first();
         $services = Service::where('freelancer_id', $freelancer->id)->where('expiration_date', '>=' , Carbon::now())->latest('id')->cursorPaginate(10);
-        return view('services.services', compact('services'));
+        return view('UserAuthScreens.services.services', compact('services'));
     }
 
     public function create() {
         $categories = ServiceCategory::all();
-        return view('services.create-service', compact('categories'));
+        return view('UserAuthScreens.services.create-service', compact('categories'));
     }
 
     public function store(Request $request) {
@@ -79,7 +79,7 @@ class ServicesController extends Controller
         $service = Service::where('id', $request->id)->first();
         $categories = ServiceCategory::all();
         $service_images = json_decode($service->attachments);
-        return view('services.edit-service', compact('service', 'categories', 'service_images'));
+        return view('UserAuthScreens.services.edit-service', compact('service', 'categories', 'service_images'));
     }
 
     public function update(Request $request) {

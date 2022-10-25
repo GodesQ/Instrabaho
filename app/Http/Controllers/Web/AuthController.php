@@ -16,7 +16,7 @@ class AuthController extends Controller
 {
     //
     public function login() {
-        return view('auth.login');
+        return view('AllScreens.auth.login');
     }
 
     public function save_login(Request $request) {
@@ -54,7 +54,7 @@ class AuthController extends Controller
     }
 
     public function register() {
-        return view('auth.register');
+        return view('AllScreens.auth.register');
     }
 
     public function save_register(Request $request) {
@@ -107,7 +107,7 @@ class AuthController extends Controller
     }
 
     public function verify_message() {
-        return view('misc.verify-message');
+        return view('AllScreens.misc.verify-message');
     }
 
     public function logout() {

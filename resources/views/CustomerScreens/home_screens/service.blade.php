@@ -9,6 +9,15 @@
       </script>
    @endpush
 @endif
+
+@if(Session::get('fail'))
+   @push('scripts')
+      <script>
+         toastr.error('{{ Session::get("fail") }}', 'Failed');
+      </script>
+   @endpush
+@endif
+
 <section class="fr-service-bar">
     <div class="container">
        <div class="row">

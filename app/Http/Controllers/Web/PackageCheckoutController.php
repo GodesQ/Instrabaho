@@ -26,7 +26,7 @@ class PackageCheckoutController extends Controller
         $user_id = session()->get('id');
         $user_model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
         $user = $user_model::where('user_id', $user_id)->with('user')->first();
-        return view('packages.package-form', compact('user', 'package'));
+        return view('CustomerScreens.packages.package-form', compact('user', 'package'));
     }
 
     public function store_package_checkout(Request $request) {
@@ -154,6 +154,6 @@ class PackageCheckoutController extends Controller
         $package = EmployerPackage::where('id', $request->package_id)->first();
         $user_id = session()->get('id');
         $user = Employer::where('user_id', $user_id)->with('user')->first();
-        return view('packages.package-form', compact('user', 'package'));
+        return view('CustomerScreens.packages.package-form', compact('user', 'package'));
     }
 }

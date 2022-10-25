@@ -32,13 +32,13 @@ class ForgotPasswordController extends Controller
     }
 
     public function forgot_message() {
-        return view('misc.forgot-password-message');
+        return view('AllScreens.misc.forgot-password-message');
     }
 
     public function forgot_reset_form(Request $request) {
         $token = $request->verify_token;
         $email = $request->email;
-        return view('auth.forgot_password_form', compact('token', 'email'));
+        return view('AllScreens.auth.forgot_password_form', compact('token', 'email'));
     }
 
     public function submit_reset_form(Request $request) {

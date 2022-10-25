@@ -60,7 +60,7 @@ class ProjectProposalController extends Controller
         $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'pending')->with('employer', 'freelancer', 'project')->whereHas('project', function($query) {
             $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
         })->cursorPaginate(10);
-        return view('proposals.employer-proposals', compact('proposals'));
+        return view('UserAuthScreens.proposals.employer-proposals', compact('proposals'));
     }
 
     public function proposals_for_freelancers() {
@@ -68,7 +68,7 @@ class ProjectProposalController extends Controller
         $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'pending')->with('employer', 'freelancer', 'project')->whereHas('project', function($query) {
             $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
         })->cursorPaginate(10);
-        return view('proposals.freelancer-proposals', compact('proposals'));
+        return view('UserAuthScreens.proposals.freelancer-proposals', compact('proposals'));
     }
 
 
@@ -86,7 +86,7 @@ class ProjectProposalController extends Controller
         $incoming_msg_id = $role == 'freelancer' ? $proposal->employer_id : $proposal->freelancer_id;
         $outgoing_msg_id = $role == 'freelancer' ? $proposal->freelancer_id : $proposal->employer_id;
         
-        return view('proposals.proposal-view', compact('proposal', 'receiver', 'incoming_msg_id', 'outgoing_msg_id'));
+        return view('UserAuthScreens.proposals.proposal-view', compact('proposal', 'receiver', 'incoming_msg_id', 'outgoing_msg_id'));
     }
 
     public function update_proposal_status(Request $request) {
@@ -136,7 +136,7 @@ class ProjectProposalController extends Controller
             ->cursorPaginate(10);
         }
 
-        return view('proposals.ongoing.ongoing-project', compact('ongoing_projects'));
+        return view('UserAuthScreens.proposals.ongoing.ongoing-project', compact('ongoing_projects'));
     }
 
     public function completed(Request $request) {
@@ -154,6 +154,6 @@ class ProjectProposalController extends Controller
             ->cursorPaginate(10);
         }
 
-        return view('proposals.completed.completed-project', compact('completed_projects'));
+        return view('UserAuthScreens.proposals.completed.completed-project', compact('completed_projects'));
     }
 }

@@ -172,7 +172,7 @@
                 </div>
             </div>
             <div class="col-md-8 col-sm-12">
-                @include('user.employer.employer-form', [$employer])
+                @include('UserAuthScreens.user.employer.employer-form', [$employer])
             </div>
         </div>
     </div>

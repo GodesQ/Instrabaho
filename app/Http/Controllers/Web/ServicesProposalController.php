@@ -26,6 +26,9 @@ class ServicesProposalController extends Controller
         }
 
         $buyer = Employer::where('user_id', session()->get('id'))->first();
+        if(!$buyer) {
+            return back()->with('fail', "Sorry. Please create first an employer's account before sending a service proposal.");
+        }
         
         $save = ServicesProposal::create([
             'buyer_id' => $buyer->id,
@@ -71,17 +74,17 @@ class ServicesProposalController extends Controller
         ->where('isCancel', 0)
         ->with('service', 'employer')
         ->cursorPaginate(10);
-        return view('services_proposals.pending_services', compact('purchased_services'));
+        return view('UserAuthScreens.services_proposals.pending_services', compact('purchased_services'));
     }
 
     public function ongoing(Request $request) {
         $query = $request->input('query');
         $purchased_services = $this->fetchPurchasedServices('approved');
-        return view('services_proposals.ongoing_services', compact('purchased_services'));
+        return view('UserAuthScreens.services_proposals.ongoing_services', compact('purchased_services'));
     }
 
     public function approved() {
-        return view('services_proposals.approved_services');
+        return view('UserAuthScreens.services_proposals.approved_services');
     } 
 
     public function get_approved_services(Request $request) {
@@ -132,7 +135,7 @@ class ServicesProposalController extends Controller
     public function completed(Request $request) {
         $query = $request->input('query');
         $purchased_services = $this->fetchPurchasedServices('completed');
-        return view('services_proposals.completed_services', compact('purchased_services'));
+        return view('UserAuthScreens.services_proposals.completed_services', compact('purchased_services'));
     }
 
     public function fetchPurchasedServices($status) {
@@ -165,7 +168,7 @@ class ServicesProposalController extends Controller
         }
         $incoming_msg_id = session()->get('role') == 'freelancer' ? $purchased_service->buyer_id : $purchased_service->seller_id;
         $outgoing_msg_id = session()->get('role') == 'freelancer' ? $purchased_service->seller_id : $purchased_service->buyer_id;
-        return view('services_proposals.view_service', compact('purchased_service', 'incoming_msg_id', 'outgoing_msg_id', 'receiver'));
+        return view('UserAuthScreens.services_proposals.view_service', compact('purchased_service', 'incoming_msg_id', 'outgoing_msg_id', 'receiver'));
     }
     
 

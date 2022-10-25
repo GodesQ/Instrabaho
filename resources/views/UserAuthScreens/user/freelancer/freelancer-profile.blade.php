@@ -172,12 +172,12 @@
                 </div>
             </div>
             <div class="col-md-8 col-sm-12">
-                @include('user.freelancer.freelancer-form', [$freelancer])
-                @include('user.freelancer.skills-form', [$freelancer, $skills])
-                @include('user.freelancer.certificates-form', [$freelancer])
-                @include('user.freelancer.projects-form', [$freelancer])
-                @include('user.freelancer.experience-form', [$freelancer])
-                @include('user.freelancer.educations-form', [$freelancer])
+                @include('UserAuthScreens.user.freelancer.freelancer-form', [$freelancer])
+                @include('UserAuthScreens.user.freelancer.skills-form', [$freelancer, $skills])
+                @include('UserAuthScreens.user.freelancer.certificates-form', [$freelancer])
+                @include('UserAuthScreens.user.freelancer.projects-form', [$freelancer])
+                @include('UserAuthScreens.user.freelancer.experience-form', [$freelancer])
+                @include('UserAuthScreens.user.freelancer.educations-form', [$freelancer])
             </div>
         </div>
     </div>

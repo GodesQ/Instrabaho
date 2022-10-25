@@ -48,6 +48,11 @@ class SaveProjectController extends Controller
     public function freelancer_saved_projects() {
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
         $saved_projects = SaveProject::where('follower_id', $freelancer->id)->with('project')->cursorPaginate(10);
-        return view('saved_projects.saved_projects', compact('saved_projects'));
+        return view('UserAuthScreens.saved_projects.saved_projects', compact('saved_projects'));
+    }
+
+    public function destroy(Request $request) {
+        $delete = SaveProject::where('id', $request->id)->delete();
+        if($delete) return back()->with('success', 'Unsaved Project Successfully');
     }
 }

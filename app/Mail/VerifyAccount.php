@@ -29,6 +29,6 @@ class VerifyAccount extends Mailable
      */
     public function build()
     {
-        return $this->subject('Welcome to INSTRABAHO APP! Please verify your Email Address!')->view('emails.user-verification', ['details' => $this->details]);
+        return $this->subject('Welcome to INSTRABAHO APP! Please verify your Email Address!')->view('AllScreens.emails.user-verification', ['details' => $this->details]);
     }
 }

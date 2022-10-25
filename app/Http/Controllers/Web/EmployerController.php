@@ -14,7 +14,7 @@ class EmployerController extends Controller
 {
     public function employer_role_form() {
         $id = session()->get('id');
-        return view('misc.employer-form', compact('id'));
+        return view('AllScreens.misc.employer-form', compact('id'));
     }
 
     public function save_employer_role_form(Request $request) {
@@ -39,6 +39,6 @@ class EmployerController extends Controller
         if($freelancer) {
             $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $freelancer->id)->exists();
         }
-        return view('user.employer.view-employer', compact('employer', 'featured_projects', 'follow_employer'));
+        return view('UserAuthScreens.user.employer.view-employer', compact('employer', 'featured_projects', 'follow_employer'));
     }
 }

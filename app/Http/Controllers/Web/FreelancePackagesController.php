@@ -13,6 +13,6 @@ class FreelancePackagesController extends Controller
     //
     public function freelance_packages() {
         $packages = FreelancePackage::all();
-        return view('packages.freelancer-package', compact('packages'));
+        return view('CustomerScreens.packages.freelancer-package', compact('packages'));
     }
 }

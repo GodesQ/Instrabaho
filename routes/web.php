@@ -99,6 +99,7 @@ Route::middleware([WebAuth::class])->group( function () {
     Route::get('/package_checkout', [PackageCheckoutController::class, 'package_checkout'])->name('package_checkout');
     Route::post('/store_package_checkout', [PackageCheckoutController::class, 'store_package_checkout'])->name('store_package_checkout');
 
+    /* ---------------------------------------- FREELANCER ACCESS ---------------------------------------------- */
     Route::middleware(['freelancer.access'])->group(function () {
         Route::get('/addons', [AddonsController::class, 'index'])->name('index');
         Route::get('/create_addon', [AddonsController::class, 'create'])->name('create_addon');
@@ -116,10 +117,14 @@ Route::middleware([WebAuth::class])->group( function () {
         Route::get('/destroy_service', [ServicesController::class, 'destroy'])->name('destroy_service');
 
         Route::get('saved_projects/freelancers', [SaveProjectController::class, 'freelancer_saved_projects'])->name('freelancer_saved_projects');
+        Route::delete('saved_projects/delete/{id}', [SaveProjectController::class, 'destroy'])->name('saved_project.destroy');
         Route::get('/followed_employer', [FollowEmployerController::class, 'followed_employer'])->name('followed_employer');
         Route::get('/proposal_lists/freelancer', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('proposals_for_freelancers');
     });
+    /* ---------------------------------------- END FREELANCER ACCESS ---------------------------------------------- */
 
+
+    /* ---------------------------------------- EMPLOYER ACCESS ---------------------------------------------- */
     Route::middleware(['employer.access'])->group(function () {
         Route::get('/projects', [ProjectsController::class, 'index'])->name('index');
         Route::get('/create_project', [ProjectsController::class, 'create'])->name('create_project')->middleware('plan.expiration');
@@ -132,6 +137,7 @@ Route::middleware([WebAuth::class])->group( function () {
         Route::get('/followed_freelancer', [FollowFreelancerController::class, 'followed_freelancer'])->name('followed_freelancer');
         Route::get('/proposal_lists/employer', [ProjectProposalController::class, 'proposals_for_employers'])->name('proposals_for_employers');
     });
+    /* ---------------------------------------- END EMPLOYER ACCESS ---------------------------------------------- */
 
     Route::post('/submit_proposal', [ServicesProposalController::class, 'submit_proposal'])->name('submit_proposal');
     Route::post('/purchased_service/change_status', [ServicesProposalController::class, 'change_status'])->name('change_status');

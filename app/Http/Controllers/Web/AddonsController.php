@@ -15,11 +15,11 @@ class AddonsController extends Controller
         $user_id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $user_id)->first();
         $addons = Addon::where('user_role_id', $freelancer->id)->latest('id')->cursorPaginate(8);
-        return view('addons.addons', compact('addons'));
+        return view('UserAuthScreens.addons.addons', compact('addons'));
     }
  
     public function create() {
-        return view('addons.create-addon');
+        return view('UserAuthScreens.addons.create-addon');
     }
 
     public function store(Request $request) {
@@ -46,7 +46,7 @@ class AddonsController extends Controller
     public function edit(Request $request) {
         $id = $request->id;
         $addon = Addon::where('id', $request->id)->first();
-       return view('addons.edit-addon', compact('addon'));
+       return view('UserAuthScreens.addons.edit-addon', compact('addon'));
     }
 
     public function update(Request $request) {
