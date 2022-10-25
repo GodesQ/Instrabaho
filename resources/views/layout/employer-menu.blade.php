@@ -37,7 +37,6 @@
                     </li>
                     <li><a class="menu-item" href="" data-i18n="Canceled Projects">Canceled Projects</a>
                     </li>
-                    
                 </ul>
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Services">Services</span></a>
@@ -63,6 +62,7 @@
                 <a href="/followed_freelancer"><i class="feather icon-heart"></i>
                     <span class="menu-title" data-i18n="Followed Freelancers">Followed Freelancers</span>
                 </a>
+                
             </li>
             <li  class="{{ Request::path() == 'user_fund' ? 'active' : '' }} nav-item">
                 <a href="/user_fund"><i class="feather icon-file"></i>

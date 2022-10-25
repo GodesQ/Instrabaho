@@ -27,7 +27,7 @@ use App\Models\Transaction;
 class TransactionsController extends Controller
 {
     public function transaction_messaage(Request $request) {
-        return view('misc.transaction-message');
+        return view('AllScreens.misc.transaction-message');
     }
 
     public function postback_transaction(Request $request) {
@@ -82,7 +82,7 @@ class TransactionsController extends Controller
                 'to_id' => $job->freelancer_id
             ];
         }
-        return view('checkout.pay-job', compact('job_data', 'user'));
+        return view('UserAuthScreens.checkout.pay-job', compact('job_data', 'user'));
     }
 
     public function check_status(Request $request) {
@@ -219,6 +219,6 @@ class TransactionsController extends Controller
     }
 
     public function paid_by_wallet_message(Request $request) {
-        return view('transaction_messages.success');
+        return view('AllScreens.transaction_messages.success');
     }
 }

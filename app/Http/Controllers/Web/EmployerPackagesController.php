@@ -11,6 +11,6 @@ class EmployerPackagesController extends Controller
 {
     public function employer_package() {
         $packages = EmployerPackage::all();
-        return view('packages.employer-package', compact('packages'));
+        return view('CustomerScreens.packages.employer-package', compact('packages'));
     }
 }

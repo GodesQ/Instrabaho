@@ -39,6 +39,6 @@ class FollowEmployerController extends Controller
     public function followed_employer() {
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
         $followed_employers =  EmployerFollower::where('follower_id', $freelancer->id)->with('employer')->cursorPaginate(10);
-        return view('followed_employers.followed_employers', compact('followed_employers'));
+        return view('UserAuthScreens.followed_employers.followed_employers', compact('followed_employers'));
     }
 }

@@ -24,7 +24,7 @@ class UserFundsController extends Controller
         // dd(session()->get('id'));
         $transactions = Transaction::where('from_id', session()->get('id'))->orWhere('to_id', session()->get('id'))->cursorPaginate(10);
         // dd($transactions);
-        return view('funds.funds', compact('user', 'transactions'));
+        return view('UserAuthScreens.funds.funds', compact('user', 'transactions'));
     }
 
     public function deposit(Request $request) {

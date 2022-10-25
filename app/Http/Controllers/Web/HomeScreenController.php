@@ -70,13 +70,13 @@ class HomeScreenController extends Controller
             'type' => $type,
         ];
         
-        return view('home_screens.service-search', compact('services', 'service_categories', 'queries'));
+        return view('CustomerScreens.home_screens.service-search', compact('services', 'service_categories', 'queries'));
     }
 
     public function service(Request $request) {
         $service = Service::where('id', $request->id)->with('category', 'freelancer')->first();
         $addons = Addon::where('user_role_id', $service->freelancer_id)->limit(5)->get();
-        return view('home_screens.service', compact('service', 'addons'));
+        return view('CustomerScreens.home_screens.service', compact('service', 'addons'));
     }
 
     public function projects(Request $request) {
@@ -134,7 +134,7 @@ class HomeScreenController extends Controller
             'type' => $type,
         ];
         
-        return view('home_screens.project-search', compact('projects', 'service_categories', 'queries'));
+        return view('CustomerScreens.home_screens.project-search', compact('projects', 'service_categories', 'queries'));
     }
 
     public function project(Request $request) {
@@ -144,7 +144,7 @@ class HomeScreenController extends Controller
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
         $save_project = SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first();
         $skills_array = Skill::whereIn('id', json_decode($project->skills))->get();
-        return view('home_screens.project', compact('project', 'save_project'));
+        return view('CustomerScreens.home_screens.project', compact('project', 'save_project'));
     }
 
     public function freelancers(Request $request) {
@@ -202,6 +202,6 @@ class HomeScreenController extends Controller
             'freelance_type' => $freelance_type,
         ];
         
-        return view('home_screens.freelancer-search', compact('freelancers', 'skills', 'queries'));
+        return view('CustomerScreens.home_screens.freelancer-search', compact('freelancers', 'skills', 'queries'));
     }
 }

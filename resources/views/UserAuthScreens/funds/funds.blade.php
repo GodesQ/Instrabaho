@@ -210,7 +210,7 @@
                         </div>
                     </div>
                 @else
-                    @include('funds.create_wallet')
+                    @include('UserAuthScreens.funds.create_wallet')
                 @endif
             </div>
         </div>

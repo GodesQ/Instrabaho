@@ -31,6 +31,6 @@ class ForgotPasswordMail extends Mailable
     {
         $token = $this->token;
         $email = $this->email;
-        return $this->subject('Forgot Password')->view('/emails.forgot-password', compact('token', 'email'));
+        return $this->subject('Forgot Password')->view('AllScreens.emails.forgot-password', compact('token', 'email'));
     }
 }

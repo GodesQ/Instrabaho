@@ -1,6 +1,15 @@
 @extends('layout.user-layout')
 
 @section('content')
+
+@if(Session::get('success'))
+    @push('scripts')
+        <script>
+            toastr.success('{{ Session::get("success") }}', 'Success');
+        </script>
+    @endpush
+@endif
+
 <div class="page-wrapper">
     <div class="page-content">
         <div class="container-fluid">
@@ -9,10 +18,10 @@
                     <div class="col-xl-3 col-md-6 col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div class="card-title">{{ $saved_project->project->title }}</div>
-                                    <div>
-                                        <h4>₱ {{ number_format($saved_project->project->cost, 2) }}</h4>
+                                <div class="row">
+                                    <div class="card-title col-md-7">{{ $saved_project->project->title }}</div>
+                                    <div class="col-md-5">
+                                        <h4 class="text-right">₱ {{ number_format($saved_project->project->cost, 2) }}</h4>
                                         <div class="text-right">({{ $saved_project->project->project_cost_type }})</div>
                                     </div>
                                 </div>
@@ -25,9 +34,13 @@
                                     @endforeach
                                 </div>
                                 <div style="font-size: 12px; color: gray;" class="my-1">{!! substr($saved_project->project->description, 0, 150) . '...' !!}</div>
-                                <div class="text-right">
+                                <div class="d-flex justify-content-end" style="gap: 10px;">
                                     <a href="/project/{{ $saved_project->project->id }}#fr-bid-form" class="btn btn-sm btn-primary p-50">Send Proposal</a>
-                                    <button class="btn btn-sm btn-danger p-50">Remove</button>
+                                    <form action="{{ route('saved_project.destroy', $saved_project->id)}}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-sm btn-danger p-50"><i class="feather icon-x"></i> Unsaved</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -48,3 +61,4 @@
     </div>
 </div>
 @endsection
+

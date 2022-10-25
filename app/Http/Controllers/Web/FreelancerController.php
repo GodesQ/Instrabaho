@@ -13,7 +13,7 @@ class FreelancerController extends Controller
 {
     public function freelancer_role_form() {
         $id = session()->get('id');
-        return view('misc.freelancer-form', compact('id'));
+        return view('AllScreens.misc.freelancer-form', compact('id'));
     }
 
     public function save_freelancer_role_form(Request $request) {
@@ -44,6 +44,6 @@ class FreelancerController extends Controller
         if($employer){
             $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $employer->id)->exists();
         }
-        return view('user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
+        return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
     }
 }

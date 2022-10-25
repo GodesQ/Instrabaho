@@ -27,14 +27,14 @@ class UserController extends Controller
         $employer = Employer::where('user_id', $id)->with('package_checkout')->first();
 
         if($this->checkAccountIfExist($freelancer, $employer)) return $this->checkAccountIfExist($freelancer, $employer);
-        if($role == 'freelancer')  return view('dashboards.freelancer', compact('freelancer'));
-        return view('dashboards.employer', compact('employer'));
+        if($role == 'freelancer')  return view('UserAuthScreens.dashboards.freelancer', compact('freelancer'));
+        return view('UserAuthScreens.dashboards.employer', compact('employer'));
     }
 
     public function user_image_form(Request $request) {
         $id = session()->get('id');
         $user = User::where('id', $id)->first();
-        return view('misc.user-image-form', compact('user'));
+        return view('AllScreens.misc.user-image-form', compact('user'));
     }
 
     public function checkAccountIfExist($freelancer, $employer) {
@@ -52,10 +52,10 @@ class UserController extends Controller
         if($role == 'freelancer') {
             $skills = Skill::all();
             $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations')->first(); 
-            return view('user.freelancer.freelancer-profile', compact('freelancer', 'skills'));
+            return view('UserAuthScreens.user.freelancer.freelancer-profile', compact('freelancer', 'skills'));
         } else {
             $employer = Employer::where('user_id', $id)->with('user')->first();
-            return view('user.employer.employer-profile', compact('employer'));
+            return view('UserAuthScreens.user.employer.employer-profile', compact('employer'));
         }
     }
 
