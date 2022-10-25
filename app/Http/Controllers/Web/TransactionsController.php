@@ -86,12 +86,13 @@ class TransactionsController extends Controller
     }
 
     public function check_status(Request $request) {
-        $freelancers = ServicesProposal::select('seller_id', DB::raw('COUNT(seller_id) AS occurrences'))
+        $freelancers = ProjectProposal::select('freelancer_id', DB::raw('COUNT(freelancer_id) AS occurrences'))
         ->groupBy('seller_id')
         ->where('status', 'completed')
         ->orderBy('occurrences', 'DESC')
         ->limit(10)
         ->get();
+        dd($freelancers);
     }
 
     public function pay_job(Request $request) {
