@@ -11,6 +11,7 @@ use App\Models\Employer;
 use App\Models\SaveProject;
 use App\Models\Addon;
 use App\Models\Project;
+use App\Models\ProjectProposal;
 use App\Models\Skill;
 use App\Models\ServiceCategory;
 use DB;
@@ -19,7 +20,18 @@ use Illuminate\Support\Facades\Schema;
 
 class HomeScreenController extends Controller
 {
-    //
+    
+    public function index() {
+        $freelancers = ProjectProposal::select('freelancer_id', DB::raw('COUNT(freelancer_id) AS occurrences'))
+        ->groupBy('freelancer_id')
+        ->where('status', 'completed')
+        ->orderBy('occurrences', 'DESC')
+        ->limit(10)
+        ->with('freelancer')
+        ->get();
+        return view('welcome', compact('freelancers'));
+    }
+
     public function services(Request $request) {
         $title = $request->input('title');
         $categories = $request->input('categories') ? $request->input('categories') : [];
@@ -203,5 +215,13 @@ class HomeScreenController extends Controller
         ];
         
         return view('CustomerScreens.home_screens.freelancer-search', compact('freelancers', 'skills', 'queries'));
+    }
+
+    public function contact_us() {
+        return view("CustomerScreens.contact-us");
+    }
+
+    public function the_process() {
+        return view('CustomerScreens.process');
     }
 }

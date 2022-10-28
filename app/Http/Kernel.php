@@ -56,6 +56,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'webauth' => \App\Http\Middleware\WebAuth::class,
+        'admin.access' => \App\Http\Middleware\AdminAuth::class,
         'employer.access' => \App\Http\Middleware\EmployerAccess::class,
         'freelancer.access' => \App\Http\Middleware\FreelancerAccess::class,
         'plan.expiration' => \App\Http\Middleware\PlanExpiration::class,

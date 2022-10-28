@@ -31,9 +31,7 @@
                     </li>
                     <li class="{{  Request::path() == 'projects' ? 'active' : ''  }}"><a class="menu-item" href="/projects" data-i18n="Active Projects">Active Projects</a>
                     </li>
-                    <li class="{{  Request::path() == 'project_proposals/ongoing' ? 'active' : ''  }}"><a class="menu-item" href="/project_proposals/ongoing" data-i18n="Ongoing Projects">Ongoing Projects</a>
-                    </li>
-                    <li  class="{{  Request::path() == 'project_proposals/completed' ? 'active' : ''  }}"><a class="menu-item" href="/project_proposals/completed" data-i18n="Completed Projects">Completed Projects</a>
+                    <li class="{{  Request::path() == 'project_proposals/approved' ? 'active' : ''  }}"><a class="menu-item" href="/project_proposals/approved" data-i18n="Approved Projects">Approved Projects</a>
                     </li>
                     <li><a class="menu-item" href="" data-i18n="Canceled Projects">Canceled Projects</a>
                     </li>

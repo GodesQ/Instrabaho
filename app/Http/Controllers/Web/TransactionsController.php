@@ -87,10 +87,11 @@ class TransactionsController extends Controller
 
     public function check_status(Request $request) {
         $freelancers = ProjectProposal::select('freelancer_id', DB::raw('COUNT(freelancer_id) AS occurrences'))
-        ->groupBy('seller_id')
+        ->groupBy('freelancer_id')
         ->where('status', 'completed')
         ->orderBy('occurrences', 'DESC')
         ->limit(10)
+        ->with('freelancer')
         ->get();
         dd($freelancers);
     }
@@ -119,11 +120,13 @@ class TransactionsController extends Controller
         if($request->job_type == 'service') {
             $services_proposal = ServicesProposal::where('id', $request->job_id)->with('service')->first();
             if(!$services_proposal) return back()->with('fail', "Service doesn't exists");
+            if($services_proposal->status == 'completed') return back()->with('fail', "This Job is already completed.");
         }
 
         if($request->job_type == 'project') {
             $project_proposal = ProjectProposal::where('id', $request->job_id)->with('project')->first();
             if(!$project_proposal) return back()->with('fail', "Project doesn't exists");
+            if($project_proposal->status == 'completed') return back()->with('fail', "This Job is already completed.");
         }
 
         // check if the employer wallet exist

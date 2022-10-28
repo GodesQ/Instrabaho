@@ -10,4 +10,8 @@ class Addon extends Model
     use HasFactory;
     protected $table = 'addons';
     protected $guarded = [];
+
+    public function freelancer() {
+        return $this->belongsTo(Freelancer::class, 'user_role_id', 'id');
+    }
 }

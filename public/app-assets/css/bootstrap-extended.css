@@ -157,7 +157,8 @@ pre {
   border: 1px solid #e3ebf3; }
 
 .table th, .table td {
-  border-bottom: 1px solid #e3ebf3; }
+  border-bottom: 1px solid #fff; 
+}
 
 .table-bordered {
   border: 1px solid #e3ebf3; }
@@ -174,7 +175,7 @@ pre {
   border-left: none; }
 
 .table th, .table td {
-  padding: 0.75rem 2rem; }
+  padding: 0.50rem 1rem; }
 
 .table.table-xl th, .table.table-xl td {
   padding: 1.25rem 2rem; }
@@ -855,7 +856,7 @@ html [type="button"],
 .navbar-semi-dark {
   background: #fff; }
   .navbar-semi-dark .navbar-header {
-    background: #000000; }
+    background: #070c26; }
     .navbar-semi-dark .navbar-header .brand-text {
       color: #fff; }
   .navbar-semi-dark .navbar-nav li {

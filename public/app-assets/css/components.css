@@ -353,7 +353,7 @@ footer.footer-dark {
           background-color: transparent; }
   .main-menu.menu-dark {
     color: #dcdcdc;
-    background: #000000; }
+    background: #070c26; }
     .main-menu.menu-dark .main-menu-header {
       padding: 20px; }
       .main-menu.menu-dark .main-menu-header .menu-search {
@@ -363,7 +363,7 @@ footer.footer-dark {
         .main-menu.menu-dark .main-menu-header .menu-search:focus {
           border-color: #232a38; }
     .main-menu.menu-dark .navigation {
-      background: #000000; }
+      background: #070c26; }
       .main-menu.menu-dark .navigation .navigation-header {
         color: #dcdcdc;
         padding: 24px 20px 8px 20px; }
@@ -464,9 +464,9 @@ footer.footer-dark {
             .main-menu.menu-dark .navigation > li ul .active .hover > a {
               background-color: transparent; }
         .main-menu.menu-dark .navigation > li > ul {
-          background: #000000; }
+          background: #070c26; }
     .main-menu.menu-dark ul.menu-popout {
-      background: #000000; }
+      background: #070c26; }
       .main-menu.menu-dark ul.menu-popout li a {
         color: #dcdcdc; }
         .main-menu.menu-dark ul.menu-popout li a span.menu-sub-title {

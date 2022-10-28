@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\SaveProject;
 use App\Models\Project;
@@ -54,5 +55,14 @@ class SaveProjectController extends Controller
     public function destroy(Request $request) {
         $delete = SaveProject::where('id', $request->id)->delete();
         if($delete) return back()->with('success', 'Unsaved Project Successfully');
+    }
+
+    public function admin_index(Request $request) {
+        $query = SaveProject::select('saved_projects.project_id', DB::raw('MAX(owner_id) as owner_id'),  DB::raw('MAX(follower_id) as follower_id'))
+                ->groupBy('project_id')
+                ->with('project', 'followers')
+                ->get();
+        $query = SaveProject::with('followers')->get();
+        dd($query);
     }
 }
