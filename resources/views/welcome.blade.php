@@ -163,200 +163,35 @@
                 </div>
              </div>
              <div class="row grid">
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/link-building.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html">Website link building and trafic generat....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">300.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="182"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/link-service.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="Generate Leads and Social Media Marketing">Generate Leads and Social Media Marketin....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">150.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="194"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/seo-1image.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="Looking to hire an digital marketing champ">Looking to hire an digital marketing cha....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">350.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="195"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/pile-3d-popular1-1.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/jason-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Voorhees Jason<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will share your post to a large social media audience">I will share your post to a large social....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">6.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="302"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/language1.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/jason-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Voorhees Jason<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will impeccably translate any content from English to French">I will impeccably translate any content ....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">10.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="305"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/programming1.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/jason-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Voorhees Jason<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will create a responsive WordPress website design">I will create a responsive WordPress web....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">980.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="307"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/social-link-img.png" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/lara-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Hannah Finn<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will build up your android and ios application in react native">I will build up your android and ios app....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">400.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="319"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/social1-icons.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/lara-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Hannah Finn<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will be your social media marketing manager and content creator">I will be your social media marketing ma....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">100.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="323"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-             </div>
-          </div>
+               @forelse($freelancers as $freelancer)
+                  <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
+                     <div class="fr-latest-grid">
+                        <div class="fr-latest-img d-flex justify-content-center">
+                           <img src="../../../images/user/profile/{{ $freelancer->freelancer->user->profile_image }}" class="rounded" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                        </div>
+                        <div class="fr-latest-details">
+                           <div class="fr-latest-content-service">
+                              <div class="fr-latest-profile">
+                                 <a class="user-image" href="/freelancer/{{ $freelancer->freelancer->user_id }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
+                                 <div class="fr-latest-profile-data">
+                                    <span class="fr-latest-name"><a href="/freelancer/{{ $freelancer->freelancer->user_id }}">{{ $freelancer->freelancer->display_name }}</a></span>
+                                 </div>
+                              </div>
+                              <p><a href="/freelancer/{{ $freelancer->freelancer->user_id }}">{!! substr($freelancer->freelancer->description, 0, 50) . '...' !!}</a></p>
+                              <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
+                           </div>
+                           <div class="fr-latest-bottom">
+                              <p>Starting From<span><span class="currency">₱</span><span class="price">{{ number_format($freelancer->freelancer->hourly_rate, 2) }}</span></span></p>
+                              <a href="/freelancer/{{ $freelancer->freelancer->user_id }}" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow Freelancer" data-post-id="182"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               @empty
+
+               @endforelse
+            </div>
+         </div>
        </div>
     </div>
  </section>

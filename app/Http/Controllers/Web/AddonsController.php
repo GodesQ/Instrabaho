@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Freelancer;
 use App\Models\Addon;
 
+use Yajra\DataTables\Facades\DataTables;
+
 class AddonsController extends Controller
 {
     //
@@ -30,9 +32,9 @@ class AddonsController extends Controller
         ]);
         $user_id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $user_id)->first();
-
+        
         $save = Addon::create([
-            'user_role_id' => $freelancer->id,
+            'user_role_id' => session()->get('role') == 'freelancer' ? $freelancer->id : $request->freelancer_id,
             'title' => $request->title,
             'price' => $request->price,
             'description' => $request->description
@@ -68,5 +70,26 @@ class AddonsController extends Controller
                 'message' => 'Delete Successfully'
             ]);
         }
+    }
+
+    public function admin_index() {
+        return view('AdminScreens.addons.addons');
+    }
+
+    public function data_table(Request $request) {
+        abort_if(!$request->ajax(), 403);
+        $data = Addon::select('*')->with('freelancer');
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('freelancer', function($row) {
+                    return $row->freelancer->user->firstname . " " . $row->freelancer->user->lastname;
+                })
+                ->addColumn('action', function($row) {
+                    $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->toJson();
     }
 }

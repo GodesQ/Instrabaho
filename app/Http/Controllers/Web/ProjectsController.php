@@ -12,6 +12,8 @@ use App\Models\Employer;
 use App\Models\EmployerPackage;
 use Carbon\Carbon;
 
+use Yajra\DataTables\Facades\DataTables;
+
 class ProjectsController extends Controller
 {
 
@@ -29,7 +31,6 @@ class ProjectsController extends Controller
     }
 
     public function store(Request $request) {
-        
         //check if the current plan is exceed in limit
         if($this->checkAvailableProject($request->project_type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
         
@@ -209,5 +210,35 @@ class ProjectsController extends Controller
         }
 
         return false;
+    }
+
+    public function admin_index() {
+        return view("AdminScreens.projects.projects");
+    }
+
+    public function data_table(Request $request) {
+        abort_if(!$request->ajax(), 403);
+        $data = Project::select('*')->with('employer', 'category');
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('category', function($row) {
+                    return $row->category->name;
+                })
+                ->addColumn('type', function($row) {
+                    if($row->project_type == 'featured') {
+                        return '<div class="badge badge-success">'.$row->project_type.'</div>';
+                    }
+                    return '<div class="badge badge-secondary">'.$row->project_type.'</div>';
+                })
+                ->addColumn('employer', function($row) {
+                    return $row->employer->user->firstname . " " . $row->employer->user->lastname;
+                })
+                ->addColumn('action', function($row){     
+                    $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action', 'type'])
+                ->toJson();
     }
 }

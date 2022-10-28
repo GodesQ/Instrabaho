@@ -77,11 +77,11 @@ class ServicesProposalController extends Controller
         return view('UserAuthScreens.services_proposals.pending_services', compact('purchased_services'));
     }
 
-    public function ongoing(Request $request) {
-        $query = $request->input('query');
-        $purchased_services = $this->fetchPurchasedServices('approved');
-        return view('UserAuthScreens.services_proposals.ongoing_services', compact('purchased_services'));
-    }
+    // public function ongoing(Request $request) {
+    //     $query = $request->input('query');
+    //     $purchased_services = $this->fetchPurchasedServices('approved');
+    //     return view('UserAuthScreens.services_proposals.ongoing_services', compact('purchased_services'));
+    // }
 
     public function approved() {
         return view('UserAuthScreens.services_proposals.approved_services');
@@ -110,7 +110,6 @@ class ServicesProposalController extends Controller
                             return $row->freelancer->display_name;
                         }
                         return $row->employer->display_name;
-                        
                     })
                     ->addColumn('category', function($row){
                         return $row->service->category->name;
@@ -132,30 +131,30 @@ class ServicesProposalController extends Controller
         }
     }
 
-    public function completed(Request $request) {
-        $query = $request->input('query');
-        $purchased_services = $this->fetchPurchasedServices('completed');
-        return view('UserAuthScreens.services_proposals.completed_services', compact('purchased_services'));
-    }
+    // public function completed(Request $request) {
+    //     $query = $request->input('query');
+    //     $purchased_services = $this->fetchPurchasedServices('completed');
+    //     return view('UserAuthScreens.services_proposals.completed_services', compact('purchased_services'));
+    // }
 
-    public function fetchPurchasedServices($status) {
-        if(session()->get('role') == 'freelancer') {
-            $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-            $purchased_services = ServicesProposal::where('seller_id', $freelancer->id)
-            ->where('status', $status)
-            ->where('isCancel', 0)
-            ->with('service', 'employer')
-            ->cursorPaginate(10);
-        } else {
-            $employer = Employer::where('user_id', session()->get('id'))->first();
-            $purchased_services = ServicesProposal::where('buyer_id', $employer->id)
-            ->where('status', $status)
-            ->where('isCancel', 0)
-            ->with('service', 'employer')
-            ->cursorPaginate(10);
-        }
-        return $purchased_services;
-    }
+    // public function fetchPurchasedServices($status) {
+    //     if(session()->get('role') == 'freelancer') {
+    //         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
+    //         $purchased_services = ServicesProposal::where('seller_id', $freelancer->id)
+    //         ->where('status', $status)
+    //         ->where('isCancel', 0)
+    //         ->with('service', 'employer')
+    //         ->cursorPaginate(10);
+    //     } else {
+    //         $employer = Employer::where('user_id', session()->get('id'))->first();
+    //         $purchased_services = ServicesProposal::where('buyer_id', $employer->id)
+    //         ->where('status', $status)
+    //         ->where('isCancel', 0)
+    //         ->with('service', 'employer')
+    //         ->cursorPaginate(10);
+    //     }
+    //     return $purchased_services;
+    // }
 
     public function service_proposal_information(Request $request) {
         $purchased_service = ServicesProposal::where('id', $request->id)->with('freelancer', 'service', 'employer')->first();

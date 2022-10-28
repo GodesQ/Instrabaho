@@ -156,4 +156,57 @@ class ProjectProposalController extends Controller
 
         return view('UserAuthScreens.proposals.completed.completed-project', compact('completed_projects'));
     }
+
+    public function approved(Request $request) {
+        return view('UserAuthScreens.proposals.approved-proposals');
+    }
+
+    public function get_approved_proposals(Request $request) {
+        $today = date('Y-m-d');
+        if($request->ajax()) {
+            $role = session()->get('role');
+            $user_id = session()->get('id');
+            $user = $role == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
+            $data = ProjectProposal::where(function($query) use ($role, $user) {
+                if($role == 'freelancer') {
+                    $query->where('freelancer_id', $user->id);
+                } else{
+                    $query->where('employer_id', $user->id);
+                }
+            })->where('status', '!=', 'pending')
+            ->with('project', 'employer', 'freelancer')
+            ->whereHas('project', function ($query) use ($today) {
+                $query->where('expiration_date', '>', $today);
+            });
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('title', function($row){
+                    return $row->project->title;
+                })
+                ->addColumn('user', function($row){
+                    if(session()->get('role') == 'employer') {
+                        return $row->freelancer->display_name;
+                    }
+                    return $row->employer->display_name; 
+                })
+                ->addColumn('offer_price', function($row){
+                    return number_format($row->offer_price, 2);
+                })
+                ->addColumn('estimated_days', function($row){
+                    return $row->estimated_days . " Days";
+                })
+                ->addColumn('status', function($row){     
+                    $status = "<div class='badge badge-info'>$row->status</div>";
+                    return $status;
+                })
+                ->addColumn('action', function($row){     
+                    $btn = '<a href="/project_proposal_information/'. $row->id .'" class="edit btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                            <a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Cancel Service</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action', 'status'])
+                ->toJson();
+        }
+    }
 }

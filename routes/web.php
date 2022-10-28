@@ -28,15 +28,21 @@ use App\Http\Controllers\Web\ForgotPasswordController;
 use App\Http\Controllers\Web\ProjectChatController;
 use App\Http\Controllers\Web\UserFundsController;
 use App\Http\Controllers\Web\TransactionsController;
+use App\Http\Controllers\Web\SkillsController;
+use App\Http\Controllers\Web\ServiceCategoriesController;
 
+use App\Http\Controllers\Web\Admin\AdminAuthController;
+use App\Http\Controllers\Web\Admin\AdminController;
+use App\Http\Controllers\Web\Admin\UserPermissionController;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeScreenController::class, 'index']);
+
+Route::get('/contact-us', [HomeScreenController::class, 'contact_us']);
+Route::get('/the-process', [HomeScreenController::class, 'the_process']);
 
 Route::get('/search_services', [HomeScreenController::class, 'services']);
 Route::get('/search_projects', [HomeScreenController::class, 'projects']);
@@ -47,6 +53,7 @@ Route::get('/service/{id}', [HomeScreenController::class, 'service']);
 
 Route::get('/freelancer/{id}', [FreelancerController::class, 'view_profile'])->name('view_profile');
 Route::get('/employer/{id}', [EmployerController::class, 'view_profile'])->name('view_employer_profile');
+
 
 
 /*
@@ -165,10 +172,11 @@ Route::middleware([WebAuth::class])->group( function () {
     Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('store_proposal');
     Route::post('/update_proposal_status', [ProjectProposalController::class, 'update_proposal_status'])->name('update_proposal_status');
 
-    Route::get('/project_proposals/ongoing', [ProjectProposalController::class, 'ongoing'])->name('proposal_ongoing');
-    Route::get('/project_proposals/completed', [ProjectProposalController::class, 'completed'])->name('proposal_completed');
-
+    Route::get('/project_proposals/approved', [ProjectProposalController::class, 'approved'])->name('proposal_approved');
+    Route::get('/project_proposals/get_approved_proposals', [ProjectProposalController::class, 'get_approved_proposals'])->name('get_approved_proposals');
     Route::get('/project_proposal_information/{id}', [ProjectProposalController::class, 'project_proposal_information'])->name('project_proposal_information');
+
+    // Route::get('/invoices')
 
     Route::get('/project_get_chat/{id}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');
     Route::post('/send_project_chat', [ProjectChatController::class, 'send_project_chat'])->name('send_project_chat');
@@ -185,3 +193,53 @@ Route::middleware([WebAuth::class])->group( function () {
 
     Route::get('/transaction_details/paid_by_wallet', [TransactionsController::class, 'paid_by_wallet_message'])->name('transaction_paid_by_wallet');
 });
+
+/* ----------------------------------------- ADMIN ROUTES -------------------------------------------- */
+Route::get('/admin/login', [AdminAuthController::class, 'login'])->name('login.get');
+Route::post('/admin/login', [AdminAuthController::class, 'save_login'])->name('login.post');
+
+Route::middleware(['admin.access'])->group( function () {
+    Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('logout.get');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard'); 
+
+    Route::get('/admin/freelancer_packages', [FreelancePackagesController::class, 'index'])->name('admin.freelancer_packages');
+    Route::get('/admin/freelancer_packages/data_table', [FreelancePackagesController::class, 'data_table'])->name('admin.freelancer_packages.data_table');
+    Route::get('/admin/freelancer_packages/edit/{id}', [FreelancePackagesController::class, 'edit'])->name('admin.freelancer_packages.edit');
+    Route::put('/admin/freelancer_packages/update', [FreelancePackagesController::class, 'update'])->name('admin.freelancer_packages.update');
+    Route::get('/admin/freelancer_packages/create', [FreelancePackagesController::class, 'create'])->name('admin.freelancer_packages.create');
+    Route::post('/admin/freelancer_packages/store', [FreelancePackagesController::class, 'store'])->name('admin.freelancer_packages.store');
+
+    Route::get('/admin/employer_packages', [EmployerPackagesController::class, 'index'])->name('admin.employer_packages');
+    Route::get('/admin/employer_packages/data_table', [EmployerPackagesController::class, 'data_table'])->name('admin.employer_packages.data_table');
+    Route::get('/admin/employer_packages/edit/{id}', [EmployerPackagesController::class, 'edit'])->name('admin.employer_packages.edit');
+    Route::put('/admin/employer_packages/update', [EmployerPackagesController::class, 'update'])->name('admin.employer_packages.update');
+    Route::get('/admin/employer_packages/create', [EmployerPackagesController::class, 'create'])->name('admin.employer_packages.create');
+    Route::post('/admin/employer_packages/store', [EmployerPackagesController::class, 'store'])->name('admin.employer_packages.store');
+
+    Route::get('/admin/freelancers', [FreelancerController::class, 'index'])->name('admin.freelancers');
+    Route::get('/admin/freelancers/data_table', [FreelancerController::class, 'data_table'])->name('admin.freelancers.data_table');
+    Route::get('/admin/freelancers/edit', [FreelancerController::class, 'edit'])->name('admin.freelancers.edit');
+
+    Route::get('/admin/employers', [EmployerController::class, 'index'])->name('admin.employers');
+    Route::get('/admin/employers/data_table', [EmployerController::class, 'data_table'])->name('admin.employers.data_table');
+
+    Route::get('/admin/services', [ServicesController::class, 'admin_index'])->name('admin.services');
+    Route::get('/admin/services/data_table', [ServicesController::class, 'data_table'])->name('admin.services.data_table');
+
+    Route::get('/admin/addons', [AddonsController::class, 'admin_index'])->name('admin.addons');
+    Route::get('/admin/addons/data_table', [AddonsController::class, 'data_table'])->name('admin.addons.data_table');
+
+    Route::get('/admin/projects', [ProjectsController::class, 'admin_index'])->name('admin.projects');
+    Route::get('/admin/projects/data_table', [ProjectsController::class, 'data_table'])->name('admin.projects.data_table');
+
+    Route::get('/admin/skills', [SkillsController::class, 'index'])->name('admin.skills');
+    Route::get('/admin/skills/data_table', [SkillsController::class, 'data_table'])->name('admin.skills.data_table');
+
+    Route::get('/admin/service_categories', [ServiceCategoriesController::class, 'index'])->name('admin.service_categories');
+    Route::get('/admin/service_categories/data_table', [ServiceCategoriesController::class, 'data_table'])->name('admin.service_categories.data_table');
+
+    Route::get('/admin/saved_projects', [SaveProjectController::class, 'admin_index'])->name('admin.saved_projects');
+
+    Route::get('/admin/user_permission', [UserPermissionController::class, 'permission'])->name('user_permission');
+});
+/* ----------------------------------------- END ADMIN ROUTES -------------------------------------------- */

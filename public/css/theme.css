@@ -1749,12 +1749,13 @@ color: #777;
 }
 .fr-bg-style {
 	border-radius: 16px;
-	margin-top: -75px;
-	margin-left: 0;
-	margin-right: 0;
-	background-color: #fff;
-	box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.07);
-	padding: 26px 30px;
+    margin-top: -48px;
+    margin-left: 0;
+    margin-right: 0;
+    background-color: #fff;
+    box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.07);
+    padding: 26px 30px;
+    margin-bottom: -63px;
 }
 .fr-gt-details .fr-bg-style {
 	margin-top: -37px;
@@ -13925,7 +13926,7 @@ ins, mark {
 .add-section-padding
 {
 	padding: 0px 0px 130px 0px;
-	background-color: #F5F5F5;
+	background-color: transparent;
 }
 .fr-co-contents.add-position
 {
