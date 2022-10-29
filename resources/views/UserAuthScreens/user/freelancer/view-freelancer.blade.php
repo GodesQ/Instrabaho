@@ -137,7 +137,7 @@
 		                  <div class="heading-contents">
 		                     <h3>Description</h3>
 		                  </div>
-		                  {!! $freelancer->description !!}
+		                  {{ $freelancer->description }}
 		               </div>
 		            </div>
 		            <div class="main-box">

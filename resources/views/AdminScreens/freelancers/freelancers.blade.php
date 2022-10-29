@@ -83,6 +83,10 @@
 @push('scripts')
     <script>
         let table = $('.data-table').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print',
+            ],
             processing: true,
             pageLength: 25,
             responsive: true,

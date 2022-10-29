@@ -171,7 +171,7 @@
                                                     {{ $purchased_service->service->category->name }}
                                                 </h6>
                                                 <div style="font-size: 15px">
-                                                    {!! $purchased_service->service->description !!}
+                                                    {{ $purchased_service->service->description }}
                                                 </div>
                                             </div>
                                         </div>

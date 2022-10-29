@@ -72,7 +72,7 @@ class FreelancerController extends Controller
                 return date_format($row->created_at, "F d, Y");
             })
             ->addColumn('action', function($row){     
-                $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
+                $btn = '<a href="/admin/freelancers/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
                         <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
                 return $btn;
             })
@@ -81,6 +81,7 @@ class FreelancerController extends Controller
     }
 
     public function edit(Request $request) {
-        
+        $freelancer = Freelancer::where('id', $request->id)->with('user')->first();
+        return view('AdminScreens.freelancers.edit-freelancer', compact('freelancer'));
     }
 }

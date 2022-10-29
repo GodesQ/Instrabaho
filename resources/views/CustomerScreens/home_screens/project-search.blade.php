@@ -216,7 +216,7 @@
                                         </ul>
                                     </div>
                                     <div class="fr-right-index">
-                                        <p>{!! substr($project->description, 0, 200) . '...' !!}</p>
+                                        <p>{{ substr($project->description, 0, 200) . '...' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +255,7 @@
                    <div class="row">
                       <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12">
                          <div class="fl-navigation">
-                            {!! $projects->links() !!}
+                            {{ $projects->links() }}
                          </div>
                       </div>
                    </div>

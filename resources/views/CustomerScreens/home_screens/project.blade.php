@@ -82,7 +82,7 @@
                 <div class="fr-project-f-des mb-4">
                    <div class="fr-project-des">
                      <h3>Description</h3>
-                     {!! $project->description !!}
+                     {{ $project->description }}
                    </div>
                    <div class="fr-project-skills">
                       <h3> Skills Required</h3>

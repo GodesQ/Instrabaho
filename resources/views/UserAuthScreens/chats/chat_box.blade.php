@@ -71,7 +71,7 @@
                                 {{ $purchased_service->service->category->name }}
                             </h6>
                             <p style="font-size: 8px">
-                                {!! $purchased_service->service->description !!}
+                                {{ $purchased_service->service->description }}
                             </p>
                         </div>
                     </div>

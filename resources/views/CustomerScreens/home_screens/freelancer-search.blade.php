@@ -225,7 +225,7 @@
                                             <a href="#">
                                                 <h3>{{ $freelancer->tagline }}</h3>
                                             </a>
-                                            <p class="excerpt">{!! substr($freelancer->description, 0, 70) !!}...</p>
+                                            <p class="excerpt">{{ htmlentities(substr($freelancer->description, 0, 200)) }}...</p>
                                             <p class="price-tag"><span class="currency">₱ </span><span class="price">{{ number_format($freelancer->hourly_rate, 2) }}</span><span class="bottom-text"> / hr</span></p>
                                             <ul class="lists d-flex justify-content-between" style="gap: 10px;">
                                                 <li style="width: 25%;"> 
@@ -269,7 +269,7 @@
                         <div class="row">
                             <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12">
                                <div class="fl-navigation">
-                                  {!! $freelancers->links() !!}
+                                  {{ $freelancers->links() }}
                                </div>
                             </div>
                          </div>

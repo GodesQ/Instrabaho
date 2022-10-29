@@ -33,7 +33,7 @@
                                         <div class="badge badge-warning p-50 my-25">{{ $skill->skill_name }}</div>
                                     @endforeach
                                 </div>
-                                <div style="font-size: 12px; color: gray;" class="my-1">{!! substr($saved_project->project->description, 0, 150) . '...' !!}</div>
+                                <div style="font-size: 12px; color: gray;" class="my-1">{{ substr($saved_project->project->description, 0, 150) . '...' }}</div>
                                 <div class="d-flex justify-content-end" style="gap: 10px;">
                                     <a href="/project/{{ $saved_project->project->id }}#fr-bid-form" class="btn btn-sm btn-primary p-50">Send Proposal</a>
                                     <form action="{{ route('saved_project.destroy', $saved_project->id)}}" method="post">
@@ -56,7 +56,7 @@
                     </div>
                 @endforelse
             </div>
-            {!! $saved_projects->links() !!}
+            {{ $saved_projects->links() }}
         </div>
     </div>
 </div>

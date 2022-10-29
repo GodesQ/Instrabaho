@@ -128,7 +128,7 @@
                <div class="main-box-services" id="description">
                   <div class="fr-product-des-box heading-contents vector-bg">
                      <h3>Description </h3>
-                     {!! $service->description !!}
+                     {{ $service->description }}
                   </div>
                </div>
                <div class="fr-seller-servives-2" id="seller">
