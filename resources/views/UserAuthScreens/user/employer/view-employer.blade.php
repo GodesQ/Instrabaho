@@ -120,7 +120,7 @@
                 <div class="col-lg-8 col-xl-8 col-md-12 col-xs-12 col-sm-12">
                     <div class="fr-product-des-box heading-contents custom-class">
                         <h3>About Us</h3>
-                        {!! $employer->description !!}
+                        {{ $employer->description }}
                     </div>
                     <h6>Featured Projects</h6>
                     @forelse($featured_projects as $featured_project)
@@ -155,7 +155,7 @@
                                         </ul>
                                     </div>
                                     <div class="fr-right-index">
-                                        <div>{!! substr($featured_project->description, 0, 200) !!}...</div>
+                                        <div>{{ substr($featured_project->description, 0, 200) }}...</div>
                                     </div>
                                 </div>
                             </div>

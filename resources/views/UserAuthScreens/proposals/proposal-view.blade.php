@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="col-md-12 my-1">
                                         <div class="font-weight-bold">Freelancer Description</div>
-                                        <div>{!! $proposal->freelancer->description !!}</div>
+                                        <div>{{ $proposal->freelancer->description }}</div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="font-weight-bold">Member Since</div>

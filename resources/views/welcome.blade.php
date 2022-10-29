@@ -177,7 +177,7 @@
                                     <span class="fr-latest-name"><a href="/freelancer/{{ $freelancer->freelancer->user_id }}">{{ $freelancer->freelancer->display_name }}</a></span>
                                  </div>
                               </div>
-                              <p><a href="/freelancer/{{ $freelancer->freelancer->user_id }}">{!! substr($freelancer->freelancer->description, 0, 50) . '...' !!}</a></p>
+                              <p><a href="/freelancer/{{ $freelancer->freelancer->user_id }}">{{ substr($freelancer->freelancer->description, 0, 50) . '...' }}</a></p>
                               <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
                            </div>
                            <div class="fr-latest-bottom">

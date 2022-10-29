@@ -218,7 +218,8 @@ Route::middleware(['admin.access'])->group( function () {
 
     Route::get('/admin/freelancers', [FreelancerController::class, 'index'])->name('admin.freelancers');
     Route::get('/admin/freelancers/data_table', [FreelancerController::class, 'data_table'])->name('admin.freelancers.data_table');
-    Route::get('/admin/freelancers/edit', [FreelancerController::class, 'edit'])->name('admin.freelancers.edit');
+    Route::get('/admin/freelancers/edit/{id}', [FreelancerController::class, 'edit'])->name('admin.freelancers.edit');
+    Route::post('/admin/freelancers/update', [FreelancerController::class, 'update'])->name('admin.freelancers.update');
 
     Route::get('/admin/employers', [EmployerController::class, 'index'])->name('admin.employers');
     Route::get('/admin/employers/data_table', [EmployerController::class, 'data_table'])->name('admin.employers.data_table');
