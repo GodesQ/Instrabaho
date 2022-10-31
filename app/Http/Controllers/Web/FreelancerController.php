@@ -84,4 +84,38 @@ class FreelancerController extends Controller
         $freelancer = Freelancer::where('id', $request->id)->with('user')->first();
         return view('AdminScreens.freelancers.edit-freelancer', compact('freelancer'));
     }
-}
+
+    public function update(Request $request) {
+
+        $request->validate([
+            'id' => 'required',
+            'username' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'display_name' => 'required',
+            'tagline' => 'required',
+            'freelancer_type' => 'required|in:Individual,Group,Student',
+            'hourly_rate' => 'required|numeric',
+            'gender' => 'required|in:Male,Female',
+            'contactno' => 'required',
+            'description' => 'required',
+            'address' => 'required',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
+
+        $freelancer = Freelancer::where('id', $request->id)->first();
+
+        $update_user = $freelancer->user()->update([
+            'username' => $request->username,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'middlename' => $request->middlename
+        ]);
+
+        $freelancer_inputs = $request->except('id', 'username', 'lastname', 'middlename', 'firstname', 'email', '_token');
+        $update_freelancer = $freelancer->update($freelancer_inputs);
+
+        return back()->with('success', 'Data Information Update Successfully');
+    }
+} 

@@ -79,6 +79,7 @@
                             <option value="Male" {{ $freelancer->gender == 'Male' ? 'selected' : null }}>Male</option>
                             <option value="Female" {{ $freelancer->gender == 'Female' ? 'selected' : null }}>Female</option>
                         </select>
+                        <span class="text-danger">@error('gender'){{$message}}@enderror</span>
                     </div>
                 </div>
                 <div class="col-md-6">

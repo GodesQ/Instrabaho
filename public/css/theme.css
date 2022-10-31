@@ -50,11 +50,8 @@ p{
 	margin: 0;
 }
 .form-control {
-    background-color: #fff;
-    border: none;
-    height: 50px;
-    line-height: 30px;
-    color: #777;
+	background: #e8eef8 !important;
+	border: none !important;
 }
 textarea.form-control {
 	height:150px;

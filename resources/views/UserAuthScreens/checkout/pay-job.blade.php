@@ -95,8 +95,8 @@
                                     <div class="card-title">Summary</div>
                                     <div class="container-fluid">
                                         <div class="d-flex justify-content-between align-items-center font-weight-normal my-50">
-                                            <h5 class="font-weight-bold">Title :</h5>
-                                            <h4>{{ $job_data['title'] }}</h4>
+                                            <h5 style="width: 20%;" class="font-weight-bold">Title :</h5>
+                                            <h4 style="width: 80%;" class="text-right">{{ $job_data['title'] }}</h4>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center font-weight-normal my-50">
                                             <h5 class="font-weight-bold">Sub Total :</h5>

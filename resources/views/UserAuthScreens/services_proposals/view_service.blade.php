@@ -69,15 +69,9 @@
                 </div>
             </div>
             <div class="container-fluid my-2">
-                @if($purchased_service->status == 'compeleted')
-                    <button type="button" class="btn btn-secondary">Cancel Service</button>
-                    @if(session()->get('role') == 'employer')
-                        @if($purchased_service == 'approved')
-                            <button class="btn btn-secondary">Move to Next Status</button>
-                        @else
-                            <a href="/pay_job/service/{{ $purchased_service->id }}" class="btn btn-primary">Set to Complete & Pay Job</a>
-                        @endif
-                    @endif
+                <button type="button" class="btn btn-secondary">Cancel Service</button>
+                @if(session()->get('role') == 'employer')
+                    <a href="/pay_job/service/{{ $purchased_service->id }}" class="btn btn-primary">Pay Job & Set to Complete</a>
                 @endif
             </div>
         </div>
@@ -177,10 +171,10 @@
                                         </div>
                                         <div class="row my-2">
                                             <div class="col-lg-12">
-                                                <h5 class="font-weight-bold">Approval Details</h5>
+                                                <h5 class="font-weight-bold">Offer Details</h5>
                                                 <div class="my-1">
-                                                    <span class="text-primary">Message:</span>
-                                                    {{ $purchased_service->message }}
+                                                    <span class="text-primary">Message:</span> <br>
+                                                    @php echo nl2br($purchased_service->message) @endphp
                                                 </div>
                                                 <div class="my-1">
                                                     <span class="text-primary">Location:</span>

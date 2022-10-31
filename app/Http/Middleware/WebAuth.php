@@ -17,7 +17,7 @@ class WebAuth
     
     public function handle(Request $request, Closure $next)
     {   
-        abort_if(!session()->has(['id']) && !session()->has(['role']), 403);
+        abort_if(!session()->has(['id']) && !session()->has(['role']) && session()->get('role') == 'admin', 401);
         // if(!session()->has(['id']) && !session()->has(['role'])) {
         //     return redirect('/login')->with('fail', 'Login to Continue.');
         // }

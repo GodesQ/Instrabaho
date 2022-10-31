@@ -40,7 +40,9 @@
                     </li>
                     <li class="{{ Request::path() == 'services' ? 'active' : '' }}"><a class="menu-item" href="/services" data-i18n="Active Services">My Services</a>
                     </li>
-                    <li class="{{  Request::path() == 'project_proposals/approved' ? 'active' : ''  }}"><a class="menu-item" href="/project_proposals/approved" data-i18n="Approved Projects">Approved Projects</a>
+                    <li class="{{ Request::path() == 'services_offer/pending' ? 'active' : '' }}"><a class="menu-item" href="/services_offer/pending" data-i18n="Offers">Offers</a>
+                    </li>
+                    <li class="{{  Request::path() == 'services_offer/approved' ? 'active' : ''  }}"><a class="menu-item" href="/services_offer/approved" data-i18n="Approved Services">Approved Services</a>
                     </li>
                     <li><a class="menu-item" href="" data-i18n="Canceled Services">Canceled Services</a>
                     </li>

@@ -39,7 +39,10 @@
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Services">Services</span></a>
                 <ul class="menu-content">
-                    <li class="{{ Request::path() == 'purchased_service/approved' ? 'active' : '' }}"><a class="menu-item" href="/purchased_service/approved" data-i18n="Ongoing Services">Approved Services</a>
+                    <li class="{{ Request::path() == 'services_offer/pending' ? 'active' : '' }}">
+                        <a class="menu-item" href="/services_offer/pending" data-i18n="Ongoing Services">My Offers</a>
+                    </li>
+                    <li class="{{ Request::path() == 'services_offer/approved' ? 'active' : '' }}"><a class="menu-item" href="/services_offer/approved" data-i18n="Ongoing Services">Approved Services</a>
                     </li>
                     <li><a class="menu-item" href="" data-i18n="Canceled Services">Canceled Services</a>
                     </li>
