@@ -21,7 +21,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <div class="card-title">Pending Services</div>
+                        <div class="card-title">Offers</div>
                     </div>
                     <div class="card-content">
                         <div class="card-body table-responsive">
@@ -32,7 +32,7 @@
                                         <tr>
                                             <th></th>
                                             <th>Service</th>
-                                            <th>Buyer</th>
+                                            <th>{{ session()->get('role') == 'freelancer' ? 'Customer' : 'Freelancer' }}</th>
                                             <th>Service Category</th>
                                             <th>Cost</th>
                                             <th style="text-align:center;">Actions</th>
@@ -48,14 +48,22 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div>
+                                                    <div style="width: 80%;">
                                                         <h4 class="font-weight-bold">{{ $purchased_service->service->name }}</h4>
                                                         <p>{{ substr($purchased_service->message, 0, 10) . '...' }}</p>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="font-weight-bold">{{ $purchased_service->employer->user->firstname . ' ' . $purchased_service->employer->user->lastname }}</div>
-                                                    <span style="font-size: 12px;">{{ $purchased_service->employer->user->email }}</span>
+                                                    <div class="font-weight-bold">
+                                                        @if (session()->get('role') == 'freelancer')
+                                                            {{ $purchased_service->employer->user->firstname . ' ' . $purchased_service->employer->user->lastname }}
+                                                            <span style="font-size: 12px;">{{ $purchased_service->employer->user->email }}</span>
+                                                        @else
+                                                            {{ $purchased_service->freelancer->user->firstname . ' ' . $purchased_service->freelancer->user->lastname }}
+                                                            <span style="font-size: 12px;">{{ $purchased_service->freelancer->user->email }}</span>
+                                                        @endif
+                                                    </div>
+                                                        
                                                 </td>
                                                 <td> 
                                                     <div>{{ $purchased_service->service->category->name }}</div>
@@ -67,13 +75,15 @@
                                                 </td>
                                                 <td style="text-align: center;">
                                                     <a href="/service_proposal_information/{{ $purchased_service->id }}" class="btn btn-solid btn-outline-info"><i class="feather icon-eye"></i> View</a>
-                                                    <button type="button" id="{{ $purchased_service->id }}" class="btn btn-solid btn-outline-success approve-btn"><i class="fa fa-check"></i> Approve</button>
-                                                    <button type="button" id="{{ $purchased_service->id }}" class="btn btn-solid btn-outline-danger cancel-btn"><i class="feather icon-x"></i>Cancel</button>
+                                                    @if(session()->get('role') == 'freelancer')
+                                                        <button type="button" id="{{ $purchased_service->id }}" class="btn btn-solid btn-outline-success approve-btn"><i class="fa fa-check"></i> Approve</button>
+                                                    @endif    
+                                                        <button type="button" id="{{ $purchased_service->id }}" class="btn btn-solid btn-outline-danger cancel-btn"><i class="feather icon-x"></i>Cancel</button>
                                                 </td>
                                             </tr>
                                         @empty
                                             </tr>
-                                                <td style="display: flex; align-items: center;flex-direction:column; justify-content: center;" colspan="6">
+                                                <td colspan="7" style="display: flex; align-items: center;flex-direction:column; justify-content: center;" colspan="6">
                                                     <h3 class="mt-4">Sorry!! No Record Found</h3>
                                                     <img src="../../../images/nothing-found.png" alt="">
                                                 </td>

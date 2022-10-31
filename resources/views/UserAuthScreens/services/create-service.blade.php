@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="form-label font-weight-bold my-50">Address</div>
+                                        <div class="form-label font-weight-bold my-50">Location</div>
                                         <input type="text" name="location" id="map-search" class="form-control controls" value="">
                                     </div>
                                     <div class="col-md-12">

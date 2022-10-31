@@ -18,6 +18,23 @@
    @endpush
 @endif
 
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        @push('scripts')
+            <script>
+                toastr.error('{{ $error }}', 'Failed')
+            </script>
+        @endpush
+    @endforeach
+@endif
+
+<style>
+   #map-canvas {
+       height: 300px;
+       width: 100%;
+   }
+</style>
+
 <section class="fr-service-bar">
     <div class="container">
        <div class="row">
@@ -202,25 +219,35 @@
                                 <p>{{ $addon->description }}</p>
                                 </div>
                             </div>
-                        @endforeach
-                        <div class="container p-4">
+                        
+                        @empty
+                            <h6 class="text-center">No Active Addons</h6>
+                        @endforelse
+                        <hr>
+                        <div class="container-fluid p-4">
+                           <div class="">
+                              <h6>Send Offer</h6>
+                           </div>
                            <div class="form-group">
                               <label>Estimated Finish Date</label>
                               <input type="date" name="estimated_date" class="form-control" id="estimated_date">
                               <span class="danger text-danger">@error('estimated_date'){{ $message }}@enderror</span>
                            </div>
                            <div class="form-group">
-                              <label>Location <span style="font-size: 10px;">(Specific Address)</span></label>
-                              <input type="text" name="location" class="form-control" id="location">
-                              <span class="danger text-danger">@error('location'){{ $message }}@enderror</span>
+                              <label>Location <span style="font-size: 10px;">(You can drag the marker to get the specific location)</span></label>
+                              <input type="text" name="location" class="form-control" id="map-search">
+                              <span class="danger text-danger">@error('location'){{ $message }}@enderror</span><br>
+                              <div id="map-canvas"></div>
+                              <input type="hidden" name="latitude" value="" class="form-control latitude">
+                              <input type="hidden" name="longitude" value="" class="form-control longitude">
                            </div>
                            <div class="form-group">
-                              <label>Message</label>
+                              <label>Offer Message</label>
                               <textarea type="text" name="message" class="form-control" id="message"></textarea>
                               <span class="danger text-danger">@error('message'){{ $message }}@enderror</span>
                            </div>
                         </div>
-                        <button type="submit" class="btn btn-theme">Send Proposal</button>
+                        <button type="submit" class="btn btn-theme">Send Offer</button>
                      </form>
                   </div>
                   <div class="fl-advert-box">
@@ -231,4 +258,6 @@
          </div>
       </div>
    </section>
+   <script src="../../../js/user-location.js"></script>
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection

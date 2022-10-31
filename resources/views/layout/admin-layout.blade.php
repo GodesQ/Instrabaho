@@ -67,13 +67,22 @@
         .hide-profile-menu {
             display: none !important;
         }
-        .form-control {
-            border: 0.1 solid #260707 !important;
-        }
         button.dt-button {
             background: #000 !important;
             border-radius: 5px !important;
             color: white !important;
+        }
+        .form-control {
+            background: #e8eef8 !important;
+            border: none !important;
+            color: #000 !important;
+            font-weight: 500;
+        }
+        .form-control:focus {
+            border: 2px solid #04bbff !important;
+        }
+        .form-control:disabled {
+            background: #bfbfbf !important;
         }
     </style>
 

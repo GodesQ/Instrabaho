@@ -60,11 +60,15 @@ class UserController extends Controller
     }
 
     public function update_profile(Request $request) {
+        $request->validate([
+            'gender' => 'required|in:Male,Female',
+        ]);
         $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
         $user_model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
         $save = $user_model::where('user_id', $request->id)->update($data);
         return back()->with('success', 'Profile update successfully');
     }
+
 
     public function change_user_picture(Request $request) {
         $profile = User::where('id', $request->id)->first();

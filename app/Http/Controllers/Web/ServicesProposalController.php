@@ -9,7 +9,9 @@ use App\Models\Addon;
 use App\Models\ServicesProposal;
 use App\Models\Employer;
 use App\Models\Freelancer;
+
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 class ServicesProposalController extends Controller
 {   
@@ -17,7 +19,7 @@ class ServicesProposalController extends Controller
         $request->validate([
             'estimated_date' => 'required',
             'message' => 'required',
-            'location' => 'required'
+            'location' => 'required',
         ]);
 
         $service_addons_total = 0;
@@ -38,13 +40,15 @@ class ServicesProposalController extends Controller
             'estimated_date' => $request->estimated_date,
             'message' => $request->message,
             'location' => $request->location,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'sub_total' => $request->service_cost,
             'total' => $request->service_cost + $service_addons_total,
             'status' => 'pending',
             'isCancel' => false,
         ]);
 
-        return back()->with('success', 'Approval Sent Successfully');
+        return back()->with('success', 'Offer Sent Successfully');
     }   
     
     public function change_status(Request $request) {
@@ -66,13 +70,23 @@ class ServicesProposalController extends Controller
     }
 
     public function pending(Request $request) {
-        $query = $request->input('query');
-        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
+        $user_id = session()->get('id');
+        $role = session()->get('role');
+        $user = $role == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
         
-        $purchased_services = ServicesProposal::where('seller_id', $freelancer->id)
+        $purchased_services = ServicesProposal::where(function($query) use ($role, $user) {
+            if($role == 'freelancer') {
+                $query->where('seller_id', $user->id);
+            } else{
+                $query->where('buyer_id', $user->id);
+            }
+        })
         ->where('status', 'pending')
         ->where('isCancel', 0)
         ->with('service', 'employer')
+        ->whereHas('service', function($q) {
+            $q->where('expiration_date', '>=', Carbon::now());
+        })
         ->cursorPaginate(10);
         return view('UserAuthScreens.services_proposals.pending_services', compact('purchased_services'));
     }
@@ -92,15 +106,18 @@ class ServicesProposalController extends Controller
             $user_id = session()->get('id');
             $role = session()->get('role');
             $user = $role == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
-            $data = ServicesProposal::where('isCancel', 0)->where(function($query) use ($role, $user) {
+            
+            $approved_services = ServicesProposal::where('isCancel', 0)->where(function($query) use ($role, $user) {
                 if($role == 'freelancer') {
                     $query->where('seller_id', $user->id);
                 } else{
                     $query->where('buyer_id', $user->id);
                 }
-            })->where('status', '!=', 'pending')->with('service', 'employer', 'freelancer');
+            })->where('status', '!=', 'pending')->with('service', 'employer', 'freelancer')->whereHas('service', function($q) {
+                $q->where('expiration_date', '>=', Carbon::now());
+            });
 
-            return Datatables::of($data)
+            return Datatables::of($approved_services)
                     ->addIndexColumn()
                     ->addColumn('service', function($row){
                         return $row->service->name;

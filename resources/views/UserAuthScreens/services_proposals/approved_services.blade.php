@@ -80,7 +80,7 @@
     responsive: true,
     serverSide: true,
     ajax: {
-        url: '/purchased_service/get_approved_services',
+        url: '/services_offer/get_approved_services',
         data: function (d) {
             d.search = $('input[type="search"]').val()
         }

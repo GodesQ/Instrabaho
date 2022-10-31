@@ -121,7 +121,7 @@
                     </div>
                     <div class="listing-widgets">
                         <ul>
-                            @if($freelancer->package_checkout && !$freelancer->package_checkout->isExpired && $freelancer->package_date_expiration > date('Y-m-d'))
+                            @if($freelancer->package_checkout && $freelancer->package_date_expiration > date('Y-m-d'))
                                 <li class="my-1">
                                     <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Projects Allowed: <span style="color: #091a3b; font-weight: 600;">{{ $freelancer->package_checkout->freelance_package->total_projects }}</span></h4>
                                 </li>
