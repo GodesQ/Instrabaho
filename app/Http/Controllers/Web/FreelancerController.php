@@ -118,4 +118,11 @@ class FreelancerController extends Controller
 
         return back()->with('success', 'Data Information Update Successfully');
     }
+
+    public function search(Request $request) {
+        dd($request->all());
+        abort_if(!$request->ajax(), 403);
+
+        $query = $request->search;
+    }
 } 
