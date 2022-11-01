@@ -66,12 +66,48 @@ class EmployerController extends Controller
                     return date_format($row->created_at, "F d, Y");
                 })
                 ->addColumn('action', function($row){     
-                    $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
+                    $btn = '<a href="/admin/employers/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
                             <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'employer', 'member_since'])
                 ->toJson();
         }
+    }
+
+    public function edit(Request $request) {
+        $employer = Employer::where('id', $request->id)->with('user')->first();
+        return view('AdminScreens.employers.edit-employer', compact('employer'));
+    }
+
+    public function update(Request $request) {
+        $request->validate([
+            'id' => 'required',
+            'username' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'display_name' => 'required',
+            'tagline' => 'required',
+            'number_employees' => 'required|in:0,1-10,11-20,21-30,31-50',
+            'contactno' => 'required',
+            'description' => 'required',
+            'address' => 'required',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
+
+        $employer = Employer::where('id', $request->id)->first();
+
+        $update_user = $employer->user()->update([
+            'username' => $request->username,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'middlename' => $request->middlename
+        ]);
+
+        $employer_inputs = $request->except('id', 'username', 'lastname', 'middlename', 'firstname', 'email', '_token');
+        $update_employer = $employer->update($employer_inputs);
+
+        return back()->with('success', 'Data Information Update Successfully');
     }
 }

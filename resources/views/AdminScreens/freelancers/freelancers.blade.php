@@ -57,6 +57,9 @@
                     </div>
                 </div>
             </div>
+            <div class="my-1 text-right">
+                <a href="" class="btn btn-primary">Create Freelancer</a>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <table class="table table-borderless table-striped data-table">
@@ -85,7 +88,7 @@
         let table = $('.data-table').DataTable({
             dom: 'Bfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print',
+                'csv', 'excel', 'pdf', 'print',
             ],
             processing: true,
             pageLength: 25,

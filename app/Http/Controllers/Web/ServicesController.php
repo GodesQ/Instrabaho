@@ -217,11 +217,16 @@ class ServicesController extends Controller
                     return $row->freelancer->user->firstname . " " . $row->freelancer->user->lastname;
                 })
                 ->addColumn('action', function($row){     
-                    $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
+                    $btn = '<a href="/admin/services/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
                             <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'type'])
                 ->toJson();
+    }
+
+    public function admin_edit(Request $request) {
+        $service = Service::where('id', $request->id)->with('freelancer')->first();
+        return view('AdminScreens.services.edit-service', compact('service'));
     }
 }

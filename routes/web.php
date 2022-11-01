@@ -221,9 +221,13 @@ Route::middleware(['throttle:global'])->group(function () {
 
         Route::get('/admin/employers', [EmployerController::class, 'index'])->name('admin.employers');
         Route::get('/admin/employers/data_table', [EmployerController::class, 'data_table'])->name('admin.employers.data_table');
+        Route::get('/admin/employers/edit/{id}', [EmployerController::class, 'edit'])->name('admin.employers.edit');
+        Route::put('/admin/employers/update', [EmployerController::class, 'update'])->name('admin.employers.update');
 
         Route::get('/admin/services', [ServicesController::class, 'admin_index'])->name('admin.services');
         Route::get('/admin/services/data_table', [ServicesController::class, 'data_table'])->name('admin.services.data_table');
+        Route::get('/admin/services/edit/{id}', [ServicesController::class, 'admin_edit'])->name('admin.services.edit');
+        Route::put('/admin/services/update', [ServicesController::class, 'update'])->name('admin.services.update');
 
         Route::get('/admin/addons', [AddonsController::class, 'admin_index'])->name('admin.addons');
         Route::get('/admin/addons/data_table', [AddonsController::class, 'data_table'])->name('admin.addons.data_table');

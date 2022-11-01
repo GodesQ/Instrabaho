@@ -76,7 +76,7 @@
                         <div class="form-label font-weight-bold my-50">Number of Employees</div>
                         <select name="number_employees" id="" class="custom-select form-control">
                             <option value="">Select number of employees</option>
-                            <opt value="0" {{ $employer->number_employees == '0' ? 'selected' : null }}>0 Employee</option>
+                            <option value="0" {{ $employer->number_employees == '0' ? 'selected' : null }}>0 Employee</option>
                             <option value="1-10" {{ $employer->number_employees == '1-10' ? 'selected' : null }}>1 - 10 Employees</option>
                             <option value="11-20" {{ $employer->number_employees == '11-20' ? 'selected' : null }}>11 - 20 Employees</option>
                             <option value="21-30" {{ $employer->number_employees == '21-30' ? 'selected' : null }}>21 - 30 Employees</option>
