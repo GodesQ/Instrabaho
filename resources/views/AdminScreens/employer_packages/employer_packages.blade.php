@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-borderedless data-table">
+                        <table class="table table-borderless table-striped data-table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
