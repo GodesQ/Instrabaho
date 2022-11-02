@@ -1,6 +1,25 @@
 @extends('layout.admin-layout')
 
 @section('content')
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        @push('scripts')
+            <script>
+                toastr.error('{{ $error }}', 'Error')
+            </script>
+        @endpush
+    @endforeach
+@endif
+
+@if (Session::get('success'))
+    @push('scripts')
+        <script>
+            toastr.success('{{ Session::get("success") }}', 'Success')
+        </script>
+    @endpush
+@endif
+
 <div class="page-wrapper">
     <div class="page-content">
         <div class="container-fluid">
@@ -16,6 +35,13 @@
                             </tr>
                         </thead>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    @include('AdminScreens.service_categories.edit-categories')
                 </div>
             </div>
         </div>
@@ -58,5 +84,16 @@
             },
         ],
     });
+
+    function getCategory(id) {
+        $.ajax({
+            url: `/admin/service_categories/edit?id=${id}`,
+            method: 'GET',
+            success: function(response) {
+                $('#category_name').val(response.name);
+                $('#category_id').val(response.id);
+            }
+        })
+    }
 </script>
 @endpush

@@ -23,12 +23,30 @@ class ServiceCategoriesController extends Controller
                     return date_format($row->created_at, 'F d, Y');
                 })
                 ->addColumn('action', function($row) {
-                    $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn = '<button onclick="getCategory('.$row->id.')" class="edit datatable-btn datatable-btn-edit" data-toggle="modal" data-target="#inlineForm"><i class="fa fa-edit"></i></button>
+                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->toJson();
     }
-    
+
+    public function edit(Request $request) {
+        $category = ServiceCategory::where('id', $request->id)->first();
+        return response()->json($category);
+    }
+
+    public function update(Request $request) {
+        $request->validate([
+            'id' => 'required|exists:services_categories,id',
+            'category_name' => 'required|alpha'
+        ]);
+
+        ServiceCategory::where('id', $request->id)->update([
+            'name' => $request->category_name
+        ]);
+
+        return back()->with('success', 'Category Update Successfully');
+    }
+
 }

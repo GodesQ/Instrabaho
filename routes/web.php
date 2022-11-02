@@ -236,6 +236,8 @@ use App\Http\Controllers\Web\Admin\UserPermissionController;
 
         Route::get('/admin/service_categories', [ServiceCategoriesController::class, 'index'])->name('admin.service_categories');
         Route::get('/admin/service_categories/data_table', [ServiceCategoriesController::class, 'data_table'])->name('admin.service_categories.data_table');
+        Route::get('/admin/service_categories/edit', [ServiceCategoriesController::class, 'edit'])->name('admin.service_categories.edit');
+        Route::post('/admin/service_categories/update', [ServiceCategoriesController::class, 'update'])->name('admin.service_categories.update');
 
         Route::get('/admin/saved_projects', [SaveProjectController::class, 'admin_index'])->name('admin.saved_projects');
 
