@@ -33,7 +33,7 @@ class ProjectsController extends Controller
     public function store(Request $request) {
         //check if the current plan is exceed in limit
         if($this->checkAvailableProject($request->project_type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
-        
+
         $request->validate([
             'title' => 'required',
             'category_id' => 'required',
@@ -47,7 +47,7 @@ class ProjectsController extends Controller
             'location' => 'required',
             'project_type' => 'required',
         ]);
-        
+
         $images = array();
         foreach ($request->file('attachments') as $key => $attachment) {
             $image_name = $attachment->getClientOriginalName();
@@ -58,7 +58,7 @@ class ProjectsController extends Controller
         $json_images = json_encode($images);
         $user_id = session()->get('id');
         $employer = Employer::where('user_id', $user_id)->first();
-        
+
         $create = Project::create([
             'employer_id' => $employer->id,
             'title' => $request->title,
@@ -93,24 +93,26 @@ class ProjectsController extends Controller
     }
 
     public function update(Request $request) {
-
         $request->validate([
+            'id' => 'required|exists:projects,id',
+            'employer' => 'required',
             'title' => 'required',
             'category_id' => 'required',
             'description' => 'required',
             'project_level' => 'required',
             'project_cost_type' => 'required',
-            'cost' => 'required',
-            'project_duration' => 'required',
-            'freelancer_type' => 'required',
-            'english_level' => 'required',
+            'cost' => 'required|numeric',
+            'project_duration' => 'required|in:1-3 Weeks,1-5 Days,Long Term,Short Term,1-2 Months',
+            'freelancer_type' => 'required|in:Company,Group,Individual,Student',
+            'english_level' => 'required|in:Basic,Bilingual,Fluent,Professional',
             'location' => 'required',
-            'project_type' => 'required',
+            'project_type' => 'required|in:simple,featured',
+            'skills' => 'required'
         ]);
 
         $project = Project::where('id', $request->id)->first();
         $project_images = json_decode($project->attachments);
-        
+
         if($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $key => $attachment) {
                 $image_name = $attachment->getClientOriginalName();
@@ -122,6 +124,7 @@ class ProjectsController extends Controller
         $json_images = json_encode($project_images);
 
         $update = Project::where('id', $request->id)->update([
+            'employer_id' => $request->employer,
             'title' => $request->title,
             'category_id' => $request->category_id,
             'description' => $request->description,
@@ -150,16 +153,16 @@ class ProjectsController extends Controller
         $project_images = json_decode($project->attachments);
 
         if(count($project_images) < 2) return response()->json(['status' => 424, 'message' => 'Fail! You only have one image. Keep this image for reference']);
-        
+
         // Search image in array
         $found_image = array_search($project_images[$key_id], $project_images);
-        
+
         if($found_image) {
             $image_path = public_path('/images/projects/') . $project_images[$key_id];
             $remove_image = @unlink($image_path);
             unset($project_images[$key_id]);
         }
-        
+
         $project->attachments = json_encode($project_images);
         $save = $project->save();
 
@@ -175,7 +178,7 @@ class ProjectsController extends Controller
         dd($request->all());
         $project = Project::where('id', $request->id)->first();
         $project_images = json_decode($project->attachments);
-        
+
         foreach ($project_images as $key => $image) {
             $image_path = public_path('/images/projects/') . $image;
             $remove_image = @unlink($image_path);
@@ -202,7 +205,7 @@ class ProjectsController extends Controller
         // Get the current created projects of user
         $current_user_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->count();
         $current_user_featured_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->where('project_type', 'featured')->count();
-        
+
         if($current_user_projects == $purchased_plan->total_projects) return true;
 
         if($type == 'featured') {
@@ -218,7 +221,7 @@ class ProjectsController extends Controller
 
     public function data_table(Request $request) {
         abort_if(!$request->ajax(), 403);
-        $data = Project::select('*')->with('employer', 'category');
+        $data = Project::select('*')->with('employer', 'category')->where('expiration_date', '>=', Carbon::now());
         return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('category', function($row) {
@@ -233,12 +236,20 @@ class ProjectsController extends Controller
                 ->addColumn('employer', function($row) {
                     return $row->employer->user->firstname . " " . $row->employer->user->lastname;
                 })
-                ->addColumn('action', function($row){     
-                    $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                ->addColumn('action', function($row){
+                    $btn = '<a href="/admin/projects/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'type'])
                 ->toJson();
+    }
+
+    public function admin_edit(Request $request) {
+        $project = Project::where('id', $request->id)->with('employer')->first();
+        $categories = ServiceCategory::all();
+        $skills = Skill::all();
+        $project_images = json_decode($project->attachments);
+        return view('AdminScreens.projects.edit-project', compact('project', 'categories', 'skills', 'project_images'));
     }
 }

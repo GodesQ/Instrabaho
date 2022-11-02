@@ -24,8 +24,10 @@ class SkillsController extends Controller
                 return date_format($row->created_at, 'F d, Y');
             })
             ->addColumn('action', function($row) {
-                $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                        <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                $btn = '<button onclick="getSkill('.$row->id.')" class="edit-skill-btn datatable-btn datatable-btn-edit" data-toggle="modal" data-target="#inlineForm">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -33,7 +35,21 @@ class SkillsController extends Controller
         }
     }
 
-    public function get_skill(Request $request) {
-        
+    public function edit(Request $request) {
+        $skill = Skill::where('id', $request->id)->first();
+        return response()->json($skill);
+    }
+
+    public function update(Request $request) {
+        $request->validate([
+            'id' => 'required|exists:skills,id',
+            'skill_name' => 'required|alpha'
+        ]);
+
+        Skill::where('id', $request->id)->update([
+            'skill_name' => $request->skill_name
+        ]);
+
+        return back()->with('success', 'Skill Update Successfully');
     }
 }

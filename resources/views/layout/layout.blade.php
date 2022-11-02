@@ -23,7 +23,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/leaflet.css') }}">
 		<!-- END: Vendor CSS-->
 
-		<!-- BEGIN: Theme CSS-->	
+		<!-- BEGIN: Theme CSS-->
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/bootstrap.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/bootstrap-extended.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/colors.css') }}">
@@ -83,7 +83,7 @@
 
         <!-- FONT-AWESOME CSS -->
         <link rel="stylesheet" href="{{ URL::asset('css/fontawesome1.css') }}" />
-		
+
         <!-- owl-carousel-css -->
         <link
             rel="stylesheet"
@@ -144,7 +144,7 @@
                             <li class="">
                                 <a href="/contact-us">Contact Us</a>
                             </li>
-                            @if(!Session::get('role') && !Session::get('id'))
+                            @if(!Session::get('role') && !Session::get('id') || Session::get('role') == 'admin')
                             <li li class="fr-list">
                                 <a
                                     href="/register"
@@ -208,7 +208,7 @@
                           <div class="col-xl-8 col-lg-8">
                             <div class="fr-gt-content">
                               <h3>Handa Ka Na Ba?</h3>
-                              <p>Join now in our trending community of blue-collar freelancers that lost their job in this time of the pandemic. Lets help our kapwa pinoy to survive in this time where everyone is struggling. 
+                              <p>Join now in our trending community of blue-collar freelancers that lost their job in this time of the pandemic. Lets help our kapwa pinoy to survive in this time where everyone is struggling.
                                     Tara na! Join naaaaa!</p>
                             </div>
                             </div>

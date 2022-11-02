@@ -9,6 +9,7 @@ use App\Models\Employer;
 use App\Models\Project;
 use App\Models\Freelancer;
 use App\Models\EmployerFollower;
+use DB;
 
 use Yajra\DataTables\Facades\DataTables;
 
@@ -57,15 +58,15 @@ class EmployerController extends Controller
                     if($row->user->profile_image) {
                        return $div = '<img class="avatar avatar-sm" src="../../../images/user/profile/' . $row->user->profile_image . '" />
                         '. $row->display_name .'';
-                    } 
-                   
+                    }
+
                     return $div = '<img class="avatar avatar-sm" src="../../../images/user-profile.png" />
                         '. $row->display_name .'';
                 })
                 ->addColumn('member_since', function($row) {
                     return date_format($row->created_at, "F d, Y");
                 })
-                ->addColumn('action', function($row){     
+                ->addColumn('action', function($row){
                     $btn = '<a href="/admin/employers/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
                             <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
@@ -109,5 +110,32 @@ class EmployerController extends Controller
         $update_employer = $employer->update($employer_inputs);
 
         return back()->with('success', 'Data Information Update Successfully');
+    }
+
+    public function search(Request $request) {
+        abort_if(!$request->ajax(), 403);
+        $query = $request->input('search');
+
+        if($request->type == 'display_name') {
+            $employers = Employer::where('display_name', 'like', '%'.$query.'%')->get();
+        }
+
+        if($request->type == 'full_name') {
+            $employers = Employer::with('user')->whereHas('user', function($q) use ($query) {
+                $q->where(DB::raw("concat(firstname, ' ', lastname)"), 'LIKE', "%".$query."%");
+            })->get();
+        }
+
+
+        $employers_collection = $employers->toArray();
+            $results = [];
+            foreach ($employers_collection as $key => $employer) {
+               $result = [
+                    'id' => $employer['id'],
+                    'text' => $request->type == 'display_name' ? $employer['display_name'] :  $employer['user']['firstname'] . " " . $employer['user']['lastname']
+               ];
+               array_push($results, $result);
+            }
+            return response()->json($results);
     }
 }
