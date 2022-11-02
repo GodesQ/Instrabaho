@@ -1,11 +1,30 @@
 @extends('layout.admin-layout')
 
 @section('content')
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        @push('scripts')
+            <script>
+                toastr.error('{{ $error }}', 'Error')
+            </script>
+        @endpush
+    @endforeach
+@endif
+
+@if (Session::get('success'))
+    @push('scripts')
+        <script>
+            toastr.success('{{ Session::get("success") }}', 'Success')
+        </script>
+    @endpush
+@endif
+
     <div class="page-wrapper">
         <div class="page-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-body table-responsive">
                                 <table class="table table-borderless table-striped data-table">
@@ -21,15 +40,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Skill</div>
-                            </div>
-                            <div class="card-body">
-
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        @include('AdminScreens.skills.edit-skill')
                     </div>
                 </div>
             </div>
@@ -41,7 +57,7 @@
 <script>
     let table = $('.data-table').DataTable({
         processing: true,
-        pageLength: 10,
+        pageLength: 25,
         responsive: true,
         serverSide: true,
         ajax: {
@@ -72,5 +88,17 @@
             },
         ],
     });
+
+    function getSkill(id) {
+        $.ajax({
+            url: `/admin/skills/edit?id=${id}`,
+            method: 'GET',
+            success: function(response) {
+                console.log(response.skill_name);
+                $('#skill_name').val(response.skill_name);
+                $('#skill_id').val(response.id);
+            }
+        })
+    }
 </script>
 @endpush

@@ -15,7 +15,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
 
-    
+
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/vendors.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/apexcharts.css') }}">
@@ -59,7 +59,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
     <link
         rel="icon"
-        href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png"  
+        href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png"
         sizes="32x32"
     />
 
@@ -289,8 +289,8 @@
             </div>
         </nav>
         <!-- END: Header-->
-    
-    
+
+
         <!-- BEGIN: Main Menu-->
         <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
             <div class="main-menu-content">
@@ -441,14 +441,14 @@
             <div class="content-overlay"></div>
             @yield('content')
         </div>
-        
+
 
         <div class="sidenav-overlay"></div>
         <div class="drag-target"></div>
 
         <!-- BEGIN: Footer-->
         <footer class="footer footer-static footer-light navbar-border">
-            <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2020 <a class="text-bold-800 grey darken-2" href="https://1.envato.market/pixinvent_portfolio" target="_blank">PIXINVENT </a></span><span class="float-md-right d-none d-lg-block">Hand-crafted & Made with <i class="feather icon-heart pink"></i></span></p>
+            <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2020 <a class="text-bold-800 grey darken-2" href="https://1.envato.market/pixinvent_portfolio" target="_blank">INSTRABAHO </a></span><span class="float-md-right d-none d-lg-block">Hand-crafted & Made with <i class="feather icon-heart pink"></i></span></p>
         </footer>
         <!-- END: Footer-->
 
@@ -471,7 +471,7 @@
         <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
         <script src="../../../app-assets/vendors/js/charts/apexcharts/apexcharts.min.js"></script>
         <script src="../../../app-assets/js/scripts/forms/custom-file-input.js"></script>
-        <!-- END: Page Vendor JS--> 
+        <!-- END: Page Vendor JS-->
 
         <!-- BEGIN: Theme JS-->
         <script src="../../../app-assets/js/core/app-menu.js"></script>

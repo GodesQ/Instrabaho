@@ -1,6 +1,7 @@
 @extends('layout.admin-layout')
 
 @section('content')
+
 @if ($errors->any())
     @foreach ($errors->all() as $error)
         @push('scripts')
@@ -55,7 +56,7 @@
                             <input type="hidden" name="id" value="{{ $service->id }}">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="font-weight-bold text-center">
+                                    <div class="font-weight-bold text-right">
                                         Service :
                                     </div>
                                 </div>
@@ -67,7 +68,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="font-weight-bold text-center">
+                                    <div class="font-weight-bold text-right">
                                         Freelancer :
                                     </div>
                                 </div>
@@ -89,7 +90,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="font-weight-bold text-center">
+                                    <div class="font-weight-bold text-right">
                                         Service Category :
                                     </div>
                                 </div>
@@ -105,7 +106,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="font-weight-bold text-center">
+                                    <div class="font-weight-bold text-right">
                                         Attachments :
                                     </div>
                                 </div>
@@ -117,7 +118,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="font-weight-bold text-center">
+                                    <div class="font-weight-bold text-right">
                                         Cost :
                                     </div>
                                 </div>
@@ -129,7 +130,7 @@
                                 <div class="col-md-4">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div class="font-weight-bold text-center">
+                                            <div class="font-weight-bold text-right">
                                                 English Level :
                                             </div>
                                         </div>
@@ -148,7 +149,7 @@
                                 <div class="col-md-3">
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <div class="font-weight-bold text-center">
+                                            <div class="font-weight-bold text-right">
                                                 Service Type :
                                             </div>
                                         </div>
@@ -165,7 +166,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="font-weight-bold text-center">
+                                    <div class="font-weight-bold text-right">
                                         Service Description :
                                     </div>
                                 </div>
@@ -177,7 +178,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="font-weight-bold text-center">
+                                    <div class="font-weight-bold text-right">
                                         Location <br>
                                         <span style="font-size: 10px;" class="font-weight-normal">(You can drag the marker to get the specific location.)</span>
                                     </div>
@@ -272,7 +273,7 @@
                                         `${response.message}`,
                                         "error"
                                     ).then((result) => {
-                                        
+
                                     });
                                 }
                             },

@@ -14,13 +14,13 @@ class WebAuth
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    
+
     public function handle(Request $request, Closure $next)
-    {   
-        abort_if(!session()->has(['id']) && !session()->has(['role']) && session()->get('role') == 'admin', 401);
-        // if(!session()->has(['id']) && !session()->has(['role'])) {
-        //     return redirect('/login')->with('fail', 'Login to Continue.');
-        // }
+    {
+        if(!session()->has('id') && !session()->has('role')) {
+            return redirect('/login')->with('fail', 'Login to Continue.');
+        }
+
         return $next($request);
     }
 }

@@ -23,6 +23,7 @@
             <form action="/update_project" method="post" class="form" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{ $project->id }}">
+                <input type="hidden" name="employer" value="{{ $project->employer_id }}">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">CREATE PROJECT</div>
@@ -162,14 +163,14 @@
                                 <div class="form-group">
                                     <div class="form-label font-weight-bold my-1">Skills</div>
                                     <select name="skills[]" id="" multiple class="select2 form-control" required>
-                                        @php 
+                                        @php
                                             $selected_skills = json_decode($project->skills);
                                         @endphp
                                         @foreach($skills as $skill)
                                             <option {{ in_array($skill->id, $selected_skills) ? 'selected' : null }} value="{{ $skill->id }}">{{ $skill->skill_name }}</option>
                                         @endforeach
                                     </select>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -235,7 +236,7 @@
                                     "Record has been removed.",
                                     "success"
                                 ).then((result) => {
-                                    
+
                                 });
                             } else {
                                 Swal.fire(
@@ -243,7 +244,7 @@
                                     `${response.message}`,
                                     "error"
                                 ).then((result) => {
-                                    
+
                                 });
                             }
                         },

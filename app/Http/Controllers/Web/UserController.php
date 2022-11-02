@@ -20,6 +20,7 @@ use App\Models\Skill;
 
 class UserController extends Controller
 {
+
     public function dashboard() {
         $role = session()->get('role');
         $id = session()->get('id');
@@ -51,7 +52,7 @@ class UserController extends Controller
         $role = session()->get('role');
         if($role == 'freelancer') {
             $skills = Skill::all();
-            $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations')->first(); 
+            $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations')->first();
             return view('UserAuthScreens.user.freelancer.freelancer-profile', compact('freelancer', 'skills'));
         } else {
             $employer = Employer::where('user_id', $id)->with('user')->first();
@@ -120,7 +121,7 @@ class UserController extends Controller
     public function store_certificates(Request $request) {
         if(!isset($request->certificates)) return back()->with('fail', 'Add atleast one certificate.');
         if(count($request->certificates) < 0) return back()->with('fail', 'Add atleast one certificate.');
-        
+
         $user_id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $user_id)->first();
 
@@ -134,7 +135,7 @@ class UserController extends Controller
             FreelancerCertificate::where('freelancer_id', $freelancer->id)->delete();
         }
 
-        
+
         foreach ($request->certificates as $key => $certifacate) {
             $image_name = $certifacate['old_image'];
             if(isset($certifacate['certificate_image'])) {
@@ -143,7 +144,7 @@ class UserController extends Controller
                 $image_name = $file->getClientOriginalName();
                 $save_file = $file->move(public_path().'/images/freelancer_certificates', $image_name);
             }
-            
+
             $save = FreelancerCertificate::create([
                 'freelancer_id' => $freelancer->id,
                 'certificate' => $certifacate['certificate'],
@@ -155,12 +156,12 @@ class UserController extends Controller
     }
 
     public function remove_certificate_image(Request $request) {
-        
+
     }
 
     public function store_experiences(Request $request) {
         if(!isset($request->experiences)) return back()->with('fail', 'Add atleast one experiences.');
-        
+
         $validation = $request->validate([
             'experiences.*.experience' => 'required',
             'experiences.*.company_name' => 'required',
@@ -188,7 +189,7 @@ class UserController extends Controller
 
     public function store_educations(Request $request) {
         if(!isset($request->educations)) return back()->with('fail', 'Add atleast one education.');
-        
+
         $validation = $request->validate([
             'educations.*.education_title' => 'required',
             'educations.*.institute_name' => 'required',
@@ -198,9 +199,9 @@ class UserController extends Controller
 
         $user_id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $user_id)->first();
-        
+
         $past_educations = FreelancerEducation::whereIn('freelancer_id', [$freelancer->id])->delete();
-        
+
         foreach ($request->educations as $key => $education) {
             FreelancerEducation::create([
                 'freelancer_id' => $freelancer->id,
@@ -215,7 +216,7 @@ class UserController extends Controller
     }
 
     public function store_skills(Request $request) {
-        
+
         $validation = $request->validate([
             'skills.*.skill' => 'required',
             'skills.*.skill_percentage' => 'required',
@@ -241,7 +242,7 @@ class UserController extends Controller
         $request->validate([
             'payment_method' => 'required'
         ]);
-        
-        
+
+
     }
 }
