@@ -107,30 +107,25 @@ Route::middleware(['throttle:global'])->group(function () {
         Route::get('/package_checkout', [PackageCheckoutController::class, 'package_checkout'])->name('package_checkout');
         Route::post('/store_package_checkout', [PackageCheckoutController::class, 'store_package_checkout'])->name('store_package_checkout');
 
-        /* ---------------------------------------- FREELANCER ACCESS ---------------------------------------------- */
-        Route::middleware(['freelancer.access'])->group(function () {
-            Route::get('/addons', [AddonsController::class, 'index'])->name('index');
-            Route::get('/create_addon', [AddonsController::class, 'create'])->name('create_addon');
-            Route::post('/store_addon', [AddonsController::class, 'store'])->name('store_addon');
-            Route::get('/edit_addon/{id}', [AddonsController::class, 'edit'])->name('edit_addon');
-            Route::post('/update_addon', [AddonsController::class, 'update'])->name('update_addon');
-            Route::get('/destroy_addon/{id}', [AddonsController::class, 'destroy'])->name('destroy_addon');
+        Route::get('/addons', [AddonsController::class, 'index'])->name('index');
+        Route::get('/create_addon', [AddonsController::class, 'create'])->name('create_addon');
+        Route::post('/store_addon', [AddonsController::class, 'store'])->name('store_addon');
+        Route::get('/edit_addon/{id}', [AddonsController::class, 'edit'])->name('edit_addon');
+        Route::post('/update_addon', [AddonsController::class, 'update'])->name('update_addon');
+        Route::get('/destroy_addon/{id}', [AddonsController::class, 'destroy'])->name('destroy_addon');
 
-            Route::get('/services', [ServicesController::class, 'index'])->name('index');
-            Route::get('/create_service', [ServicesController::class, 'create'])->name('create_service')->middleware('plan.expiration');
-            Route::post('/store_service', [ServicesController::class, 'store'])->name('store_service')->middleware('plan.expiration');
-            Route::get('/edit_service/{id}', [ServicesController::class, 'edit'])->name('edit_service');
-            Route::post('/update_service', [ServicesController::class, 'update'])->name('update_service')->middleware('plan.expiration');;
-            Route::get('/remove_image/{id}/{key_id}', [ServicesController::class, 'remove_image'])->name('remove_image')->middleware('plan.expiration');
-            Route::get('/destroy_service', [ServicesController::class, 'destroy'])->name('destroy_service');
+        Route::get('/services', [ServicesController::class, 'index'])->name('index');
+        Route::get('/create_service', [ServicesController::class, 'create'])->name('service.create')->middleware('plan.expiration');
+        Route::post('/store_service', [ServicesController::class, 'store'])->name('service.store')->middleware('plan.expiration');
+        Route::get('/edit_service/{id}', [ServicesController::class, 'edit'])->name('service.edit');
+        Route::post('/update_service', [ServicesController::class, 'update'])->name('service.update')->middleware('plan.expiration');
+        Route::get('/service/remove_image/{id}/{key_id}', [ServicesController::class, 'remove_image'])->name('service.remove_image')->middleware('plan.expiration');
+        Route::get('/destroy_service', [ServicesController::class, 'destroy'])->name('service.destroy');
 
-            Route::get('saved_projects/freelancers', [SaveProjectController::class, 'freelancer_saved_projects'])->name('freelancer_saved_projects');
-            Route::delete('saved_projects/delete/{id}', [SaveProjectController::class, 'destroy'])->name('saved_project.destroy');
-            Route::get('/followed_employer', [FollowEmployerController::class, 'followed_employer'])->name('followed_employer');
-            Route::get('/proposal_lists/freelancer', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('proposals_for_freelancers');
-        });
-        /* ---------------------------------------- END FREELANCER ACCESS ---------------------------------------------- */
-
+        Route::get('saved_projects/freelancers', [SaveProjectController::class, 'freelancer_saved_projects'])->name('freelancer_saved_projects');
+        Route::delete('saved_projects/delete/{id}', [SaveProjectController::class, 'destroy'])->name('saved_project.destroy');
+        Route::get('/followed_employer', [FollowEmployerController::class, 'followed_employer'])->name('followed_employer');
+        Route::get('/proposal_lists/freelancer', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('proposals_for_freelancers');
 
         /* ---------------------------------------- EMPLOYER ACCESS ---------------------------------------------- */
         Route::middleware(['employer.access'])->group(function () {
@@ -218,6 +213,7 @@ Route::middleware(['throttle:global'])->group(function () {
         Route::get('/admin/freelancers/data_table', [FreelancerController::class, 'data_table'])->name('admin.freelancers.data_table');
         Route::get('/admin/freelancers/edit/{id}', [FreelancerController::class, 'edit'])->name('admin.freelancers.edit');
         Route::put('/admin/freelancers/update', [FreelancerController::class, 'update'])->name('admin.freelancers.update');
+        Route::get('/admin/freelancers/search', [FreelancerController::class, 'search'])->name('admin.freelancers.search');
 
         Route::get('/admin/employers', [EmployerController::class, 'index'])->name('admin.employers');
         Route::get('/admin/employers/data_table', [EmployerController::class, 'data_table'])->name('admin.employers.data_table');
@@ -226,14 +222,13 @@ Route::middleware(['throttle:global'])->group(function () {
 
         Route::get('/admin/services', [ServicesController::class, 'admin_index'])->name('admin.services');
         Route::get('/admin/services/data_table', [ServicesController::class, 'data_table'])->name('admin.services.data_table');
-        Route::get('/admin/services/edit/{id}', [ServicesController::class, 'admin_edit'])->name('admin.services.edit');
-        Route::put('/admin/services/update', [ServicesController::class, 'update'])->name('admin.services.update');
 
         Route::get('/admin/addons', [AddonsController::class, 'admin_index'])->name('admin.addons');
         Route::get('/admin/addons/data_table', [AddonsController::class, 'data_table'])->name('admin.addons.data_table');
 
         Route::get('/admin/projects', [ProjectsController::class, 'admin_index'])->name('admin.projects');
         Route::get('/admin/projects/data_table', [ProjectsController::class, 'data_table'])->name('admin.projects.data_table');
+        
 
         Route::get('/admin/skills', [SkillsController::class, 'index'])->name('admin.skills');
         Route::get('/admin/skills/data_table', [SkillsController::class, 'data_table'])->name('admin.skills.data_table');

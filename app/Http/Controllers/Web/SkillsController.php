@@ -32,4 +32,8 @@ class SkillsController extends Controller
             ->toJson();
         }
     }
+
+    public function get_skill(Request $request) {
+        
+    }
 }

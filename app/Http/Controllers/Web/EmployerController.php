@@ -66,8 +66,8 @@ class EmployerController extends Controller
                     return date_format($row->created_at, "F d, Y");
                 })
                 ->addColumn('action', function($row){     
-                    $btn = '<a href="/admin/employers/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn = '<a href="/admin/employers/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'employer', 'member_since'])

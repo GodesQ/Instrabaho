@@ -26,8 +26,9 @@ function initialize() {
     marker = new google.maps.Marker({
         position: mapOptions.center,
         map: map,
-        // icon: 'http://pngimages.net/sites/default/files/google-maps-png-image-70164.png',
-        draggable: true
+        icon: '',
+        draggable: true,
+        animation: google.maps.Animation.DROP,
     });
     
     searchBox = new google.maps.places.SearchBox( addressEl );

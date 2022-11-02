@@ -73,13 +73,12 @@
             color: white !important;
         }
         .form-control {
-            background: #e8eef8 !important;
-            border: none !important;
+            border: 1px solid gray !important;
             color: #000 !important;
             font-weight: 500;
         }
         .form-control:focus {
-            border: 2px solid #04bbff !important;
+            border: 1px solid #04bbff !important;
         }
         .form-control:disabled {
             background: #bfbfbf !important;

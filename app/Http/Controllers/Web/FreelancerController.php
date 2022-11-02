@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Freelancer;
 use App\Models\FreelancerFollower;
@@ -72,8 +73,8 @@ class FreelancerController extends Controller
                 return date_format($row->created_at, "F d, Y");
             })
             ->addColumn('action', function($row){     
-                $btn = '<a href="/admin/freelancers/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                        <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                $btn = '<a href="/admin/freelancers/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                 return $btn;
             })
             ->rawColumns(['action', 'freelancer', 'member_since'])
@@ -120,9 +121,29 @@ class FreelancerController extends Controller
     }
 
     public function search(Request $request) {
-        dd($request->all());
         abort_if(!$request->ajax(), 403);
+        $query = $request->input('search');
+        
+        if($request->type == 'display_name') {
+            $freelancers = Freelancer::where('display_name', 'like', '%'.$query.'%')->get();
+        }
 
-        $query = $request->search;
+        if($request->type == 'full_name') {
+            $freelancers = Freelancer::with('user')->whereHas('user', function($q) use ($query) {
+                $q->where(DB::raw("concat(firstname, ' ', lastname)"), 'LIKE', "%".$query."%");
+            })->get();
+        }
+        
+          
+        $freelancers_collection = $freelancers->toArray();
+            $results = [];
+            foreach ($freelancers_collection as $key => $freelancer) {
+               $result = [
+                    'id' => $freelancer['id'],
+                    'text' => $request->type == 'display_name' ? $freelancer['display_name'] :  $freelancer['user']['firstname'] . " " . $freelancer['user']['lastname']
+               ];
+               array_push($results, $result);
+            }
+            return response()->json($results);
     }
 } 

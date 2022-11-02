@@ -193,7 +193,7 @@
                   <div class="row">
                      @forelse($services as $service)
                         @php
-                           $images = json_decode($service->attachments)
+                           $images = json_decode($service->attachments);
                         @endphp
                      <div class="col-md-4">
                         <a href="/service/{{ $service->id }}">

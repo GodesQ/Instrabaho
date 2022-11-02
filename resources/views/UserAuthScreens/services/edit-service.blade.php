@@ -9,12 +9,19 @@
             </script>
         @endpush
     @endif
+    <style>
+        #map-canvas {
+            height: 300px;
+            width: 100%;
+        }
+    </style>
     <div class="page-header">
         <div class="page-content">
             <div class="container">
                 <form method="POST" action="/update_service" enctype="multipart/form-adta">
                     @csrf
                     <input type="hidden" name="id" value="{{ $service->id }}">
+                    <input type="hidden" name="freelancer" value="{{ $service->freelancer_id }}">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div class="card-title">Update Service</div>
@@ -81,9 +88,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="form-label font-weight-bold my-1">Location</div>
-                                        <input type="text" name="location" class="form-control" id="" value="{{ $service->location }}">
-                                        <span class="danger text-danger">@error('location'){{ $message }}@enderror</span>
+                                        <div class="form-label font-weight-bold my-1">Type</div>
+                                        <select name="type" id="" class="select2 form-control">
+                                            <option {{ $service->type == 'simple' ? 'selected' : null }} value="simple">Simple</option>
+                                            <option {{ $service->type == 'featured' ? 'selected' : null }} value="featured">Featured</option>>
+                                        </select>
+                                        <span class="danger text-danger">@error('type'){{ $message }}@enderror</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -107,12 +117,23 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="form-label font-weight-bold my-1">Type</div>
-                                        <select name="type" id="" class="select2 form-control">
-                                            <option {{ $service->type == 'simple' ? 'selected' : null }} value="simple">Simple</option>
-                                            <option {{ $service->type == 'featured' ? 'selected' : null }} value="featured">Featured</option>>
-                                        </select>
-                                        <span class="danger text-danger">@error('type'){{ $message }}@enderror</span>
+                                        <input type="text" class="form-control" id="map-search" name="location" value="{{ $service->location }}"> <br>
+                                        <div id="map-canvas"></div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group d-none">
+                                                    <div class="form-label font-weight-bold my-50">Latitude</div>
+                                                    <input type="text" name="latitude" value="{{ $service->latitude }}" class="form-control latitude">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group d-none">
+                                                    <div class="form-label font-weight-bold my-50">Longitude</div>
+                                                    <input type="text" name="longitude" value="{{ $service->longitude }}" class="form-control longitude">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -126,6 +147,8 @@
         </div>
     </div>
 </div>
+<script src="../../../js/user-location.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection
 
 @push('scripts')
