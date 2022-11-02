@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="my-1 text-right">
-                <a href="" class="btn btn-primary">Create Freelancer</a>
+                <a href="" class="btn btn-primary">Create <i class="feather icon-plus"></i></a>
             </div>
             <div class="card">
                 <div class="card-body">

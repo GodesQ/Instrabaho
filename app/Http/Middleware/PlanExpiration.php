@@ -21,13 +21,14 @@ class PlanExpiration
     {   
         $user_id = session()->get('id');
         $role = session()->get('role');
-        
         if($role == 'freelancer') {
             $freelancer = Freelancer::where('user_id', $user_id)->first();
             if($freelancer->package_date_expiration < Carbon::now()) {
                 return redirect('/dashboard')->with('fail', 'Fail Your Current Plan is already expired. Please purchase new plan.');
             }
-        } else {
+        } 
+        
+        if($role == 'employer') {
             $employer = Employer::where('user_id', $user_id)->first();
             if($employer->package_date_expiration < Carbon::now()) {
                 return redirect('/dashboard')->with('fail', 'Fail Your Current Plan is already expired. Please purchase new plan.');

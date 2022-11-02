@@ -84,20 +84,20 @@ class ServicesController extends Controller
     }
 
     public function update(Request $request) {
-        
         $request->validate([
+            'id' => 'required|exists:services,id',
             'name' => 'required',
-            'cost' => 'required',
-            'english_level' => 'required',
+            'cost' => 'required|numeric',
+            'freelancer' => 'required',
+            'english_level' => 'required|in:Basic,Bilingual,Fluent,Professional',
             'service_category' => 'required',
             'location' => 'required',
             'description' => 'required',
-            'type' => 'required',
+            'type' => 'required|in:simple,featured',
         ]);
 
         $service = Service::where('id', $request->id)->first();
         $service_images = json_decode($service->attachments);
-        
         if($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $key => $attachment) {
                 $image_name = $attachment->getClientOriginalName();
@@ -111,9 +111,12 @@ class ServicesController extends Controller
         $update = Service::where('id', $request->id)->update([
             'name' => $request->name,
             'cost' => $request->cost,
+            'freelancer_id' => $request->freelancer,
             'english_level' => $request->english_level,
             'service_category' => $request->service_category,
             'location' => $request->location,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'description' => $request->description,
             'type' => $request->type,
             'attachments' => $json_images,
@@ -130,18 +133,22 @@ class ServicesController extends Controller
         $key_id = $request->key_id;
         $service = Service::where('id', $request->id)->first();
         $service_images = json_decode($service->attachments);
-
         if(count($service_images) < 2) return response()->json(['status' => 424, 'message' => 'Fail! You only have one image. Keep this image for reference']);
         
         // Search image in array
-        $found_image = array_search($service_images[$key_id], $service_images);
-        
+        $found_image = in_array($service_images[$key_id], $service_images);
         if($found_image) {
             $image_path = public_path('/images/services/') . $service_images[$key_id];
             $remove_image = @unlink($image_path);
-            unset($service_images[$key_id]);
+            
+            if($key_id == 0) {
+                array_shift($service_images);
+            }else {
+                unset($service_images[$key_id]);
+            }
+           
+            
         }
-        
         $service->attachments = json_encode($service_images);
         $save = $service->save();
 
@@ -201,7 +208,7 @@ class ServicesController extends Controller
 
     public function data_table(Request $request) {
         abort_if(!$request->ajax(), 403);
-        $data = Service::select('*')->with('freelancer', 'category');
+        $data = Service::select('*')->with('freelancer', 'category')->where('expiration_date', '>=', Carbon::now());
         return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('service_category', function($row) {
@@ -217,8 +224,8 @@ class ServicesController extends Controller
                     return $row->freelancer->user->firstname . " " . $row->freelancer->user->lastname;
                 })
                 ->addColumn('action', function($row){     
-                    $btn = '<a href="/admin/services/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                    $btn = '<a href="/admin/services/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'type'])
@@ -226,7 +233,9 @@ class ServicesController extends Controller
     }
 
     public function admin_edit(Request $request) {
+        $categories = ServiceCategory::all();
         $service = Service::where('id', $request->id)->with('freelancer')->first();
-        return view('AdminScreens.services.edit-service', compact('service'));
+        $service_images = json_decode($service->attachments);
+        return view('AdminScreens.services.edit-service', compact('service', 'categories', 'service_images'));
     }
 }

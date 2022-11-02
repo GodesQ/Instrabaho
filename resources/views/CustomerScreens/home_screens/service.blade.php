@@ -101,6 +101,9 @@
                         <li>
                            <p>0 Order in queue</p>
                         </li>
+                        <li>
+                           <p><i class="fa fa-location-arrow"></i> {{ $service->location }}</p>
+                        </li>
                      </ul>
                   </div>
                </div>
@@ -113,7 +116,7 @@
                             @endphp
                             @foreach($attachments as $image)
                             <li class="clone " aria-hidden="true"> 
-                                <a data-fancybox="services" href="../../../images/services/{{ $image }}"><img style="width: 100%; min-height: 400px !important; max-height: 600px; object-fit: cover;" src="../../../images/services/{{ $image }}" draggable="false"></a> 
+                                <a data-fancybox="services" href="../../../images/services/{{ $image }}" target="_blank"><img style="width: 100%; min-height: 400px !important; max-height: 600px; object-fit: cover;" src="../../../images/services/{{ $image }}" draggable="false"></a> 
                             </li>
                             @endforeach
                         </ul>
@@ -170,8 +173,8 @@
                   <div class="fr-seller-contents">
                      <ul>
                         <li>
-                           <p>Location:</p>
-                           <span>{{ $service->freelancer->location }}</span> 
+                           <p>Address:</p>
+                           <span>{{ $service->freelancer->address }}</span> 
                         </li>
                         <li>
                            <p>Member since:</p>
@@ -234,7 +237,7 @@
                               <span class="danger text-danger">@error('estimated_date'){{ $message }}@enderror</span>
                            </div>
                            <div class="form-group">
-                              <label>Location <span style="font-size: 10px;">(You can drag the marker to get the specific location)</span></label>
+                              <label>Location <br> <span style="font-size: 10px;">(You can drag the marker or search the address to get the specific location)</span></label>
                               <input type="text" name="location" class="form-control" id="map-search">
                               <span class="danger text-danger">@error('location'){{ $message }}@enderror</span><br>
                               <div id="map-canvas"></div>
