@@ -19,12 +19,12 @@ class FreelancePackagesController extends Controller
     public function data_table(Request $request) {
         if($request->ajax()) {
             $data = FreelancePackage::select('*');
-            
+
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){     
-                    $btn = '<a href="/admin/freelancer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                ->addColumn('action', function($row){
+                    $btn = '<a href="/admin/freelancer_packages/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -60,7 +60,7 @@ class FreelancePackagesController extends Controller
         if($update) {
             return back()->with('success', 'Package update successfully');
         }
-        
+
     }
 
     public function create() {

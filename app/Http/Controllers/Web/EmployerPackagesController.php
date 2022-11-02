@@ -10,7 +10,7 @@ use App\Models\EmployerPackage;
 use Yajra\DataTables\Facades\DataTables;
 
 class EmployerPackagesController extends Controller
-{   
+{
     public function index(Request $request) {
         return view('AdminScreens.employer_packages.employer_packages');
     }
@@ -18,12 +18,12 @@ class EmployerPackagesController extends Controller
     public function data_table(Request $request) {
         if($request->ajax()) {
             $data = EmployerPackage::select('*');
-            
+
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){     
-                    $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit btn btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="edit btn btn-danger"><i class="fa fa-trash"></i></a>';
+                ->addColumn('action', function($row){
+                    $btn = '<a href="/admin/employer_packages/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -57,7 +57,7 @@ class EmployerPackagesController extends Controller
         if($update) {
             return back()->with('success', 'Package update successfully');
         }
-        
+
     }
 
     public function create() {
@@ -86,7 +86,7 @@ class EmployerPackagesController extends Controller
             return redirect('/admin/employer_packages')->with('success', 'Package added successfully');
         }
     }
-    
+
     public function employer_package() {
         $packages = EmployerPackage::all();
         return view('CustomerScreens.packages.employer-package', compact('packages'));

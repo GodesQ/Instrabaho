@@ -423,6 +423,11 @@
                     </li>
                     <li class=" navigation-header"><span>OTHERS</span><i class=" feather icon-minus" data-toggle="tooltip" data-placement="right" data-original-title="OTHERS"></i>
                     </li>
+                    <li class="{{ Request::path() == 'admin/user_types' ? 'active' : '' }} nav-item">
+                        <a href="/admin/user_types"><i class="fa fa-user-circle"></i>
+                            <span class="menu-title" data-i18n="User Types">User Types</span>
+                        </a>
+                    </li>
                     <li class="{{ Request::path() == 'admin/user_permission' ? 'active' : '' }} nav-item">
                         <a href="/admin/user_permission"><i class="fa fa-lock"></i>
                             <span class="menu-title" data-i18n="User Permission">User Permission</span>

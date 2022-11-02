@@ -23,13 +23,19 @@
 <div class="page-wrapper">
     <div class="page-content">
         <div class="container-fluid">
+            <div class="text-right my-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">
+                    Create <i class="feather icon-plus"></i>
+                </button>
+            </div>
             <div class="card">
                 <div class="card-body table-responsive">
-                    <table class="table table-borderless table-striped data-table">
+                    <table class="table table-striped table-borderless data-table">
                         <thead>
                             <tr>
-                                <th>Service Category ID</th>
-                                <th>Name</th>
+                                <th>User Type ID</th>
+                                <th>User Type</th>
+                                <th>Slug</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -38,10 +44,17 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal fade text-left" id="create" tabindex="-1" role="dialog" aria-labelledby="create" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    @include('AdminScreens.service_categories.edit-categories')
+                    @include('AdminScreens.user_types.create-user-type')
+                </div>
+            </div>
+        </div>
+        <div class="modal fade text-left" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    @include('AdminScreens.user_types.edit-user-type')
                 </div>
             </div>
         </div>
@@ -50,14 +63,14 @@
 @endsection
 
 @push('scripts')
-<script>
+    <script>
     let table = $('.data-table').DataTable({
         processing: true,
         pageLength: 25,
         responsive: true,
         serverSide: true,
         ajax: {
-            url: "{{ route('admin.service_categories.data_table') }}",
+            url: "{{ route('admin.user_types.data_table') }}",
         },
         columns: [
             {
@@ -65,8 +78,14 @@
                 name: 'id'
             },
             {
-                data: 'name',
-                name: 'name',
+                data: 'user_type',
+                name: 'user_type',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'slug',
+                name: 'slug',
                 orderable: true,
                 searchable: true
             },
@@ -85,15 +104,16 @@
         ],
     });
 
-    function getCategory(id) {
+    function getUserType(id) {
         $.ajax({
-            url: `/admin/service_categories/edit?id=${id}`,
+            url: `/admin/user_types/edit?id=${id}`,
             method: 'GET',
             success: function(response) {
-                $('#category_name').val(response.name);
-                $('#category_id').val(response.id);
+                $('#edit_user_type').val(response.user_type);
+                $('#edit_slug').val(response.slug);
+                $('#user_type_id').val(response.id);
             }
         })
     }
-</script>
+    </script>
 @endpush

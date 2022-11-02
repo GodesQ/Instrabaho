@@ -20,7 +20,7 @@
                     </table>
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
 </div>
 @endsection
@@ -28,6 +28,10 @@
 @push('scripts')
     <script>
         let table = $('.data-table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'pdf', 'print',
+        ],
         processing: true,
         pageLength: 10,
         responsive: true,

@@ -15,9 +15,10 @@
                 <form method="POST" action="/update_addon">
                     @csrf
                     <input type="hidden" name="id" value="{{ $addon->id }}">
+                    <input type="hidden" name="freelancer" value="{{ $addon->user_role_id }}">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Create Addons</div>
+                            <div class="card-title">Edit Addons</div>
                         </div>
                         <hr>
                         <div class="card-body">

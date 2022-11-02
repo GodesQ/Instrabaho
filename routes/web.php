@@ -34,6 +34,8 @@ use App\Http\Controllers\Web\ServiceCategoriesController;
 use App\Http\Controllers\Web\Admin\AdminAuthController;
 use App\Http\Controllers\Web\Admin\AdminController;
 use App\Http\Controllers\Web\Admin\UserPermissionController;
+use App\Http\Controllers\Web\Admin\UserTypesController;
+
 /*
 |--------------------------------------------------------------------------
 | PUBLIC Routes
@@ -108,11 +110,11 @@ use App\Http\Controllers\Web\Admin\UserPermissionController;
         Route::post('/store_package_checkout', [PackageCheckoutController::class, 'store_package_checkout'])->name('store_package_checkout');
 
         Route::get('/addons', [AddonsController::class, 'index'])->name('index');
-        Route::get('/create_addon', [AddonsController::class, 'create'])->name('create_addon');
-        Route::post('/store_addon', [AddonsController::class, 'store'])->name('store_addon');
-        Route::get('/edit_addon/{id}', [AddonsController::class, 'edit'])->name('edit_addon');
-        Route::post('/update_addon', [AddonsController::class, 'update'])->name('update_addon');
-        Route::get('/destroy_addon/{id}', [AddonsController::class, 'destroy'])->name('destroy_addon');
+        Route::get('/create_addon', [AddonsController::class, 'create'])->name('addon.create');
+        Route::post('/store_addon', [AddonsController::class, 'store'])->name('addon.store');
+        Route::get('/edit_addon/{id}', [AddonsController::class, 'edit'])->name('addon.edit');
+        Route::post('/update_addon', [AddonsController::class, 'update'])->name('addon.update');
+        Route::get('/destroy_addon/{id}', [AddonsController::class, 'destroy'])->name('addon.destroy');
 
         Route::get('/services', [ServicesController::class, 'index'])->name('index');
         Route::get('/create_service', [ServicesController::class, 'create'])->name('service.create')->middleware('plan.expiration');
@@ -224,6 +226,8 @@ use App\Http\Controllers\Web\Admin\UserPermissionController;
 
         Route::get('/admin/addons', [AddonsController::class, 'admin_index'])->name('admin.addons');
         Route::get('/admin/addons/data_table', [AddonsController::class, 'data_table'])->name('admin.addons.data_table');
+        Route::get('/admin/addons/edit/{id}', [AddonsController::class, 'admin_edit'])->name('admin.addons.edit');
+        Route::get('/admin/addons/update', [AddonsController::class, 'update'])->name('admin.addons.update');
 
         Route::get('/admin/projects', [ProjectsController::class, 'admin_index'])->name('admin.projects');
         Route::get('/admin/projects/data_table', [ProjectsController::class, 'data_table'])->name('admin.projects.data_table');
@@ -236,9 +240,16 @@ use App\Http\Controllers\Web\Admin\UserPermissionController;
 
         Route::get('/admin/service_categories', [ServiceCategoriesController::class, 'index'])->name('admin.service_categories');
         Route::get('/admin/service_categories/data_table', [ServiceCategoriesController::class, 'data_table'])->name('admin.service_categories.data_table');
+        Route::get('/admin/service_categories/edit', [ServiceCategoriesController::class, 'edit'])->name('admin.service_categories.edit');
+        Route::post('/admin/service_categories/update', [ServiceCategoriesController::class, 'update'])->name('admin.service_categories.update');
 
         Route::get('/admin/saved_projects', [SaveProjectController::class, 'admin_index'])->name('admin.saved_projects');
 
+        Route::get('/admin/user_types', [UserTypesController::class, 'index'])->name('user_types');
+        Route::get('/admin/user_types/data_table', [UserTypesController::class, 'data_table'])->name('admin.user_types.data_table');
+        Route::post('/admin/user_types/store', [UserTypesController::class, 'store'])->name('admin.user_types.store');
+        Route::get('/admin/user_types/edit', [UserTypesController::class, 'edit'])->name('admin.user_types.edit');
+        Route::post('/admin/user_types/update', [UserTypesController::class, 'update'])->name('admin.user_types.update');
+
         Route::get('/admin/user_permission', [UserPermissionController::class, 'permission'])->name('user_permission');
     });
-    /* ----------------------------------------- END ADMIN ROUTES -------------------------------------------- */
