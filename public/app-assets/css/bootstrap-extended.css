@@ -157,7 +157,7 @@ pre {
   border: 1px solid #e3ebf3; }
 
 .table th, .table td {
-  border-bottom: 1px solid #fff; 
+  border-bottom: 1px solid #fff;
 }
 
 .table-bordered {
@@ -224,7 +224,7 @@ form {
   form .form-group {
     margin-bottom: 1.5rem; }
   form .form-control {
-    border: 1px solid #ccd6e6;
+    border: 1px solid #004E88;
     color: #3f587e; }
     form .form-control::-webkit-input-placeholder {
       color: #b1c1d8; }
@@ -554,7 +554,7 @@ html [type="button"],
   background-color: #ff7588; }
 
 .btn-info ~ .dropdown-menu .dropdown-item.active {
-  background-color: #2dcee3; }
+  background-color: #04bbff; }
 
 .btn-warning ~ .dropdown-menu .dropdown-item.active {
   background-color: #ff7e00; }
@@ -1350,9 +1350,9 @@ html [type="button"],
     background-color: #11a578; }
 
 .badge-info {
-  background-color: #2dcee3; }
+  background-color: #04bbff; }
   .badge-info.badge-glow {
-    box-shadow: 0px 0px 10px #2dcee3; }
+    box-shadow: 0px 0px 10px #04bbff; }
   .badge-info[href]:hover, .badge-info[href]:focus {
     background-color: #1ab0c3; }
 
@@ -1597,7 +1597,7 @@ html [type="button"],
   .nav.nav-tabs.nav-underline {
     background: #fff;
     position: relative;
-    border-bottom: 1px solid #2dcee3; }
+    border-bottom: 1px solid #04bbff; }
     .nav.nav-tabs.nav-underline .nav-item {
       position: relative;
       z-index: 1;
@@ -1612,7 +1612,7 @@ html [type="button"],
         background-color: transparent; }
         .nav.nav-tabs.nav-underline .nav-item.open a .nav-link:focus, .nav.nav-tabs.nav-underline .nav-item.open a .nav-link:hover {
           background-color: transparent;
-          color: #2dcee3; }
+          color: #04bbff; }
       .nav.nav-tabs.nav-underline .nav-item a.nav-link {
         position: relative;
         display: block;
@@ -1623,7 +1623,7 @@ html [type="button"],
         padding: 0.5rem 1rem;
         -webkit-transition: color 0.2s;
         transition: color 0.2s;
-        color: #2dcee3;
+        color: #04bbff;
         border: none; }
         .nav.nav-tabs.nav-underline .nav-item a.nav-link.dropdown-toggle::after {
           margin-top: -1rem; }
@@ -1637,14 +1637,14 @@ html [type="button"],
             -webkit-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0); }
         .nav.nav-tabs.nav-underline .nav-item a.nav-link:hover, .nav.nav-tabs.nav-underline .nav-item a.nav-link:focus {
-          color: #2dcee3; }
+          color: #04bbff; }
         .nav.nav-tabs.nav-underline .nav-item a.nav-link:before {
           position: absolute;
           bottom: -1px;
           left: 0;
           width: 100%;
           height: 4px;
-          background: #2dcee3;
+          background: #04bbff;
           content: '';
           -webkit-transition: -webkit-transform 0.3s;
           transition: transform 0.3s;

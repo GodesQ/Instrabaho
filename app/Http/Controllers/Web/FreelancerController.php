@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Freelancer;
 use App\Models\FreelancerFollower;
 use App\Models\Employer;
+use App\Models\FreelancerCertificate;
+use App\Models\FreelancerProject;
+use App\Models\FreelancerExperience;
+use App\Models\FreelancerEducation;
+use App\Models\FreelancerSkill;
+use App\Models\Skill;
 
 use Yajra\DataTables\Facades\DataTables;
 
@@ -21,7 +27,7 @@ class FreelancerController extends Controller
 
     public function save_freelancer_role_form(Request $request) {
         $id = session()->get('id');
-        
+
         $save = Freelancer::create([
             'user_id' => $id,
             'display_name' => $request->display_name,
@@ -33,13 +39,13 @@ class FreelancerController extends Controller
             'description' => $request->description,
             'address' => $request->address,
         ]);
-        
+
         if($save) return redirect('/');
     }
 
     public function view_profile(Request $request) {
         $employer = Employer::where('user_id', session()->get('id'))->first();
-        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->first(); 
+        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->first();
         $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
         $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
         $follow_freelancer = false;
@@ -50,13 +56,131 @@ class FreelancerController extends Controller
         return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
     }
 
+    public function store_certificates(Request $request) {
+        if(!isset($request->certificates)) return back()->with('fail', 'Add atleast one certificate.');
+        if(count($request->certificates) < 0) return back()->with('fail', 'Add atleast one certificate.');
+
+         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+
+        $certificates = FreelancerCertificate::where('freelancer_id', $freelancer->id)->get();
+
+        if($certificates->count() > 0) {
+            foreach ($certificates as $key => $certificate) {
+                $image = public_path('/images/freelancer_certificates') . $certificate->certificate_image;
+                $remove_image = @unlink($image);
+            }
+            FreelancerCertificate::where('freelancer_id', $freelancer->id)->delete();
+        }
+
+
+        foreach ($request->certificates as $key => $certifacate) {
+            $image_name = $certifacate['old_image'];
+            if(isset($certifacate['certificate_image'])) {
+                // uploading image in public directory
+                $file = $certifacate['certificate_image'];
+                $image_name = $file->getClientOriginalName();
+                $save_file = $file->move(public_path().'/images/freelancer_certificates', $image_name);
+            }
+
+            $save = FreelancerCertificate::create([
+                'freelancer_id' => $freelancer->id,
+                'certificate' => $certifacate['certificate'],
+                'certificate_date' => $certifacate['certificate_date'],
+                'certificate_image' => $image_name
+            ]);
+        }
+        return back()->with('success', 'Certificates Added Successfully');
+    }
+
+    public function remove_certificate_image(Request $request) {
+
+    }
+
+    public function store_experiences(Request $request) {
+        if(!isset($request->experiences)) return back()->with('fail', 'Add atleast one experiences.');
+
+        $validation = $request->validate([
+            'experiences.*.experience' => 'required',
+            'experiences.*.company_name' => 'required',
+            'experiences.*.start_date' => 'required',
+            'experiences.*.description' => 'required|min:10',
+        ]);
+
+
+        $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+
+        $past_experiences = FreelancerExperience::whereIn('freelancer_id', [$freelancer->id])->delete();
+        foreach ($request->experiences as $key => $experience) {
+            FreelancerExperience::create([
+                'freelancer_id' => $freelancer->id,
+                'experience_title' => $experience['experience'],
+                'company_name' => $experience['company_name'],
+                'start_date' => $experience['start_date'],
+                'end_date' => $experience['end_date'],
+                'description' => $experience['description']
+            ]);
+        }
+
+        return back()->with('success', 'Experience update successfully.');
+    }
+
+    public function store_educations(Request $request) {
+        if(!isset($request->educations)) return back()->with('fail', 'Add atleast one education.');
+
+        $validation = $request->validate([
+            'educations.*.education_title' => 'required',
+            'educations.*.institute_name' => 'required',
+            'educations.*.start_date' => 'required',
+            'educations.*.description' => 'required|min:10',
+        ]);
+
+         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+
+        $past_educations = FreelancerEducation::whereIn('freelancer_id', [$freelancer->id])->delete();
+
+        foreach ($request->educations as $key => $education) {
+            FreelancerEducation::create([
+                'freelancer_id' => $freelancer->id,
+                'education_title' => $education['education_title'],
+                'institute_name' => $education['institute_name'],
+                'start_date' => $education['start_date'],
+                'end_date' => $education['end_date'],
+                'description' => $education['description']
+            ]);
+        }
+        return back()->with('success', 'Education update successfully.');
+    }
+
+    public function store_skills(Request $request) {
+        $validation = $request->validate([
+            'skills.*.skill' => 'required',
+            'skills.*.skill_percentage' => 'required',
+        ]);
+        $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+        $past_skills = FreelancerSkill::whereIn('freelancer_id', [$freelancer->id])->delete();
+
+        foreach ($request->skills as $key => $skill) {
+            $create = FreelancerSkill::create([
+                'freelancer_id' => $freelancer->id,
+                'skill_id' => $skill['skill'],
+                'skill_percentage' =>$skill['skill_percentage']
+            ]);
+        }
+
+        return back()->with('success', 'Skill update successfully');
+    }
+
     public function index(Request $request) {
         return view('AdminScreens.freelancers.freelancers');
     }
 
     public function data_table(Request $request) {
         abort_if(!$request->ajax(), 404);
-        
+
         $data = Freelancer::select('*')->with('user')->latest('id');
         return DataTables::of($data)
             ->addIndexColumn()
@@ -64,26 +188,33 @@ class FreelancerController extends Controller
                 if($row->user->profile_image) {
                     return $div = '<img class="avatar avatar-sm" src="../../../images/user/profile/' . $row->user->profile_image . '" />
                     '. $row->display_name .'';
-                } 
-                
+                }
+
                 return $div = '<img class="avatar avatar-sm" src="../../../images/user-profile.png" />
                     '. $row->display_name .'';
             })
             ->addColumn('member_since', function($row) {
                 return date_format($row->created_at, "F d, Y");
             })
-            ->addColumn('action', function($row){     
+            ->addColumn('active_status', function($row) {
+                if($row->is_active) {
+                    return '<div class="badge badge-success"><i class="fa fa-circle text-success"><i> <span class="text-success mx-50">Active</span></div>';
+                }
+                return '<div class="badge badge-warning d-flex align-items-center justify-content-center p-50" style="font-size: 10px; !important; width: 100px;"><span class="mx-50" style="font-size: 10px; !important">Inactive</span></div>';
+            })
+            ->addColumn('action', function($row){
                 $btn = '<a href="/admin/freelancers/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
                         <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                 return $btn;
             })
-            ->rawColumns(['action', 'freelancer', 'member_since'])
+            ->rawColumns(['action', 'freelancer', 'member_since', 'active_status'])
             ->toJson();
     }
 
     public function edit(Request $request) {
         $freelancer = Freelancer::where('id', $request->id)->with('user')->first();
-        return view('AdminScreens.freelancers.edit-freelancer', compact('freelancer'));
+        $skills = Skill::all();
+        return view('AdminScreens.freelancers.edit-freelancer', compact('freelancer', 'skills'));
     }
 
     public function update(Request $request) {
@@ -123,7 +254,7 @@ class FreelancerController extends Controller
     public function search(Request $request) {
         abort_if(!$request->ajax(), 403);
         $query = $request->input('search');
-        
+
         if($request->type == 'display_name') {
             $freelancers = Freelancer::where('display_name', 'like', '%'.$query.'%')->get();
         }
@@ -133,8 +264,8 @@ class FreelancerController extends Controller
                 $q->where(DB::raw("concat(firstname, ' ', lastname)"), 'LIKE', "%".$query."%");
             })->get();
         }
-        
-          
+
+
         $freelancers_collection = $freelancers->toArray();
             $results = [];
             foreach ($freelancers_collection as $key => $freelancer) {
@@ -146,4 +277,4 @@ class FreelancerController extends Controller
             }
             return response()->json($results);
     }
-} 
+}

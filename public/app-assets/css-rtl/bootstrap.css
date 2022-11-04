@@ -11,7 +11,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 :root {
-  --blue : #2DCEE3;
+  --blue : #04bbff;
   --indigo : #6610F2;
   --purple : #6F42C1;
   --pink : #E83E8C;
@@ -27,7 +27,7 @@
   --primary : #04bbff;
   --secondary : #000000;
   --success : #16D39A;
-  --info : #2DCEE3;
+  --info : #04bbff;
   --warning : #ff7e00;
   --danger : #FF7588;
   --light : #BABFC7;
@@ -3182,8 +3182,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 .btn-info {
   color : #2A2E30;
-  background-color : #2DCEE3;
-  border-color : #2DCEE3;
+  background-color : #04bbff;
+  border-color : #04bbff;
 }
 .btn-info:hover {
   color : #FFFFFF;
@@ -3198,8 +3198,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 .btn-info.disabled, .btn-info:disabled {
   color : #2A2E30;
-  background-color : #2DCEE3;
-  border-color : #2DCEE3;
+  background-color : #04bbff;
+  border-color : #04bbff;
 }
 .btn-info:not(:disabled):not(.disabled):active, .btn-info:not(:disabled):not(.disabled).active, .show > .btn-info.dropdown-toggle {
   color : #FFFFFF;
@@ -3406,25 +3406,25 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-outline-info {
-  color : #2DCEE3;
-  border-color : #2DCEE3;
+  color : #04bbff;
+  border-color : #04bbff;
 }
 .btn-outline-info:hover {
   color : #2A2E30;
-  background-color : #2DCEE3;
-  border-color : #2DCEE3;
+  background-color : #04bbff;
+  border-color : #04bbff;
 }
 .btn-outline-info:focus, .btn-outline-info.focus {
   box-shadow : 0 0 0 0.2rem rgba(45, 206, 227, 0.5);
 }
 .btn-outline-info.disabled, .btn-outline-info:disabled {
-  color : #2DCEE3;
+  color : #04bbff;
   background-color : transparent;
 }
 .btn-outline-info:not(:disabled):not(.disabled):active, .btn-outline-info:not(:disabled):not(.disabled).active, .show > .btn-outline-info.dropdown-toggle {
   color : #2A2E30;
-  background-color : #2DCEE3;
-  border-color : #2DCEE3;
+  background-color : #04bbff;
+  border-color : #04bbff;
 }
 .btn-outline-info:not(:disabled):not(.disabled):active:focus, .btn-outline-info:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-info.dropdown-toggle:focus {
   box-shadow : 0 0 0 0.2rem rgba(45, 206, 227, 0.5);
@@ -5572,7 +5572,7 @@ a.badge-success:focus, a.badge-success.focus {
 
 .badge-info {
   color : #2A2E30;
-  background-color : #2DCEE3;
+  background-color : #04bbff;
 }
 a.badge-info:hover, a.badge-info:focus {
   color : #2A2E30;
@@ -7123,7 +7123,7 @@ a.bg-success:hover, a.bg-success:focus, button.bg-success:hover, button.bg-succe
 }
 
 .bg-info {
-  background-color : #2DCEE3 !important;
+  background-color : #04bbff !important;
 }
 
 a.bg-info:hover, a.bg-info:focus, button.bg-info:hover, button.bg-info:focus {
@@ -7223,7 +7223,7 @@ a.bg-dark:hover, a.bg-dark:focus, button.bg-dark:hover, button.bg-dark:focus {
 }
 
 .border-info {
-  border-color : #2DCEE3 !important;
+  border-color : #04bbff !important;
 }
 
 .border-warning {
@@ -11774,7 +11774,7 @@ a.text-success:hover, a.text-success:focus {
 }
 
 .text-info {
-  color : #2DCEE3 !important;
+  color : #04bbff !important;
 }
 
 a.text-info:hover, a.text-info:focus {

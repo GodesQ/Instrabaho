@@ -99,11 +99,12 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::post('/profile', [UserController::class, 'update_profile'])->name('profile.update');
         Route::post('/user_change_password', [UserController::class, 'user_change_password'])->name('user_change_password');
         Route::post('/change_user_picture', [UserController::class, 'change_user_picture'])->name('change_user_picture');
-        Route::post('/store_certificates', [UserController::class, 'store_certificates'])->name('store_certificates');
-        Route::get('/remove_certificate_image/{id}/{key_id}', [UserController::class, 'remove_certificate_image'])->name('remove_certificate_image');
-        Route::post('/store_experiences', [UserController::class, 'store_experiences'])->name('store_experiences');
-        Route::post('/store_educations', [UserController::class, 'store_educations'])->name('store_educations');
-        Route::post('/store_skills', [UserController::class, 'store_skills'])->name('store_skills');
+        Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('store_certificates');
+        Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');
+        Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('store_certificates');
+        Route::post('/store_experiences', [FreelancerController::class, 'store_experiences'])->name('store_experiences');
+        Route::post('/store_educations', [FreelancerController::class, 'store_educations'])->name('store_educations');
+        Route::post('/store_skills', [FreelancerController::class, 'store_skills'])->name('store_skills');
         Route::post('/update_payment_method', [UserController::class, 'change_user_payment_method'])->name('change_user_payment_method');
 
         Route::get('/package_checkout', [PackageCheckoutController::class, 'package_checkout'])->name('package_checkout');
@@ -111,28 +112,36 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
         Route::get('/addons', [AddonsController::class, 'index'])->name('index');
         Route::get('/create_addon', [AddonsController::class, 'create'])->name('addon.create');
-        Route::post('/store_addon', [AddonsController::class, 'store'])->name('addon.store');
         Route::get('/edit_addon/{id}', [AddonsController::class, 'edit'])->name('addon.edit');
+        Route::post('/store_addon', [AddonsController::class, 'store'])->name('addon.store');
         Route::post('/update_addon', [AddonsController::class, 'update'])->name('addon.update');
         Route::get('/destroy_addon/{id}', [AddonsController::class, 'destroy'])->name('addon.destroy');
 
         Route::get('/services', [ServicesController::class, 'index'])->name('index');
         Route::get('/create_service', [ServicesController::class, 'create'])->name('service.create')->middleware('plan.expiration');
-        Route::post('/store_service', [ServicesController::class, 'store'])->name('service.store')->middleware('plan.expiration');
         Route::get('/edit_service/{id}', [ServicesController::class, 'edit'])->name('service.edit');
+        Route::post('/store_service', [ServicesController::class, 'store'])->name('service.store')->middleware('plan.expiration');
         Route::post('/update_service', [ServicesController::class, 'update'])->name('service.update')->middleware('plan.expiration', 'admin.access');
         Route::get('/service/remove_image/{id}/{key_id}', [ServicesController::class, 'remove_image'])->name('service.remove_image')->middleware('plan.expiration');
         Route::get('/destroy_service', [ServicesController::class, 'destroy'])->name('service.destroy');
+
+        Route::get('/services_offer/employer', [ServicesProposalController::class, 'employer_proposals'])->name('employer_proposals')->middleware('employer.access');
+        Route::get('/services_offer/pending', [ServicesProposalController::class, 'pending'])->name('pending');
+        Route::get('/services_offer/cancel', [ServicesProposalController::class, 'cancel'])->name('cancel');
+        // Route::get('/services_offer/approved', [ServicesProposalController::class, 'approved'])->name('approved');
+        // Route::get('/services_offer/get_approved_services', [ServicesProposalController::class, 'get_approved_services'])->name('get_approved_services');
+
+        Route::get('/service_proposal_information/{id}', [ServicesProposalController::class, 'service_proposal_information'])->name('service_proposal_information');
 
         Route::get('saved_projects/freelancers', [SaveProjectController::class, 'freelancer_saved_projects'])->name('freelancer_saved_projects');
         Route::delete('saved_projects/delete/{id}', [SaveProjectController::class, 'destroy'])->name('saved_project.destroy');
         Route::get('/followed_employer', [FollowEmployerController::class, 'followed_employer'])->name('followed_employer');
         Route::get('/proposal_lists/freelancer', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('proposals_for_freelancers');
 
-        Route::get('/projects', [ProjectsController::class, 'index'])->name('index');
+        Route::get('/projects', [ProjectsController::class, 'index'])->name('index')->middleware('em');
         Route::get('/create_project', [ProjectsController::class, 'create'])->name('project.create')->middleware('plan.expiration');
         Route::post('/store_project', [ProjectsController::class, 'store'])->name('project.store')->middleware('plan.expiration');
-        Route::get('/edit_project/{id}', [ProjectsController::class, 'edit'])->name('project.edit');
+        Route::get('/edit_project/{id}', [ProjectsController::class, 'user_edit'])->name('project.edit');
         Route::post('/update_project', [ProjectsController::class, 'update'])->name('project.update')->middleware('plan.expiration');
         Route::get('/remove_project_image/{id}/{key_id}', [ProjectsController::class, 'remove_project_image'])->name('project.remove_image')->middleware('plan.expiration');
         Route::get('/destroy_project/{id}', [ProjectsController::class, 'destroy'])->name('project.destroy');
@@ -143,14 +152,6 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
         Route::post('/submit_proposal', [ServicesProposalController::class, 'submit_proposal'])->name('submit_proposal');
         Route::post('/purchased_service/change_status', [ServicesProposalController::class, 'change_status'])->name('change_status');
-
-        // Route::get('/purchased_service/view/{id}', [ServicesProposalController::class, 'view_service'])->name('view_service');
-        Route::get('/services_offer/pending', [ServicesProposalController::class, 'pending'])->name('pending');
-        Route::get('/services_offer/cancel', [ServicesProposalController::class, 'cancel'])->name('cancel');
-        Route::get('/services_offer/approved', [ServicesProposalController::class, 'approved'])->name('approved');
-        Route::get('/services_offer/get_approved_services', [ServicesProposalController::class, 'get_approved_services'])->name('get_approved_services');
-
-        Route::get('/service_proposal_information/{id}', [ServicesProposalController::class, 'service_proposal_information'])->name('service_proposal_information');
 
         // This is for service chat
         Route::get('/get_chat/{id}', [ChatController::class, 'get_chat'])->name('get_chat');
@@ -169,7 +170,6 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('/project_proposal_information/{id}', [ProjectProposalController::class, 'project_proposal_information'])->name('project_proposal_information');
 
         // Route::get('/invoices')
-
         Route::get('/project_get_chat/{id}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');
         Route::post('/send_project_chat', [ProjectChatController::class, 'send_project_chat'])->name('send_project_chat');
 
@@ -237,11 +237,15 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('/admin/skills/data_table', [SkillsController::class, 'data_table'])->name('admin.skills.data_table');
         Route::get('/admin/skills/edit', [SkillsController::class, 'edit'])->name('admin.skills.edit');
         Route::post('/admin/skills/update', [SkillsController::class, 'update'])->name('admin.skills.update');
+        Route::post('/admin/skills/store', [SkillsController::class, 'store'])->name('admin.skills.store');
+        Route::delete('/admin/skills/destroy', [SkillsController::class, 'destroy'])->name('admin.skills.destroy');
 
         Route::get('/admin/service_categories', [ServiceCategoriesController::class, 'index'])->name('admin.service_categories');
         Route::get('/admin/service_categories/data_table', [ServiceCategoriesController::class, 'data_table'])->name('admin.service_categories.data_table');
         Route::get('/admin/service_categories/edit', [ServiceCategoriesController::class, 'edit'])->name('admin.service_categories.edit');
         Route::post('/admin/service_categories/update', [ServiceCategoriesController::class, 'update'])->name('admin.service_categories.update');
+        Route::post('/admin/service_categories/store', [ServiceCategoriesController::class, 'store'])->name('admin.service_categories.store');
+        Route::delete('/admin/service_categories/destroy', [ServiceCategoriesController::class, 'destroy'])->name('admin.service_categories.destroy');
 
         Route::get('/admin/saved_projects', [SaveProjectController::class, 'admin_index'])->name('admin.saved_projects');
 

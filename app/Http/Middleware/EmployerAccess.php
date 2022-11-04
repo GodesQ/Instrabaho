@@ -16,9 +16,7 @@ class EmployerAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if(session()->get('role') != 'employer') {
-            return redirect('/dashboard')->with('fail', 'You are not authorized in your requested page.');
-        }
+        abort_if(session()->get('role') != 'employer', 401);
         return $next($request);
     }
 }
