@@ -365,14 +365,14 @@
 
 .bs-callout-info {
   display : block;
-  border-color : #2DCEE3 !important;
+  border-color : #04bbff !important;
   background-color : #BDF0F6;
   border-radius : 0.25rem;
   color : #020E0F;
 }
 .bs-callout-info h1, .bs-callout-info h2, .bs-callout-info h3, .bs-callout-info h4, .bs-callout-info h5, .bs-callout-info h6 {
   margin-top : 0;
-  color : #2DCEE3;
+  color : #04bbff;
 }
 .bs-callout-info p:last-child {
   margin-bottom : 0;
@@ -382,14 +382,14 @@
 }
 .bs-callout-info.callout-transparent {
   display : block;
-  border-color : #2DCEE3 !important;
+  border-color : #04bbff !important;
   background-color : transparent;
   border-radius : 0.25rem;
   color : #020E0F;
 }
 .bs-callout-info.callout-transparent h1, .bs-callout-info.callout-transparent h2, .bs-callout-info.callout-transparent h3, .bs-callout-info.callout-transparent h4, .bs-callout-info.callout-transparent h5, .bs-callout-info.callout-transparent h6 {
   margin-top : 0;
-  color : #2DCEE3;
+  color : #04bbff;
 }
 .bs-callout-info.callout-transparent p:last-child {
   margin-bottom : 0;
@@ -398,10 +398,10 @@
   background-color : #FFFFFF;
 }
 .bs-callout-info .callout-arrow-left:before {
-  border-right-color : #2DCEE3;
+  border-right-color : #04bbff;
 }
 .bs-callout-info .callout-arrow-right:before {
-  border-left-color : #2DCEE3;
+  border-left-color : #04bbff;
 }
 
 .climacon-info.climacon-darken-1 .climacon_component-stroke {

@@ -30,13 +30,13 @@
 		      <div class="row custom-product">
 		         <div class="col-lg-9 col-xl-9 col-xs-12 col-md-9 col-sm-12">
 		            <div class="fr-hero-details-content">
-		               <div class="fr-hero-details-products"> 
+		               <div class="fr-hero-details-products">
 							@if($freelancer->user->profile_image)
 								<img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" alt="" class="img-fluid">
 							@else
 							<img src="../../../images/user-profile.png" alt="" class="img-fluid">
 							@endif
-						
+
 						</div>
 		               <div class="fr-hero-details-information">
 		                  <span class="title"><i class="fa fa-check add-weight"></i>{{ $freelancer->display_name }}</span>
@@ -130,7 +130,7 @@
 		      <div class="row">
 		         <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
 		            <!-- <div class="fl-advert-box">
-		               <a href="index.html"><img src="img/top-trending-imgs/exertio-elementor.jpg" alt="exertio theme" class="img-fluid"></a>	
+		               <a href="index.html"><img src="img/top-trending-imgs/exertio-elementor.jpg" alt="exertio theme" class="img-fluid"></a>
 		            </div> -->
 		            <div class="main-box fr-product-des-box">
 		               <div class="">
@@ -200,7 +200,7 @@
 									<h3 class="text-center">No Experience Found</h3>
 								</div>
 							@endforelse
-							
+
 		               </div>
 		            </div>
 		            <div class="main-box">
@@ -239,7 +239,7 @@
 		         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
 		            <div class="freelance-sidebar">
 		               <div class="fr-product-progress sidebar-box">
-		                  <a href="/"><img class="brand-text" alt="stack admin logo" src="../../../images/logo/main-logo.png" style="width: 140px;"></a>    
+		                  <a href="/"><img class="brand-text" alt="stack admin logo" src="../../../images/logo/main-logo.png" style="width: 140px;"></a>
 		               </div>
 		               <div class="fr-recent-certification sidebar-box">
 		                  <div class="sidebar-heading">
@@ -270,14 +270,14 @@
 									<li>
 										<div class="fr-product-progress-content">
 											<p>{{ $skill->skill->skill_name }}</p>
-											<span>{{ $skill->skill_percentage }}%</span> 
+											<span>{{ $skill->skill_percentage }}%</span>
 										</div>
 										<div class="progress">
-											<div class="progress-bar bg-primary"  role="progressbar" aria-valuenow="{{ $skill->skill_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+											<div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{ $skill->skill_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
 									</li>
 								@empty
-									
+
 								@endforelse
 						   </ul>
 					   </div>
@@ -291,7 +291,7 @@
 		                        <div class="meta">
 		                           <span>Gender</span>
 		                           <p>
-		                              {{ $freelancer->gender }}				
+		                              {{ $freelancer->gender }}
 		                           </p>
 		                        </div>
 		                     </li>
@@ -333,7 +333,7 @@
 		                  </ul>
 		               </div>
 		               <div class="fr-product-progress sidebar-box">
-		                  <a href="/"><img class="brand-text" alt="stack admin logo" src="../../../images/logo/main-logo.png" style="width: 140px;"></a>    
+		                  <a href="/"><img class="brand-text" alt="stack admin logo" src="../../../images/logo/main-logo.png" style="width: 140px;"></a>
 		               </div>
 		            </div>
 		            <p class="report-button text-center"> <a href="#" data-bs-toggle="modal" data-bs-target="#report-modal"><i class="fas fa-exclamation-triangle"></i>Report Freelancer</a></p>

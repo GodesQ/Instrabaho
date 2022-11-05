@@ -66,7 +66,7 @@
             strokeColor : "#ff6c23",
             pointColor : "#fff",
             pointBorderColor: "rgba(255,255,255,1)",
-            pointBackgroundColor: "#2DCEE3",
+            pointBackgroundColor: "#04bbff",
             pointBorderWidth: 2,
             pointHoverBorderWidth: 2,
             pointRadius: 5,

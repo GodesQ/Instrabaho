@@ -2599,10 +2599,10 @@ input:focus ~ .bg-info {
   background-color: #44d3e6; }
 
 .info {
-  color: #2dcee3 !important; }
+  color: #04bbff !important; }
 
 .bg-info {
-  background-color: #2dcee3 !important; }
+  background-color: #04bbff !important; }
   .bg-info .card-header,
   .bg-info .card-footer {
     background-color: transparent; }
@@ -2615,20 +2615,20 @@ input:focus ~ .bg-info {
     color: #062a2f !important; }
 
 .bullet.bullet-info {
-  background-color: #2dcee3; }
+  background-color: #04bbff; }
 
 .bg-light-info {
   background-color: rgba(45, 206, 227, 0.15); }
 
 .border-info {
-  border-color: #2dcee3; }
+  border-color: #04bbff; }
 
 .bg-info.badge-glow,
 .border-info.badge-glow {
-  box-shadow: 0px 0px 10px #2dcee3; }
+  box-shadow: 0px 0px 10px #04bbff; }
 
 .overlay-info {
-  background: #2dcee3;
+  background: #04bbff;
   /* The Fallback */
   background: rgba(45, 206, 227, 0.8); }
 
@@ -2643,7 +2643,7 @@ input:focus ~ .bg-info {
       } */
 .btn-info {
   border-color: !important;
-  background-color: #2dcee3 !important;
+  background-color: #04bbff !important;
   color: #FFFFFF; }
   .btn-info:hover {
     border-color: #1dc4da !important;
@@ -2655,44 +2655,44 @@ input:focus ~ .bg-info {
     color: #FFF !important; }
 
 .btn-outline-info {
-  border-color: #2dcee3;
+  border-color: #04bbff;
   background-color: transparent;
-  color: #2dcee3; }
+  color: #04bbff; }
   .btn-outline-info:hover {
-    background-color: #2dcee3;
+    background-color: #04bbff;
     color: #FFF !important; }
 
 .widget-timeline .timeline-items.timeline-icon-info:before {
-  background-color: #2dcee3; }
+  background-color: #04bbff; }
 
 input[type="checkbox"].bg-info + .custom-control-label:before, input[type="radio"].bg-info + .custom-control-label:before {
-  background-color: #2dcee3 !important; }
+  background-color: #04bbff !important; }
 
 input:focus ~ .bg-info {
-  box-shadow: 0 0 0 0.075rem #fff, 0 0 0 0.21rem #2dcee3 !important; }
+  box-shadow: 0 0 0 0.075rem #fff, 0 0 0 0.21rem #04bbff !important; }
 
 .border-info {
-  border: 1px solid #2dcee3 !important; }
+  border: 1px solid #04bbff !important; }
 
 .border-top-info {
-  border-top: 1px solid #2dcee3; }
+  border-top: 1px solid #04bbff; }
 
 .border-bottom-info {
-  border-bottom: 1px solid #2dcee3; }
+  border-bottom: 1px solid #04bbff; }
 
 .border-left-info {
-  border-left: 1px solid #2dcee3; }
+  border-left: 1px solid #04bbff; }
 
 .border-right-info {
-  border-right: 1px solid #2dcee3; }
+  border-right: 1px solid #04bbff; }
 
 /* Scrumboard Application - kanban-item with coloured border */
 /* --------------------------------------------------------- */
 .kanban-container .kanban-board .kanban-item[data-border=info]:before {
-  background-color: #2dcee3; }
+  background-color: #04bbff; }
 
 .edit-kanban-item select option.bg-color_name {
-  background-color: #2dcee3; }
+  background-color: #04bbff; }
 
 .info.darken-1 {
   color: #1dc4da !important; }

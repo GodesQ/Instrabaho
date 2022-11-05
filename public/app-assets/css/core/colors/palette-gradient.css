@@ -107,11 +107,11 @@
   background-repeat: repeat-x; }
 
 .bg-gradient-x2-info {
-  background-image: linear-gradient(to right, #5ad9e9, #2dcee3 50%, #71deec);
+  background-image: linear-gradient(to right, #5ad9e9, #04bbff 50%, #71deec);
   background-repeat: no-repeat; }
 
 .bg-gradient-y2-info {
-  background-image: linear-gradient(#5ad9e9, #2dcee3 50%, #71deec);
+  background-image: linear-gradient(#5ad9e9, #04bbff 50%, #71deec);
   background-repeat: no-repeat; }
 
 .bg-gradient-radial-info {

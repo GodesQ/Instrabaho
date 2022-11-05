@@ -193,7 +193,7 @@
                                     </div>
                                     <div class="fr-jobs-price">
                                         <div class="style-hd">
-                                        <span class="style-6"><span class="currency">₱ </span><span class="price">{{ number_format($project->cost, 2) }}</span></span><small class="protip" data-pt-position="top" data-pt-scheme="black" data-pt-title=""><i class="far fa-question-circle" aria-hidden="true"></i></small>                        
+                                        <span class="style-6"><span class="currency">₱ </span><span class="price">{{ number_format($project->cost, 2) }}</span></span><small class="protip" data-pt-position="top" data-pt-scheme="black" data-pt-title=""><i class="far fa-question-circle" aria-hidden="true"></i></small>
                                         </div>
                                         <p>({{ $project->project_cost_type }})</p>
                                     </div>
@@ -242,14 +242,13 @@
                                 <div class="fr-right-bid" style="width: 30%;">
                                     <ul>
                                        <li><a href="/project/{{ $project->id }}" class="btn btn-theme btn-theme-secondary">View Project</a></li>
-                                       <li><a href="/project/{{ $project->id }}#fr-bid-form" class="btn btn-theme"> Send Proposal </a></li>
                                     </ul>
                                 </div>
                             </div>
                             </div>
                         </div>
                       @empty
-                         
+
                       @endforelse
                    </div>
                    <div class="row">

@@ -14,6 +14,9 @@
             <div class="repeater-default">
                 <form action="/store_experiences" method="POST">
                     @csrf
+                    @if(session()->get('role') == 'admin')
+                        <input type="number" hidden name="user_id" value="{{ $freelancer->user_id }}">
+                    @endif
                     <div data-repeater-list="experiences">
                         @forelse($freelancer->experiences as $experience)
                             <div data-repeater-item="">

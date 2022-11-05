@@ -1,16 +1,20 @@
 <div class="main-menu menu-fixed menu-light menu-accordion" data-scroll-to-active="true">
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="profile-menu d-flex justify-content-center flex-column align-items-center my-2 bg-gradient-x-primary p-2 m-2 rounded">
-                <div class="avatar avatar-xl profile-menu-avatar">
-                    @if(Session::get('profile_image'))
-                        <img class="brand-text" style="width: 70px; height: 70px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
-                    @else
-                        <img class="brand-text" src="../../../images/user-profile.png" alt="Avatar Image">
-                    @endif
+            <li class="profile-menu my-2 card p-1 m-2 rounded">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="avatar avatar-xl profile-menu-avatar" style="width: 30% !important;">
+                        @if(Session::get('profile_image'))
+                            <img class="brand-text" style="width: 40px; height: 40px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
+                        @else
+                            <img class="brand-text" src="../../../images/user-profile.png" alt="Avatar Image">
+                        @endif
+                    </div>
+                    <div style="width: 70% !important;">
+                        <h6 class="mt-75 profile-menu-text" style="color: #000; line-height: 0px;" data-i18n="Name">{{ Session::get('username') }}</h6>
+                        <span style="font-size: 8px; color: #000;" class="profile-menu-text">{{ Session::get('email') }}</span>
+                    </div>
                 </div>
-                <h4 class="mt-75 profile-menu-text" style="color: #ffffff; line-height: 10px;" data-i18n="Name">{{ Session::get('username') }}</h4>
-                <span style="font-size: 10px; color: #ffffff;" class="profile-menu-text">{{ Session::get('email') }}</span>
             </li>
             <li class=" nav-item {{ Request::path() == 'dashboard' ? 'active' : '' }}">
                 <a href="/dashboard"><i class="feather icon-home"></i>
@@ -34,15 +38,11 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Manage Services">Manage Services</span></a>
+            <li class="nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Services">Manage Services</span></a>
                 <ul class="menu-content">
                     <li class="{{ Request::path() == 'create_service' ? 'active' : '' }}"><a class="menu-item" href="/create_service" data-i18n="Create Services">Create Services</a>
                     </li>
                     <li class="{{ Request::path() == 'services' ? 'active' : '' }}"><a class="menu-item" href="/services" data-i18n="Active Services">My Services</a>
-                    </li>
-                    <li class="{{ Request::path() == 'services_offer/pending' ? 'active' : '' }}"><a class="menu-item" href="/services_offer/pending" data-i18n="Offers">Offers</a>
-                    </li>
-                    <li class="{{  Request::path() == 'services_offer/approved' ? 'active' : ''  }}"><a class="menu-item" href="/services_offer/approved" data-i18n="Approved Services">Approved Services</a>
                     </li>
                     <li><a class="menu-item" href="" data-i18n="Canceled Services">Canceled Services</a>
                     </li>
@@ -50,9 +50,7 @@
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Projects">Manage Projects</span></a>
                 <ul class="menu-content">
-                    <li class="{{ Request::path() == 'project_proposals/ongoing' ? 'active' : '' }}"><a class="menu-item" href="/project_proposals/ongoing" data-i18n="Ongoing Projects">Ongoing Projects</a>
-                    </li>
-                    <li class="{{ Request::path() == 'project_proposals/completed' ? 'active' : '' }}"><a class="menu-item" href="/project_proposals/completed" data-i18n="Completed Projects">Completed Projects</a>
+                    <li class="{{ Request::path() == 'project_proposals/approved' ? 'active' : '' }}"><a class="menu-item" href="/project_proposals/approved" data-i18n="Approved Projects">Approved Projects</a>
                     </li>
                     <li><a class="menu-item" href="" data-i18n="Canceled Projects">Canceled Projects</a>
                     </li>

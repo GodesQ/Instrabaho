@@ -11,7 +11,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 :root {
-  --blue: #2dcee3;
+  --blue: #04bbff;
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
@@ -27,7 +27,7 @@
   --primary: #04bbff;
   --secondary: #000000;
   --success: #16d39a;
-  --info: #2dcee3;
+  --info: #04bbff;
   --warning: #ff7e00;
   --danger: #ff7588;
   --light: #babfc7;
@@ -1567,7 +1567,7 @@ pre {
   .form-control:focus {
     color: #4e5154;
     background-color: #fff;
-    border-color: #04bbff;
+    border-color: #003066;
     outline: 0;
     box-shadow: none; }
   .form-control::placeholder {
@@ -2033,8 +2033,8 @@ fieldset:disabled a.btn {
 
 .btn-info {
   color: #2a2e30;
-  background-color: #2dcee3;
-  border-color: #2dcee3; }
+  background-color: #04bbff;
+  border-color: #04bbff; }
   .btn-info:hover {
     color: #fff;
     background-color: #1cbace;
@@ -2046,8 +2046,8 @@ fieldset:disabled a.btn {
     box-shadow: 0 0 0 0.2rem rgba(45, 182, 200, 0.5); }
   .btn-info.disabled, .btn-info:disabled {
     color: #2a2e30;
-    background-color: #2dcee3;
-    border-color: #2dcee3; }
+    background-color: #04bbff;
+    border-color: #04bbff; }
   .btn-info:not(:disabled):not(.disabled):active, .btn-info:not(:disabled):not(.disabled).active,
   .show > .btn-info.dropdown-toggle {
     color: #fff;
@@ -2225,22 +2225,22 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(22, 211, 154, 0.5); }
 
 .btn-outline-info {
-  color: #2dcee3;
-  border-color: #2dcee3; }
+  color: #04bbff;
+  border-color: #04bbff; }
   .btn-outline-info:hover {
     color: #2a2e30;
-    background-color: #2dcee3;
-    border-color: #2dcee3; }
+    background-color: #04bbff;
+    border-color: #04bbff; }
   .btn-outline-info:focus, .btn-outline-info.focus {
     box-shadow: 0 0 0 0.2rem rgba(45, 206, 227, 0.5); }
   .btn-outline-info.disabled, .btn-outline-info:disabled {
-    color: #2dcee3;
+    color: #04bbff;
     background-color: transparent; }
   .btn-outline-info:not(:disabled):not(.disabled):active, .btn-outline-info:not(:disabled):not(.disabled).active,
   .show > .btn-outline-info.dropdown-toggle {
     color: #2a2e30;
-    background-color: #2dcee3;
-    border-color: #2dcee3; }
+    background-color: #04bbff;
+    border-color: #04bbff; }
     .btn-outline-info:not(:disabled):not(.disabled):active:focus, .btn-outline-info:not(:disabled):not(.disabled).active:focus,
     .show > .btn-outline-info.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(45, 206, 227, 0.5); }
@@ -3707,12 +3707,12 @@ input[type="button"].btn-block {
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: #009c9f;
+  color: #04bbff;
   background-color: #fff;
   border: 1px solid #ddd; }
   .page-link:hover {
     z-index: 2;
-    color: #008385;
+    color: #04bbff;
     text-decoration: none;
     background-color: #f5f7fa;
     border-color: #ddd; }
@@ -3829,7 +3829,7 @@ input[type="button"].btn-block {
 
 .badge-info {
   color: #2a2e30;
-  background-color: #2dcee3; }
+  background-color: #04bbff; }
   a.badge-info:hover, a.badge-info:focus {
     color: #2a2e30;
     background-color: #1ab0c3; }
@@ -4926,7 +4926,7 @@ button.bg-success:focus {
   background-color: #11a578 !important; }
 
 .bg-info {
-  background-color: #2dcee3 !important; }
+  background-color: #04bbff !important; }
 
 a.bg-info:hover, a.bg-info:focus,
 button.bg-info:hover,
@@ -5011,7 +5011,7 @@ button.bg-dark:focus {
   border-color: #16d39a !important; }
 
 .border-info {
-  border-color: #2dcee3 !important; }
+  border-color: #04bbff !important; }
 
 .border-warning {
   border-color: #ff7e00 !important; }
@@ -8420,7 +8420,7 @@ a.text-success:hover, a.text-success:focus {
   color: #0f8e67 !important; }
 
 .text-info {
-  color: #2dcee3 !important; }
+  color: #04bbff !important; }
 
 a.text-info:hover, a.text-info:focus {
   color: #179bad !important; }

@@ -139,7 +139,7 @@
                 </div>
             </div>
             <div class="form-footer float-right">
-                <button class="btn btn-primary">Save</button>
+                <button class="btn btn-primary mt-1">Save</button>
             </div>
         </div>
     </form>

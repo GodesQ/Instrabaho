@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 
 use App\Models\Service;
+use App\Models\ServicesProposal;
 use App\Models\Freelancer;
 use App\Models\Employer;
 use App\Models\ServiceCategory;
@@ -33,7 +34,7 @@ class ServicesController extends Controller
     public function store(Request $request) {
         //check if the current plan is exceed in limit
         if($this->checkAvailableService($request->type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
-        
+
         $request->validate([
             'name' => 'required',
             'cost' => 'required',
@@ -57,7 +58,7 @@ class ServicesController extends Controller
         $json_images = json_encode($images);
         $user_id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $user_id)->first();
-        
+
         $save = Service::create([
             'freelancer_id' => $freelancer->id,
             'name' => $request->name,
@@ -72,15 +73,46 @@ class ServicesController extends Controller
             'attachments' => $json_images,
             'expiration_date' => $freelancer->package_date_expiration
         ]);
-        
+
         return redirect('/services')->with('success', 'Service Added Successfully');
     }
 
     public function edit(Request $request) {
+        $user_id = session()->get('id');
+        $role = session()->get('role');
+        $user = Freelancer::where('user_id', $user_id)->first();
         $service = Service::where('id', $request->id)->first();
         $categories = ServiceCategory::all();
         $service_images = json_decode($service->attachments);
-        return view('UserAuthScreens.services.edit-service', compact('service', 'categories', 'service_images'));
+
+        $pending_offers = ServicesProposal::where('seller_id', $user->id)
+        ->where('service_id', $service->id)
+        ->where('status', 'pending')
+        ->where('isCancel', 0)
+        ->with('service', 'employer')
+        ->whereHas('service', function($q) {
+            $q->where('expiration_date', '>=', Carbon::now());
+        })
+        ->cursorPaginate(10);
+
+        return view('UserAuthScreens.services.edit-service', compact('service', 'categories', 'service_images', 'pending_offers'));
+    }
+
+    public function fetch_services_offer(Request $request) {
+        $user_id = session()->get('id');
+        $role = session()->get('role');
+        $user = Freelancer::where('user_id', $user_id)->first();
+        $service = Service::where('id', $request->id)->first();
+        $pending_offers = ServicesProposal::where('seller_id', $user->id)
+        ->where('service_id', $service->id)
+        ->where('status', 'pending')
+        ->where('isCancel', 0)
+        ->with('service', 'employer')
+        ->whereHas('service', function($q) {
+            $q->where('expiration_date', '>=', Carbon::now());
+        })
+        ->cursorPaginate(10);
+        return view('UserAuthScreens.services_proposals.freelancer.pending', compact('pending_offers'))->render();
     }
 
     public function update(Request $request) {
@@ -126,7 +158,7 @@ class ServicesController extends Controller
             return back()->with('success', 'Update Successfully');
         }
 
-        
+
     }
 
     public function remove_image(Request $request) {
@@ -134,20 +166,20 @@ class ServicesController extends Controller
         $service = Service::where('id', $request->id)->first();
         $service_images = json_decode($service->attachments);
         if(count($service_images) < 2) return response()->json(['status' => 424, 'message' => 'Fail! You only have one image. Keep this image for reference']);
-        
+
         // Search image in array
         $found_image = in_array($service_images[$key_id], $service_images);
         if($found_image) {
             $image_path = public_path('/images/services/') . $service_images[$key_id];
             $remove_image = @unlink($image_path);
-            
+
             if($key_id == 0) {
                 array_shift($service_images);
             }else {
                 unset($service_images[$key_id]);
             }
-           
-            
+
+
         }
         $service->attachments = json_encode($service_images);
         $save = $service->save();
@@ -159,12 +191,12 @@ class ServicesController extends Controller
             ]);
         }
 
-    } 
+    }
 
     public function destroy(Request $request) {
         $service = Service::where('id', $request->id)->first();
         $service_images = json_decode($service->attachments);
-        
+
         foreach ($service_images as $key => $image) {
             $image_path = public_path('/images/services/') . $image;
             $remove_image = @unlink($image_path);
@@ -192,7 +224,7 @@ class ServicesController extends Controller
         // Get the current created services of user
         $current_user_services = Service::where('freelancer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->count();
         $current_user_featured_services = Service::where('freelancer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->where('type', 'featured')->count();
-        
+
         if($current_user_services == $purchased_plan->total_services) return true;
 
         if($type == 'featured') {
@@ -223,7 +255,7 @@ class ServicesController extends Controller
                 ->addColumn('freelancer', function($row) {
                     return $row->freelancer->user->firstname . " " . $row->freelancer->user->lastname;
                 })
-                ->addColumn('action', function($row){     
+                ->addColumn('action', function($row){
                     $btn = '<a href="/admin/services/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
                             <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;

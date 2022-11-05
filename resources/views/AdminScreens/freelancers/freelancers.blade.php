@@ -17,7 +17,7 @@
                                     <div class="badge bg-success bg-accent-4 text-secondary font-weight-bold px-2 p-1"><i class="fa fa-arrow-up"></i> 20%</div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                                     <div class="badge bg-danger bg-accent-4 text-secondary font-weight-bold px-2 p-1"><i class="fa fa-arrow-down"></i> 10%</div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                                     <img src="../../../images/user-profile.png" alt="" class="avatar avatar-sm" style="margin-left: -10px;">
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -70,6 +70,7 @@
                                 <th>Freelancer Type</th>
                                 <th>Hourly Rate</th>
                                 <th>Member Since</th>
+                                <th>Active Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -123,6 +124,12 @@
                 {
                     data: 'member_since',
                     name: 'member_since',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'active_status',
+                    name: 'active_status',
                     orderable: true,
                     searchable: true
                 },

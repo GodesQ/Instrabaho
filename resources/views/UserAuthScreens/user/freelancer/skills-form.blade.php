@@ -14,6 +14,9 @@
             <div class="repeater-default">
                 <form action="/store_skills" method="POST">
                     @csrf
+                    @if(session()->get('role') == 'admin')
+                        <input type="number" hidden name="user_id" value="{{ $freelancer->user_id }}">
+                    @endif
                     <div data-repeater-list="skills">
                         @forelse($freelancer->skills as $freelancer_skill)
                             <div data-repeater-item="">
@@ -30,7 +33,7 @@
                                         <span class="text-danger danger">@error('skill'){{ $message }}@enderror</span>
                                     </div>
                                     <div class="form-group mb-1 col-sm-12 col-md-5">
-                                        <label for="pass">Skill Percentage 
+                                        <label for="pass">Skill Percentage
                                             <span class="text-primary" style="font-size: 12px; font-style: italic;">(Up to 100%)</span>
                                         </label>
                                         <br>
@@ -58,7 +61,7 @@
                                         <span class="text-danger danger">@error('skill'){{ $message }}@enderror</span>
                                     </div>
                                     <div class="form-group mb-1 col-sm-12 col-md-5">
-                                        <label for="pass">Skill Percentage 
+                                        <label for="pass">Skill Percentage
                                             <span class="text-primary" style="font-size: 12px; font-style: italic;">(Up to 100%)</span>
                                         </label>
                                         <br>
