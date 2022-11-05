@@ -22,7 +22,7 @@
 
 <style>
     #map-canvas {
-        height: 300px;
+        height: 200px;
         width: 100%;
     }
 </style>
@@ -31,7 +31,7 @@
         <div class="page-content">
             <div class="container">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header d-flex justify-content-between aJlign-items-center">
                         <h2 class="card-title font-weight-bold">Edit Service</h2>
                         <a href="/admin/services" class="btn btn-secondary">Back to List</a>
                     </div>
