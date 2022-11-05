@@ -84,7 +84,7 @@ class ProjectsController extends Controller
         }
     }
 
-    public function edit(Request $request) {
+    public function user_edit(Request $request) {
         $project = Project::where('id', $request->id)->first();
         $categories = ServiceCategory::all();
         $skills = Skill::all();

@@ -9,5 +9,5 @@ class Skill extends Model
 {
     use HasFactory;
     protected $table = 'skills';
-    protected $guard = [];
+    protected $guarded = [];
 }

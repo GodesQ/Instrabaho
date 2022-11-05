@@ -16,7 +16,7 @@ class ServiceCategoriesController extends Controller
 
     public function data_table(Request $request) {
         abort_if(!$request->ajax(), 404);
-        $data = ServiceCategory::select('*');
+        $data = ServiceCategory::select('*')->latest('id');
         return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('created_at', function($row) {
@@ -24,7 +24,7 @@ class ServiceCategoriesController extends Controller
                 })
                 ->addColumn('action', function($row) {
                     $btn = '<button onclick="getCategory('.$row->id.')" class="edit datatable-btn datatable-btn-edit" data-toggle="modal" data-target="#inlineForm"><i class="fa fa-edit"></i></button>
-                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
+                            <button id="'. $row->id .'" class="delete-category datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -39,7 +39,7 @@ class ServiceCategoriesController extends Controller
     public function update(Request $request) {
         $request->validate([
             'id' => 'required|exists:services_categories,id',
-            'category_name' => 'required|alpha'
+            'category_name' => 'required'
         ]);
 
         ServiceCategory::where('id', $request->id)->update([
@@ -47,6 +47,31 @@ class ServiceCategoriesController extends Controller
         ]);
 
         return back()->with('success', 'Category Update Successfully');
+    }
+
+    public function store(Request $request) {
+        $request->validate([
+            'category_name' => 'required'
+        ]);
+
+        ServiceCategory::create([
+            'name' => $request->category_name
+        ]);
+
+        return back()->with('success', 'Category Added Successfully');
+    }
+
+    public function destroy(Request $request) {
+        abort_if(!$request->ajax(), 403);
+
+        $delete = ServiceCategory::where('id', $request->id)->delete();
+
+        if($delete) {
+            return response()->json([
+                'status' => 201,
+                'message' => 'Deleted Successfully'
+            ]);
+        }
     }
 
 }

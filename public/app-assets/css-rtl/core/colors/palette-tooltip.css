@@ -54,14 +54,14 @@
 }
 
 .tooltip-bg-info .tooltip-inner {
-  background-color : #2DCEE3;
+  background-color : #04bbff;
 }
 .tooltip-bg-info .tooltip-inner:before {
-  border-top-color : #2DCEE3 !important;
+  border-top-color : #04bbff !important;
 }
 
 .tooltip-text-info .tooltip-inner {
-  color : #2DCEE3;
+  color : #04bbff;
 }
 
 .tooltip-bg-warning .tooltip-inner {

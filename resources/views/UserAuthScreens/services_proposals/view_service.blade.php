@@ -1,4 +1,4 @@
-@extends('layout.user-layout') 
+@extends('layout.user-layout')
 @section('content')
 <div class="row">
     <div class="col-xl-4 col-lg-12">
@@ -42,13 +42,13 @@
                     </div>
                     <div class="col-lg-6">
                         <h5 class="font-weight-regular mt-2">
-                            Created Approval Date :
+                            Estimated Start Date :
                         </h5>
                         <div class="container">
                             <div class="font-weight-light">
                                 <div class="font-weight-bold">
                                     <i class="feather icon-calendar"></i>
-                                    {{ date_format(new DateTime($purchased_service->created_at), "F d, Y") }}
+                                    {{ date_format(new DateTime($purchased_service->estimated_start_date), "F d, Y") }}
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="font-weight-light">
                                 <div class="font-weight-bold">
                                     <i class="feather icon-calendar"></i>
-                                    {{ date_format(new DateTime($purchased_service->estimated_date), "F d, Y") }}
+                                    {{ date_format(new DateTime($purchased_service->estimated_finish_date), "F d, Y") }}
                                 </div>
                             </div>
                         </div>
@@ -69,9 +69,17 @@
                 </div>
             </div>
             <div class="container-fluid my-2">
-                <button type="button" class="btn btn-secondary">Cancel Service</button>
                 @if(session()->get('role') == 'employer')
+                    <a href="/edit_service/{{ $purchased_service->service_id }}" class="btn btn-secondary"><i class="feather icon-log-out"></i> Back to Service</a>
                     <a href="/pay_job/service/{{ $purchased_service->id }}" class="btn btn-primary">Pay Job & Set to Complete</a>
+                @else
+                    <a href="/edit_service/{{ $purchased_service->service_id }}" class="btn btn-secondary"><i class="feather icon-log-out"></i> Back to Service</a>
+                @endif
+                @if($purchased_service->status == 'approved')
+                    <button type="button" class="btn btn-danger">Cancel Service <i class="fa fa-thumbs-down"></i></button>
+                @endif
+                @if($purchased_service->status == 'pending')
+                    <a href="/service_proposal_information/{{ $purchased_service->id }}" class="btn btn-success">Approved Offer <i class="fa fa-thumbs-up"></i></a>
                 @endif
             </div>
         </div>
@@ -97,11 +105,7 @@
                             json_decode($purchased_service->service->attachments) @endphp
                             <div class="row">
                                 <div class="col-xl-6 col-lg-12">
-                                    <div
-                                        id="carousel-example-generic"
-                                        class="carousel slide"
-                                        data-ride="carousel"
-                                    >
+                                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                         <ol class="carousel-indicators">
                                             @foreach($attachments as $key => $attachment)
                                             <li
@@ -180,12 +184,7 @@
                                                     <span class="text-primary">Location:</span>
                                                     {{ $purchased_service->location }}
                                                 </div>
-                                                <div class="my-1">
-                                                    <span class="text-primary"
-                                                        >Estimated Date:</span
-                                                    >
-                                                    {{ date_format(new DateTime($purchased_service->estimated_date), "F d, Y") }}
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -264,7 +263,7 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection
 
 @push('scripts')
 <script src="../../../js/chat.js"></script>

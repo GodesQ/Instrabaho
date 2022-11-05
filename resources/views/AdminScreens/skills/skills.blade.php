@@ -23,6 +23,11 @@
     <div class="page-wrapper">
         <div class="page-content">
             <div class="container-fluid">
+                <div class="text-right my-2">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">
+                        Create <i class="feather icon-plus"></i>
+                    </button>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -39,6 +44,13 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade text-left" id="create" tabindex="-1" role="dialog" aria-labelledby="create" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        @include('AdminScreens.skills.create-skill')
                     </div>
                 </div>
             </div>
@@ -99,10 +111,59 @@
             method: 'GET',
             success: function(response) {
                 console.log(response.skill_name);
-                $('#skill_name').val(response.skill_name);
-                $('#skill_id').val(response.id);
+                $('#edit_skill_name').val(response.skill_name);
+                $('#edit_skill_id').val(response.id);
             }
         })
     }
+
+    $(document).on("click", ".delete-skill", function (e) {
+        e.preventDefault();
+        let id = $(this).attr("id");
+        let csrf = "{{ csrf_token() }}";
+        Swal.fire({
+            title: "Delete Skill",
+            text: "Are you sure you want to delete this?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#000",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "{{ route('admin.skills.destroy') }}",
+                    method: 'DELETE',
+                    data: {
+                        'id': id,
+                        '_token': csrf
+                    },
+                    success: function (response) {
+                        if(response.status == 201) {
+                            Swal.fire(
+                                "Deleted!",
+                                `${response.message}`,
+                                "success"
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            Swal.fire(
+                                "Error!",
+                                `Something went wrong! Please Try Again.`,
+                                "error"
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        }
+                    },
+                });
+            }
+        });
+    });
 </script>
 @endpush

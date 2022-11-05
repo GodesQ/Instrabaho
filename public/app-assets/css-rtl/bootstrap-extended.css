@@ -733,7 +733,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
 }
 
 .btn-info ~ .dropdown-menu .dropdown-item.active {
-  background-color : #2DCEE3;
+  background-color : #04bbff;
 }
 
 .btn-warning ~ .dropdown-menu .dropdown-item.active {
@@ -1783,10 +1783,10 @@ button, html [type='button'], [type='reset'], [type='submit'] {
 }
 
 .badge-info {
-  background-color : #2DCEE3;
+  background-color : #04bbff;
 }
 .badge-info.badge-glow {
-  box-shadow : 0 0 10px #2DCEE3;
+  box-shadow : 0 0 10px #04bbff;
 }
 .badge-info[href]:hover, .badge-info[href]:focus {
   background-color : #1AB0C3;
@@ -2118,7 +2118,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
 .nav.nav-tabs.nav-underline {
   background : #FFFFFF;
   position : relative;
-  border-bottom : 1px solid #2DCEE3;
+  border-bottom : 1px solid #04bbff;
 }
 .nav.nav-tabs.nav-underline .nav-item {
   position : relative;
@@ -2137,7 +2137,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
 }
 .nav.nav-tabs.nav-underline .nav-item.open a .nav-link:focus, .nav.nav-tabs.nav-underline .nav-item.open a .nav-link:hover {
   background-color : transparent;
-  color : #2DCEE3;
+  color : #04bbff;
 }
 .nav.nav-tabs.nav-underline .nav-item a.nav-link {
   position : relative;
@@ -2149,7 +2149,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
   padding : 0.5rem 1rem;
   -webkit-transition : color 0.2s;
           transition : color 0.2s;
-  color : #2DCEE3;
+  color : #04bbff;
   border : none;
 }
 .nav.nav-tabs.nav-underline .nav-item a.nav-link.dropdown-toggle::after {
@@ -2168,7 +2168,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
           transform : translate3d(0, 0, 0);
 }
 .nav.nav-tabs.nav-underline .nav-item a.nav-link:hover, .nav.nav-tabs.nav-underline .nav-item a.nav-link:focus {
-  color : #2DCEE3;
+  color : #04bbff;
 }
 .nav.nav-tabs.nav-underline .nav-item a.nav-link:before {
   position : absolute;
@@ -2176,7 +2176,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
   right : 0;
   width : 100%;
   height : 4px;
-  background : #2DCEE3;
+  background : #04bbff;
   content : '';
   -webkit-transition : -webkit-transform 0.3s;
           transition : -webkit-transform 0.3s;

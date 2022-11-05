@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Schema;
 
 class HomeScreenController extends Controller
 {
-    
+
     public function index() {
         $freelancers = ProjectProposal::select('freelancer_id', DB::raw('COUNT(freelancer_id) AS occurrences'))
         ->groupBy('freelancer_id')
@@ -52,10 +52,10 @@ class HomeScreenController extends Controller
             }
         })
         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
-            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . ")) 
-            * cos(radians(services.latitude)) 
-            * cos(radians(services.longitude) - radians(" . $longitude . ")) 
-            + sin(radians(" .$latitude. "))     
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
+            * cos(radians(services.latitude))
+            * cos(radians(services.longitude) - radians(" . $longitude . "))
+            + sin(radians(" .$latitude. "))
             * sin(radians(services.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
         })
         ->when($type, function ($q) use ($type) {
@@ -81,7 +81,7 @@ class HomeScreenController extends Controller
             'my_range' => $my_range,
             'type' => $type,
         ];
-        
+
         return view('CustomerScreens.home_screens.service-search', compact('services', 'service_categories', 'queries'));
     }
 
@@ -115,10 +115,10 @@ class HomeScreenController extends Controller
             }
         })
         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
-            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . ")) 
-            * cos(radians(projects.latitude)) 
-            * cos(radians(projects.longitude) - radians(" . $longitude . ")) 
-            + sin(radians(" .$latitude. "))     
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
+            * cos(radians(projects.latitude))
+            * cos(radians(projects.longitude) - radians(" . $longitude . "))
+            + sin(radians(" .$latitude. "))
             * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
         })
         ->when($type, function ($q) use ($type) {
@@ -133,7 +133,7 @@ class HomeScreenController extends Controller
 
         $service_categories = ServiceCategory::all();
         // dd($projects);
-        
+
         $queries = [
             'title' => $title,
             'categories' => $categories,
@@ -145,7 +145,7 @@ class HomeScreenController extends Controller
             'my_range' => $my_range,
             'type' => $type,
         ];
-        
+
         return view('CustomerScreens.home_screens.project-search', compact('projects', 'service_categories', 'queries'));
     }
 
@@ -154,7 +154,7 @@ class HomeScreenController extends Controller
         $project->setSkills(json_decode($project->skills));
         $project->getSkills();
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $save_project = SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first();
+        $save_project = session()->has('id') ? SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first() : null;
         $skills_array = Skill::whereIn('id', json_decode($project->skills))->get();
         return view('CustomerScreens.home_screens.project', compact('project', 'save_project'));
     }
@@ -177,10 +177,10 @@ class HomeScreenController extends Controller
             return $q->where(DB::raw('lower(display_name)'), 'like', '%' . strtolower($title) . '%');
         })
         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
-            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . ")) 
-            * cos(radians(user_freelancer.latitude)) 
-            * cos(radians(user_freelancer.longitude) - radians(" . $longitude . ")) 
-            + sin(radians(" .$latitude. "))     
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
+            * cos(radians(user_freelancer.latitude))
+            * cos(radians(user_freelancer.longitude) - radians(" . $longitude . "))
+            + sin(radians(" .$latitude. "))
             * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
         })
         ->when($my_range, function ($q) use ($my_range) {
@@ -213,7 +213,7 @@ class HomeScreenController extends Controller
             'freelancer_skills' => $freelancer_skills,
             'freelance_type' => $freelance_type,
         ];
-        
+
         return view('CustomerScreens.home_screens.freelancer-search', compact('freelancers', 'skills', 'queries'));
     }
 

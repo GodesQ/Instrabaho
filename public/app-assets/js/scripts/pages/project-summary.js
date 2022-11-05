@@ -8,7 +8,7 @@
 ==========================================================================================*/
 
 // custom colors declaration
-var $blue = '#2dcee3', //$info
+var $blue = '#04bbff', //$info
    $danger = '#ff7588', //$danger
    $orange = '#ff7e00', //$warning
    $green = '#16d39a', //$success
@@ -114,7 +114,7 @@ var radial_bar_multiple_chart_option = {
    },
    series: [89, 78, 67, 44],
    labels: ['Critical', 'High', 'Medium', 'Low'],
- 
+
  }
 
   var radial_bar_multiple_chart = new ApexCharts(

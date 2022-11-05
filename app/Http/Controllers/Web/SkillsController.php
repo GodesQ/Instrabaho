@@ -27,7 +27,7 @@ class SkillsController extends Controller
                 $btn = '<button onclick="getSkill('.$row->id.')" class="edit-skill-btn datatable-btn datatable-btn-edit" data-toggle="modal" data-target="#inlineForm">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
+                        <button id="'.$row->id.'" class="delete-skill datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></button>';
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -51,5 +51,29 @@ class SkillsController extends Controller
         ]);
 
         return back()->with('success', 'Skill Update Successfully');
+    }
+
+    public function store(Request $request) {
+        $request->validate([
+            'skill_name' => 'required',
+        ]);
+
+        Skill::create([
+            'skill_name' => $request->skill_name
+        ]);
+
+        return back()->with('success', 'Skill Added Successfully');
+    }
+
+    public function destroy(Request $request) {
+        abort_if(!$request->ajax(), 403);
+
+        $delete = Skill::where('id', $request->id)->delete();
+        if($delete) {
+            return response()->json([
+                'status' => 201,
+                'message' => 'Deleted Successfully'
+            ]);
+        }
     }
 }

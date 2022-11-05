@@ -27,10 +27,11 @@
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Projects">Manage Projects</span></a>
                 <ul class="menu-content">
-                    <li class="{{  Request::path() == 'create_project' ? 'active' : ''  }}"><a class="menu-item" href="/create_project" data-i18n="Create Projects">Create Projects</a>
+                    <li class="{{ Request::path() == 'create_project' ? 'active' : ''  }}"><a class="menu-item" href="/create_project" data-i18n="Create Projects">Create Projects</a>
                     </li>
-                    <li class="{{  Request::path() == 'projects' ? 'active' : ''  }}"><a class="menu-item" href="/projects" data-i18n="Active Projects">Active Projects</a>
+                    <li class="{{ Request::path() == 'projects' ? 'active' : ''  }}"><a class="menu-item" href="/projects" data-i18n="Active Projects">Active Projects</a>
                     </li>
+
                     <li class="{{  Request::path() == 'project_proposals/approved' ? 'active' : ''  }}"><a class="menu-item" href="/project_proposals/approved" data-i18n="Approved Projects">Approved Projects</a>
                     </li>
                     <li><a class="menu-item" href="" data-i18n="Canceled Projects">Canceled Projects</a>
@@ -40,7 +41,7 @@
             <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Services">Services</span></a>
                 <ul class="menu-content">
                     <li class="{{ Request::path() == 'services_offer/pending' ? 'active' : '' }}">
-                        <a class="menu-item" href="/services_offer/pending" data-i18n="Ongoing Services">My Offers</a>
+                        <a class="menu-item" href="/services_offer/pending" data-i18n="Ongoing Services">My Offers / Proposals</a>
                     </li>
                     <li class="{{ Request::path() == 'services_offer/approved' ? 'active' : '' }}"><a class="menu-item" href="/services_offer/approved" data-i18n="Ongoing Services">Approved Services</a>
                     </li>
@@ -63,7 +64,7 @@
                 <a href="/followed_freelancer"><i class="feather icon-heart"></i>
                     <span class="menu-title" data-i18n="Followed Freelancers">Followed Freelancers</span>
                 </a>
-                
+
             </li>
             <li  class="{{ Request::path() == 'user_fund' ? 'active' : '' }} nav-item">
                 <a href="/user_fund"><i class="feather icon-file"></i>

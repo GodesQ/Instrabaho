@@ -15,12 +15,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
 
-    
+
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/vendors.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/apexcharts.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/icheck/icheck.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/icheck/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/toggle/switchery.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/morris.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/extensions/unslider.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/weather-icons/climacons.min.css') }}">
@@ -48,8 +49,10 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/app-chat.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/chat.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/custom-step.css') }}">
-    <!-- END: Page CSS-->
+
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/app-todo.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/plugins/forms/switch.css') }}">
+    <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/style.css') }}">
@@ -58,13 +61,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
     <link
         rel="icon"
-        href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png"  
+        href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png"
         sizes="32x32"
     />
 
     <style>
         .hide-profile-menu {
             display: none !important;
+        }
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #003066 !important;
+        }
+        .select2-container--default .select2-selection--multiple {
+            border: 1px solid #003066 !important;
+        }
+        .select2-container--classic.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: 1px solid #003066 !important;
         }
     </style>
 
@@ -139,7 +151,7 @@
         @if(Session::get('role') == 'employer')
             @include('layout.employer-menu')
         @else
-            @include('layout.freelancer-menu') 
+            @include('layout.freelancer-menu')
         @endif
     <!-- END: Main Menu-->
 
@@ -181,7 +193,9 @@
     <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
     <script src="../../../app-assets/vendors/js/charts/apexcharts/apexcharts.min.js"></script>
     <script src="../../../app-assets/js/scripts/forms/custom-file-input.js"></script>
-    <!-- END: Page Vendor JS--> 
+    <script src="../../../app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js"></script>
+    <script src="../../../app-assets/vendors/js/forms/toggle/switchery.min.js"></script>
+    <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
     <script src="../../../app-assets/js/core/app-menu.js"></script>
@@ -191,6 +205,7 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/account-setting.js"></script>
     <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
     <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
     <script src="../../../app-assets/js/scripts/cards/card-statistics.js"></script>
@@ -202,6 +217,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="../../../app-assets/js/scripts/forms/switch.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="../../../app-assets/js/scripts/forms/checkbox-radio.js"></script>

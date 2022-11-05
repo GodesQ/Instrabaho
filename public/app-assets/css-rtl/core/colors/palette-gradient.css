@@ -160,14 +160,14 @@
 }
 
 .bg-gradient-x2-info {
-  background-image : -webkit-linear-gradient(right, #5AD9E9, #2DCEE3 50%, #71DEEC);
-  background-image :         linear-gradient(to left, #5AD9E9, #2DCEE3 50%, #71DEEC);
+  background-image : -webkit-linear-gradient(right, #5AD9E9, #04bbff 50%, #71DEEC);
+  background-image :         linear-gradient(to left, #5AD9E9, #04bbff 50%, #71DEEC);
   background-repeat : no-repeat;
 }
 
 .bg-gradient-y2-info {
-  background-image : -webkit-linear-gradient(#5AD9E9, #2DCEE3 50%, #71DEEC);
-  background-image :         linear-gradient(#5AD9E9, #2DCEE3 50%, #71DEEC);
+  background-image : -webkit-linear-gradient(#5AD9E9, #04bbff 50%, #71DEEC);
+  background-image :         linear-gradient(#5AD9E9, #04bbff 50%, #71DEEC);
   background-repeat : no-repeat;
 }
 

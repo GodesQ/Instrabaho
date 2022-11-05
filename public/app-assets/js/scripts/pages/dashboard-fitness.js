@@ -46,7 +46,7 @@
    // apex chart in dashboard fitness's activity division
 
    // custom colors declaration
-   var $blue = '#2dcee3', //$info
+   var $blue = '#04bbff', //$info
    $danger = '#ff7588', //$danger
    $orange = '#ff7e00', //$warning
    $green = '#16d39a', //$success
