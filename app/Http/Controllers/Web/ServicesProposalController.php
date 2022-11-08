@@ -86,6 +86,7 @@ class ServicesProposalController extends Controller
         ->cursorPaginate(10);
 
 
+
     }
 
     // public function pending(Request $request) {

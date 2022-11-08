@@ -4,7 +4,7 @@
 @if(Session::get('success'))
     @push('scripts')
         <script>
-            toastr.success('{{ Session::get("scripts") }}', 'Success');
+            toastr.success('{{ Session::get("success") }}', 'Success');
         </script>
     @endpush
 @endif
@@ -40,7 +40,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td> 
+                                    <td>
                                         <h3 style="font-size: 20px;">{{ date_format(new DateTime($addon->created_at), "F d, Y") }}</h3>
                                     </td>
                                     <td valign="center">

@@ -184,7 +184,6 @@
                                                     <span class="text-primary">Location:</span>
                                                     {{ $purchased_service->location }}
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>

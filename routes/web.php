@@ -126,6 +126,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('/destroy_service', [ServicesController::class, 'destroy'])->name('service.destroy');
 
         Route::get('/services_offer/employer', [ServicesProposalController::class, 'employer_proposals'])->name('employer_proposals')->middleware('employer.access');
+        Route::get('/services_offer/employer/fetch_data', [ServicesProposalController::class, 'fetch_employer_proposals'])->name('fetch_employer_proposals')->middleware('employer.access');
         Route::get('/services_offer/pending', [ServicesProposalController::class, 'pending'])->name('pending');
         Route::get('/services_offer/cancel', [ServicesProposalController::class, 'cancel'])->name('cancel');
         // Route::get('/services_offer/approved', [ServicesProposalController::class, 'approved'])->name('approved');
