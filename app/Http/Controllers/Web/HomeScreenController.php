@@ -66,13 +66,13 @@ class HomeScreenController extends Controller
             return $q->whereBetween('cost', [$range[0], $range[1]]);
         })
         ->where('expiration_date', '>' , Carbon::now())
-        ->with('category')
+        ->with('category') 
         ->cursorPaginate(10);
         $service_categories = ServiceCategory::all();
 
         $queries = [
             'title' => $title,
-            'categories' => $categories,
+            'categories' => $categories, 
             'price_min' => $price_min,
             'price_max' => $price_max,
             'address' => $address,
@@ -82,13 +82,13 @@ class HomeScreenController extends Controller
             'type' => $type,
         ];
 
-        return view('CustomerScreens.home_screens.service-search', compact('services', 'service_categories', 'queries'));
+        return view('CustomerScreens.home_screens.service.service-search', compact('services', 'service_categories', 'queries'));
     }
 
     public function service(Request $request) {
         $service = Service::where('id', $request->id)->with('category', 'freelancer')->first();
         $addons = Addon::where('user_role_id', $service->freelancer_id)->limit(5)->get();
-        return view('CustomerScreens.home_screens.service', compact('service', 'addons'));
+        return view('CustomerScreens.home_screens.service.service', compact('service', 'addons'));
     }
 
     public function projects(Request $request) {
@@ -129,7 +129,9 @@ class HomeScreenController extends Controller
             return $q->whereBetween('cost', [$range[0], $range[1]]);
         })
         ->with('category', 'employer')
-        ->cursorPaginate(10);
+        ->latest('id')
+        ->cursorPaginate(1);
+        
 
         $service_categories = ServiceCategory::all();
         // dd($projects);
@@ -146,7 +148,21 @@ class HomeScreenController extends Controller
             'type' => $type,
         ];
 
-        return view('CustomerScreens.home_screens.project-search', compact('projects', 'service_categories', 'queries'));
+        return view('CustomerScreens.home_screens.project.project-search', compact('projects', 'service_categories', 'queries'));
+    }
+
+    public function fetch_projects(Request $request) {
+        if(!$request->ajax) {
+            $projects = Project::select('*')
+            ->where('expiration_date', '>' , Carbon::now())
+            ->where('isExpired', 0)
+            ->orWhereNull('status')
+            ->with('category', 'employer')
+            ->latest('id')
+            ->cursorPaginate(1);
+
+            return view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
+        }
     }
 
     public function project(Request $request) {
@@ -156,7 +172,7 @@ class HomeScreenController extends Controller
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
         $save_project = session()->has('id') ? SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first() : null;
         $skills_array = Skill::whereIn('id', json_decode($project->skills))->get();
-        return view('CustomerScreens.home_screens.project', compact('project', 'save_project'));
+        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project'));
     }
 
     public function freelancers(Request $request) {
@@ -214,7 +230,7 @@ class HomeScreenController extends Controller
             'freelance_type' => $freelance_type,
         ];
 
-        return view('CustomerScreens.home_screens.freelancer-search', compact('freelancers', 'skills', 'queries'));
+        return view('CustomerScreens.home_screens.freelancer.freelancer-search', compact('freelancers', 'skills', 'queries'));
     }
 
     public function contact_us() {

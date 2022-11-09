@@ -49,6 +49,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
     Route::get('/search_services', [HomeScreenController::class, 'services']);
     Route::get('/search_projects', [HomeScreenController::class, 'projects']);
+    Route::get('/search_projects/fetch_data', [HomeScreenController::class, 'fetch_projects']);
     Route::get('/search_freelancers', [HomeScreenController::class, 'freelancers']);
 
     Route::get('/project/{id}', [HomeScreenController::class, 'project']);
