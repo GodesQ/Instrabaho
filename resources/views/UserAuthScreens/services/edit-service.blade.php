@@ -17,7 +17,7 @@
     </style>
     <div class="page-header">
         <div class="page-content">
-            <div class="container">
+            <div class="container-fluid">
                 <ul class="nav nav-tabs nav-underline no-hover-bg" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="base-tab31" data-toggle="tab" aria-controls="tab31" href="#tab31" role="tab" aria-selected="true">Details</a>
