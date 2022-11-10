@@ -54,13 +54,13 @@
                    <a href="/search_projects">Clear Result</a>
                 </div>
                 <div class="service-widget">
-                   <form action="#">
+                   <form action="#" id="projects-filter-form">
                       <div class="panel panel-default">
                          <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#search-widget"> Keywords </a> </div>
                          <div id="search-widget" class="panel-collapse collapse show" role="tabpanel">
                             <div class="panel-body" tabindex="1">
                                <div class="form-group">
-                                  <input type="text" class="form-control" value="{{ $queries['title'] }}" name="title" placeholder="What are you looking for" value="">
+                                  <input type="text" class="form-control" value="{{ $queries['title'] }}" id="title" name="title" placeholder="What are you looking for" value="">
                                </div>
                             </div>
                          </div>
@@ -107,7 +107,7 @@
                                   @foreach($service_categories as $category)
                                      <li class="">
                                         <div class="pretty p-icon p-thick p-curve">
-                                           <input type="checkbox" name="categories[]" {{ in_array($category->id, $queries['categories']) ? 'checked' : null }} value="{{ $category->id }}" id="{{ $category->id }}">
+                                           <input type="checkbox" id="categories" name="categories[]" {{ in_array($category->id, $queries['categories']) ? 'checked' : null }} value="{{ $category->id }}" id="{{ $category->id }}">
                                            <div class="state p-warning">
                                               <i class="icon fa fa-check" aria-hidden="true"></i>
                                               <label></label>
@@ -125,11 +125,11 @@
                          <div id="price-widget" class="panel-collapse collapse show" role="tabpanel">
                             <div class="panel-body" tabindex="4">
                                <div class="range-slider">
-                                 <input type="text" class="services-range-slider" name="my_range" value="" />
+                                 <input type="text" class="services-range-slider" id="my_range" name="my_range" value="" />
                                </div>
                                <div class="extra-controls">
-                                  <input type="text" class="services-input-from form-control" value="{{ $queries['price_min'] }}" name="price-min">
-                                  <input type="text" class="services-input-to form-control" value="{{ $queries['price_max'] }}" name="price-max">
+                                  <input type="text" class="services-input-from form-control" value="{{ $queries['price_min'] }}" id="price-min" name="price-min">
+                                  <input type="text" class="services-input-to form-control" value="{{ $queries['price_max'] }}" name="price-max" id="price-max">
                                </div>
                             </div>
                          </div>
@@ -138,7 +138,7 @@
                          <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#type-widget"> Type </a> </div>
                          <div id="type-widget" class="panel-collapse collapse show" role="tabpanel">
                             <div class="" tabindex="5">
-                               <select name="type" id="" class="select2 form-control">
+                               <select name="type" id="type" class="select2 form-control">
                                   <option value="">Select Type</option>
                                   <option {{ $queries['type'] == 'simple' ? 'selected' : null }} value="simple">Simple</option>
                                   <option {{ $queries['type'] == 'featured' ? 'selected' : null }} value="featured">Featured</option>
@@ -146,6 +146,7 @@
                             </div>
                          </div>
                       </div>
+                      <input type="hidden" name="page" id="page_count" value="1">
                       <div class="submit-btn">
                          <p><i>Select the options and press the Filter Result button to apply the changes  </i></p>
                          <button class="btn btn-theme btn-block" type="submit"> Filter Result</button>
@@ -194,23 +195,77 @@
    <script>
       $(document).ready(function() {
 
-         $(document).on('click', '.pagination .page-item a', function(event) {
-            event.preventDefault();
-            let page = $(this).attr('href').split('cursor=')[1];
-            fetchProjects(page, this);
-            
-         })
+        // $(document).on('click', '.pagination .page-item a', function(event) {
+        // event.preventDefault();
+        // let page = $(this).attr('href').split('page=')[1];
+        // $('#page_count').val(page);
 
-         function fetchProjects(page, element) {
-            $.ajax({
-               url: "/search_projects/fetch_data?cursor="+page,
-               success: function (data) {
-                  $('.projects-data').html(data);
-                 $('.protip-container').remove();
-               }
-            })
-         }
-         
+        // let selected_categories = [];
+        // // get the selected categories
+        // $.each($("#categories:checked"), function(){
+        //     selected_categories.push($(this).val());
+        // });
+
+        // let filter_data = {
+        //         title: $('#title').val(),
+        //         address: $('#map-search').val(),
+        //         latitude: $('.latitude').val(),
+        //         longitude: $('.longitude').val(),
+        //         my_range: $('#my_range').val(),
+        //         type: $('#type').val(),
+        //         categories: encodeURIComponent(JSON.stringify(selected_categories)),
+        //     }
+
+        //     let filter_parameters = `&title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
+        //     fetchProjects(page, filter_parameters);
+        // })
+
+        // function fetchProjects(page, filter_parameters) {
+        //     $.ajax({
+        //         url: "/search_projects/fetch_data?page="+page+filter_parameters,
+        //         success: function (data) {
+        //             $('.projects-data').html(data);
+        //             $('.protip-container').remove();
+        //         }
+        //     })
+        // }
+
+        // $(document).on('submit', '#projects-filter-form', function(event) {
+        //     event.preventDefault();
+        //     let selected_categories = [];
+
+        //     // get the selected categories
+        //     $.each($("#categories:checked"), function(){
+        //         selected_categories.push($(this).val());
+        //     });
+
+        //     // create filter data object
+        //     let filter_data = {
+        //         title: $('#title').val(),
+        //         address: $('#map-search').val(),
+        //         latitude: $('.latitude').val(),
+        //         longitude: $('.longitude').val(),
+        //         my_range: $('#my_range').val(),
+        //         type: $('#type').val(),
+        //         categories: encodeURIComponent(JSON.stringify(selected_categories)),
+        //     }
+
+        //     let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
+        //     let current_page = $('#page_count').val();
+
+        //     // send data to filter out projects
+        //     $.ajax({
+        //         url: "/search_projects/fetch_data?"+filter_parameters,
+        //         method: 'GET',
+        //         success: function (data) {
+        //             $('.projects-data').html(data);
+        //             $('.protip-container').remove();
+        //         }
+        //     })
+
+        // })
+
+
       })
    </script>
 @endpush
