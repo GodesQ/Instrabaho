@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyAccount;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use App\Models\Freelancer;
@@ -24,31 +25,31 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $userExist = User::where('email', $request->email)->first();
-        
-        if(!$userExist) return back()->with('fail', "Sorry your email doesn't exist");
 
-        if(!Hash::check($request->password, $userExist->password)) return back()->with('fail', "Sorry your password is incorrect.");
+        if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            return back()->withErrors('Your email or password is incorrect. Please Try Again.');
+        }
 
-        if(!$userExist->isVerify) return back()->with('fail', "Please verify your email address to continue.");
+        $user = Auth::user();
+        if(!$user->isVerify)  return back()->withErrors('Please verify your email address.');
 
         $request->session()->put([
-            'id' => $userExist->id,
-            'username' => $userExist->username,
-            'email' => $userExist->email,
+            'id' => $user->id,
+            'username' => $user->username,
+            'email' => $user->email,
             'role' => $request->role,
-            'profile_image' => $userExist->profile_image
+            'profile_image' => $user->profile_image
         ]);
 
-        $user_freelancer = Freelancer::where('user_id', $userExist->id)->first();
-        $user_employer = Employer::where('user_id', $userExist->id)->first();
+        $user_freelancer = Freelancer::where('user_id', $user->id)->first();
+        $user_employer = Employer::where('user_id', $user->id)->first();
 
         //check if the user has a freelancer data
-        if($request->role == 'freelancer' && !$user_freelancer) return redirect('/freelancer_role_form')->with('success', 'Login Successfully');
-        
+        if($request->role == 'freelancer' && !$user_freelancer) return redirect()->route('freelancer.role_form')->with('success', 'Login Successfully');
+
         //check if the user has a employer data
         if($request->role == 'employer' && !$user_employer) return redirect('/employer_role_form')->with('success', 'Login Successfully');
-        
+
         return redirect('/')->with('success', 'Login Successfully');
     }
 
@@ -82,7 +83,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'username' => $request->username,
         ];
-        
+
         // SEND EMAIL FOR VERIFICATION
         Mail::to($request->email)->send(new VerifyAccount($details));
 

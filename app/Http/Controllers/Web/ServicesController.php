@@ -22,7 +22,7 @@ class ServicesController extends Controller
     public function index() {
         $user_id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $user_id)->first();
-        $services = Service::where('freelancer_id', $freelancer->id)->where('expiration_date', '>=' , Carbon::now())->latest('id')->cursorPaginate(10);
+        $services = Service::where('freelancer_id', $freelancer->id)->where('expiration_date', '>=' , Carbon::now())->latest('id')->where('isDeleted', 0)->cursorPaginate(10);
         return view('UserAuthScreens.services.services', compact('services'));
     }
 
@@ -32,8 +32,10 @@ class ServicesController extends Controller
     }
 
     public function store(Request $request) {
-        //check if the current plan is exceed in limit
-        if($this->checkAvailableService($request->type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
+        if(session()->get('role') == 'freelancer') {
+            //check if the current plan is exceed in limit
+            if($this->checkAvailableService($request->type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
+        }
 
         $request->validate([
             'name' => 'required',
@@ -48,6 +50,8 @@ class ServicesController extends Controller
             'attachment' => 'required|max:2048',
         ]);
 
+        $user_type = base64_decode($request->user_type);
+
         $images = [];
         foreach ($request->file('attachment') as $key => $attachment) {
             $image_name = $attachment->getClientOriginalName();
@@ -56,8 +60,14 @@ class ServicesController extends Controller
         }
 
         $json_images = json_encode($images);
+
         $user_id = session()->get('id');
-        $freelancer = Freelancer::where('user_id', $user_id)->first();
+        $freelancer_query = Freelancer::query();
+        if($user_type == 'admin') {
+            $freelancer =  $freelancer_query->where('id', $request->freelancer)->first();
+        } else {
+            $freelancer = $freelancer_query->where('user_id', $user_id)->first();
+        }
 
         $save = Service::create([
             'freelancer_id' => $freelancer->id,
@@ -73,6 +83,8 @@ class ServicesController extends Controller
             'attachments' => $json_images,
             'expiration_date' => $freelancer->package_date_expiration
         ]);
+
+        if($user_type == 'admin') return redirect()->route('admin.services')->with('success', 'Successfully Created');
 
         return redirect('/services')->with('success', 'Service Added Successfully');
     }
@@ -202,7 +214,9 @@ class ServicesController extends Controller
             $remove_image = @unlink($image_path);
         }
 
-        $delete = $service->delete();
+        $service->attachments = [];
+        $service->isDeleted = 1;
+        $delete = $service->save();
 
         if($delete) {
             return response()->json([
@@ -240,7 +254,7 @@ class ServicesController extends Controller
 
     public function data_table(Request $request) {
         abort_if(!$request->ajax(), 403);
-        $data = Service::select('*')->with('freelancer', 'category')->where('expiration_date', '>=', Carbon::now());
+        $data = Service::select('*')->with('freelancer', 'category')->where('expiration_date', '>=', Carbon::now())->where('isDeleted', 0);
         return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('service_category', function($row) {
@@ -257,7 +271,7 @@ class ServicesController extends Controller
                 })
                 ->addColumn('action', function($row){
                     $btn = '<a href="/admin/services/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
+                            <a id="'. $row->id .'" class="delete-service datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'type'])
@@ -270,4 +284,10 @@ class ServicesController extends Controller
         $service_images = json_decode($service->attachments);
         return view('AdminScreens.services.edit-service', compact('service', 'categories', 'service_images'));
     }
+
+    public function admin_create(Request $request) {
+        $categories = ServiceCategory::all();
+        return view('AdminScreens.services.create-service', compact('categories'));
+    }
+
 }

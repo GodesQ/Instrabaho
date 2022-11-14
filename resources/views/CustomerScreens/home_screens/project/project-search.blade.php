@@ -193,79 +193,79 @@
 
 @push('scripts')
    <script>
-      $(document).ready(function() {
+    //   $(document).ready(function() {
 
-        // $(document).on('click', '.pagination .page-item a', function(event) {
-        // event.preventDefault();
-        // let page = $(this).attr('href').split('page=')[1];
-        // $('#page_count').val(page);
+    //     $(document).on('click', '.pagination .page-item a', function(event) {
+    //     event.preventDefault();
+    //     let page = $(this).attr('href').split('page=')[1];
+    //     $('#page_count').val(page);
 
-        // let selected_categories = [];
-        // // get the selected categories
-        // $.each($("#categories:checked"), function(){
-        //     selected_categories.push($(this).val());
-        // });
+    //     let selected_categories = [];
+    //     // get the selected categories
+    //     $.each($("#categories:checked"), function(){
+    //         selected_categories.push($(this).val());
+    //     });
 
-        // let filter_data = {
-        //         title: $('#title').val(),
-        //         address: $('#map-search').val(),
-        //         latitude: $('.latitude').val(),
-        //         longitude: $('.longitude').val(),
-        //         my_range: $('#my_range').val(),
-        //         type: $('#type').val(),
-        //         categories: encodeURIComponent(JSON.stringify(selected_categories)),
-        //     }
+    //     let filter_data = {
+    //             title: $('#title').val(),
+    //             address: $('#map-search').val(),
+    //             latitude: $('.latitude').val(),
+    //             longitude: $('.longitude').val(),
+    //             my_range: $('#my_range').val(),
+    //             type: $('#type').val(),
+    //             categories: encodeURIComponent(JSON.stringify(selected_categories)),
+    //         }
 
-        //     let filter_parameters = `&title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
-        //     fetchProjects(page, filter_parameters);
-        // })
+    //         let filter_parameters = `&title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
+    //         fetchProjects(page, filter_parameters);
+    //     })
 
-        // function fetchProjects(page, filter_parameters) {
-        //     $.ajax({
-        //         url: "/search_projects/fetch_data?page="+page+filter_parameters,
-        //         success: function (data) {
-        //             $('.projects-data').html(data);
-        //             $('.protip-container').remove();
-        //         }
-        //     })
-        // }
+    //     function fetchProjects(page, filter_parameters) {
+    //         $.ajax({
+    //             url: "/search_projects/fetch_data?page="+page+filter_parameters,
+    //             success: function (data) {
+    //                 $('.projects-data').html(data);
+    //                 $('.protip-container').remove();
+    //             }
+    //         })
+    //     }
 
-        // $(document).on('submit', '#projects-filter-form', function(event) {
-        //     event.preventDefault();
-        //     let selected_categories = [];
+    //     $(document).on('submit', '#projects-filter-form', function(event) {
+    //         event.preventDefault();
+    //         let selected_categories = [];
 
-        //     // get the selected categories
-        //     $.each($("#categories:checked"), function(){
-        //         selected_categories.push($(this).val());
-        //     });
+    //         // get the selected categories
+    //         $.each($("#categories:checked"), function(){
+    //             selected_categories.push($(this).val());
+    //         });
 
-        //     // create filter data object
-        //     let filter_data = {
-        //         title: $('#title').val(),
-        //         address: $('#map-search').val(),
-        //         latitude: $('.latitude').val(),
-        //         longitude: $('.longitude').val(),
-        //         my_range: $('#my_range').val(),
-        //         type: $('#type').val(),
-        //         categories: encodeURIComponent(JSON.stringify(selected_categories)),
-        //     }
+    //         // create filter data object
+    //         let filter_data = {
+    //             title: $('#title').val(),
+    //             address: $('#map-search').val(),
+    //             latitude: $('.latitude').val(),
+    //             longitude: $('.longitude').val(),
+    //             my_range: $('#my_range').val(),
+    //             type: $('#type').val(),
+    //             categories: encodeURIComponent(JSON.stringify(selected_categories)),
+    //         }
 
-        //     let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
-        //     let current_page = $('#page_count').val();
+    //         let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
+    //         let current_page = $('#page_count').val();
 
-        //     // send data to filter out projects
-        //     $.ajax({
-        //         url: "/search_projects/fetch_data?"+filter_parameters,
-        //         method: 'GET',
-        //         success: function (data) {
-        //             $('.projects-data').html(data);
-        //             $('.protip-container').remove();
-        //         }
-        //     })
+    //         // send data to filter out projects
+    //         $.ajax({
+    //             url: "/search_projects/fetch_data?"+filter_parameters,
+    //             method: 'GET',
+    //             success: function (data) {
+    //                 $('.projects-data').html(data);
+    //                 $('.protip-container').remove();
+    //             }
+    //         })
 
-        // })
+    //     })
 
 
-      })
+    //   })
    </script>
 @endpush

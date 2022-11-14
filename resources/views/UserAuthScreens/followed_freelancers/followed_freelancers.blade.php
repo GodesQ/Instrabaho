@@ -42,12 +42,12 @@
                                         <td>{{ number_format($followed_freelancer->freelancer->hourly_rate, 2) }}</td>
                                         <td class="40%">{{ date_format(new DateTime($followed_freelancer->freelancer->created_at), "F d, Y")}}</td>
                                         <td>
-                                            <a href="/freelancer/{{ $followed_freelancer->freelancer->user_id }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a>
-                                            <a href="/follow_freelancer/{{ $followed_freelancer->freelancer->id }}" class="btn btn-sm btn-outline-danger"><i class="feather icon-x"></i></a>
+                                            <a href="/freelancer/view/{{ $followed_freelancer->freelancer->user_id }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a>
+                                            <a href="/follow_freelancer/view/{{ $followed_freelancer->freelancer->id }}" class="btn btn-sm btn-outline-danger"><i class="feather icon-x"></i></a>
                                         </td>
                                     </tr>
                                 @empty
-                                    
+
                                 @endforelse
                             </tbody>
                         </table>
