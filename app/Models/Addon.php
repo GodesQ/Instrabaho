@@ -14,4 +14,5 @@ class Addon extends Model
     public function freelancer() {
         return $this->belongsTo(Freelancer::class, 'user_role_id', 'id');
     }
+
 }

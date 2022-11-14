@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WebAuth
 {
@@ -17,10 +18,9 @@ class WebAuth
 
     public function handle(Request $request, Closure $next)
     {
-        if(!session()->has('id') && !session()->has('role')) {
+        if(!session()->get('role') && !session()->get('id')) {
             return redirect('/login')->with('fail', 'Login to Continue.');
         }
-
         return $next($request);
     }
 }

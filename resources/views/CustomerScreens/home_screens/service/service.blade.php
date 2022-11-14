@@ -169,17 +169,17 @@
                                   <h3>About The Seller</h3>
                                </div>
                                <div class="fr-seller-servives-meta">
-                                  <a href="/freelancer/{{ $service->freelancer->user_id }} ">
+                                  <a href="/freelancer/view/{{ $service->freelancer->user_id }} ">
                                      <div class="fr-seller-profile"> <img src="../../../images/user/profile/{{ $service->freelancer->user->profile_image }}" alt="" class="img-fluid"> </div>
                                   </a>
                                   <div class="fr-seller-details">
-                                     <a href="/freelancer/{{ $service->freelancer->user_id }} "><span><i class="fa fa-check" aria-hidden="true"></i>{{ $service->freelancer->display_name }}</span></a>
+                                     <a href="/freelancer/view/{{ $service->freelancer->user_id }} "><span><i class="fa fa-check" aria-hidden="true"></i>{{ $service->freelancer->display_name }}</span></a>
                                      <h3>{{ $service->freelancer->tagline }}</h3>
                                      <div class="fr-seller-rating">
                                         No Reviews
                                      </div>
                                   </div>
-                                  <div class="fr-seller-view"> <a href="/freelancer/{{ $service->freelancer->user_id }}" class="btn btn-theme">View Profile</a> </div>
+                                  <div class="fr-seller-view"> <a href="/freelancer/view/{{ $service->freelancer->user_id }}" class="btn btn-theme">View Profile</a> </div>
                                </div>
                             </div>
                             <div class="fr-seller-contents">

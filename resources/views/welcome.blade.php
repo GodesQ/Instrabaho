@@ -1,4 +1,4 @@
-@extends('layout.layout') 
+@extends('layout.layout')
 
 @section('content')
 @if(Session::get('success'))
@@ -70,7 +70,7 @@
                             <h1>Trabaho o trabahador?
                                 Boss, anong hanap mo?</h1>
                             <p>
-                                Instrabaho is a community where you can post a project if you are an employer or you may post service if you are a freelancer. 
+                                Instrabaho is a community where you can post a project if you are an employer or you may post service if you are a freelancer.
                                 This initiative is to help people who lose their job during the time of the pandemic.
                             </p>
                         </div>
@@ -172,17 +172,17 @@
                         <div class="fr-latest-details">
                            <div class="fr-latest-content-service">
                               <div class="fr-latest-profile">
-                                 <a class="user-image" href="/freelancer/{{ $freelancer->freelancer->user_id }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
+                                 <a class="user-image" href="/freelancer/view/{{ $freelancer->freelancer->user_id }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
                                  <div class="fr-latest-profile-data">
-                                    <span class="fr-latest-name"><a href="/freelancer/{{ $freelancer->freelancer->user_id }}">{{ $freelancer->freelancer->display_name }}</a></span>
+                                    <span class="fr-latest-name"><a href="/freelancer/view/{{ $freelancer->freelancer->user_id }}">{{ $freelancer->freelancer->display_name }}</a></span>
                                  </div>
                               </div>
-                              <p><a href="/freelancer/{{ $freelancer->freelancer->user_id }}">{{ substr($freelancer->freelancer->description, 0, 50) . '...' }}</a></p>
+                              <p><a href="/freelancer/view/{{ $freelancer->freelancer->user_id }}">{{ substr($freelancer->freelancer->description, 0, 50) . '...' }}</a></p>
                               <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
                            </div>
                            <div class="fr-latest-bottom">
                               <p>Starting From<span><span class="currency">₱</span><span class="price">{{ number_format($freelancer->freelancer->hourly_rate, 2) }}</span></span></p>
-                              <a href="/freelancer/{{ $freelancer->freelancer->user_id }}" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow Freelancer" data-post-id="182"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                              <a href="/freelancer/view/{{ $freelancer->freelancer->user_id }}" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow Freelancer" data-post-id="182"><i class="fa fa-heart" aria-hidden="true"></i></a>
                            </div>
                         </div>
                      </div>

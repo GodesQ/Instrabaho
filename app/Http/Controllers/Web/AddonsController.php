@@ -30,15 +30,24 @@ class AddonsController extends Controller
             'price' => 'numeric:required',
             'description' => 'required'
         ]);
+
+        $user_type = base64_decode($request->user_type);
         $user_id = session()->get('id');
-        $freelancer = Freelancer::where('user_id', $user_id)->first();
+        $freelancer_query = Freelancer::query();
+        if($user_type == 'admin') {
+            $freelancer =  $freelancer_query->where('id', $request->freelancer)->first();
+        } else {
+            $freelancer = $freelancer_query->where('user_id', $user_id)->first();
+        }
 
         $save = Addon::create([
-            'user_role_id' => session()->get('role') == 'freelancer' ? $freelancer->id : $request->freelancer_id,
+            'user_role_id' => $freelancer->id,
             'title' => $request->title,
             'price' => $request->price,
             'description' => $request->description
         ]);
+
+        if($user_type == 'admin') return redirect()->route('admin.addons')->with('success', 'Addon Created Successfully');
 
         if($save) {
             return redirect('/addons')->with('success','Addons Added Successfully');
@@ -71,8 +80,8 @@ class AddonsController extends Controller
         return back()->with('success', 'Addon Update Successfully');
     }
 
-    public function destroy(Addon $id) {
-        $delete = $id->delete();
+    public function destroy(Request $request) {
+        $delete = Addon::where('id', $request->id)->delete();
         if($delete) {
             return response()->json([
                 'status' => 201,
@@ -95,7 +104,7 @@ class AddonsController extends Controller
                 })
                 ->addColumn('action', function($row) {
                     $btn = '<a href="/admin/addons/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
+                            <a id="'. $row->id .'" class="delete-addon datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -105,5 +114,9 @@ class AddonsController extends Controller
     public function admin_edit(Request $request) {
         $addon = Addon::where('id', $request->id)->with('freelancer')->first();
         return view('AdminScreens.addons.edit-addon', compact('addon'));
+    }
+
+    public function admin_create(Request $request) {
+        return view('AdminScreens.addons.create-addon');
     }
 }

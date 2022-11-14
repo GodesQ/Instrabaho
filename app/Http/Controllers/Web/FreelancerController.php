@@ -53,6 +53,7 @@ class FreelancerController extends Controller
         if($employer){
             $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $employer->id)->exists();
         }
+
         return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
     }
 
