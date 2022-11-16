@@ -87,11 +87,17 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     */
     Route::middleware(['webauth'])->group( function () {
 
+        Route::get('freelancer/role_form', [FreelancerController::class, 'freelancer_role_form'])->name('freelancer.role_form');
+        Route::post('freelancer/role_form', [FreelancerController::class, 'save_freelancer_role_form'])->name('freelancer.save_role_form');
 
         Route::group(['prefix'=>'freelancer', 'middleware'=>['freelancer.access']], function(){
-            Route::get('role_form', [FreelancerController::class, 'freelancer_role_form'])->name('freelancer.role_form');
-            Route::post('role_form', [FreelancerController::class, 'save_freelancer_role_form'])->name('freelancer.save_role_form');
+            Route::get('dashboard', [FreelancerController::class, 'dashboard'])->name('freelancer.dashboard');
+            Route::get('profile', [FreelancerController::class, 'profile'])->name('freelancer.profile');
+            Route::post('profile', [FreelancerController::class, 'update_profile'])->name('freelancer.profile.update');
+        });
 
+        Route::group(['prefix' => 'employer', 'middleware' => ['employer.access']], function() {
+            
         });
 
         Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
@@ -101,8 +107,6 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::post('/employer_role_form', [EmployerController::class, 'save_employer_role_form'])->name('employer_role_form.post');
 
         Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-        Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-        Route::post('/profile', [UserController::class, 'update_profile'])->name('profile.update');
         Route::post('/user_change_password', [UserController::class, 'user_change_password'])->name('user_change_password');
         Route::post('/change_user_picture', [UserController::class, 'change_user_picture'])->name('change_user_picture');
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('store_certificates');

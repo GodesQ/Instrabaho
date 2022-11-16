@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
                 'employer_id' => 1,
                 'category_id' => 7,
                 'title' => Str::random(20),
-                'description' => Str::random(20),
                 'description' => Str::random(300),
                 'attachments' => '["toilet.jpeg"]',
                 'project_level' => 'Moderate',

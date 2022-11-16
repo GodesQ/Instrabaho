@@ -49,10 +49,8 @@
         </script>
     @endpush
 @endif
+
 <div class="page-wrapper">
-    <div class="page-header">
-        
-    </div>
     <div class="page-content">
         <div class="row">
             <div class="col-md-4 col-sm-12">

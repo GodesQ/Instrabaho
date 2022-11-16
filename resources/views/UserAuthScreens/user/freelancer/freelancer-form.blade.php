@@ -9,7 +9,7 @@
         <div class="card-title">Profile Basics</div>
     </div>
     <div class="card-body">
-        <form action="" method="POST">
+        <form action="{{ route('freelancer.profile.update') }}" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $freelancer->user->id }}">
             <div class="row">
