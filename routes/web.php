@@ -55,7 +55,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     Route::get('/project/{id}', [HomeScreenController::class, 'project']);
     Route::get('/service/{id}', [HomeScreenController::class, 'service']);
 
-    Route::get('/freelancer/{id}', [FreelancerController::class, 'view_profile'])->name('view_profile');
+    Route::get('/freelancer/view/{id}', [FreelancerController::class, 'view_profile'])->name('view_profile');
     Route::get('/employer/{id}', [EmployerController::class, 'view_profile'])->name('view_employer_profile');
 
 
@@ -86,18 +86,27 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     |--------------------------------------------------------------------------
     */
     Route::middleware(['webauth'])->group( function () {
+
+        Route::get('freelancer/role_form', [FreelancerController::class, 'freelancer_role_form'])->name('freelancer.role_form');
+        Route::post('freelancer/role_form', [FreelancerController::class, 'save_freelancer_role_form'])->name('freelancer.save_role_form');
+
+        Route::group(['prefix'=>'freelancer', 'middleware'=>['freelancer.access']], function(){
+            Route::get('dashboard', [FreelancerController::class, 'dashboard'])->name('freelancer.dashboard');
+            Route::get('profile', [FreelancerController::class, 'profile'])->name('freelancer.profile');
+            Route::post('profile', [FreelancerController::class, 'update_profile'])->name('freelancer.profile.update');
+        });
+
+        Route::group(['prefix' => 'employer', 'middleware' => ['employer.access']], function() {
+            
+        });
+
         Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
         Route::get('/change_login', [AuthController::class, 'change_login'])->name('user.change_login');
 
         Route::get('/employer_role_form', [EmployerController::class, 'employer_role_form'])->name('employer_role_form');
         Route::post('/employer_role_form', [EmployerController::class, 'save_employer_role_form'])->name('employer_role_form.post');
 
-        Route::get('/freelancer_role_form', [FreelancerController::class, 'freelancer_role_form'])->name('freelancer_role_form');
-        Route::post('/freelancer_role_form', [FreelancerController::class, 'save_freelancer_role_form'])->name('freelancer_role_form.post');
-
         Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-        Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-        Route::post('/profile', [UserController::class, 'update_profile'])->name('profile.update');
         Route::post('/user_change_password', [UserController::class, 'user_change_password'])->name('user_change_password');
         Route::post('/change_user_picture', [UserController::class, 'change_user_picture'])->name('change_user_picture');
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('store_certificates');
@@ -116,7 +125,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('/edit_addon/{id}', [AddonsController::class, 'edit'])->name('addon.edit');
         Route::post('/store_addon', [AddonsController::class, 'store'])->name('addon.store');
         Route::post('/update_addon', [AddonsController::class, 'update'])->name('addon.update');
-        Route::get('/destroy_addon/{id}', [AddonsController::class, 'destroy'])->name('addon.destroy');
+        Route::delete('/destroy_addon', [AddonsController::class, 'destroy'])->name('addon.destroy');
 
         Route::get('/services', [ServicesController::class, 'index'])->name('index');
         Route::get('/create_service', [ServicesController::class, 'create'])->name('service.create')->middleware('plan.expiration');
@@ -124,7 +133,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::post('/store_service', [ServicesController::class, 'store'])->name('service.store')->middleware('plan.expiration');
         Route::post('/update_service', [ServicesController::class, 'update'])->name('service.update')->middleware('plan.expiration', 'admin.access');
         Route::get('/service/remove_image/{id}/{key_id}', [ServicesController::class, 'remove_image'])->name('service.remove_image')->middleware('plan.expiration');
-        Route::get('/destroy_service', [ServicesController::class, 'destroy'])->name('service.destroy');
+        Route::delete('/destroy_service', [ServicesController::class, 'destroy'])->name('service.destroy');
 
         Route::get('/services_offer/employer', [ServicesProposalController::class, 'employer_proposals'])->name('employer_proposals')->middleware('employer.access');
         Route::get('/services_offer/employer/fetch_data', [ServicesProposalController::class, 'fetch_employer_proposals'])->name('fetch_employer_proposals')->middleware('employer.access');
@@ -225,11 +234,12 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('/admin/services', [ServicesController::class, 'admin_index'])->name('admin.services');
         Route::get('/admin/services/data_table', [ServicesController::class, 'data_table'])->name('admin.services.data_table');
         Route::get('/admin/services/edit/{id}', [ServicesController::class, 'admin_edit'])->name('admin.services.edit');
+        Route::get('/admin/services/create', [ServicesController::class, 'admin_create'])->name('admin.create.create');
 
         Route::get('/admin/addons', [AddonsController::class, 'admin_index'])->name('admin.addons');
         Route::get('/admin/addons/data_table', [AddonsController::class, 'data_table'])->name('admin.addons.data_table');
         Route::get('/admin/addons/edit/{id}', [AddonsController::class, 'admin_edit'])->name('admin.addons.edit');
-        Route::get('/admin/addons/update', [AddonsController::class, 'update'])->name('admin.addons.update');
+        Route::get('/admin/addons/create', [AddonsController::class, 'admin_create'])->name('admin.addons.create');
 
         Route::get('/admin/projects', [ProjectsController::class, 'admin_index'])->name('admin.projects');
         Route::get('/admin/projects/data_table', [ProjectsController::class, 'data_table'])->name('admin.projects.data_table');

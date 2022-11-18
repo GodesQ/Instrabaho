@@ -23,10 +23,10 @@
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Profile">Profile</span></a>
                 <ul class="menu-content">
-                    <li><a class="menu-item" href="/freelancer/{{ session()->get('id') }}" data-i18n="View Profile">View Profile</a>
+                    <li><a class="menu-item" href="/freelancer/view/{{ session()->get('id') }}" data-i18n="View Profile">View Profile</a>
                     </li>
-                    <li class="{{ Request::path() == 'profile' ? 'active' : '' }}">
-                        <a class="menu-item" href="/profile" data-i18n="Edit Profile">Edit Profile</a>
+                    <li class="{{ Request::path() == 'freelancer/profile' ? 'active' : '' }}">
+                        <a class="menu-item" href="/freelancer/profile" data-i18n="Edit Profile">Edit Profile</a>
                     </li>
                 </ul>
             </li>

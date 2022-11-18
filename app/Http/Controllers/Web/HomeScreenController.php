@@ -66,13 +66,14 @@ class HomeScreenController extends Controller
             return $q->whereBetween('cost', [$range[0], $range[1]]);
         })
         ->where('expiration_date', '>' , Carbon::now())
-        ->with('category') 
+        ->where('isDeleted', 0)
+        ->with('category')
         ->cursorPaginate(10);
         $service_categories = ServiceCategory::all();
 
         $queries = [
             'title' => $title,
-            'categories' => $categories, 
+            'categories' => $categories,
             'price_min' => $price_min,
             'price_max' => $price_max,
             'address' => $address,
@@ -105,9 +106,8 @@ class HomeScreenController extends Controller
         $projects = Project::select('*')
         ->where('expiration_date', '>' , Carbon::now())
         ->where('isExpired', 0)
-        ->orWhereNull('status')
         ->when($title, function ($q) use ($title) {
-            return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%');
+            return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%')->orderBy("id",'asc');
         })
         ->when($categories, function ($q) use ($categories) {
             if($categories[0]) {
@@ -122,16 +122,17 @@ class HomeScreenController extends Controller
             * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
         })
         ->when($type, function ($q) use ($type) {
-            return $q->where('project_type', $type);
+            return $q->where('project_type', $type)->orderBy("id",'asc');;
         })
         ->when($my_range, function ($q) use ($my_range) {
             $range = explode(';', $my_range);
-            return $q->whereBetween('cost', [$range[0], $range[1]]);
+            return $q->whereBetween('cost', [$range[0], $range[1]])->orderBy("id",'asc');
         })
+        ->orWhereNull('status')
         ->with('category', 'employer')
         ->latest('id')
-        ->cursorPaginate(1);
-        
+        ->paginate(5);
+
 
         $service_categories = ServiceCategory::all();
         // dd($projects);
@@ -151,19 +152,52 @@ class HomeScreenController extends Controller
         return view('CustomerScreens.home_screens.project.project-search', compact('projects', 'service_categories', 'queries'));
     }
 
-    public function fetch_projects(Request $request) {
-        if(!$request->ajax) {
-            $projects = Project::select('*')
-            ->where('expiration_date', '>' , Carbon::now())
-            ->where('isExpired', 0)
-            ->orWhereNull('status')
-            ->with('category', 'employer')
-            ->latest('id')
-            ->cursorPaginate(1);
+    // public function fetch_projects(Request $request) {
+    //     if($request->ajax()) {
+    //         $title = $request->get('title');
+    //         $categories = $request->get('categories') ? json_decode($request->get('categories')) : [];
+    //         $my_range = $request->get('my_range');
+    //         $address = $request->get('address');
+    //         $latitude = $request->get('latitude');
+    //         $longitude = $request->get('longitude');
+    //         $type = $request->get('type');
+    //         dd($request->all());
 
-            return view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
-        }
-    }
+    //         $projects = Project::select('*')
+    //         ->where('expiration_date', '>' , Carbon::now())
+    //         ->where('isExpired', 0)
+    //         ->orWhereNull('status')
+    //         ->when($title, function ($q) use ($title) {
+    //             return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%');
+    //         })
+    //         ->when($categories, function ($q) use ($categories) {
+    //             if($categories[0]) {
+    //                 return $q->whereIn('category_id', $categories);
+    //             }
+    //         })
+    //         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
+    //             return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
+    //             * cos(radians(projects.latitude))
+    //             * cos(radians(projects.longitude) - radians(" . $longitude . "))
+    //             + sin(radians(" .$latitude. "))
+    //             * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
+    //         })
+    //         ->when($type, function ($q) use ($type) {
+    //             return $q->where('project_type', $type);
+    //         })
+    //         ->when($my_range, function ($q) use ($my_range) {
+    //             $range = explode(';', $my_range);
+    //             return $q->whereBetween('cost', [$range[0], $range[1]]);
+    //         })
+    //         ->with('category', 'employer')
+    //         ->latest('id')
+    //         ->paginate(10);
+
+    //         return view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
+    //     } else {
+    //         dd(false);
+    //     }
+    // }
 
     public function project(Request $request) {
         $project =  Project::where('id', $request->id)->with('employer', 'category')->first();
@@ -216,7 +250,7 @@ class HomeScreenController extends Controller
                 });
             }
         })
-        ->cursorPaginate(10);
+        ->paginate(10);
 
         $queries = [
             'title' => $title,

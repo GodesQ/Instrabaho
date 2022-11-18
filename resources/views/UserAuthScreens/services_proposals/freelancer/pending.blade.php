@@ -30,7 +30,7 @@
                                     <h3 class="text-secondary">{{ $pending_offer->employer->display_name }}</h3>
                                     <p class="font-weight-light">{{ substr($pending_offer->employer->description, 0, 255) }}...</p>
                                     <div class="text-right mt-2">
-                                        <a href="/employer/{{ $pending_offer->employer->user_id }}" class="btn btn-outline-primary">View Employer <i class="fa fa-user"></i></a>
+                                        <a href="/employer/{{ $pending_offer->employer->user_id }}" class="btn btn-outline-primary">View Client <i class="fa fa-user"></i></a>
                                         <a href="/service_proposal_information/{{ $pending_offer->id }}" class="btn btn-success">Approved Offer <i class="fa fa-thumbs-up"></i></a>
                                         <a href="/service_proposal_information/{{ $pending_offer->id }}" class="btn btn-primary">View Offer <i class="fa fa-arrow-right"></i></a>
                                     </div>

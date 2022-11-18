@@ -59,7 +59,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-7">
-                                        <a href="/freelancer/{{ $proposal->freelancer->user->id }}" class="btn btn-secondary">View Profile</a>
+                                        <a href="/freelancer/view/{{ $proposal->freelancer->user->id }}" class="btn btn-secondary">View Profile</a>
                                     </div>
                                     @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
                                         <div class="col-md-2 col-lg-2">
@@ -75,7 +75,7 @@
                                             </div>
                                         @endif
                                     @else
-                                        <span class="col-lg-2 badge badge-primary d-flex justify-content-center align-items-center">Status : 
+                                        <span class="col-lg-2 badge badge-primary d-flex justify-content-center align-items-center">Status :
                                             <span class="font-weight-bold text-uppercase">{{ $proposal->status }}</span>
                                         </span>
                                     @endif
@@ -127,7 +127,7 @@
                                             <div class="col-md-12 my-25">
                                                 @php $proposal->project->setSkills(json_decode($proposal->project->skills)) @endphp
                                                 @php $proposal->project->getSkills() @endphp
-                                                <div class="font-weight-bold">Skills Needed : 
+                                                <div class="font-weight-bold">Skills Needed :
                                                     @foreach($proposal->project->skills_name as $skill)
                                                         <div class="badge badge-warning p-50 mx-1">{{ $skill->skill_name }}</div>
                                                     @endforeach
@@ -149,15 +149,15 @@
                                                 <div class="font-weight-bold">Project Cost Type : <span class="font-weight-normal mx-1">{{ $proposal->project_cost_type }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25 mt-2">
-                                                <div class="font-weight-bold">Attachments : 
-                                                    @php 
+                                                <div class="font-weight-bold">Attachments :
+                                                    @php
                                                         $attachments = json_decode($proposal->attachments)
                                                     @endphp
                                                     @forelse($attachments as $attachment)
                                                         <a href="./../../images/projects/proposal_attachments/{{ $attachment }}" target="_blank" class="badge badge-secondary p-75">{{ $attachment }}</a>
                                                     @empty
                                                     @endforelse
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="col-md-12 my-1 p-2 rounded" style="background:#f3f5f8;">

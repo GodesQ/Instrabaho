@@ -58,7 +58,7 @@
 		               </div>
 		               <div class="fr-hero-short-list-2">
 		                  <div class="fr-hero-hire-content">
-		                     <a href="/follow_freelancer/{{ $freelancer->id }}" class="follow-freelancer protip" data-fid="171" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow Freelancer">
+		                     <a href="/follow_freelancer/view/{{ $freelancer->id }}" class="follow-freelancer protip" data-fid="171" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow Freelancer">
 		                     <i class="{{ $follow_freelancer ? 'fa' : 'far' }} fa-heart text-danger"></i>
 		                     </a>
 		                     <a href="" class="btn btn-theme hire-freelancer" data-bs-toggle="" data-bs-target="">Hire Now</a>

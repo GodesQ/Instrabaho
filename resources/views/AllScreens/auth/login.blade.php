@@ -40,10 +40,14 @@
                                 <div class="text-center" style="color: #000; font-size: 10px;">Looking for a perfect fit</div>
                             </div>
                         </div>
-                        @if(Session::get('fail'))
-                                <div class="alert alert-danger">
-                                    {{ Session::get('fail') }}
-                                </div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         @endif
                         <form id="signup-form" method="POST">
                             @csrf
@@ -61,11 +65,11 @@
                                 </div>
                             </div>
                             <div class="fr-sigin-requirements">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#forget_pwd"> <span> Forgot Password</span></a> 
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#forget_pwd"> <span> Forgot Password</span></a>
                             </div>
                             <div class="fr-sign-submit">
                             <div class="form-group d-grid">
-                                <button type="submit" class="btn btn-theme btn-loading" id="signup-btn"> Sign in                 
+                                <button type="submit" class="btn btn-theme btn-loading" id="signup-btn"> Sign in
                                     <span class="bubbles"> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"></i> </span>
                                 </button>
                                 <input type="hidden" id="role" name="role" value="freelancer">
@@ -132,7 +136,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-theme btn-block btn-loading" id="forget_btn">Recover now              
+                        <button type="submit" class="btn btn-theme btn-block btn-loading" id="forget_btn">Recover now
                             <span class="bubbles"> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"></i> </span>
                         </button>
                     </div>

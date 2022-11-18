@@ -46,7 +46,7 @@
                            @endforeach
                         </select>
                      </li>
-                     <li class="d-flex justify-content-center"> 
+                     <li class="d-flex justify-content-center">
                         <button type="submit" class="btn btn-sm btn-style mx-1">Search</button>
                         <a href="/search_services" class="btn btn-sm btn-style btn-warning">Clear Result</a>
                      </li>
@@ -200,8 +200,12 @@
                            <div class="badge badge-info p-2 text-uppercase position-relative" style="margin-bottom: -200px; z-index: 10;"></div>
                            <div class="fr-top-contents bg-white-color">
                               <div class="fr-top-product">
-                                 <img height="250" width="100%" style="object-fit: cover;" src="../../../images/services/{{ $images[0] }}" alt="" class="img-responsive">
-                                 <div class="fr-top-rating"> <a href="" class="save_service protip" data-fid="171" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="355"><i class="fa fa-heart" aria-hidden="true"></i></a> </div>
+                                @if(count($images) > 0)
+                                    <img height="250" width="100%" style="object-fit: cover;" src="../../../images/services/{{ $images[0] }}" alt="" class="img-responsive">
+                                @else
+                                    <img height="250" width="100%" style="object-fit: cover;" src="../../../images/bg-image/default-cover.png" alt="" class="img-responsive">
+                                @endif
+                                <div class="fr-top-rating"> <a href="" class="save_service protip" data-fid="171" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="355"><i class="fa fa-heart" aria-hidden="true"></i></a> </div>
                                  @if($service->type == 'featured')
                                     <div class="fr-top-right-rating">Featured</div>
                                  @endif
@@ -221,7 +225,7 @@
                         </a>
                      </div>
                      @empty
-                        
+
                      @endforelse
                   </div>
                   <div class="row">
