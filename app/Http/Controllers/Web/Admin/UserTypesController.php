@@ -40,7 +40,7 @@ class UserTypesController extends Controller
         ]);
 
         UserType::create([
-            'user_type' => $request->user_type,
+            'role' => $request->user_type,
             'slug' => $request->slug
         ]);
 

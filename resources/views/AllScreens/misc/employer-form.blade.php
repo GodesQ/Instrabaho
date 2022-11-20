@@ -9,15 +9,20 @@
             </script>
         @endpush
     @endif
+    
     <style>
         .form-control {
             background-color: #fff !important;
+        }
+        #map-canvas {
+            height: 300px;
+            width: 100%;
         }
     </style>
     <!-- BEGIN: Content-->
     <div class="app-content content">
         <div class="content-overlay"></div>
-        <div class="content-wrapper">
+        <div class="content-wrapper my-1">
             <div class="content-body">
                 <!-- Form wizard with icon tabs section start -->
                 <section id="number-tabs">
@@ -83,15 +88,28 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="form-label font-weight-bold my-50">Location</div>
+                                                        <input type="text" name="address" id="map-search" class="form-control controls" value="">
+                                                    </div>
                                                     <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="date2">Address:</label>
-                                                            <input type="text" name="address" class="form-control" id="address">
+                                                        <div id="map-canvas"></div>
+                                                    </div>
+                                                    <div class="col-md-6 d-none">
+                                                        <div class="form-group d-none">
+                                                            <div class="form-label font-weight-bold my-50">Latitude</div>
+                                                            <input type="text" name="latitude" class="form-control latitude" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6d-none">
+                                                        <div class="form-group d-none">
+                                                            <div class="form-label font-weight-bold my-50">Longitude</div>
+                                                            <input type="text" name="longitude" class="form-control longitude" value="">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
-                                            <div class="form-footer">
+                                            <div class="form-footer my-3">
                                                 <button class="btn btn-secondary btn-solid" type="reset">Reset</button>
                                                 <button class="btn btn-primary btn-solid" type="submit">Save</button>
                                             </div>
@@ -109,4 +127,6 @@
     </div>
     <!-- END: Content-->
 
+<script src="../../../js/user-location.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection

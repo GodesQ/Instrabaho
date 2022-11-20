@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 
 use App\Models\ServiceCategory;
 
@@ -36,36 +38,23 @@ class ServiceCategoriesController extends Controller
         return response()->json($category);
     }
 
-    public function update(Request $request) {
-        $request->validate([
-            'id' => 'required|exists:services_categories,id',
-            'category_name' => 'required'
-        ]);
-
+    public function update(UpdateCategoryRequest $request) {
         ServiceCategory::where('id', $request->id)->update([
             'name' => $request->category_name
         ]);
-
         return back()->with('success', 'Category Update Successfully');
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'category_name' => 'required'
-        ]);
-
+    public function store(StoreCategoryRequest $request) {
         ServiceCategory::create([
             'name' => $request->category_name
         ]);
-
         return back()->with('success', 'Category Added Successfully');
     }
 
     public function destroy(Request $request) {
         abort_if(!$request->ajax(), 403);
-
         $delete = ServiceCategory::where('id', $request->id)->delete();
-
         if($delete) {
             return response()->json([
                 'status' => 201,

@@ -12,6 +12,11 @@
     <div class="page-content">
         <div class="page-body">
             <div class="container-fluid">
+                <div class="text-right my-2">
+                    <a class="btn btn-primary" href="/admin/freelancer_packages/create">
+                        Create <i class="feather icon-plus"></i>
+                    </a>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-borderless table-striped data-table">

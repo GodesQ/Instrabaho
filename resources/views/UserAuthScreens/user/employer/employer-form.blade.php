@@ -9,7 +9,7 @@
         <div class="card-title">Profile Basics</div>
     </div>
     <div class="card-body">
-        <form action="" method="POST">
+        <form action="{{ route('employer.profile') }}" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $employer->user->id }}">
             <div class="row">

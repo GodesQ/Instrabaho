@@ -176,7 +176,7 @@
 										<h6 class="h6 text-black-50">Wallet Funds</h6>
 										<h3 class="text-primary">₱ 1000.00</h3>
 									</a> -->
-									<a href="/dashboard" class="dropdown-item" style="color: #000000 !important;">
+									<a href="/{{session()->get('role') == 'freelancer' ? 'freelancer' : 'employer'}}/dashboard" class="dropdown-item" style="color: #000000 !important;">
 										<i class="fa fa-home"></i> Dashboard
 									</a>
                                     <a href="" class="dropdown-item" style="color: #000000 !important;">

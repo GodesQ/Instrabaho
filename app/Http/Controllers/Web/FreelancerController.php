@@ -22,6 +22,8 @@ class FreelancerController extends Controller
 {
     public function freelancer_role_form() {
         $id = session()->get('id');
+        $freelancer_exists = Freelancer::where('user_id', $id)->exists();
+        if($freelancer_exists) redirect()->route('freelancer.dasboard');
         return view('AllScreens.misc.freelancer-form', compact('id'));
     }
 
@@ -42,19 +44,30 @@ class FreelancerController extends Controller
 
         if($save) return redirect('/');
     }
+    
+    public function dashboard() {
+        $role = session()->get('role');
+        $id = session()->get('id');
+        $freelancer = Freelancer::where('user_id', $id)->with('package_checkout')->first();
+        return view('UserAuthScreens.dashboards.freelancer', compact('freelancer'));
+    }
 
-    public function view_profile(Request $request) {
-        $employer = Employer::where('user_id', session()->get('id'))->first();
-        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->first();
-        $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
-        $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
-        $follow_freelancer = false;
-        //if the user has an account of employer
-        if($employer){
-            $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $employer->id)->exists();
-        }
+    public function profile(Request $request) {
+        $id = session()->get('id');
+        $role = session()->get('role');
+        $skills = Skill::all();
+        $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations')->first();
+        return view('UserAuthScreens.user.freelancer.freelancer-profile', compact('freelancer', 'skills'));
+    }
 
-        return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
+    public function update_profile(Request $request) {
+        $request->validate([
+            'gender' => 'required|in:Male,Female',
+        ]);
+        $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
+        $user_model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
+        $save = $user_model::where('user_id', $request->id)->update($data);
+        return back()->with('success', 'Profile update successfully');
     }
 
     public function store_certificates(Request $request) {
@@ -63,6 +76,7 @@ class FreelancerController extends Controller
 
          $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
         $freelancer = Freelancer::where('user_id', $user_id)->first();
+        
 
         $certificates = FreelancerCertificate::where('freelancer_id', $freelancer->id)->get();
 

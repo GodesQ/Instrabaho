@@ -4,6 +4,11 @@
 <div class="page-wrapper">
     <div class="page-content">
         <div class="container-fluid">
+            <div class="text-right my-2">
+                <a class="btn btn-primary" href="/admin/projects/create">
+                    Create <i class="feather icon-plus"></i>
+                </a>
+            </div>
             <div class="card">
                 <div class="card-body table-responsive">
                     <table class="table table-borderless table-striped data-table">

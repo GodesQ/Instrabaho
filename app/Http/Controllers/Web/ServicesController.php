@@ -13,6 +13,8 @@ use App\Models\Employer;
 use App\Models\ServiceCategory;
 use App\Models\FreelancePackage;
 use App\Models\EmployerPackage;
+use App\Http\Requests\Service\StoreServiceRequest;
+use App\Http\Requests\Service\UpdateServiceRequest;
 
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -31,62 +33,37 @@ class ServicesController extends Controller
         return view('UserAuthScreens.services.create-service', compact('categories'));
     }
 
-    public function store(Request $request) {
+    public function store(StoreServiceRequest $request) {
         if(session()->get('role') == 'freelancer') {
             //check if the current plan is exceed in limit
             if($this->checkAvailableService($request->type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
         }
 
-        $request->validate([
-            'name' => 'required',
-            'cost' => 'required',
-            'english_level' => 'required',
-            'service_category' => 'required',
-            'location' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
-            'description' => 'required',
-            'type' => 'required',
-            'attachment' => 'required|max:2048',
-        ]);
-
         $user_type = base64_decode($request->user_type);
-
         $images = [];
         foreach ($request->file('attachment') as $key => $attachment) {
             $image_name = $attachment->getClientOriginalName();
             $save_file = $attachment->move(public_path().'/images/services', $image_name);
             array_push($images, $image_name);
         }
-
         $json_images = json_encode($images);
-
         $user_id = session()->get('id');
         $freelancer_query = Freelancer::query();
+
         if($user_type == 'admin') {
             $freelancer =  $freelancer_query->where('id', $request->freelancer)->first();
         } else {
             $freelancer = $freelancer_query->where('user_id', $user_id)->first();
         }
 
-        $save = Service::create([
+        $save = Service::create(array_merge($request->validated(), [
             'freelancer_id' => $freelancer->id,
-            'name' => $request->name,
-            'cost' => $request->cost,
-            'english_level' => $request->english_level,
-            'service_category' => $request->service_category,
-            'location' => $request->location,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'description' => $request->description,
-            'type' => $request->type,
             'attachments' => $json_images,
             'expiration_date' => $freelancer->package_date_expiration
-        ]);
+        ]));
 
         if($user_type == 'admin') return redirect()->route('admin.services')->with('success', 'Successfully Created');
-
-        return redirect('/services')->with('success', 'Service Added Successfully');
+        return redirect('/freelancer/services')->with('success', 'Service Added Successfully');
     }
 
     public function edit(Request $request) {
@@ -110,6 +87,27 @@ class ServicesController extends Controller
         return view('UserAuthScreens.services.edit-service', compact('service', 'categories', 'service_images', 'pending_offers'));
     }
 
+    public function update(UpdateServiceRequest $request) {
+
+        $service = Service::where('id', $request->id)->first();
+        $service_images = json_decode($service->attachments);
+        if($request->hasFile('attachment')) {
+            foreach ($request->file('attachment') as $key => $attachment) {
+                $image_name = $attachment->getClientOriginalName();
+                $save_file = $attachment->move(public_path().'/images/services', $image_name);
+                array_push($service_images, $image_name);
+            }
+        }
+        
+        $json_images = json_encode($service_images);
+        $update = $service->update(array_merge($request->validated(), [
+            'attachments' => $json_images,
+        ]));
+        if($update) {
+            return back()->with('success', 'Update Successfully');
+        }
+    }
+
     public function fetch_services_offer(Request $request) {
         $user_id = session()->get('id');
         $role = session()->get('role');
@@ -125,52 +123,6 @@ class ServicesController extends Controller
         })
         ->cursorPaginate(10);
         return view('UserAuthScreens.services_proposals.freelancer.pending', compact('pending_offers'))->render();
-    }
-
-    public function update(Request $request) {
-        $request->validate([
-            'id' => 'required|exists:services,id',
-            'name' => 'required',
-            'cost' => 'required|numeric',
-            'freelancer' => 'required',
-            'english_level' => 'required|in:Basic,Bilingual,Fluent,Professional',
-            'service_category' => 'required',
-            'location' => 'required',
-            'description' => 'required',
-            'type' => 'required|in:simple,featured',
-        ]);
-
-        $service = Service::where('id', $request->id)->first();
-        $service_images = json_decode($service->attachments);
-        if($request->hasFile('attachment')) {
-            foreach ($request->file('attachment') as $key => $attachment) {
-                $image_name = $attachment->getClientOriginalName();
-                $save_file = $attachment->move(public_path().'/images/services', $image_name);
-                array_push($service_images, $image_name);
-            }
-        }
-
-        $json_images = json_encode($service_images);
-
-        $update = Service::where('id', $request->id)->update([
-            'name' => $request->name,
-            'cost' => $request->cost,
-            'freelancer_id' => $request->freelancer,
-            'english_level' => $request->english_level,
-            'service_category' => $request->service_category,
-            'location' => $request->location,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'description' => $request->description,
-            'type' => $request->type,
-            'attachments' => $json_images,
-        ]);
-
-        if($update) {
-            return back()->with('success', 'Update Successfully');
-        }
-
-
     }
 
     public function remove_image(Request $request) {

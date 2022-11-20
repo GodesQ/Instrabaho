@@ -186,6 +186,7 @@
           </div>
        </div>
     </div>
+    
  </section>
  <script src="../../../js/user-location.js"></script>
  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
@@ -200,6 +201,17 @@
     //     let page = $(this).attr('href').split('page=')[1];
     //     $('#page_count').val(page);
 
+         function fetchProjects(page, element) {
+            $.ajax({
+               url: "/search_projects/fetch_data?cursor="+page,
+               success: function (data) {
+                  $('.projects-data').html(data);
+                 $('.protip-container').remove();
+               }
+            })
+         }
+      })
+      
     //     let selected_categories = [];
     //     // get the selected categories
     //     $.each($("#categories:checked"), function(){

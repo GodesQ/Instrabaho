@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-xl-4 col-lg-5 col-md-5 col-sm-5 align-self-center">
                         <div class="fr-expert-content"> 
-                            <a href="/follow_employer/{{ $employer->id }}" class="btn btn-danger follow-employer" data-emp-id="804"><i class="fa fa-heart"></i> {{ $follow_employer ? 'Unfollow' : 'Follow' }}</a>
+                            <a href="/freelancer/follow_employer/{{ $employer->id }}" class="btn btn-danger follow-employer" data-emp-id="804"><i class="fa fa-heart"></i> {{ $follow_employer ? 'Unfollow' : 'Follow' }}</a>
                         </div>
                     </div>
                 </div>

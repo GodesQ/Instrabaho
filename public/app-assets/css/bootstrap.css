@@ -1541,6 +1541,8 @@ pre {
   .table-responsive > .table-bordered {
     border: 0; }
 
+  
+
 .form-control {
   display: block;
   width: 100%;
@@ -1905,6 +1907,8 @@ textarea.form-control {
   border-radius: 0.25rem;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
 
+
+
   .datatable-btn {
     display: inline-block;
     font-weight: 400;
@@ -1935,6 +1939,10 @@ textarea.form-control {
   .datatable-btn.datatable-btn-remove:hover {
     color: #fff;
     background: #ff2946;
+  }
+
+  .data-table tbody td {
+     padding: 2rem 0rem !important;
   }
 
   @media (prefers-reduced-motion: reduce) {

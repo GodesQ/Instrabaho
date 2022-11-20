@@ -9,6 +9,17 @@
         </script>
     @endpush
 @endif
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        @push('scripts')
+            <script>
+                toastr.error('{{ $error }}', 'Failed')
+            </script>
+        @endpush
+    @endforeach
+@endif
+
 <style>
     #map-canvas {
         height: 300px;
@@ -105,7 +116,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-label font-weight-bold my-50">Location</div>
-                                        <input type="text" name="location" id="map-search" class="form-control controls" value="">
+                                        <input type="text" name="location" id="map-search" class="form-control controls" value="{{ Auth::user()->freelancer->address }}">
                                     </div>
                                     <div class="col-md-12">
                                         <div id="map-canvas"></div>
@@ -113,13 +124,13 @@
                                     <div class="col-md-6 d-none">
                                         <div class="form-group d-none">
                                             <div class="form-label font-weight-bold my-50">Latitude</div>
-                                            <input type="text" name="latitude" value="" class="form-control latitude">
+                                            <input type="text" name="latitude" value="" class="form-control latitude" value="{{ Auth::user()->freelancer->latitude }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6d-none">
                                         <div class="form-group d-none">
                                             <div class="form-label font-weight-bold my-50">Longitude</div>
-                                            <input type="text" name="longitude" class="form-control longitude" value="">
+                                            <input type="text" name="longitude" class="form-control longitude" value="{{ Auth::user()->freelancer->longitude }}">
                                         </div>
                                     </div>
                                 </div>
@@ -139,10 +150,10 @@
 @endsection
 
 @push('scripts')
-<script>
-    tinymce.init({
-        selector: 'textarea#tinymce_description',
-        height: 300
-    });
-</script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#tinymce_description',
+            height: 300
+        });
+    </script>
 @endpush

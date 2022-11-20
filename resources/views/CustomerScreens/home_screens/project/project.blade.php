@@ -38,7 +38,7 @@
                       </ul>
                       <h2>{{ $project->title }}</h2>
                       <div class="fr-project-style">
-                        <a href="{{ $save_project ? 'javascript:void(0)' : '/save_project/' . $project->id . '/' . $project->employer_id }}" class="mark_fav protip" data-post-id="225" 
+                        <a href="{{ $save_project ? 'javascript:void(0)' : '/freelancer/save_project/' . $project->id . '/' . $project->employer_id }}" class="mark_fav protip" data-post-id="225" 
                            data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Project">
                            <i class="{{ $save_project ? 'fa' : 'far' }} fa-heart text-danger"></i>
                         </a>
@@ -219,7 +219,7 @@
                       </a>
                       <span>Member since {{ date_format(new DateTime($project->employer->created_at), "F d, Y")}}</span> 
                    </div>
-                   <a href="/employer/{{ $project->employer->user_id }}" class="btn-style">View Profile</a> 
+                   <a href="/employer/view/{{ $project->employer->user_id }}" class="btn-style">View Profile</a> 
                 </div>
                 <div class="fr-project-f-employers">
                    <div class="fr-project-employer-details">
