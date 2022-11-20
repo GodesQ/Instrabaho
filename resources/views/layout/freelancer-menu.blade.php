@@ -16,8 +16,8 @@
                     </div>
                 </div>
             </li>
-            <li class=" nav-item {{ Request::path() == 'dashboard' ? 'active' : '' }}">
-                <a href="/dashboard"><i class="feather icon-home"></i>
+            <li class=" nav-item {{ Request::path() == 'freelancer/dashboard' ? 'active' : '' }}">
+                <a href="/freelancer/dashboard"><i class="feather icon-home"></i>
                     <span class="menu-title" data-i18n="Dashboard">Dashboard</span>
                 </a>
             </li>
@@ -32,17 +32,17 @@
             </li>
             <li class="nav-item "><a href="#"><i class="feather icon-layers"></i><span class="menu-title" data-i18n="Manage Addons">Manage Addons</span></a>
                 <ul class="menu-content">
-                    <li class="{{ Request::path() == 'create_addon' ? 'active' : '' }}"><a class="menu-item" href="/create_addon" data-i18n="Create Addon">Create Addon</a>
+                    <li class="{{ Request::path() == 'freelancer/create_addon' ? 'active' : '' }}"><a class="menu-item" href="/freelancer/create_addon" data-i18n="Create Addon">Create Addon</a>
                     </li>
-                    <li class="{{ Request::path() == 'addons' ? 'active' : '' }}"><a class="menu-item" href="/addons" data-i18n="My Addon">My Addon</a>
+                    <li class="{{ Request::path() == 'freelancer/addons' ? 'active' : '' }}"><a class="menu-item" href="/freelancer/addons" data-i18n="My Addon">My Addon</a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Services">Manage Services</span></a>
                 <ul class="menu-content">
-                    <li class="{{ Request::path() == 'create_service' ? 'active' : '' }}"><a class="menu-item" href="/create_service" data-i18n="Create Services">Create Services</a>
+                    <li class="{{ Request::path() == 'freelancer/create_service' ? 'active' : '' }}"><a class="menu-item" href="/freelancer/create_service" data-i18n="Create Services">Create Services</a>
                     </li>
-                    <li class="{{ Request::path() == 'services' ? 'active' : '' }}"><a class="menu-item" href="/services" data-i18n="Active Services">My Services</a>
+                    <li class="{{ Request::path() == 'freelancer/services' ? 'active' : '' }}"><a class="menu-item" href="/freelancer/services" data-i18n="Active Services">My Services</a>
                     </li>
                     <li><a class="menu-item" href="" data-i18n="Canceled Services">Canceled Services</a>
                     </li>
@@ -56,18 +56,18 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ Request::path() == 'proposal_lists/freelancer' ? 'active' : '' }} nav-item">
-                <a href="/proposal_lists/freelancer"><i class="feather icon-book"></i>
+            <li class="{{ Request::path() == 'freelancer/proposal_lists' ? 'active' : '' }} nav-item">
+                <a href="/freelancer/proposal_lists"><i class="feather icon-book"></i>
                     <span class="menu-title" data-i18n="My Proposals">My Proposals</span>
                 </a>
             </li>
-            <li class="{{ Request::path() == 'saved_projects/freelancers' ? 'active' : '' }} nav-item">
-                <a href="/saved_projects/freelancers"><i class="feather icon-bookmark"></i>
+            <li class="{{ Request::path() == '/freelancer/saved_projects' ? 'active' : '' }} nav-item">
+                <a href="/freelancer/saved_projects"><i class="feather icon-bookmark"></i>
                     <span class="menu-title" data-i18n="Saved Projects">Saved Projects</span>
                 </a>
             </li>
-            <li class="{{ Request::path() == 'followed_employer' ? 'active' : '' }} nav-item">
-                <a href="/followed_employer"><i class="feather icon-heart"></i>
+            <li class="{{ Request::path() == 'freelancer/followed_employers' ? 'active' : '' }} nav-item">
+                <a href="/freelancer/followed_employers"><i class="feather icon-heart"></i>
                     <span class="menu-title" data-i18n="Followed Employers">Followed Employers</span>
                 </a>
             </li>

@@ -48,7 +48,7 @@ class AuthController extends Controller
         if($request->role == 'freelancer' && !$user_freelancer) return redirect()->route('freelancer.role_form')->with('success', 'Login Successfully');
 
         //check if the user has a employer data
-        if($request->role == 'employer' && !$user_employer) return redirect('/employer_role_form')->with('success', 'Login Successfully');
+        if($request->role == 'employer' && !$user_employer) return redirect()->route('employer.role_form', 'Login Successfully');
 
         return redirect('/')->with('success', 'Login Successfully');
     }
@@ -121,12 +121,12 @@ class AuthController extends Controller
         $role = session()->get('role');
         if($role == 'freelancer') {
             session()->put('role', 'employer');
-            return redirect('/dashboard')->with('success', 'Login Successfully');
+            return redirect('employer/dashboard')->with('success', 'Login Successfully');
         }
 
         if($role == 'employer') {
             session()->put('role', 'freelancer');
-            return redirect('/dashboard')->with('success', 'Login Successfully');
+            return redirect('freelancer/dashboard')->with('success', 'Login Successfully');
         }
     }
 }

@@ -201,7 +201,6 @@
     //     let page = $(this).attr('href').split('page=')[1];
     //     $('#page_count').val(page);
 
-<<<<<<< HEAD
          function fetchProjects(page, element) {
             $.ajax({
                url: "/search_projects/fetch_data?cursor="+page,
@@ -212,7 +211,7 @@
             })
          }
       })
-=======
+      
     //     let selected_categories = [];
     //     // get the selected categories
     //     $.each($("#categories:checked"), function(){
@@ -280,6 +279,5 @@
 
 
     //   })
->>>>>>> 1e30aaccebbc223088661f6cacc5f22e089e4405
    </script>
 @endpush

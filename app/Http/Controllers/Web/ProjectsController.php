@@ -10,13 +10,15 @@ use App\Models\Skill;
 use App\Models\Project;
 use App\Models\Employer;
 use App\Models\EmployerPackage;
+use App\Http\Requests\Project\StoreProjectRequest;
+use App\Http\Requests\Project\UpdateProjectRequest;
+
 use Carbon\Carbon;
 
 use Yajra\DataTables\Facades\DataTables;
 
 class ProjectsController extends Controller
 {
-
     public function index() {
         $user_id = session()->get('id');
         $employer = Employer::where('user_id', $user_id)->first();
@@ -30,23 +32,9 @@ class ProjectsController extends Controller
         return view('UserAuthScreens.projects.create-project', compact('categories', 'skills'));
     }
 
-    public function store(Request $request) {
+    public function store(StoreProjectRequest $request) {
         //check if the current plan is exceed in limit
         if($this->checkAvailableProject($request->project_type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
-
-        $request->validate([
-            'title' => 'required',
-            'category_id' => 'required',
-            'description' => 'required',
-            'project_level' => 'required',
-            'project_cost_type' => 'required',
-            'cost' => 'required',
-            'project_duration' => 'required',
-            'freelancer_type' => 'required',
-            'english_level' => 'required',
-            'location' => 'required',
-            'project_type' => 'required',
-        ]);
 
         $images = array();
         foreach ($request->file('attachments') as $key => $attachment) {
@@ -57,6 +45,7 @@ class ProjectsController extends Controller
 
         $json_images = json_encode($images);
         $user_id = session()->get('id');
+
         $employer = Employer::where('user_id', $user_id)->first();
 
         $create = Project::create([
@@ -76,7 +65,7 @@ class ProjectsController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'project_type' => $request->project_type,
-            'expiration_date' => $employer->package_date_expiration,
+            'expiration_date' => $employer->package_date_expiration > Carbon::now() || $employer->package_date_expiration ? $employer->package_date_expiration : Carbon::now()
         ]);
 
         if($create) {
@@ -85,7 +74,7 @@ class ProjectsController extends Controller
     }
 
     public function user_edit(Request $request) {
-        $project = Project::where('id', $request->id)->first();
+        $project = Project::where('id', $request->id)->firstOrFail();
         $categories = ServiceCategory::all();
         $skills = Skill::all();
         $project_images = json_decode($project->attachments);
@@ -246,10 +235,16 @@ class ProjectsController extends Controller
     }
 
     public function admin_edit(Request $request) {
-        $project = Project::where('id', $request->id)->with('employer')->first();
+        $project = Project::where('id', $request->id)->with('employer')->firstOrFail();
         $categories = ServiceCategory::all();
         $skills = Skill::all();
         $project_images = json_decode($project->attachments);
         return view('AdminScreens.projects.edit-project', compact('project', 'categories', 'skills', 'project_images'));
+    }
+    
+    public function admin_create() {
+        $categories = ServiceCategory::all();
+        $skills = Skill::all();
+        return view('AdminScreens.projects.create-project', compact('categories', 'skills'));
     }
 }

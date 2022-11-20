@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Skill;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\Skill\StoreSkillRequest;
+use App\Http\Requests\Skill\UpdateSkillRequest;
 
 class SkillsController extends Controller
 {
@@ -40,29 +42,14 @@ class SkillsController extends Controller
         return response()->json($skill);
     }
 
-    public function update(Request $request) {
-        $request->validate([
-            'id' => 'required|exists:skills,id',
-            'skill_name' => 'required|alpha'
-        ]);
-
-        Skill::where('id', $request->id)->update([
-            'skill_name' => $request->skill_name
-        ]);
-
-        return back()->with('success', 'Skill Update Successfully');
+    public function update(UpdateSkillRequest $request) {
+        $save = Skill::where('id', $request->id)->update(array_diff($request->validated(), [$request->id]));
+        if($save) return back()->with('success', 'Skill Update Successfully');
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'skill_name' => 'required',
-        ]);
-
-        Skill::create([
-            'skill_name' => $request->skill_name
-        ]);
-
-        return back()->with('success', 'Skill Added Successfully');
+    public function store(StoreSkillRequest $request, Skill $skill) {
+        $save = $skill->create($request->validated());
+        if($save) return back()->with('success', 'Skill Added Successfully');
     }
 
     public function destroy(Request $request) {

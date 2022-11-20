@@ -12,24 +12,24 @@
                 <h4 class="mt-50 profile-menu-text" style="color: #ffffff; line-height: 10px;" data-i18n="Name">James Garnfil</h4>
                 <span style="font-size: 10px; color: #ffffff;" class="profile-menu-text">jamesgarnfil@gmail.com</span>
             </li>
-            <li class="{{  Request::path() == 'dashboard' ? 'active' : ''  }} nav-item">
-                <a href="/dashboard"><i class="feather icon-home"></i>
+            <li class="{{  Request::path() == 'employer/dashboard' ? 'active' : ''  }} nav-item">
+                <a href="/employer/dashboard"><i class="feather icon-home"></i>
                     <span class="menu-title" data-i18n="Dashboard">Dashboard</span>
                 </a>
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Profile">Profile</span></a>
                 <ul class="menu-content">
-                    <li><a class="menu-item" href="/employer/{{ session()->get('id') }}" data-i18n="View Profile">View Profile</a>
+                    <li><a class="menu-item" href="/employer/view/{{ session()->get('id') }}" data-i18n="View Profile">View Profile</a>
                     </li>
-                    <li class="{{  Request::path() == 'profile' ? 'active' : ''  }}"><a class="menu-item" href="/profile" data-i18n="Edit Profile">Edit Profile</a>
+                    <li class="{{  Request::path() == 'employer/profile' ? 'active' : ''  }}"><a class="menu-item" href="/employer/profile" data-i18n="Edit Profile">Edit Profile</a>
                     </li>
                 </ul>
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Projects">Manage Projects</span></a>
                 <ul class="menu-content">
-                    <li class="{{ Request::path() == 'create_project' ? 'active' : ''  }}"><a class="menu-item" href="/create_project" data-i18n="Create Projects">Create Projects</a>
+                    <li class="{{ Request::path() == 'employer/create_project' ? 'active' : ''  }}"><a class="menu-item" href="/employer/create_project" data-i18n="Create Projects">Create Projects</a>
                     </li>
-                    <li class="{{ Request::path() == 'projects' ? 'active' : ''  }}"><a class="menu-item" href="/projects" data-i18n="Active Projects">Active Projects</a>
+                    <li class="{{ Request::path() == 'employer/projects' ? 'active' : ''  }}"><a class="menu-item" href="/employer/projects" data-i18n="Active Projects">Active Projects</a>
                     </li>
 
                     <li class="{{  Request::path() == 'project_proposals/approved' ? 'active' : ''  }}"><a class="menu-item" href="/project_proposals/approved" data-i18n="Approved Projects">Approved Projects</a>

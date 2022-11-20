@@ -36,7 +36,7 @@ class FollowEmployerController extends Controller
         return back()->with('fail', 'Something went wrong.');
     }
 
-    public function followed_employer() {
+    public function followed_employers() {
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
         $followed_employers =  EmployerFollower::where('follower_id', $freelancer->id)->with('employer')->cursorPaginate(10);
         return view('UserAuthScreens.followed_employers.followed_employers', compact('followed_employers'));

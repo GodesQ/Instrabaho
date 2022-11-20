@@ -21,17 +21,6 @@ use App\Models\Skill;
 class UserController extends Controller
 {
 
-    public function dashboard() {
-        $role = session()->get('role');
-        $id = session()->get('id');
-        $freelancer = Freelancer::where('user_id', $id)->with('package_checkout')->first();
-        $employer = Employer::where('user_id', $id)->with('package_checkout')->first();
-
-        if($this->checkAccountIfExist($freelancer, $employer)) return $this->checkAccountIfExist($freelancer, $employer);
-        if($role == 'freelancer')  return view('UserAuthScreens.dashboards.freelancer', compact('freelancer'));
-        return view('UserAuthScreens.dashboards.employer', compact('employer'));
-    }
-
     public function user_image_form(Request $request) {
         $id = session()->get('id');
         $user = User::where('id', $id)->first();
@@ -43,7 +32,6 @@ class UserController extends Controller
         $id = session()->get('id');
         if($role == 'freelancer' && !$freelancer) return redirect('freelancer_role_form')->with('fail', 'You need to fill up this form to continue in dashboard. Thankyou');
         if($role == 'employer' && !$employer) return redirect('employer_role_form')->with('fail', 'You need to fill up this form to continue in dashboard. Thankyou');;
-
         return false;
     }
 

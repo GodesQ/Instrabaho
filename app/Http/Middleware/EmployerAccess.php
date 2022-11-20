@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\Employer;
 
 class EmployerAccess
 {
@@ -15,8 +16,12 @@ class EmployerAccess
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
-        abort_if(session()->get('role') != 'employer', 401);
+    {   
+        abort_if(session()->get('role') != 'employer', 403);
+
+        $user_id = session()->get('id');
+        $employer_exist = Employer::where('user_id', $user_id)->exists();
+        if(!$employer_exist) return redirect()->route('employer.role_form')->with('Oops! Looks like you dont have a employer account. Create first to continue');
         return $next($request);
     }
 }

@@ -36,7 +36,7 @@
                                         <div>
                                             <h4 class="font-weight-bold">{{ $service->name }}</h4>
                                             <div class="d-flex align-items-center">
-                                                <a href="/edit_service/{{ $service->id }}" class="btn btn-outline-primary btn-sm mr-50"><i class="fa fa-edit"></i> Edit</a>
+                                                <a href="/freelancer/edit_service/{{ $service->id }}" class="btn btn-outline-primary btn-sm mr-50"><i class="fa fa-edit"></i> Edit</a>
                                                 <button id="{{ $service->id }}" class="delete-service btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
                                             </div>
                                         </div>

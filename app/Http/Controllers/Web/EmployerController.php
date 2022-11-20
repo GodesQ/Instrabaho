@@ -15,12 +15,23 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EmployerController extends Controller
 {
-    public function employer_role_form() {
+    public function role_form() {
         $id = session()->get('id');
         return view('AllScreens.misc.employer-form', compact('id'));
     }
 
-    public function save_employer_role_form(Request $request) {
+    public function save_role_form(Request $request) {
+        $request->validate([
+            'display_name' => 'required',
+            'tagline' => 'required',
+            'number_employees' => 'required',
+            'contactno' => 'required',
+            'description' => 'required',
+            'address' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required'
+        ]);
+
         $id = session()->get('id');
         $save = Employer::create([
             'user_id' => $id,
@@ -30,19 +41,36 @@ class EmployerController extends Controller
             'tagline' => $request->tagline,
             'description' => $request->description,
             'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude
         ]);
-        return redirect('/');
+
+        return redirect()->route('freelancer.dashboard')->with('success', 'Freelancer Account Successfully Created.');
     }
 
-    public function view_profile(Request $request) {
-        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $employer = Employer::where('user_id', $request->id)->with('user', 'projects')->first();
-        $featured_projects = Project::where('employer_id', $employer->id)->where('project_type', 'featured')->get();
-        $follow_employer = false;
-        if($freelancer) {
-            $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $freelancer->id)->exists();
-        }
-        return view('UserAuthScreens.user.employer.view-employer', compact('employer', 'featured_projects', 'follow_employer'));
+    public function dashboard() {
+        $id = session()->get('id');
+        $employer = Employer::where('user_id', $id)->with('package_checkout')->first();
+        return view('UserAuthScreens.dashboards.employer', compact('employer'));
+    }
+
+    public function profile(Request $request) {
+        $id = session()->get('id');
+        $role = session()->get('role');
+        $employer = Employer::where('user_id', $id)->with('user')->first();
+        return view('UserAuthScreens.user.employer.employer-profile', compact('employer'));
+    }
+
+    public function update_profile(Request $request) {
+        $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
+        $employer = Employer::where('user_id', $request->id)->first();
+        $employer->update($data);
+        $employer->user()->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'username' => $request->username
+        ]);
+        return back()->with('success', 'Profile update successfully');
     }
 
     public function index() {

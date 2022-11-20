@@ -70,20 +70,6 @@ class FreelancerController extends Controller
         return back()->with('success', 'Profile update successfully');
     }
 
-    public function view_profile(Request $request) {
-        $employer = Employer::where('user_id', session()->get('id'))->first();
-        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->first();
-        $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
-        $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
-        $follow_freelancer = false;
-        //if the user has an account of employer
-        if($employer){
-            $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $employer->id)->exists();
-        }
-
-        return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
-    }
-
     public function store_certificates(Request $request) {
         if(!isset($request->certificates)) return back()->with('fail', 'Add atleast one certificate.');
         if(count($request->certificates) < 0) return back()->with('fail', 'Add atleast one certificate.');
