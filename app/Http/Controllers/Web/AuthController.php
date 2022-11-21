@@ -121,12 +121,12 @@ class AuthController extends Controller
         $role = session()->get('role');
         if($role == 'freelancer') {
             session()->put('role', 'employer');
-            return redirect('/dashboard')->with('success', 'Login Successfully');
+            return redirect()->route('employer.dashboard')->with('success', 'Login Successfully');
         }
 
         if($role == 'employer') {
             session()->put('role', 'freelancer');
-            return redirect('/dashboard')->with('success', 'Login Successfully');
+            return redirect()->route('freelancer.dashboard')->with('success', 'Login Successfully');
         }
     }
 }

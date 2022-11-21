@@ -14,12 +14,39 @@ use App\Models\Project;
 use App\Models\ProjectProposal;
 use App\Models\Skill;
 use App\Models\ServiceCategory;
+use App\Models\FreelancerFollower;
+use App\Models\EmployerFollower;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 
 class HomeScreenController extends Controller
 {
+
+    public function employer(Request $request) {
+        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
+        $employer = Employer::where('user_id', $request->id)->with('user', 'projects')->first();
+        $featured_projects = Project::where('employer_id', $employer->id)->where('project_type', 'featured')->get();
+        $follow_employer = false;
+        if($freelancer) {
+            $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $freelancer->id)->exists();
+        }
+        return view('UserAuthScreens.user.employer.view-employer', compact('employer', 'featured_projects', 'follow_employer'));
+    }
+
+    public function freelancer(Request $request) {
+        $employer = Employer::where('user_id', session()->get('id'))->first();
+        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->first();
+        $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
+        $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
+        $follow_freelancer = false;
+        //if the user has an account of employer
+        if($employer){
+            $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $employer->id)->exists();
+        }
+
+        return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
+    }
 
     public function index() {
         $freelancers = ProjectProposal::select('freelancer_id', DB::raw('COUNT(freelancer_id) AS occurrences'))

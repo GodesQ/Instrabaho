@@ -12,16 +12,16 @@
                 <h4 class="mt-50 profile-menu-text" style="color: #ffffff; line-height: 10px;" data-i18n="Name">James Garnfil</h4>
                 <span style="font-size: 10px; color: #ffffff;" class="profile-menu-text">jamesgarnfil@gmail.com</span>
             </li>
-            <li class="{{  Request::path() == 'dashboard' ? 'active' : ''  }} nav-item">
-                <a href="/dashboard"><i class="feather icon-home"></i>
+            <li class="{{  Request::path() == 'employer/dashboard' ? 'active' : ''  }} nav-item">
+                <a href="/employer/dashboard"><i class="feather icon-home"></i>
                     <span class="menu-title" data-i18n="Dashboard">Dashboard</span>
                 </a>
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Profile">Profile</span></a>
                 <ul class="menu-content">
-                    <li><a class="menu-item" href="/employer/{{ session()->get('id') }}" data-i18n="View Profile">View Profile</a>
+                    <li><a class="menu-item" href="/employer/view/{{ session()->get('id') }}" data-i18n="View Profile">View Profile</a>
                     </li>
-                    <li class="{{  Request::path() == 'profile' ? 'active' : ''  }}"><a class="menu-item" href="/profile" data-i18n="Edit Profile">Edit Profile</a>
+                    <li class="{{  Request::path() == '/employer/profile' ? 'active' : ''  }}"><a class="menu-item" href="/employer/profile" data-i18n="Edit Profile">Edit Profile</a>
                     </li>
                 </ul>
             </li>
