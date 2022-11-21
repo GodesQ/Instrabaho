@@ -9,7 +9,11 @@
         <div class="card-title">Profile Basics</div>
     </div>
     <div class="card-body">
+<<<<<<< HEAD
         <form action="{{ route('freelancer.profile.update') }}" method="POST">
+=======
+        <form action="{{ route('employer.profile') }}" method="POST">
+>>>>>>> dba521396ddb9031bdca8193b1e7a254b8811efa
             @csrf
             <input type="hidden" name="id" value="{{ $employer->user->id }}">
             <div class="row">

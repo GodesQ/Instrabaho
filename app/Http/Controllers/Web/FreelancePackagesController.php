@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\FreelancePackage;
 use App\Models\Freelancer;
+use App\Http\Requests\FreelancerPackage\StoreFreelancePackageRequest;
+use App\Http\Requests\FreelancerPackage\UpdateFreelancePackageRequest;
 
 use Yajra\DataTables\Facades\DataTables;
 
@@ -37,59 +39,24 @@ class FreelancePackagesController extends Controller
         return view('AdminScreens.freelance_packages.edit_freelance_package', compact('package'));
     }
 
-    public function update(Request $request) {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'total_projects' => 'required|numeric',
-            'total_services' => 'required|numeric',
-            'total_feature_services' => 'required|numeric',
-            'expiry_days' => 'required|numeric'
-        ]);
-
-        $update = FreelancePackage::where('id', $request->id)->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'total_projects' => $request->total_projects,
-            'total_services' => $request->total_services,
-            'total_feature_services' => $request->total_feature_services,
-            'expiry_days' => $request->expiry_days,
+    public function update(UpdateFreelancePackageRequest $request) {
+        $update = FreelancePackage::where('id', $request->id)->update(array_merge($request->validated(), [
             'isProfileFeatured' => $request->isProfileFeatured ? $request->isProfileFeatured : 0
-        ]);
+        ]));
 
-        if($update) {
-            return back()->with('success', 'Package update successfully');
-        }
-
+        if($update) return back()->with('success', 'Package update successfully');
     }
 
     public function create() {
         return view('AdminScreens.freelance_packages.create_freelance_package');
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'total_projects' => 'required|numeric',
-            'total_services' => 'required|numeric',
-            'total_feature_services' => 'required|numeric',
-            'expiry_days' => 'required|numeric'
-        ]);
-
-        $store = FreelancePackage::create([
-            'name' => $request->name,
-            'price' => $request->price,
-            'total_projects' => $request->total_projects,
-            'total_services' => $request->total_services,
-            'total_feature_services' => $request->total_feature_services,
-            'expiry_days' => $request->expiry_days,
+    public function store(StoreFreelancePackageRequest $request) {
+        $store = FreelancePackage::create(array_merge($request->validated(), [
             'isProfileFeatured' => $request->isProfileFeatured ? $request->isProfileFeatured : 0
-        ]);
+        ]));
 
-        if($store) {
-            return redirect('/admin/freelancer_packages')->with('success', 'Package added successfully');
-        }
+        if($store) return redirect('/admin/freelancer_packages')->with('success', 'Package added successfully');
     }
 
     public function freelance_packages() {

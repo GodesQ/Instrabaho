@@ -35,7 +35,7 @@
                                             <h4 class="font-weight-bold">{{ $addon->title }}</h4>
                                             <p>{{ substr($addon->description, 0, 8) . '...' }}</p>
                                             <div class="d-flex align-items-center">
-                                                <a href="/edit_addon/{{ $addon->id }}" class="btn btn-outline-primary btn-sm mr-50"><i class="fa fa-edit"></i> Edit</a>
+                                                <a href="/freelancer/edit_addon/{{ $addon->id }}" class="btn btn-outline-primary btn-sm mr-50"><i class="fa fa-edit"></i> Edit</a>
                                                 <button id="{{ $addon->id }}" class="delete-addon btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
                                             </div>
                                         </div>

@@ -15,12 +15,23 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EmployerController extends Controller
 {
-    public function employer_role_form() {
+    public function role_form() {
         $id = session()->get('id');
         return view('AllScreens.misc.employer-form', compact('id'));
     }
 
-    public function save_employer_role_form(Request $request) {
+    public function save_role_form(Request $request) {
+        $request->validate([
+            'display_name' => 'required',
+            'tagline' => 'required',
+            'number_employees' => 'required',
+            'contactno' => 'required',
+            'description' => 'required',
+            'address' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required'
+        ]);
+
         $id = session()->get('id');
         $save = Employer::create([
             'user_id' => $id,
@@ -30,12 +41,18 @@ class EmployerController extends Controller
             'tagline' => $request->tagline,
             'description' => $request->description,
             'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude
         ]);
-        return redirect('/');
+
+        return redirect()->route('freelancer.dashboard')->with('success', 'Freelancer Account Successfully Created.');
     }
 
     public function dashboard() {
+<<<<<<< HEAD
         $role = session()->get('role');
+=======
+>>>>>>> dba521396ddb9031bdca8193b1e7a254b8811efa
         $id = session()->get('id');
         $employer = Employer::where('user_id', $id)->with('package_checkout')->first();
         return view('UserAuthScreens.dashboards.employer', compact('employer'));

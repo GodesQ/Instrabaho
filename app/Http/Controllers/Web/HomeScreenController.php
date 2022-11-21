@@ -59,6 +59,33 @@ class HomeScreenController extends Controller
         return view('welcome', compact('freelancers'));
     }
 
+    public function freelancer(Request $request) {
+        // Data of Freelancer
+        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->first();
+        $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
+        $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
+        
+        $my_profile = Employer::where('user_id', session()->get('id'))->first();
+        $follow_freelancer = false;
+        //if the user has an account of employer
+        if($my_profile){
+            $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $my_profile->id)->exists();
+        }
+        return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
+    }
+
+    public function employer(Request $request) {
+        $employer = Employer::where('user_id', $request->id)->with('user', 'projects')->first();
+        $featured_projects = Project::where('employer_id', $employer->id)->where('project_type', 'featured')->get();
+
+        $my_profile = Freelancer::where('user_id', session()->get('id'))->first();
+        $follow_employer = false;
+        if($my_profile) {
+            $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $my_profile->id)->exists();
+        }
+        return view('UserAuthScreens.user.employer.view-employer', compact('employer', 'featured_projects', 'follow_employer'));
+    }
+
     public function services(Request $request) {
         $title = $request->input('title');
         $categories = $request->input('categories') ? $request->input('categories') : [];

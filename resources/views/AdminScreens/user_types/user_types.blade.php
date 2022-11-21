@@ -78,8 +78,8 @@
                 name: 'id'
             },
             {
-                data: 'user_type',
-                name: 'user_type',
+                data: 'role',
+                name: 'role',
                 orderable: true,
                 searchable: true
             },
@@ -109,7 +109,7 @@
             url: `/admin/user_types/edit?id=${id}`,
             method: 'GET',
             success: function(response) {
-                $('#edit_user_type').val(response.user_type);
+                $('#edit_user_type').val(response.role);
                 $('#edit_slug').val(response.slug);
                 $('#user_type_id').val(response.id);
             }

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Models\Freelancer;
 use App\Models\Addon;
+use App\Http\Requests\Addon\StoreAddonRequest;
+use App\Http\Requests\Addon\UpdateAddonRequest;
+
 
 use Yajra\DataTables\Facades\DataTables;
 
@@ -24,31 +27,24 @@ class AddonsController extends Controller
         return view('UserAuthScreens.addons.create-addon');
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'title' => 'required',
-            'price' => 'numeric:required',
-            'description' => 'required'
-        ]);
+    public function store(StoreAddonRequest $request, Addon $addon) {
 
+        // check the role of user
         $user_type = base64_decode($request->user_type);
         $user_id = session()->get('id');
         $freelancer_query = Freelancer::query();
+
         if($user_type == 'admin') {
             $freelancer =  $freelancer_query->where('id', $request->freelancer)->first();
         } else {
             $freelancer = $freelancer_query->where('user_id', $user_id)->first();
         }
 
-        $save = Addon::create([
-            'user_role_id' => $freelancer->id,
-            'title' => $request->title,
-            'price' => $request->price,
-            'description' => $request->description
-        ]);
+        $save = $addon->create(array_merge($request->validated(), [
+                'user_role_id' => $freelancer->id,
+        ]));
 
-        if($user_type == 'admin') return redirect()->route('admin.addons')->with('success', 'Addon Created Successfully');
-
+        if($user_type == 'admin' && $save) return redirect()->route('admin.addons')->with('success', 'Addon Created Successfully');
         if($save) {
             return redirect('/addons')->with('success','Addons Added Successfully');
         }
@@ -60,23 +56,12 @@ class AddonsController extends Controller
        return view('UserAuthScreens.addons.edit-addon', compact('addon'));
     }
 
-    public function update(Request $request) {
-        $request->validate([
-            'id' => 'required|exists:addons,id',
-            'freelancer' => 'required',
-            'title' => 'required',
-            'price' => 'required|numeric',
-            'description' => 'required'
-        ]);
-
+    public function update(UpdateAddonRequest $request) {
+        $data = array_diff($request->validated(), [$request->id, $request->freelancer]);
         $id = $request->id;
-        $save = Addon::where('id', $request->id)->update([
-            'user_role_id' => $request->freelancer,
-            'title' => $request->title,
-            'price' => $request->price,
-            'description' => $request->description
-        ]);
-
+        $save = Addon::where('id', $request->id)->update(array_merge($data, [
+            'user_role_id' => $request->freelancer
+        ]));
         return back()->with('success', 'Addon Update Successfully');
     }
 

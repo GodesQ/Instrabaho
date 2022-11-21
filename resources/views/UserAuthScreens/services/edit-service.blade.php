@@ -9,6 +9,15 @@
             </script>
         @endpush
     @endif
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            @push('scripts')
+                <script>
+                    toastr.error('{{ $error }}', 'Error')
+                </script>
+            @endpush
+        @endforeach
+    @endif
     <style>
         #map-canvas {
             height: 300px;
@@ -71,7 +80,6 @@
                                             <div class="form-group">
                                                 <div class="form-label font-weight-bold my-1">Cost</div>
                                                 <input type="number" name="cost" class="form-control" id="" value="{{ $service->cost }}">
-                                                <span class="danger text-danger">@error('cost'){{ $message }}@enderror</span>
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +93,6 @@
                                                     <option value="Fluent" {{ $service->english_level == 'Fluent' ? 'selected' : null }}>Fluent Level</option>
                                                     <option value="Professional" {{ $service->english_level == 'Professional' ? 'selected' : null }}>Professional Level</option>
                                                 </select>
-                                                <span class="danger text-danger">@error('english_level'){{ $message }}@enderror</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -97,7 +104,6 @@
                                                         <option {{ $service->service_category == $category->id ? 'selected' : null }} value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
-                                                <span class="danger text-danger">@error('cost'){{ $message }}@enderror</span>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +115,6 @@
                                                     <option {{ $service->type == 'simple' ? 'selected' : null }} value="simple">Simple</option>
                                                     <option {{ $service->type == 'featured' ? 'selected' : null }} value="featured">Featured</option>>
                                                 </select>
-                                                <span class="danger text-danger">@error('type'){{ $message }}@enderror</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -119,7 +124,6 @@
                                                     <input type="file" class="custom-file-input" name="attachment[]" id="inputGroupFile01">
                                                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                                 </div>
-                                                <span class="danger text-danger">@error('attachment'){{ $message }}@enderror</span>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +132,6 @@
                                             <div class="form-group">
                                                 <div class="form-label font-weight-bold my-1">Description</div>
                                                 <textarea name="description" id="tinymce_description" cols="30" rows="8" class="form-control">{{ $service->description }}</textarea>
-                                                <span class="danger text-danger">@error('description'){{ $message }}@enderror</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">

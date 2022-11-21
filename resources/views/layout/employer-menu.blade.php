@@ -21,15 +21,19 @@
                 <ul class="menu-content">
                     <li><a class="menu-item" href="/employer/view/{{ session()->get('id') }}" data-i18n="View Profile">View Profile</a>
                     </li>
+<<<<<<< HEAD
                     <li class="{{  Request::path() == '/employer/profile' ? 'active' : ''  }}"><a class="menu-item" href="/employer/profile" data-i18n="Edit Profile">Edit Profile</a>
+=======
+                    <li class="{{  Request::path() == 'employer/profile' ? 'active' : ''  }}"><a class="menu-item" href="/employer/profile" data-i18n="Edit Profile">Edit Profile</a>
+>>>>>>> dba521396ddb9031bdca8193b1e7a254b8811efa
                     </li>
                 </ul>
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Projects">Manage Projects</span></a>
                 <ul class="menu-content">
-                    <li class="{{ Request::path() == 'create_project' ? 'active' : ''  }}"><a class="menu-item" href="/create_project" data-i18n="Create Projects">Create Projects</a>
+                    <li class="{{ Request::path() == 'employer/create_project' ? 'active' : ''  }}"><a class="menu-item" href="/employer/create_project" data-i18n="Create Projects">Create Projects</a>
                     </li>
-                    <li class="{{ Request::path() == 'projects' ? 'active' : ''  }}"><a class="menu-item" href="/projects" data-i18n="Active Projects">Active Projects</a>
+                    <li class="{{ Request::path() == 'employer/projects' ? 'active' : ''  }}"><a class="menu-item" href="/employer/projects" data-i18n="Active Projects">Active Projects</a>
                     </li>
 
                     <li class="{{  Request::path() == 'project_proposals/approved' ? 'active' : ''  }}"><a class="menu-item" href="/project_proposals/approved" data-i18n="Approved Projects">Approved Projects</a>
