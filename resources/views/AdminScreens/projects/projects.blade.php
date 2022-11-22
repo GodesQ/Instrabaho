@@ -17,7 +17,7 @@
                                 <th>Title</th>
                                 <th>Category</th>
                                 <th>Employer</th>
-                                <th>Project Level</th>
+                                <th>Project Cost</th>
                                 <th>Cost</th>
                                 <th>Project Type</th>
                                 <th>Actions</th>

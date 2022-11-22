@@ -26,9 +26,9 @@ class UpdateAddonRequest extends FormRequest
         return [
             'id' => 'required|exists:addons,id',
             'freelancer' => 'required',
-            'title' => 'required',
-            'price' => 'required|numeric',
-            'description' => 'required'
+            'title' => 'required|min:10',
+            'price' => 'numeric|required',
+            'description' => 'required|min:30'
         ];
     }
 }

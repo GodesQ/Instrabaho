@@ -34,9 +34,9 @@ class AdminAuthController extends Controller
         session()->put([
             'id' => $admin->id,
             'username' => $admin->username,
-            'role' => 'admin'
+            'role' => $admin->role
         ]);
-        
+
         return redirect('/admin')->with('success', 'Login Successfully');
     }
 

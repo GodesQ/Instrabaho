@@ -28,7 +28,6 @@ class AddonsController extends Controller
     }
 
     public function store(StoreAddonRequest $request, Addon $addon) {
-
         // check the role of user
         $user_type = base64_decode($request->user_type);
         $user_id = session()->get('id');
@@ -46,7 +45,7 @@ class AddonsController extends Controller
 
         if($user_type == 'admin' && $save) return redirect()->route('admin.addons')->with('success', 'Addon Created Successfully');
         if($save) {
-            return redirect('/addons')->with('success','Addons Added Successfully');
+            return redirect()->route('freelancer.addons.index')->with('success','Addons Added Successfully');
         }
     }
 
@@ -75,8 +74,19 @@ class AddonsController extends Controller
         }
     }
 
+    // ADMIN CRUD
+
     public function admin_index() {
         return view('AdminScreens.addons.addons');
+    }
+
+    public function admin_edit(Request $request) {
+        $addon = Addon::where('id', $request->id)->with('freelancer')->first();
+        return view('AdminScreens.addons.edit-addon', compact('addon'));
+    }
+
+    public function admin_create(Request $request) {
+        return view('AdminScreens.addons.create-addon');
     }
 
     public function data_table(Request $request) {
@@ -94,14 +104,5 @@ class AddonsController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->toJson();
-    }
-
-    public function admin_edit(Request $request) {
-        $addon = Addon::where('id', $request->id)->with('freelancer')->first();
-        return view('AdminScreens.addons.edit-addon', compact('addon'));
-    }
-
-    public function admin_create(Request $request) {
-        return view('AdminScreens.addons.create-addon');
     }
 }

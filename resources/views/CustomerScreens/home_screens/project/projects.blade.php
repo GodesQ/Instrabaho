@@ -18,13 +18,12 @@
                     <p>({{ $project->project_cost_type }})</p>
                 </div>
                 <div class="fr-right-details2">
-                    <a href="/project/{{ $project->id }}">
+                    <a href="{{ route('project.view', $project->id)}}">
                     <h3 title="{{ $project->title }}">{{ $project->title }}</h3>
                     </a>
                 </div>
                 <div class="fr-right-product">
                     <ul class="skills">
-
                         <!-- convert the json array ids into model and get to fetch in blade -->
                         @php $project->setSkills(json_decode($project->skills)) @endphp
                         @php $project->getSkills() @endphp
@@ -61,7 +60,7 @@
             </div>
             <div class="fr-right-bid" style="width: 30%;">
                 <ul>
-                    <li><a href="/project/{{ $project->id }}" class="btn btn-theme btn-theme-secondary">View Project</a></li>
+                    <li><a href="{{ route('project.view', $project->id)}}" class="btn btn-theme btn-theme-secondary">View Project</a></li>
                 </ul>
             </div>
         </div>

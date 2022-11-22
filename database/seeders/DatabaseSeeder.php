@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 1000; $i++) {
+        for ($i=0; $i < 10; $i++) {
             DB::table('projects')->insert([
                 'employer_id' => 1,
                 'category_id' => 7,

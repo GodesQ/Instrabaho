@@ -24,9 +24,9 @@ class StoreAddonRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'price' => 'numeric:required',
-            'description' => 'required'
+            'title' => 'required|min:10',
+            'price' => 'numeric|required',
+            'description' => 'required|min:30'
         ];
     }
 }

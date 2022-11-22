@@ -1,6 +1,17 @@
 @extends('layout.admin-layout')
 
 @section('content')
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        @push('scripts')
+            <script>
+                toastr.error('{{ $error }}', 'Error')
+            </script>
+        @endpush
+    @endforeach
+@endif
+
     <div class="page-wrapper">
         <div class="page-content">
             <div class="container">

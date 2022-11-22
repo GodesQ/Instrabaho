@@ -547,6 +547,16 @@ a.btn-style::after:hover{
 	background-color: #000;
 	border:1px solid #000;
 }
+.btn-theme-warning
+{
+	background-color: #ff7e00 !important;
+	border:1px solid #ff7e00 !important;
+}
+.btn-theme-warning:hover
+{
+	background-color: #ff7e00;
+	border:1px solid #ff7e00;
+}
 .bubbles {
   display: none;
 }
@@ -759,7 +769,7 @@ background: #259d00;
 	float: none;
 }
 .fr-menu .sb-menu ul li > a {
-	font-size: 14px;
+	font-size: 15px;
 	text-transform: capitalize;
 }
 .fr-menu .sb-menu ul li.fr-list {

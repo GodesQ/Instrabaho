@@ -23,31 +23,6 @@ use Illuminate\Support\Facades\Schema;
 class HomeScreenController extends Controller
 {
 
-    public function employer(Request $request) {
-        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $employer = Employer::where('user_id', $request->id)->with('user', 'projects')->first();
-        $featured_projects = Project::where('employer_id', $employer->id)->where('project_type', 'featured')->get();
-        $follow_employer = false;
-        if($freelancer) {
-            $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $freelancer->id)->exists();
-        }
-        return view('UserAuthScreens.user.employer.view-employer', compact('employer', 'featured_projects', 'follow_employer'));
-    }
-
-    public function freelancer(Request $request) {
-        $employer = Employer::where('user_id', session()->get('id'))->first();
-        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->first();
-        $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
-        $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
-        $follow_freelancer = false;
-        //if the user has an account of employer
-        if($employer){
-            $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $employer->id)->exists();
-        }
-
-        return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
-    }
-
     public function index() {
         $freelancers = ProjectProposal::select('freelancer_id', DB::raw('COUNT(freelancer_id) AS occurrences'))
         ->groupBy('freelancer_id')
@@ -61,24 +36,23 @@ class HomeScreenController extends Controller
 
     public function freelancer(Request $request) {
         // Data of Freelancer
-        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->first();
+        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->firstOrFail();
         $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
         $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
-        
-        $my_profile = Employer::where('user_id', session()->get('id'))->first();
+
+        $my_profile = Employer::where('user_id', session()->get('id'))->firstOrFail();
         $follow_freelancer = false;
-        //if the user has an account of employer
-        if($my_profile){
+        if($my_profile) {
             $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $my_profile->id)->exists();
         }
         return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer'));
     }
 
     public function employer(Request $request) {
-        $employer = Employer::where('user_id', $request->id)->with('user', 'projects')->first();
+        $employer = Employer::where('user_id', $request->id)->with('user', 'projects')->firstOrFail();
         $featured_projects = Project::where('employer_id', $employer->id)->where('project_type', 'featured')->get();
 
-        $my_profile = Freelancer::where('user_id', session()->get('id'))->first();
+        $my_profile = Freelancer::where('user_id', session()->get('id'))->firstOrFail();
         $follow_employer = false;
         if($my_profile) {
             $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $my_profile->id)->exists();
@@ -141,14 +115,14 @@ class HomeScreenController extends Controller
     }
 
     public function service(Request $request) {
-        $service = Service::where('id', $request->id)->with('category', 'freelancer')->first();
+        $service = Service::where('id', $request->id)->with('category', 'freelancer')->firstOrFail();
         $addons = Addon::where('user_role_id', $service->freelancer_id)->limit(5)->get();
         return view('CustomerScreens.home_screens.service.service', compact('service', 'addons'));
     }
 
     public function projects(Request $request) {
         $title = $request->input('title');
-        $categories = $request->input('categories') ? $request->input('categories') : [];
+        $categories = $request->input('categories') ? json_decode($request->input('categories')) : [];
         $price_min = $request->input('price-min');
         $price_max = $request->input('price-max');
         $my_range = $request->input('my_range');
@@ -160,13 +134,30 @@ class HomeScreenController extends Controller
         $projects = Project::select('*')
         ->where('expiration_date', '>' , Carbon::now())
         ->where('isExpired', 0)
-        ->when($title, function ($q) use ($title) {
-            return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%')->orderBy("id",'asc');
-        })
+        ->with('category', 'employer')
+        ->latest('id')
+        ->paginate(7);
+
+        $service_categories = ServiceCategory::all();
+        return view('CustomerScreens.home_screens.project.project-search', compact('projects', 'service_categories'));
+    }
+
+    public function fetch_projects(Request $request) {
+
+        abort_if(!$request->ajax(), 404);
+
+        $title = $request->get('title');
+        $categories = $request->get('categories') ? json_decode($request->get('categories')) : [];
+        $my_range = $request->get('my_range');
+        $address = $request->get('address');
+        $latitude = $request->get('latitude');
+        $longitude = $request->get('longitude');
+        $type = $request->get('type');
+
+        $projects = Project::select('*')
+        ->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%')
         ->when($categories, function ($q) use ($categories) {
-            if($categories[0]) {
-                return $q->whereIn('category_id', $categories);
-            }
+            if($categories[0]) return $q->whereIn('category_id', $categories);
         })
         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
             return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
@@ -176,85 +167,23 @@ class HomeScreenController extends Controller
             * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
         })
         ->when($type, function ($q) use ($type) {
-            return $q->where('project_type', $type)->orderBy("id",'asc');;
+            return $q->where('project_type', $type);
         })
         ->when($my_range, function ($q) use ($my_range) {
             $range = explode(';', $my_range);
-            return $q->whereBetween('cost', [$range[0], $range[1]])->orderBy("id",'asc');
+            return $q->whereBetween('cost', [$range[0], $range[1]]);
         })
-        ->orWhereNull('status')
+        ->where('expiration_date', '>' , Carbon::now())
+        ->where('isExpired', 0)
         ->with('category', 'employer')
         ->latest('id')
-        ->paginate(5);
+        ->paginate(7);
 
-
-        $service_categories = ServiceCategory::all();
-        // dd($projects);
-
-        $queries = [
-            'title' => $title,
-            'categories' => $categories,
-            'price_min' => $price_min,
-            'price_max' => $price_max,
-            'address' => $address,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-            'my_range' => $my_range,
-            'type' => $type,
-        ];
-
-        return view('CustomerScreens.home_screens.project.project-search', compact('projects', 'service_categories', 'queries'));
+        return view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
     }
 
-    // public function fetch_projects(Request $request) {
-    //     if($request->ajax()) {
-    //         $title = $request->get('title');
-    //         $categories = $request->get('categories') ? json_decode($request->get('categories')) : [];
-    //         $my_range = $request->get('my_range');
-    //         $address = $request->get('address');
-    //         $latitude = $request->get('latitude');
-    //         $longitude = $request->get('longitude');
-    //         $type = $request->get('type');
-    //         dd($request->all());
-
-    //         $projects = Project::select('*')
-    //         ->where('expiration_date', '>' , Carbon::now())
-    //         ->where('isExpired', 0)
-    //         ->orWhereNull('status')
-    //         ->when($title, function ($q) use ($title) {
-    //             return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%');
-    //         })
-    //         ->when($categories, function ($q) use ($categories) {
-    //             if($categories[0]) {
-    //                 return $q->whereIn('category_id', $categories);
-    //             }
-    //         })
-    //         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
-    //             return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
-    //             * cos(radians(projects.latitude))
-    //             * cos(radians(projects.longitude) - radians(" . $longitude . "))
-    //             + sin(radians(" .$latitude. "))
-    //             * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
-    //         })
-    //         ->when($type, function ($q) use ($type) {
-    //             return $q->where('project_type', $type);
-    //         })
-    //         ->when($my_range, function ($q) use ($my_range) {
-    //             $range = explode(';', $my_range);
-    //             return $q->whereBetween('cost', [$range[0], $range[1]]);
-    //         })
-    //         ->with('category', 'employer')
-    //         ->latest('id')
-    //         ->paginate(10);
-
-    //         return view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
-    //     } else {
-    //         dd(false);
-    //     }
-    // }
-
     public function project(Request $request) {
-        $project =  Project::where('id', $request->id)->with('employer', 'category')->first();
+        $project =  Project::where('id', $request->id)->with('employer', 'category')->firstOrFail();
         $project->setSkills(json_decode($project->skills));
         $project->getSkills();
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();

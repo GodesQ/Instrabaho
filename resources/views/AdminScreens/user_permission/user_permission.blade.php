@@ -1,80 +1,83 @@
 @extends('layout.admin-layout')
 
 @section('content')
-<div class="page-wrapper">
-    <div class="page-content">
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <form action="" class="table-responsive">
-                        <table class="table table-bordered text-center">
+
+@if (Session::get('success'))
+    @push('scripts')
+        <script>
+            toastr.success('{{ Session::get("success") }}', 'Success')
+        </script>
+    @endpush
+@endif
+
+    <div class="page-wrapper">
+        <div class="page-content">
+            <div class="container">
+                <div class="text-right my-2">
+                    <a class="btn btn-primary" href="/admin/user_permissions/create">
+                        Create <i class="feather icon-plus"></i>
+                    </a>
+                </div>
+                <div class="card">
+                    <div class="card-body table-responsive">
+                        <table class="table table-striped table-borderless data-table">
                             <thead>
                                 <tr>
-                                    <th>Functionalities</th>
-                                    <th>Employer</th>
-                                    <th>Freelancer</th>
-                                    <th>Customer Support</th>
-                                    <th>Human Resource</th>
-                                    <th>Admin</th>
-                                    <th>Super Admin</th>
+                                    <th>Permission ID</th>
+                                    <th>Permission</th>
+                                    <th>Roles Access</th>
+                                    <th>Created At</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="" class="font-weight-bold">Services</td>
-                                    <td>
-                                        <input type="checkbox" name="employer" id="">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" name="freelancer" id="">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" name="customer_support" id="">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" name="human_resource" id="">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" name="admin" id="">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" name="super_admin" id="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="" class="font-weight-bold">Projects</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="" class="font-weight-bold">Services Proposal</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="" class="font-weight-bold">Projects Proposal</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                </tr>
-                            </tbody>
                         </table>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
 @endsection
+
+@push('scripts')
+    <script>
+    let table = $('.data-table').DataTable({
+        processing: true,
+        pageLength: 25,
+        responsive: true,
+        serverSide: true,
+        ajax: {
+            url: "{{ route('admin.user_permissions.data_table') }}",
+        },
+        columns: [
+            {
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'permission',
+                name: 'permission',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'roles',
+                name: 'roles',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'created_at',
+                name: 'created_at',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ],
+    });
+    </script>
+@endpush

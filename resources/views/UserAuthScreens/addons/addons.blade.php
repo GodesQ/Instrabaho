@@ -76,7 +76,7 @@
                 let id = $(this).attr("id");
                 let csrf = "{{ csrf_token() }}";
                 Swal.fire({
-                    title: "Delete Addon Service",
+                    title: "Delete Addon",
                     text: "Are you sure you want to delete this?",
                     icon: "warning",
                     showCancelButton: true,
@@ -86,7 +86,12 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `/destroy_addon/${id}`,
+                            url: `/destroy_addon`,
+                            method: 'DELETE',
+                            data: {
+                                _token: csrf,
+                                id: id,
+                            },
                             success: function (response) {
                                 Swal.fire(
                                     "Deleted!",

@@ -34,28 +34,21 @@
         <div class="carousel-item active">
             <img
                 class="d-block w-100"
-                src="../../../images/slider/Instrabaho_Slider_01_WEB4.png"
+                src="../../../images/slider/Instrabaho_Slider_01_WEB15.png"
                 alt="1558"
             />
         </div>
         <div class="carousel-item">
             <img
                 class="d-block w-100"
-                src="../../../images/slider/Instrabaho_Slider_01_WEB9.jpeg"
+                src="../../../images/slider/Instrabaho_Slider_01_WEB16.png"
                 alt="1558"
             />
         </div>
         <div class="carousel-item">
             <img
                 class="d-block w-100"
-                src="../../../images/slider/Instrabaho_Slider_01_WEB13.png"
-                alt="1558"
-            />
-        </div>
-        <div class="carousel-item">
-            <img
-                class="d-block w-100"
-                src="../../../images/slider/Instrabaho_Slider_01_WEB14.png"
+                src="../../../images/slider/Instrabaho_Slider_01_WEB17.png"
                 alt="1558"
             />
         </div>
