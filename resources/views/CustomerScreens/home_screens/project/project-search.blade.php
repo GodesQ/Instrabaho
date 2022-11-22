@@ -60,7 +60,7 @@
                          <div id="search-widget" class="panel-collapse collapse show" role="tabpanel">
                             <div class="panel-body" tabindex="1">
                                <div class="form-group">
-                                  <input type="text" class="form-control" value="{{ $queries['title'] }}" id="title" name="title" placeholder="What are you looking for" value="">
+                                  <input type="text" class="form-control" value="" id="title" name="title" placeholder="What are you looking for" value="">
                                </div>
                             </div>
                          </div>
@@ -73,7 +73,7 @@
                                     <div class="col-md-12">
                                        <div class="form-group">
                                           <div class="form-label font-weight-bold my-50">Address</div>
-                                          <input type="text" name="address" id="map-search" class="form-control controls" value="{{ $queries['address'] }}">
+                                          <input type="text" name="address" id="map-search" class="form-control controls" value="">
                                        </div>
                                     </div>
                               </div>
@@ -86,13 +86,13 @@
                                     <div class="col-md-6">
                                        <div class="form-group">
                                           <!-- <div class="form-label font-weight-bold my-50">Latitude</div> -->
-                                          <input type="hidden" name="latitude" value="{{ $queries['latitude'] }}" class="form-control latitude">
+                                          <input type="hidden" name="latitude" value="" class="form-control latitude">
                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                        <div class="form-group">
                                           <!-- <div class="form-label font-weight-bold my-50">Longitude</div> -->
-                                          <input type="hidden" name="longitude" class="form-control longitude" value="{{ $queries['longitude'] }}">
+                                          <input type="hidden" name="longitude" class="form-control longitude" value="">
                                        </div>
                                     </div>
                               </div>
@@ -107,7 +107,7 @@
                                   @foreach($service_categories as $category)
                                      <li class="">
                                         <div class="pretty p-icon p-thick p-curve">
-                                           <input type="checkbox" id="categories" name="categories[]" {{ in_array($category->id, $queries['categories']) ? 'checked' : null }} value="{{ $category->id }}" id="{{ $category->id }}">
+                                           <input type="checkbox" id="categories" name="categories[]" value="{{ $category->id }}" id="{{ $category->id }}">
                                            <div class="state p-warning">
                                               <i class="icon fa fa-check" aria-hidden="true"></i>
                                               <label></label>
@@ -128,8 +128,8 @@
                                  <input type="text" class="services-range-slider" id="my_range" name="my_range" value="" />
                                </div>
                                <div class="extra-controls">
-                                  <input type="text" class="services-input-from form-control" value="{{ $queries['price_min'] }}" id="price-min" name="price-min">
-                                  <input type="text" class="services-input-to form-control" value="{{ $queries['price_max'] }}" name="price-max" id="price-max">
+                                  <input type="text" class="services-input-from form-control" value="" id="price-min" name="price-min">
+                                  <input type="text" class="services-input-to form-control" value="" name="price-max" id="price-max">
                                </div>
                             </div>
                          </div>
@@ -140,8 +140,8 @@
                             <div class="" tabindex="5">
                                <select name="type" id="type" class="select2 form-control">
                                   <option value="">Select Type</option>
-                                  <option {{ $queries['type'] == 'simple' ? 'selected' : null }} value="simple">Simple</option>
-                                  <option {{ $queries['type'] == 'featured' ? 'selected' : null }} value="featured">Featured</option>
+                                  <option value="simple">Simple</option>
+                                  <option value="featured">Featured</option>
                                </select>
                             </div>
                          </div>
@@ -186,7 +186,7 @@
           </div>
        </div>
     </div>
-    
+
  </section>
  <script src="../../../js/user-location.js"></script>
  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
@@ -194,90 +194,45 @@
 
 @push('scripts')
    <script>
-    //   $(document).ready(function() {
+      $(document).ready(function() {
 
-    //     $(document).on('click', '.pagination .page-item a', function(event) {
-    //     event.preventDefault();
-    //     let page = $(this).attr('href').split('page=')[1];
-    //     $('#page_count').val(page);
+        let selected_categories = [];
 
-         function fetchProjects(page, element) {
+        $(document).on('click', '.pagination .page-item a', function(event) {
+            event.preventDefault();
+            let page = $(this).attr('href').split('page=')[1];
+            $('#page_count').val(page);
+            fetchProjects(page);
+        })
+
+        $(document).on('submit', '#projects-filter-form', function(event) {
+            event.preventDefault();
+            $.each($("#categories:checked"), function(){
+                selected_categories.push($(this).val());
+            });
+            fetchProjects(1);
+        })
+
+        function fetchProjects(page) {
+            let filter_data = {
+                title: $('#title').val(),
+                address: $('#map-search').val(),
+                latitude: $('.latitude').val(),
+                longitude: $('.longitude').val(),
+                my_range: $('#my_range').val(),
+                type: $('#type').val(),
+                categories: encodeURIComponent(JSON.stringify(selected_categories)),
+            }
+            let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
             $.ajax({
-               url: "/search_projects/fetch_data?cursor="+page,
-               success: function (data) {
-                  $('.projects-data').html(data);
-                 $('.protip-container').remove();
-               }
+                url: "/search_projects/fetch_data?page="+page+'&'+filter_parameters,
+                success: function (data) {
+                    $('.projects-data').html(data);
+                    $('.protip-container').remove();
+                }
             })
-         }
+
+        }
       })
-      
-    //     let selected_categories = [];
-    //     // get the selected categories
-    //     $.each($("#categories:checked"), function(){
-    //         selected_categories.push($(this).val());
-    //     });
-
-    //     let filter_data = {
-    //             title: $('#title').val(),
-    //             address: $('#map-search').val(),
-    //             latitude: $('.latitude').val(),
-    //             longitude: $('.longitude').val(),
-    //             my_range: $('#my_range').val(),
-    //             type: $('#type').val(),
-    //             categories: encodeURIComponent(JSON.stringify(selected_categories)),
-    //         }
-
-    //         let filter_parameters = `&title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
-    //         fetchProjects(page, filter_parameters);
-    //     })
-
-    //     function fetchProjects(page, filter_parameters) {
-    //         $.ajax({
-    //             url: "/search_projects/fetch_data?page="+page+filter_parameters,
-    //             success: function (data) {
-    //                 $('.projects-data').html(data);
-    //                 $('.protip-container').remove();
-    //             }
-    //         })
-    //     }
-
-    //     $(document).on('submit', '#projects-filter-form', function(event) {
-    //         event.preventDefault();
-    //         let selected_categories = [];
-
-    //         // get the selected categories
-    //         $.each($("#categories:checked"), function(){
-    //             selected_categories.push($(this).val());
-    //         });
-
-    //         // create filter data object
-    //         let filter_data = {
-    //             title: $('#title').val(),
-    //             address: $('#map-search').val(),
-    //             latitude: $('.latitude').val(),
-    //             longitude: $('.longitude').val(),
-    //             my_range: $('#my_range').val(),
-    //             type: $('#type').val(),
-    //             categories: encodeURIComponent(JSON.stringify(selected_categories)),
-    //         }
-
-    //         let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
-    //         let current_page = $('#page_count').val();
-
-    //         // send data to filter out projects
-    //         $.ajax({
-    //             url: "/search_projects/fetch_data?"+filter_parameters,
-    //             method: 'GET',
-    //             success: function (data) {
-    //                 $('.projects-data').html(data);
-    //                 $('.protip-container').remove();
-    //             }
-    //         })
-
-    //     })
-
-
-    //   })
    </script>
 @endpush

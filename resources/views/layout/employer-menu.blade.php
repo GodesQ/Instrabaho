@@ -21,7 +21,11 @@
                 <ul class="menu-content">
                     <li><a class="menu-item" href="/employer/view/{{ session()->get('id') }}" data-i18n="View Profile">View Profile</a>
                     </li>
+<<<<<<< HEAD
+                    <li class="{{  Request::path() == '/employer/profile' ? 'active' : ''  }}"><a class="menu-item" href="/employer/profile" data-i18n="Edit Profile">Edit Profile</a>
+=======
                     <li class="{{  Request::path() == 'employer/profile' ? 'active' : ''  }}"><a class="menu-item" href="/employer/profile" data-i18n="Edit Profile">Edit Profile</a>
+>>>>>>> dba521396ddb9031bdca8193b1e7a254b8811efa
                     </li>
                 </ul>
             </li>

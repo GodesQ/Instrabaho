@@ -327,11 +327,13 @@
                     </li>
                     <li class=" navigation-header"><span>Users</span><i class=" feather icon-minus" data-toggle="tooltip" data-placement="right" data-original-title="Apps"></i>
                     </li>
-                    <li class="{{ Request::path() == 'admin/freelancers' ? 'active' : '' }} nav-item">
-                        <a href="/admin/freelancers"><i class="feather icon-user"></i>
-                            <span class="menu-title" data-i18n="Freelancers">Freelancers</span>
-                        </a>
-                    </li>
+                    @can('manage_freelancers')
+                        <li class="{{ Request::path() == 'admin/freelancers' ? 'active' : '' }} nav-item">
+                            <a href="/admin/freelancers"><i class="feather icon-user"></i>
+                                <span class="menu-title" data-i18n="Freelancers">Freelancers</span>
+                            </a>
+                        </li>
+                    @endcan
                     <li class="{{ Request::path() == 'admin/employers' ? 'active' : '' }} nav-item">
                         <a href="/admin/employers"><i class="feather icon-user"></i>
                             <span class="menu-title" data-i18n="Employers">Employers</span>
@@ -354,8 +356,8 @@
                             <li>
                                 <a class="menu-item" href="" data-i18n="Saved Services">Saved Services</a>
                             </li>
-                            <li>
-                                <a class="menu-item" href="" data-i18n="Saved Projects">Saved Projects</a>
+                            <li class="{{ Request::path() == 'admin/saved_projects' ? 'active' : '' }}">
+                                <a class="menu-item" href="/admin/saved_projects" data-i18n="Saved Projects">Saved Projects</a>
                             </li>
                         </ul>
                     </li>
@@ -428,8 +430,8 @@
                             <span class="menu-title" data-i18n="User Types">User Types</span>
                         </a>
                     </li>
-                    <li class="{{ Request::path() == 'admin/user_permission' ? 'active' : '' }} nav-item">
-                        <a href="/admin/user_permission"><i class="fa fa-lock"></i>
+                    <li class="{{ Request::path() == 'admin/user_permissions' ? 'active' : '' }} nav-item">
+                        <a href="/admin/user_permissions"><i class="fa fa-lock"></i>
                             <span class="menu-title" data-i18n="User Permission">User Permission</span>
                         </a>
                     </li>

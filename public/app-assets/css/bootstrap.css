@@ -1541,7 +1541,7 @@ pre {
   .table-responsive > .table-bordered {
     border: 0; }
 
-  
+
 
 .form-control {
   display: block;
@@ -1941,9 +1941,9 @@ textarea.form-control {
     background: #ff2946;
   }
 
-  .data-table tbody td {
+  /* .data-table tbody td {
      padding: 2rem 0rem !important;
-  }
+  } */
 
   @media (prefers-reduced-motion: reduce) {
     .btn {

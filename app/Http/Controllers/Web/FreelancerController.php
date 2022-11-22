@@ -65,8 +65,13 @@ class FreelancerController extends Controller
             'gender' => 'required|in:Male,Female',
         ]);
         $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
-        $user_model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
-        $save = $user_model::where('user_id', $request->id)->update($data);
+        $freelancer = Freelancer::where('user_id', $request->id)->first();
+        $freelancer->update($data);
+        $freelancer->user()->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'username' => $request->username
+        ]);
         return back()->with('success', 'Profile update successfully');
     }
 

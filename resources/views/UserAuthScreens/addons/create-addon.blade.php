@@ -1,6 +1,17 @@
 @extends('layout.user-layout')
 
 @section('content')
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        @push('scripts')
+            <script>
+                toastr.error('{{ $error }}', 'Error')
+            </script>
+        @endpush
+    @endforeach
+@endif
+
 <div class="page-wrapper">
     <div class="page-header">
         <div class="page-content">
@@ -18,14 +29,12 @@
                                     <div class="form-group">
                                         <div class="form-label font-weight-bold my-1">Title</div>
                                         <input type="text" name="title" class="form-control" id="">
-                                        <span class="danger text-danger">@error('title'){{ $message }}@enderror</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-label font-weight-bold my-1">Price</div>
                                         <input type="number" name="price" class="form-control" id="">
-                                        <span class="danger text-danger">@error('price'){{ $message }}@enderror</span>
                                     </div>
                                 </div>
                             </div>
@@ -34,7 +43,6 @@
                                     <div class="form-group">
                                         <div class="form-label font-weight-bold my-1">Description</div>
                                         <textarea name="description" id="" cols="30" rows="8" class="form-control"></textarea>
-                                        <span class="danger text-danger">@error('description'){{ $message }}@enderror</span>
                                     </div>
                                 </div>
                             </div>

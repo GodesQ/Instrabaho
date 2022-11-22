@@ -105,12 +105,14 @@
                 <div class="sb-header-container">
                     <!--Logo-->
                     <div
+                        style="width: 170px;"
                         class="logo"
                         data-mobile-logo="../../../images/logo/main-logo.png"
                         data-sticky-logo="../../../images/logo/main-logo.png"
                     >
                         <a href="/"
                             ><img
+                                style="width: 100%;"
                                 src="../../../images/logo/main-logo.png"
                                 alt=""
                         /></a>
@@ -145,14 +147,14 @@
                                 <a href="/contact-us">Contact Us</a>
                             </li>
                             @if(!Session::get('role') && !Session::get('id') || Session::get('role') == 'admin')
-                            <li li class="fr-list">
+                            <li class="fr-list">
                                 <a
                                     href="/register"
-                                    class="btn-theme-secondary style-1"
+                                    class="btn-theme-warning style-1" style="padding: 0.7rem 1rem !important;"
                                 >
                                     Register
                                 </a>
-                                <a href="/login" class="btn btn-theme"
+                                <a href="/login" class="btn btn-theme" style="padding: 0.7rem 1rem !important;"
                                     >Sign in</a
                                 >
                             </li>

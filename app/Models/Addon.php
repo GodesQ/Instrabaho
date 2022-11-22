@@ -9,6 +9,7 @@ class Addon extends Model
 {
     use HasFactory;
     protected $table = 'addons';
+    protected $fillable = ['user_role_id', 'title', 'price', 'description'];
     protected $guarded = [];
 
     public function freelancer() {

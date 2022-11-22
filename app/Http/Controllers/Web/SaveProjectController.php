@@ -11,6 +11,8 @@ use App\Models\Project;
 use App\Models\Employer;
 use App\Models\Freelancer;
 
+use Yajra\DataTables\Facades\DataTables;
+
 class SaveProjectController extends Controller
 {
     public function save_project(Request $request) {
@@ -22,7 +24,7 @@ class SaveProjectController extends Controller
         $freelancerExist = Freelancer::where('user_id', $user_id)->first();
         if(!$freelancerExist) return back()->with('fail', 'You need to create a freelancer account before following projects');
 
-        //check if the owner_id exist in employer_table 
+        //check if the owner_id exist in employer_table
         $owner = Employer::find($owner_id);
         if(!$owner) return back()->with('fail', "Oops! This Employer doesn't exist.");
 
@@ -33,7 +35,7 @@ class SaveProjectController extends Controller
         // check if the user already save the project
         $saved_project_exist = SaveProject::where('project_id', $project_id)->where('follower_id', $freelancerExist->id)->exists();
         if($saved_project_exist) return back()->with('fail', 'You are already follow this project');
-        
+
         $create = SaveProject::create([
             'project_id' => $project_id,
             'owner_id' => $owner_id,
@@ -58,11 +60,35 @@ class SaveProjectController extends Controller
     }
 
     public function admin_index(Request $request) {
-        $query = SaveProject::select('saved_projects.project_id', DB::raw('MAX(owner_id) as owner_id'),  DB::raw('MAX(follower_id) as follower_id'))
-                ->groupBy('project_id')
-                ->with('project', 'followers')
-                ->get();
-        $query = SaveProject::with('followers')->get();
-        dd($query);
+        return view('AdminScreens.saved_projects.saved_projects');
+    }
+
+    public function data_table(Request $request) {
+        abort_if(!$request->ajax(), 404);
+        $data = SaveProject::select('project_id', DB::raw('MAX(owner_id) as owner_id'), DB::raw('MAX(follower_id) as follower_id'), DB::raw('MAX(created_at) as created_at'))
+        ->groupBy('project_id')
+        ->latest('created_at')
+        ->with('project', 'owner', 'followers');
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('project', function($row) {
+                return $row->project->title;
+            })
+            ->addColumn('project_owner', function($row) {
+                return $row->owner->display_name;
+            })
+            ->addColumn('followers', function($row) {
+                $followers_div = '';
+                foreach ($row->followers as $key => $follower) {
+                    $followers_div .= '<img src=".../../../images/user/profile/'.$follower->user->profile_image.'" alt="" class="avatar avatar-sm" style="margin-left: -10px;">';
+                }
+               return $followers_div;
+            })
+            ->addColumn('saved_date', function($row) {
+                return date_format($row->created_at, 'F d, Y');
+            })
+            ->rawColumns(['action', 'followers'])
+            ->toJson();
     }
 }

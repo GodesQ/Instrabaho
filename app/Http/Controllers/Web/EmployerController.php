@@ -49,6 +49,7 @@ class EmployerController extends Controller
     }
 
     public function dashboard() {
+        $role = session()->get('role');
         $id = session()->get('id');
         $employer = Employer::where('user_id', $id)->with('package_checkout')->first();
         return view('UserAuthScreens.dashboards.employer', compact('employer'));

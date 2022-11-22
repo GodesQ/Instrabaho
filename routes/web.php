@@ -52,11 +52,13 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     Route::get('/search_projects/fetch_data', [HomeScreenController::class, 'fetch_projects']);
     Route::get('/search_freelancers', [HomeScreenController::class, 'freelancers']);
 
-    Route::get('/project/{id}', [HomeScreenController::class, 'project']);
-    Route::get('/service/{id}', [HomeScreenController::class, 'service']);
+    Route::get('/project/view/{id}', [HomeScreenController::class, 'project'])->name('project.view');
+    Route::get('/service/view/{id}', [HomeScreenController::class, 'service'])->name('service.view');
 
     Route::get('/freelancer/view/{id}', [HomeScreenController::class, 'freelancer'])->name('freelancer.view');
     Route::get('/employer/view/{id}', [HomeScreenController::class, 'employer'])->name('employer.view');
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -85,13 +87,19 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     */
     Route::middleware(['webauth'])->group( function () {
 
+        Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
+        Route::get('/change_login', [AuthController::class, 'change_login'])->name('user.change_login');
+
         Route::get('freelancer/role_form', [FreelancerController::class, 'freelancer_role_form'])->name('freelancer.role_form');
         Route::post('freelancer/role_form', [FreelancerController::class, 'save_freelancer_role_form'])->name('freelancer.save_role_form');
 
-        Route::get('/employer/role_form', [EmployerController::class, 'role_form'])->name('employer.role_form');
-        Route::post('/employer/role_form', [EmployerController::class, 'save_role_form'])->name('employer.save_role_form');
+        Route::get('/employer/role_form', [EmployerController::class, 'employer_role_form'])->name('employer.role_form');
+        Route::post('/employer/role_form', [EmployerController::class, 'save_employer_role_form'])->name('employer.save_role_form');
 
-        Route::group(['prefix'=> 'freelancer', 'middleware'=>['freelancer.access']], function(){
+        Route::get('/package_checkout', [PackageCheckoutController::class, 'package_checkout'])->name('package_checkout');
+        Route::post('/store_package_checkout', [PackageCheckoutController::class, 'store_package_checkout'])->name('store_package_checkout');
+
+        Route::group(['prefix'=>'freelancer', 'middleware'=>['freelancer.access']], function(){
             Route::get('dashboard', [FreelancerController::class, 'dashboard'])->name('freelancer.dashboard');
             Route::get('profile', [FreelancerController::class, 'profile'])->name('freelancer.profile');
             Route::post('profile', [FreelancerController::class, 'update_profile'])->name('freelancer.profile.update');
@@ -108,6 +116,13 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
             Route::get('followed_employers', [FollowEmployerController::class, 'followed_employers'])->name('freelancer.followed_employer');
         });
 
+        Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
+        Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');
+        Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
+        Route::post('/store_experiences', [FreelancerController::class, 'store_experiences'])->name('freelancer.store_experiences');
+        Route::post('/store_educations', [FreelancerController::class, 'store_educations'])->name('freelancer.store_educations');
+        Route::post('/store_skills', [FreelancerController::class, 'store_skills'])->name('freelancer.store_skills');
+
         Route::group(['prefix' => 'employer', 'middleware' => ['employer.access']], function() {
             Route::get('dashboard', [EmployerController::class, 'dashboard'])->name('user.dashboard');
             Route::get('profile', [EmployerController::class, 'profile'])->name('employer.profile');
@@ -115,10 +130,8 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
             Route::get('projects', [ProjectsController::class, 'index'])->name('freelancer.projects.index');
             Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create')->middleware('plan.expiration');
             Route::get('edit_project/{id}', [ProjectsController::class, 'user_edit'])->name('freelancer.project.edit');
-        }); 
+        });
 
-        Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
-        Route::get('/change_login', [AuthController::class, 'change_login'])->name('user.change_login');
 
         Route::post('/user_change_password', [UserController::class, 'user_change_password'])->name('user_change_password');
         Route::post('/change_user_picture', [UserController::class, 'change_user_picture'])->name('change_user_picture');
@@ -151,7 +164,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('/service_proposal_information/{id}', [ServicesProposalController::class, 'service_proposal_information'])->name('service_proposal_information');
         Route::delete('saved_projects/delete/{id}', [SaveProjectController::class, 'destroy'])->name('saved_project.destroy');
 
-        
+
         Route::post('/store_project', [ProjectsController::class, 'store'])->name('project.store')->middleware('plan.expiration');
         Route::post('/update_project', [ProjectsController::class, 'update'])->name('project.update')->middleware('plan.expiration');
         Route::get('/remove_project_image/{id}/{key_id}', [ProjectsController::class, 'remove_project_image'])->name('project.remove_image')->middleware('plan.expiration');
@@ -258,6 +271,10 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::delete('service_categories/destroy', [ServiceCategoriesController::class, 'destroy'])->name('admin.service_categories.destroy');
 
         Route::get('saved_projects', [SaveProjectController::class, 'admin_index'])->name('admin.saved_projects');
+        Route::get('saved_projects/data_table', [SaveProjectController::class, 'data_table'])->name('admin.saved_projects.datatables');
+
+
+        Route::get('saved_services', [SaveServiceController::class, 'admin_index'])->name('admin.saved_services');
 
         Route::get('user_types', [UserTypesController::class, 'index'])->name('user_types');
         Route::get('user_types/data_table', [UserTypesController::class, 'data_table'])->name('admin.user_types.data_table');
@@ -265,5 +282,10 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('user_types/edit', [UserTypesController::class, 'edit'])->name('admin.user_types.edit');
         Route::post('user_types/update', [UserTypesController::class, 'update'])->name('admin.user_types.update');
 
-        Route::get('user_permission', [UserPermissionController::class, 'permission'])->name('user_permission');
+        Route::get('user_permissions', [UserPermissionController::class, 'permission'])->name('admin.user_permissions');
+        Route::get('user_permissions/data_table', [UserPermissionController::class, 'data_table'])->name('admin.user_permissions.data_table');
+        Route::get('user_permissions/create', [UserPermissionController::class, 'create'])->name('admin.user_permissions.create');
+        Route::post('user_permissions/store', [UserPermissionController::class, 'store'])->name('admin.user_permissions.store');
+        Route::get('user_permissions/edit/{id}', [UserPermissionController::class, 'edit'])->name('admin.user_permissions.edit')->middleware('can:manage_freelancers');
+        Route::post('user_permissions/update', [UserPermissionController::class, 'update'])->name('admin.user_permissions.update');
     });

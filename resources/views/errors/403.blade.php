@@ -1,6 +1,6 @@
 @extends('layout.error-layout')
 
-@section('title', '404 - Not Found')
+@section('title', '403 - Forbidden')
 
 @section('content')
     <div class="d-flex justify-content-center align-items-center flex-column" style="height: 100vh;">

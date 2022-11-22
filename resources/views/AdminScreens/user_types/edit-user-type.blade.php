@@ -18,7 +18,7 @@
                         <input type="text" placeholder="User Type" name="user_type" id="edit_user_type" class="form-control">
                     </div>
                     <div class="form-group">
-                        <input type="text" placeholder="Slug" name="slug" id="edit_slug" readonly class="form-control">
+                        <input type="text" placeholder="Slug" name="slug" id="edit_slug" {{session()->get('role') != 'super_admin' ? 'readonly' : null }} class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">

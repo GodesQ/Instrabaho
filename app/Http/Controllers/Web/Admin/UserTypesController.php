@@ -59,9 +59,10 @@ class UserTypesController extends Controller
             'slug' => 'required'
         ]);
 
-        UserType::where('id', $request->id)->update([
-            'user_type' => $request->user_type,
-            'slug' => $request->slug
+        $user_type = UserType::where('id', $request->id)->firstOrFail();
+        $user_type->update([
+            'role' => $request->user_type,
+            'slug' => session()->get('role') == 'admin' ? $request->slug : $user_type->slug
         ]);
 
         return back()->with('success', 'Update User Type Successfully');

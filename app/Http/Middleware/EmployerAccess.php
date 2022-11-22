@@ -16,7 +16,7 @@ class EmployerAccess
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {   
+    {
         abort_if(session()->get('role') != 'employer', 403);
 
         $user_id = session()->get('id');

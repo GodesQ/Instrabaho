@@ -22,7 +22,7 @@
 
 <div class="page-wrapper">
     <div class="page-content">
-        <div class="container-fluid">
+        <div class="container">
             <div class="text-right my-2">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">
                     Create <i class="feather icon-plus"></i>
