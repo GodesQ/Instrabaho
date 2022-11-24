@@ -90,6 +90,13 @@
                                             {{ Session::get('fail') }}
                                         </div>
                                 @endif
+                                @if(Session::get('errors'))
+                                    @push('scripts')
+                                        <script>
+                                            toastr.error('{{ Session::get("errors") }}', 'Fail');
+                                        </script>
+                                    @endpush
+                                @endif
                                 <div class="card-content">
                                     <div class="card-body">
                                         <form class="form-horizontal" action="{{ route('login.post') }}" method="POST">
@@ -99,14 +106,12 @@
                                                 <div class="form-control-position">
                                                     <i class="feather icon-user"></i>
                                                 </div>
-                                                <span class="text-danger danger">@error('username'){{ $message }}@enderror</span>
                                             </fieldset>
                                             <fieldset class="form-group position-relative has-icon-left">
                                                 <input type="password" class="form-control" id="user-password" placeholder="Enter Password" name="password">
                                                 <div class="form-control-position">
                                                     <i class="fa fa-key"></i>
                                                 </div>
-                                                <span class="text-danger danger">@error('password'){{ $message }}@enderror</span>
                                             </fieldset>
                                             <button type="submit" class="btn btn-outline-primary btn-block"><i class="feather icon-unlock"></i> Login</button>
                                         </form>
