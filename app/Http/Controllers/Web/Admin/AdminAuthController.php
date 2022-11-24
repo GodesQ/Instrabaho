@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Admin;
 
@@ -22,14 +23,11 @@ class AdminAuthController extends Controller
             'password' => 'required'
         ]);
 
-        $admin = Admin::where('username', $request->username)->first();
-        if(!$admin) {
-            return back()->with('fail', 'Username does not exist.');
+        if(!Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
+            return back()->with('errors', 'Your email or password is incorrect. Please Try Again.');
         }
 
-        if(!Hash::check($request->password, $admin->password)) {
-            return back()->with('fail', 'Password is incorrect.');
-        }
+        $admin = Auth::guard('admin')->user();
 
         session()->put([
             'id' => $admin->id,
