@@ -286,6 +286,6 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('user_permissions/data_table', [UserPermissionController::class, 'data_table'])->name('admin.user_permissions.data_table');
         Route::get('user_permissions/create', [UserPermissionController::class, 'create'])->name('admin.user_permissions.create');
         Route::post('user_permissions/store', [UserPermissionController::class, 'store'])->name('admin.user_permissions.store');
-        Route::get('user_permissions/edit/{id}', [UserPermissionController::class, 'edit'])->name('admin.user_permissions.edit')->middleware('can:manage_freelancers');
+        Route::get('user_permissions/edit/{id}', [UserPermissionController::class, 'edit'])->name('admin.user_permissions.edit');
         Route::post('user_permissions/update', [UserPermissionController::class, 'update'])->name('admin.user_permissions.update');
     });

@@ -44,7 +44,7 @@ class FreelancerController extends Controller
 
         if($save) return redirect('/');
     }
-    
+
     public function dashboard() {
         $role = session()->get('role');
         $id = session()->get('id');
@@ -81,7 +81,7 @@ class FreelancerController extends Controller
 
          $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
         $freelancer = Freelancer::where('user_id', $user_id)->first();
-        
+
 
         $certificates = FreelancerCertificate::where('freelancer_id', $freelancer->id)->get();
 
@@ -195,6 +195,7 @@ class FreelancerController extends Controller
     }
 
     public function index(Request $request) {
+
         return view('AdminScreens.freelancers.freelancers');
     }
 

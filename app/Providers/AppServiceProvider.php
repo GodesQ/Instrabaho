@@ -28,5 +28,18 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+        view()->composer('*', function ($view)
+        {
+            $user_permissions = UserPermission::all();
+            foreach ($user_permissions as $key => $user_permission) {
+                $permission_roles = explode("|", $user_permission->roles);
+                $auth_user_role = session()->get('role');
+                // dd(in_array(session()->get('role'), $permission_roles));
+                $gate = Gate::define($user_permission->permission, function(Admin $admin) {
+                    return true;
+                });
+                // dd($gate);
+            }
+        });
     }
 }
