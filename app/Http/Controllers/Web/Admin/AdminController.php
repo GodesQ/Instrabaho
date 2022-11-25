@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function index(Request $request) {
-        $admin = Auth::user();
-        dd($admin);
         return view('AdminScreens.dashboard.admin_dashboard');
     }
 }

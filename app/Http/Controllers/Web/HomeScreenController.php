@@ -40,7 +40,7 @@ class HomeScreenController extends Controller
         $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
         $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
 
-        $my_profile = Employer::where('user_id', session()->get('id'))->firstOrFail();
+        $my_profile = Employer::where('user_id', session()->get('id'))->first();
         $follow_freelancer = false;
         if($my_profile) {
             $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $my_profile->id)->exists();

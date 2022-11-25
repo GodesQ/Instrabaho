@@ -229,7 +229,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('employer_packages/create', [EmployerPackagesController::class, 'create'])->name('employer_packages.create');
         Route::post('employer_packages/store', [EmployerPackagesController::class, 'store'])->name('employer_packages.store');
 
-        Route::get('freelancers', [FreelancerController::class, 'index'])->name('freelancers');
+        Route::get('freelancers', [FreelancerController::class, 'index'])->name('freelancers')->middleware('can:manage_freelancers');
         Route::get('freelancers/data_table', [FreelancerController::class, 'data_table'])->name('freelancers.data_table');
         Route::get('freelancers/edit/{id}', [FreelancerController::class, 'edit'])->name('freelancers.edit');
         Route::put('freelancers/update', [FreelancerController::class, 'update'])->name('freelancers.update');
@@ -282,10 +282,10 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('user_types/edit', [UserTypesController::class, 'edit'])->name('user_types.edit');
         Route::post('user_types/update', [UserTypesController::class, 'update'])->name('user_types.update');
 
-        Route::get('user_permissions', [UserPermissionController::class, 'permission'])->name('admin.user_permissions');
-        Route::get('user_permissions/data_table', [UserPermissionController::class, 'data_table'])->name('admin.user_permissions.data_table');
-        Route::get('user_permissions/create', [UserPermissionController::class, 'create'])->name('admin.user_permissions.create');
-        Route::post('user_permissions/store', [UserPermissionController::class, 'store'])->name('admin.user_permissions.store');
-        Route::get('user_permissions/edit/{id}', [UserPermissionController::class, 'edit'])->name('admin.user_permissions.edit');
-        Route::post('user_permissions/update', [UserPermissionController::class, 'update'])->name('admin.user_permissions.update');
+        Route::get('user_permissions', [UserPermissionController::class, 'permission'])->name('user_permissions');
+        Route::get('user_permissions/data_table', [UserPermissionController::class, 'data_table'])->name('user_permissions.data_table');
+        Route::get('user_permissions/create', [UserPermissionController::class, 'create'])->name('user_permissions.create');
+        Route::post('user_permissions/store', [UserPermissionController::class, 'store'])->name('user_permissions.store');
+        Route::get('user_permissions/edit/{id}', [UserPermissionController::class, 'edit'])->name('user_permissions.edit');
+        Route::post('user_permissions/update', [UserPermissionController::class, 'update'])->name('user_permissions.update');
     });

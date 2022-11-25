@@ -16,15 +16,12 @@
         <div class="page-content">
             <div class="container">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Create Permission</div>
-                        <hr>
-                    </div>
                     <div class="card-body">
+                        <div class="card-title">Create Permission</div>
                         <form action="{{ route('admin.user_permissions.store') }}" class="form" method="POST">
                             @csrf
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="font-weight-bold" for="permission">Permission</label>
                                         <input type="text" class="form-control" name="permission" id="permission">

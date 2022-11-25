@@ -197,13 +197,11 @@ class FreelancerController extends Controller
     }
 
     public function index(Request $request) {
-
         return view('AdminScreens.freelancers.freelancers');
     }
 
     public function data_table(Request $request) {
         abort_if(!$request->ajax(), 404);
-
         $data = Freelancer::select('*')->with('user')->latest('id');
         return DataTables::of($data)
             ->addIndexColumn()

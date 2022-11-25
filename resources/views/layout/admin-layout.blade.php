@@ -327,11 +327,13 @@
                     </li>
                     <li class=" navigation-header"><span>Users</span><i class=" feather icon-minus" data-toggle="tooltip" data-placement="right" data-original-title="Apps"></i>
                     </li>
+                    @can('manage_freelancers')
                         <li class="{{ Request::path() == 'admin/freelancers' ? 'active' : '' }} nav-item">
                             <a href="/admin/freelancers"><i class="feather icon-user"></i>
                                 <span class="menu-title" data-i18n="Freelancers">Freelancers</span>
                             </a>
                         </li>
+                    @endcan
                     <li class="{{ Request::path() == 'admin/employers' ? 'active' : '' }} nav-item">
                         <a href="/admin/employers"><i class="feather icon-user"></i>
                             <span class="menu-title" data-i18n="Employers">Employers</span>
