@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -25,14 +26,16 @@ class AdminAuthController extends Controller
         ]);
 
         if(!Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
-            return back()->withErrors('Your email or password is incorrect. Please Try Again.');
+            return back()->with('errors', 'Your email or password is incorrect. Please Try Again.');
         }
 
-        // session()->put([
-        //     'id' => $admin->id,
-        //     'username' => $admin->username,
-        //     'role' => $admin->role
-        // ]);
+        $admin = Auth::guard('admin')->user();
+
+        session()->put([
+            'id' => $admin->id,
+            'username' => $admin->username,
+            'role' => $admin->role
+        ]);
 
         return redirect('/admin')->with('success', 'Login Successfully');
     }

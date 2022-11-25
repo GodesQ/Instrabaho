@@ -73,7 +73,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     Route::get('/verify-message', [AuthController::class, 'verify_message'])->name('verify-message');
 
     Route::post('/send_forgot_form', [ForgotPasswordController::class, 'send_forgot_form'])->name('send_forgot_form');
-    Route::get('/forgot-message', [ForgotPasswordController::class, 'forgot_message']);
+    Route::get('/forgot-message', [ForgotPasswordController::class, 'forgot_ message']);
     Route::get('/forgot-reset-form', [ForgotPasswordController::class, 'forgot_reset_form']);
     Route::post('/submit-reset-form', [ForgotPasswordController::class, 'submit_reset_form']);
 
@@ -211,76 +211,76 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     Route::get('/admin/login', [AdminAuthController::class, 'login'])->name('login.get');
     Route::post('/admin/login', [AdminAuthController::class, 'save_login'])->name('login.post');
 
-    Route::group(['prefix' => 'admin', 'middleware' => ['admin.access']], function() {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin.access']], function() {
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout.get');
-        Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/', [AdminController::class, 'index'])->name('dashboard');
 
-        Route::get('freelancer_packages', [FreelancePackagesController::class, 'index'])->name('admin.freelancer_packages');
-        Route::get('freelancer_packages/data_table', [FreelancePackagesController::class, 'data_table'])->name('admin.freelancer_packages.data_table');
-        Route::get('freelancer_packages/edit/{id}', [FreelancePackagesController::class, 'edit'])->name('admin.freelancer_packages.edit');
-        Route::put('freelancer_packages/update', [FreelancePackagesController::class, 'update'])->name('admin.freelancer_packages.update');
-        Route::get('freelancer_packages/create', [FreelancePackagesController::class, 'create'])->name('admin.freelancer_packages.create');
-        Route::post('freelancer_packages/store', [FreelancePackagesController::class, 'store'])->name('admin.freelancer_packages.store');
+        Route::get('freelancer_packages', [FreelancePackagesController::class, 'index'])->name('freelancer_packages');
+        Route::get('freelancer_packages/data_table', [FreelancePackagesController::class, 'data_table'])->name('freelancer_packages.data_table');
+        Route::get('freelancer_packages/edit/{id}', [FreelancePackagesController::class, 'edit'])->name('freelancer_packages.edit');
+        Route::put('freelancer_packages/update', [FreelancePackagesController::class, 'update'])->name('freelancer_packages.update');
+        Route::get('freelancer_packages/create', [FreelancePackagesController::class, 'create'])->name('freelancer_packages.create');
+        Route::post('freelancer_packages/store', [FreelancePackagesController::class, 'store'])->name('freelancer_packages.store');
 
-        Route::get('employer_packages', [EmployerPackagesController::class, 'index'])->name('admin.employer_packages');
-        Route::get('employer_packages/data_table', [EmployerPackagesController::class, 'data_table'])->name('admin.employer_packages.data_table');
-        Route::get('employer_packages/edit/{id}', [EmployerPackagesController::class, 'edit'])->name('admin.employer_packages.edit');
-        Route::put('employer_packages/update', [EmployerPackagesController::class, 'update'])->name('admin.employer_packages.update');
-        Route::get('employer_packages/create', [EmployerPackagesController::class, 'create'])->name('admin.employer_packages.create');
-        Route::post('employer_packages/store', [EmployerPackagesController::class, 'store'])->name('admin.employer_packages.store');
+        Route::get('employer_packages', [EmployerPackagesController::class, 'index'])->name('employer_packages');
+        Route::get('employer_packages/data_table', [EmployerPackagesController::class, 'data_table'])->name('employer_packages.data_table');
+        Route::get('employer_packages/edit/{id}', [EmployerPackagesController::class, 'edit'])->name('employer_packages.edit');
+        Route::put('employer_packages/update', [EmployerPackagesController::class, 'update'])->name('employer_packages.update');
+        Route::get('employer_packages/create', [EmployerPackagesController::class, 'create'])->name('employer_packages.create');
+        Route::post('employer_packages/store', [EmployerPackagesController::class, 'store'])->name('employer_packages.store');
 
-        Route::get('freelancers', [FreelancerController::class, 'index'])->name('admin.freelancers');
-        Route::get('freelancers/data_table', [FreelancerController::class, 'data_table'])->name('admin.freelancers.data_table');
-        Route::get('freelancers/edit/{id}', [FreelancerController::class, 'edit'])->name('admin.freelancers.edit');
-        Route::put('freelancers/update', [FreelancerController::class, 'update'])->name('admin.freelancers.update');
-        Route::get('freelancers/search', [FreelancerController::class, 'search'])->name('admin.freelancers.search');
+        Route::get('freelancers', [FreelancerController::class, 'index'])->name('freelancers');
+        Route::get('freelancers/data_table', [FreelancerController::class, 'data_table'])->name('freelancers.data_table');
+        Route::get('freelancers/edit/{id}', [FreelancerController::class, 'edit'])->name('freelancers.edit');
+        Route::put('freelancers/update', [FreelancerController::class, 'update'])->name('freelancers.update');
+        Route::get('freelancers/search', [FreelancerController::class, 'search'])->name('freelancers.search');
 
-        Route::get('employers', [EmployerController::class, 'index'])->name('admin.employers');
-        Route::get('employers/data_table', [EmployerController::class, 'data_table'])->name('admin.employers.data_table');
-        Route::get('employers/edit/{id}', [EmployerController::class, 'edit'])->name('admin.employers.edit');
-        Route::put('employers/update', [EmployerController::class, 'update'])->name('admin.employers.update');
-        Route::get('employers/search', [EmployerController::class, 'search'])->name('admin.employers.search');
+        Route::get('employers', [EmployerController::class, 'index'])->name('employers');
+        Route::get('employers/data_table', [EmployerController::class, 'data_table'])->name('employers.data_table');
+        Route::get('employers/edit/{id}', [EmployerController::class, 'edit'])->name('employers.edit');
+        Route::put('employers/update', [EmployerController::class, 'update'])->name('employers.update');
+        Route::get('employers/search', [EmployerController::class, 'search'])->name('employers.search');
 
-        Route::get('services', [ServicesController::class, 'admin_index'])->name('admin.services');
-        Route::get('services/data_table', [ServicesController::class, 'data_table'])->name('admin.services.data_table');
-        Route::get('services/edit/{id}', [ServicesController::class, 'admin_edit'])->name('admin.services.edit');
-        Route::get('services/create', [ServicesController::class, 'admin_create'])->name('admin.create.create');
+        Route::get('services', [ServicesController::class, 'admin_index'])->name('services');
+        Route::get('services/data_table', [ServicesController::class, 'data_table'])->name('services.data_table');
+        Route::get('services/edit/{id}', [ServicesController::class, 'admin_edit'])->name('services.edit');
+        Route::get('services/create', [ServicesController::class, 'admin_create'])->name('services.create');
 
-        Route::get('addons', [AddonsController::class, 'admin_index'])->name('admin.addons');
-        Route::get('addons/data_table', [AddonsController::class, 'data_table'])->name('admin.addons.data_table');
-        Route::get('addons/edit/{id}', [AddonsController::class, 'admin_edit'])->name('admin.addons.edit');
-        Route::get('addons/create', [AddonsController::class, 'admin_create'])->name('admin.addons.create');
+        Route::get('addons', [AddonsController::class, 'admin_index'])->name('addons');
+        Route::get('addons/data_table', [AddonsController::class, 'data_table'])->name('addons.data_table');
+        Route::get('addons/edit/{id}', [AddonsController::class, 'admin_edit'])->name('addons.edit');
+        Route::get('addons/create', [AddonsController::class, 'admin_create'])->name('addons.create');
 
-        Route::get('projects', [ProjectsController::class, 'admin_index'])->name('admin.projects');
-        Route::get('projects/data_table', [ProjectsController::class, 'data_table'])->name('admin.projects.data_table');
-        Route::get('projects/edit/{id}', [ProjectsController::class, 'admin_edit'])->name('admin.projects.edit');
-        Route::get('projects/create', [ProjectsController::class, 'admin_create'])->name('admin.projects.create');
+        Route::get('projects', [ProjectsController::class, 'admin_index'])->name('projects');
+        Route::get('projects/data_table', [ProjectsController::class, 'data_table'])->name('projects.data_table');
+        Route::get('projects/edit/{id}', [ProjectsController::class, 'admin_edit'])->name('projects.edit');
+        Route::get('projects/create', [ProjectsController::class, 'admin_create'])->name('projects.create');
 
-        Route::get('skills', [SkillsController::class, 'index'])->name('admin.skills');
-        Route::get('skills/data_table', [SkillsController::class, 'data_table'])->name('admin.skills.data_table');
-        Route::get('skills/edit', [SkillsController::class, 'edit'])->name('admin.skills.edit');
-        Route::post('skills/update', [SkillsController::class, 'update'])->name('admin.skills.update');
-        Route::post('skills/store', [SkillsController::class, 'store'])->name('admin.skills.store');
-        Route::delete('skills/destroy', [SkillsController::class, 'destroy'])->name('admin.skills.destroy');
+        Route::get('skills', [SkillsController::class, 'index'])->name('skills');
+        Route::get('skills/data_table', [SkillsController::class, 'data_table'])->name('skills.data_table');
+        Route::get('skills/edit', [SkillsController::class, 'edit'])->name('skills.edit');
+        Route::post('skills/update', [SkillsController::class, 'update'])->name('skills.update');
+        Route::post('skills/store', [SkillsController::class, 'store'])->name('skills.store');
+        Route::delete('skills/destroy', [SkillsController::class, 'destroy'])->name('skills.destroy');
 
-        Route::get('service_categories', [ServiceCategoriesController::class, 'index'])->name('admin.service_categories');
-        Route::get('service_categories/data_table', [ServiceCategoriesController::class, 'data_table'])->name('admin.service_categories.data_table');
-        Route::get('service_categories/edit', [ServiceCategoriesController::class, 'edit'])->name('admin.service_categories.edit');
-        Route::post('service_categories/update', [ServiceCategoriesController::class, 'update'])->name('admin.service_categories.update');
-        Route::post('service_categories/store', [ServiceCategoriesController::class, 'store'])->name('admin.service_categories.store');
-        Route::delete('service_categories/destroy', [ServiceCategoriesController::class, 'destroy'])->name('admin.service_categories.destroy');
+        Route::get('service_categories', [ServiceCategoriesController::class, 'index'])->name('service_categories');
+        Route::get('service_categories/data_table', [ServiceCategoriesController::class, 'data_table'])->name('service_categories.data_table');
+        Route::get('service_categories/edit', [ServiceCategoriesController::class, 'edit'])->name('service_categories.edit');
+        Route::post('service_categories/update', [ServiceCategoriesController::class, 'update'])->name('service_categories.update');
+        Route::post('service_categories/store', [ServiceCategoriesController::class, 'store'])->name('service_categories.store');
+        Route::delete('service_categories/destroy', [ServiceCategoriesController::class, 'destroy'])->name('service_categories.destroy');
 
-        Route::get('saved_projects', [SaveProjectController::class, 'admin_index'])->name('admin.saved_projects');
-        Route::get('saved_projects/data_table', [SaveProjectController::class, 'data_table'])->name('admin.saved_projects.datatables');
+        Route::get('saved_projects', [SaveProjectController::class, 'admin_index'])->name('saved_projects');
+        Route::get('saved_projects/data_table', [SaveProjectController::class, 'data_table'])->name('saved_projects.datatables');
 
 
-        Route::get('saved_services', [SaveServiceController::class, 'admin_index'])->name('admin.saved_services');
+        Route::get('saved_services', [SaveServiceController::class, 'admin_index'])->name('saved_services');
 
         Route::get('user_types', [UserTypesController::class, 'index'])->name('user_types');
-        Route::get('user_types/data_table', [UserTypesController::class, 'data_table'])->name('admin.user_types.data_table');
-        Route::post('user_types/store', [UserTypesController::class, 'store'])->name('admin.user_types.store');
-        Route::get('user_types/edit', [UserTypesController::class, 'edit'])->name('admin.user_types.edit');
-        Route::post('user_types/update', [UserTypesController::class, 'update'])->name('admin.user_types.update');
+        Route::get('user_types/data_table', [UserTypesController::class, 'data_table'])->name('user_types.data_table');
+        Route::post('user_types/store', [UserTypesController::class, 'store'])->name('user_types.store');
+        Route::get('user_types/edit', [UserTypesController::class, 'edit'])->name('user_types.edit');
+        Route::post('user_types/update', [UserTypesController::class, 'update'])->name('user_types.update');
 
         Route::get('user_permissions', [UserPermissionController::class, 'permission'])->name('admin.user_permissions');
         Route::get('user_permissions/data_table', [UserPermissionController::class, 'data_table'])->name('admin.user_permissions.data_table');
