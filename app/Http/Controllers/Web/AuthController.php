@@ -26,11 +26,11 @@ class AuthController extends Controller
         ]);
 
 
-        if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if(!Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password])) {
             return back()->withErrors('Your email or password is incorrect. Please Try Again.');
         }
 
-        $user = Auth::user();
+        $user = Auth::guard('user')->user();
         if(!$user->isVerify)  return back()->withErrors('Please verify your email address.');
 
         $request->session()->put([

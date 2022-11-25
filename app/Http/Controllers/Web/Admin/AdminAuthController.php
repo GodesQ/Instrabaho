@@ -23,12 +23,10 @@ class AdminAuthController extends Controller
             'password' => 'required'
         ]);
 
-        if(!Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
+        if(!Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             return back()->with('errors', 'Your email or password is incorrect. Please Try Again.');
         }
-
-        $admin = Auth::guard('admin')->user();
-
+        $admin = Auth::user();
         session()->put([
             'id' => $admin->id,
             'username' => $admin->username,

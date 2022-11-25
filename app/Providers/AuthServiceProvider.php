@@ -28,23 +28,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
         $user_permissions = UserPermission::all();
-
-        Gate::define('manage_freelancer', function($admin) {
-            return true;
-        });
-
-        // foreach ($user_permissions as $key => $user_permission) {
-        //     $permission_roles = explode("|", $user_permission->roles);
-        //     Gate::define($user_permission->permission, function($admin) {
-        //         $has_access = in_array($admin->role, $permission_roles);
-        //         if($has_access) {
-        //             return true;
-        //         } else {
-        //             return false;
-        //         }
-        //     });
-        // }
+        foreach ($user_permissions as $key => $user_permission) {
+            Gate::define($user_permission->permission, function(Admin $admin) use ($user_permission) {
+                $permission_roles = explode("|", $user_permission->roles);
+                return in_array($admin->role, $permission_roles);
+            });
+        }
     }
 }

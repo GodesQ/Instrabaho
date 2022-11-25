@@ -39,7 +39,7 @@
                                         <input type="text" class="form-control" name="permission" id="permission"value="{{ $permission->permission }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="font-weight-bold" for="roles">Roles</label>
                                         <br>
@@ -48,7 +48,7 @@
                                                 $selected_user_types = explode("|", $permission->roles);
                                             @endphp
                                             @foreach ($user_types as $user_type)
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <input type="checkbox" {{in_array($user_type->slug, $selected_user_types) ? 'checked' : null}} name="roles[]" id="roles" value="{{ $user_type->slug }}"> {{$user_type->role}} <br> <br>
                                                 </div>
                                             @endforeach

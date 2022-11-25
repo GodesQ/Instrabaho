@@ -46,7 +46,7 @@ class FreelancerController extends Controller
 
         if($save) return redirect('/');
     }
-    
+
     public function dashboard() {
         $role = session()->get('role');
         $id = session()->get('id');
@@ -83,7 +83,7 @@ class FreelancerController extends Controller
 
          $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
         $freelancer = Freelancer::where('user_id', $user_id)->first();
-        
+
 
         $certificates = FreelancerCertificate::where('freelancer_id', $freelancer->id)->get();
 
@@ -197,14 +197,11 @@ class FreelancerController extends Controller
     }
 
     public function index(Request $request) {
-        $gate = Gate::allows('manage_freelancer', auth('admin')->user());
-        dd($gate);
         return view('AdminScreens.freelancers.freelancers');
     }
 
     public function data_table(Request $request) {
         abort_if(!$request->ajax(), 404);
-
         $data = Freelancer::select('*')->with('user')->latest('id');
         return DataTables::of($data)
             ->addIndexColumn()
