@@ -165,7 +165,7 @@
                     </div>
                     <div class="tab-pane" id="tab32" role="tabpanel" aria-labelledby="base-tab32">
                         <div class="container">
-                            @include('UserAuthScreens.services_proposals.freelancer.pending', [$pending_offers])
+                            @include('UserAuthScreens.services_proposals.freelancer.pending_offers.pending_offers', [$pending_offers])
                         </div>
                     </div>
                     <div class="tab-pane" id="tab33" role="tabpanel" aria-labelledby="base-tab33">

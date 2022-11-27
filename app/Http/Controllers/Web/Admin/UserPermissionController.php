@@ -17,7 +17,7 @@ class UserPermissionController extends Controller
     }
 
     public function data_table(Request $request) {
-        $data = UserPermission::select('*');
+        $data = UserPermission::select('*')->latest('id');
         return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('roles', function ($row) {
@@ -28,7 +28,7 @@ class UserPermissionController extends Controller
                 })
                 ->addColumn('action', function($row) {
                     $btn = '<a href="/admin/user_permissions/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
+                            <button id="'.$row->id.'" class="delete_user_permission datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></button>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -71,5 +71,22 @@ class UserPermissionController extends Controller
             'roles' => $roles
         ]);
         return back()->with('success', 'Create Permission Successfully');
+    }
+
+    public function destroy(Request $request) {
+        if(!$request->ajax()) return response()->json(
+            ['status' => '405', 
+            'message' => 'Oops, Your request is invalid. Please Try Again Later.'
+        ]);
+
+        $user_permission = UserPermission::where('id', $request->id)->firstOrFail();
+        $delete = $user_permission->delete();
+        if($delete) {
+            return response()->json([
+                'status' => 201,
+                'message' => 'User Permission successfully deleted.'
+            ]);
+        }
+        
     }
 }

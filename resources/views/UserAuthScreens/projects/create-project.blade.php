@@ -52,27 +52,6 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <div class="form-label font-weight-bold my-50">Address</div>
-                                    <input type="text" name="location" id="map-search" class="form-control controls" value="">
-                                </div>
-                                <div class="col-md-12">
-                                    <div id="map-canvas"></div>
-                                </div>
-                                <div class="col-md-6 d-none">
-                                    <div class="form-group d-none">
-                                        <div class="form-label font-weight-bold my-50">Latitude</div>
-                                        <input type="text" name="latitude" value="" class="form-control latitude">
-                                    </div>
-                                </div>
-                                <div class="col-md-6d-none">
-                                    <div class="form-group d-none">
-                                        <div class="form-label font-weight-bold my-50">Longitude</div>
-                                        <input type="text" name="longitude" class="form-control longitude" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <div class="form-label font-weight-bold my-1">Attachment</div>
                                     <input type="file" multiple class="form-control" id="pass" name="attachments[]" placeholder="Attachment Name" required>
                                     <span class="danger text-danger">@error('attachments'){{ $message }}@enderror</span>
@@ -125,10 +104,19 @@
                                     <span class="danger text-danger">@error('project_cost_type'){{ $message }}@enderror</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <div class="form-label font-weight-bold my-1">Cost</div>
                                     <input type="number" name="cost" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="form-label font-weight-bold my-1">Type</div>
+                                    <select name="project_type" id="" class="select2 form-control">
+                                        <option value="Simple">Simple</option>
+                                        <option value="Featured">Featured</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -143,17 +131,29 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <div class="form-label font-weight-bold my-1">Type</div>
-                                    <select name="project_type" id="" class="select2 form-control">
-                                        <option value="Simple">Simple</option>
-                                        <option value="Featured">Featured</option>
-                                    </select>
+                                    <div class="form-label font-weight-bold my-1">Description</div>
+                                    <textarea name="description" class="form-control" id="tinymce_description" cols="30" rows="8"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <div class="form-label font-weight-bold my-1">Description</div>
-                                    <textarea name="description" class="form-control" id="tinymce_description" cols="30" rows="8"></textarea>
+                                    <div class="form-label font-weight-bold my-50">Address</div>
+                                    <input type="text" name="location" id="map-search" class="form-control controls" value="">
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="map-canvas"></div>
+                                </div>
+                                <div class="col-md-6 d-none">
+                                    <div class="form-group d-none">
+                                        <div class="form-label font-weight-bold my-50">Latitude</div>
+                                        <input type="text" name="latitude" value="" class="form-control latitude">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-none">
+                                    <div class="form-group d-none">
+                                        <div class="form-label font-weight-bold my-50">Longitude</div>
+                                        <input type="text" name="longitude" class="form-control longitude" value="">
+                                    </div>
                                 </div>
                             </div>
                         </div>

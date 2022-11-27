@@ -587,7 +587,6 @@
         <script type="text/javascript" src="../../../js/rangeslider.min.js"></script>
         <script type="text/javascript" src="../../../js/custom-script.js"></script>
         <script src="../../../app-assets/js/scripts/tinymce/js/tinymce.min.js"></script>
-
         @stack('scripts')
     </body>
 </html>

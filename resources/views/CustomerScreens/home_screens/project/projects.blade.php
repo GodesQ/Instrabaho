@@ -29,7 +29,7 @@
                         @php $project->getSkills() @endphp
 
                         @foreach($project->skills_name as $skill)
-                            <li class=""><a href="search-page.html">{{ $skill->skill_name }}</a></li>
+                            <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
                         @endforeach
 
                     </ul>

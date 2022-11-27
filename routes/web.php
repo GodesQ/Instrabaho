@@ -48,8 +48,11 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     Route::get('/the-process', [HomeScreenController::class, 'the_process']);
 
     Route::get('/search_services', [HomeScreenController::class, 'services']);
+    Route::get('/search_services/fetch_data', [HomeScreenController::class, 'fetch_services']);
+    
     Route::get('/search_projects', [HomeScreenController::class, 'projects']);
     Route::get('/search_projects/fetch_data', [HomeScreenController::class, 'fetch_projects']);
+
     Route::get('/search_freelancers', [HomeScreenController::class, 'freelancers']);
 
     Route::get('/project/view/{id}', [HomeScreenController::class, 'project'])->name('project.view');
@@ -57,8 +60,6 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
     Route::get('/freelancer/view/{id}', [HomeScreenController::class, 'freelancer'])->name('freelancer.view');
     Route::get('/employer/view/{id}', [HomeScreenController::class, 'employer'])->name('employer.view');
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -230,8 +231,8 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::post('employer_packages/store', [EmployerPackagesController::class, 'store'])->name('employer_packages.store');
 
         Route::get('freelancers', [FreelancerController::class, 'index'])->name('freelancers')->middleware('can:manage_freelancers');
-        Route::get('freelancers/data_table', [FreelancerController::class, 'data_table'])->name('freelancers.data_table');
-        Route::get('freelancers/edit/{id}', [FreelancerController::class, 'edit'])->name('freelancers.edit');
+        Route::get('freelancers/data_table', [FreelancerController::class, 'data_table'])->name('freelancers.data_table')->middleware('can:manage_freelancers');
+        Route::get('freelancers/edit/{id}', [FreelancerController::class, 'edit'])->name('freelancers.edit')->middleware('can:edit_freelancer');;
         Route::put('freelancers/update', [FreelancerController::class, 'update'])->name('freelancers.update');
         Route::get('freelancers/search', [FreelancerController::class, 'search'])->name('freelancers.search');
 
@@ -288,4 +289,5 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::post('user_permissions/store', [UserPermissionController::class, 'store'])->name('user_permissions.store');
         Route::get('user_permissions/edit/{id}', [UserPermissionController::class, 'edit'])->name('user_permissions.edit');
         Route::post('user_permissions/update', [UserPermissionController::class, 'update'])->name('user_permissions.update');
+        Route::delete('user_permissions/delete', [UserPermissionController::class, 'destroy'])->name('user_permissions.destroy');
     });

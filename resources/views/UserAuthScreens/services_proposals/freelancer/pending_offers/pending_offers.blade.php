@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 @empty
-
+                    <div class="text-center">No Offers Found</div>
                 @endforelse
                 {!! $pending_offers->links() !!}
             </div>

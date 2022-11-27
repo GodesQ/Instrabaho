@@ -69,7 +69,7 @@
         .hide-profile-menu {
             display: none !important;
         }
-        .select2-container--default .select2-selection--single {
+        /* .select2-container--default .select2-selection--single {
             border: 1px solid #003066 !important;
         }
         .select2-container--default .select2-selection--multiple {
@@ -77,7 +77,7 @@
         }
         .select2-container--classic.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
             border: 1px solid #003066 !important;
-        }
+        } */
     </style>
 
 </head>

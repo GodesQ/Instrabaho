@@ -196,8 +196,6 @@
    <script>
       $(document).ready(function() {
 
-        let selected_categories = [];
-
         $(document).on('click', '.pagination .page-item a', function(event) {
             event.preventDefault();
             let page = $(this).attr('href').split('page=')[1];
@@ -214,6 +212,10 @@
         })
 
         function fetchProjects(page) {
+            let selected_categories = [];
+            $.each($("#categories:checked"), function(){
+               selected_categories.push($(this).val());
+            });
             let filter_data = {
                 title: $('#title').val(),
                 address: $('#map-search').val(),

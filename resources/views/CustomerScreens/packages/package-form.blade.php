@@ -33,7 +33,7 @@
        </div>
     </div>
  </section>
- <section class="exertio-checkout">
+ <section class="exertio-checkout my-5">
     <div class="container">
         <form action="/store_package_checkout" class="form" method="POST">
             @csrf
@@ -114,51 +114,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <!-- <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-label font-weight-bold my-50">
-                                            Street address 
-                                        </div>
-                                        <input type="text" name="street_address" class="form-control">
-                                        <span class="danger text-danger">@error('street_address'){{ $message }}@enderror</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-label font-weight-bold my-50">
-                                            Apartment, suite, unit, etc. (optional)
-                                        </div>
-                                        <input type="text" name="apartment_unit" class="form-control">
-                                        <span class="danger text-danger">@error('apartment_unit'){{ $message }}@enderror</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-label font-weight-bold my-50">
-                                            City
-                                        </div>
-                                        <input type="text" name="city" class="form-control">
-                                        <span class="danger text-danger">@error('city'){{ $message }}@enderror</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-label font-weight-bold my-50">
-                                            Province
-                                        </div>
-                                        <input type="text" name="state" class="form-control">
-                                        <span class="danger text-danger">@error('state'){{ $message }}@enderror</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-label font-weight-bold my-50">
-                                            Postal Code
-                                        </div>
-                                        <input type="text" name="postal_code" class="form-control">
-                                        <span class="danger text-danger">@error('postal_code'){{ $message }}@enderror</span>
-                                    </div>
-                                </div> -->
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="form-label font-weight-bold my-50">
