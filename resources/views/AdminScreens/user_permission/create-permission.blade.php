@@ -34,7 +34,7 @@
                                         <div class="row">
                                             @foreach ($user_types as $user_type)
                                                 <div class="col-md-6">
-                                                    <input type="checkbox" name="roles[]" id="roles" value="{{ $user_type->slug }}"> {{$user_type->role}} <br> <br>
+                                                    <input type="checkbox" {{$user_type->slug == 'super_admin' ? 'checked' : null }} name="roles[]" id="roles" value="{{ $user_type->slug }}"> {{$user_type->role}} <br> <br>
                                                 </div>
                                             @endforeach
                                         </div>

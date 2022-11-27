@@ -304,25 +304,33 @@
                     </li>
                     <li class=" nav-item"><a href="#"><i class="feather icon-box"></i><span class="menu-title" data-i18n="Packages">Packages</span></a>
                         <ul class="menu-content">
-                            <li class="{{ Request::path() == 'admin/freelancer_packages' ? 'active' : '' }}"><a class="menu-item" href="/admin/freelancer_packages" data-i18n="Freelance Packages">Freelance Packages</a>
-                            </li>
-                            <li class="{{ Request::path() == 'admin/employer_packages' ? 'active' : '' }}"><a class="menu-item" href="/admin/employer_packages" data-i18n="Employer Packages">Employer Packages</a>
-                            </li>
+                            @can('manage_freelance_packages')
+                                <li class="{{ Request::path() == 'admin/freelancer_packages' ? 'active' : '' }}"><a class="menu-item" href="/admin/freelancer_packages" data-i18n="Freelance Packages">Freelance Packages</a>
+                                </li>
+                            @endcan
+                            @can('manage_employer_packages')
+                                <li class="{{ Request::path() == 'admin/employer_packages' ? 'active' : '' }}"><a class="menu-item" href="/admin/employer_packages" data-i18n="Employer Packages">Employer Packages</a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
-                    <li class="{{ Request::path() == 'admin/services' ? 'active' : '' }} nav-item">
-                        <a href="/admin/services"><i class="feather icon-arrow-up-circle"></i>
-                            <span class="menu-title" data-i18n="Services">Services</span>
-                        </a>
-                    </li>
+                    @can('manage_services')
+                        <li class="{{ Request::path() == 'admin/services' ? 'active' : '' }} nav-item">
+                            <a href="/admin/services"><i class="feather icon-arrow-up-circle"></i>
+                                <span class="menu-title" data-i18n="Services">Services</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('manage_projects')
+                        <li class="{{ Request::path() == 'admin/projects' ? 'active' : '' }} nav-item">
+                            <a href="/admin/projects"><i class="feather icon-arrow-up-circle"></i>
+                                <span class="menu-title" data-i18n="Projects">Projects</span>
+                            </a>
+                        </li>
+                    @endcan
                     <li class="{{ Request::path() == 'admin/addons' ? 'active' : '' }} nav-item">
                         <a href="/admin/addons"><i class="feather icon-arrow-up-circle"></i>
                             <span class="menu-title" data-i18n="Addons">Addons</span>
-                        </a>
-                    </li>
-                    <li class="{{ Request::path() == 'admin/projects' ? 'active' : '' }} nav-item">
-                        <a href="/admin/projects"><i class="feather icon-arrow-up-circle"></i>
-                            <span class="menu-title" data-i18n="Projects">Projects</span>
                         </a>
                     </li>
                     <li class=" navigation-header"><span>Users</span><i class=" feather icon-minus" data-toggle="tooltip" data-placement="right" data-original-title="Apps"></i>
@@ -334,18 +342,22 @@
                             </a>
                         </li>
                     @endcan
-                    <li class="{{ Request::path() == 'admin/employers' ? 'active' : '' }} nav-item">
-                        <a href="/admin/employers"><i class="feather icon-user"></i>
-                            <span class="menu-title" data-i18n="Employers">Employers</span>
-                        </a>
-                    </li>
+                    @can('manage_employers')
+                        <li class="{{ Request::path() == 'admin/employers' ? 'active' : '' }} nav-item">
+                            <a href="/admin/employers"><i class="feather icon-user"></i>
+                                <span class="menu-title" data-i18n="Employers">Employers</span>
+                            </a>
+                        </li>
+                    @endcan
                     <li class=" navigation-header"><span>Misc</span><i class=" feather icon-minus" data-toggle="tooltip" data-placement="right" data-original-title="Misc"></i>
                     </li>
-                    <li class="{{ Request::path() == 'admin/skills' ? 'active' : '' }} nav-item">
-                        <a href="/admin/skills"><i class="feather icon-activity"></i>
-                            <span class="menu-title" data-i18n="Skills">Skills</span>
-                        </a>
-                    </li>
+                    @can('manage_skills')
+                        <li class="{{ Request::path() == 'admin/skills' ? 'active' : '' }} nav-item">
+                            <a href="/admin/skills"><i class="feather icon-activity"></i>
+                                <span class="menu-title" data-i18n="Skills">Skills</span>
+                            </a>
+                        </li>
+                    @endcan
                     <li class="{{ Request::path() == 'admin/service_categories' ? 'active' : '' }} nav-item">
                         <a href="/admin/service_categories"><i class="feather icon-activity"></i>
                             <span class="menu-title" data-i18n="Service Categories">Service Categories</span>
@@ -409,32 +421,36 @@
                     <li class=" navigation-header"><span>CONTROLS</span><i class=" feather icon-minus" data-toggle="tooltip" data-placement="right" data-original-title="CONTROLS"></i>
                     </li>
                     <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
-                        <a href="/admin"><i class="fa fa-running"></i>
+                        <a href="/admin"><i class="fa fa-calendar"></i>
                             <span class="menu-title" data-i18n="Run Scheduled Tasks">Run Scheduled Tasks</span>
                         </a>
                     </li>
                     <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
-                        <a href="/admin"><i class="fa fa-wall"></i>
+                        <a href="/admin"><i class="fa fa-shield"></i>
                             <span class="menu-title" data-i18n="Blocked Users">Blocked Users</span>
                         </a>
                     </li>
                     <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
-                        <a href="/admin"><i class="fa fa-running"></i>
+                        <a href="/admin"><i class="fa fa-check-circle"></i>
                             <span class="menu-title" data-i18n="Verify Users">Verify Users</span>
                         </a>
                     </li>
                     <li class=" navigation-header"><span>OTHERS</span><i class=" feather icon-minus" data-toggle="tooltip" data-placement="right" data-original-title="OTHERS"></i>
                     </li>
-                    <li class="{{ Request::path() == 'admin/user_types' ? 'active' : '' }} nav-item">
-                        <a href="/admin/user_types"><i class="fa fa-user-circle"></i>
-                            <span class="menu-title" data-i18n="User Types">User Types</span>
-                        </a>
-                    </li>
-                    <li class="{{ Request::path() == 'admin/user_permissions' ? 'active' : '' }} nav-item">
-                        <a href="/admin/user_permissions"><i class="fa fa-lock"></i>
-                            <span class="menu-title" data-i18n="User Permission">User Permission</span>
-                        </a>
-                    </li>
+                    @can('manage_user_types')
+                        <li class="{{ Request::path() == 'admin/user_types' ? 'active' : '' }} nav-item">
+                            <a href="/admin/user_types"><i class="fa fa-user-circle"></i>
+                                <span class="menu-title" data-i18n="User Types">User Types</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('manage_user_permissions')
+                        <li class="{{ Request::path() == 'admin/user_permissions' ? 'active' : '' }} nav-item">
+                            <a href="/admin/user_permissions"><i class="fa fa-lock"></i>
+                                <span class="menu-title" data-i18n="User Permission">User Permission</span>
+                            </a>
+                        </li>
+                    @endcan
                     <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
                         <a href="/admin"><i class="feather icon-settings"></i>
                             <span class="menu-title" data-i18n="Settings">Settings</span>

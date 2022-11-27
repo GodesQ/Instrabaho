@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyAccount;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Requests\UserAuth\RegisterRequest;
+
 use App\Models\User;
 use App\Models\Freelancer;
 use App\Models\Employer;
@@ -57,26 +59,13 @@ class AuthController extends Controller
         return view('AllScreens.auth.register');
     }
 
-    public function save_register(Request $request) {
+    public function save_register(RegisterRequest $request) {
 
-        $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'middlename' => 'required',
-            'username' => 'required|unique:user',
-            'email' => 'required|unique:user',
-            'password' => 'required'
-        ]);
-
-        $save = User::create([
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
+        $save = User::create(array_merge($request->validated(),[
             'middlename' => $request->middlename,
-            'username' => $request->username,
-            'email' => $request->email,
             'password' => Hash::make($request->password),
             'isVerify' => false,
-        ]);
+        ]));
 
         $details = [
             'title' => 'Verification email from INSTRABAHO',
@@ -87,9 +76,7 @@ class AuthController extends Controller
         // SEND EMAIL FOR VERIFICATION
         Mail::to($request->email)->send(new VerifyAccount($details));
 
-        if($save) {
-            return redirect('/verify-message');
-        }
+        if($save)  return redirect('/verify-message');
     }
 
     public function verify_email(Request $request)

@@ -122,74 +122,76 @@
             <div class="fl-advert-box">
                <a href="javascript:void(0)"><img src="../../../images/logo/main-logo.png" width="124" alt="exertio theme" class="img-fluid"></a>
             </div>
-             <div class="fr-project-lastest-product">
-                <div class="fr-project-place" id="fr-bid-form">
-                   <h3> Send Your Proposal</h3>
-                     <form method="POST" action="/store_proposal" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="project_id" value="{{ $project->id }}">
-                        <input type="hidden" name="employer_id" value="{{ $project->employer_id }}">
-                           <div class="row g-3">
-                              <div class="col">
-                                 <div class="form-group">
-                                    <label>Your Price <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                       <input type="number" class="form-control" id="bidding-price" name="offer_price" required="" data-smk-msg="Provide your price in numbers only" data-smk-type="number">
-                                       <div class="input-group-prepend">
-                                          <div class="input-group-text">₱ </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col">
-                                 <div class="form-group">
-                                    <label> Days to complete <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                       <input type="number" class="form-control" name="estimated_days" required="" data-smk-msg="Dasy to complete in numbers only" data-smk-type="number">
-                                       <div class="input-group-prepend">
-                                          <div class="input-group-text">Days</div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="form-row">
-                              <div class="col-12">
-                                 <div class="form-group">
-                                    <label>Address <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                       <input type="text" multiple class="form-control" id="bidding-price" name="address" required="" data-smk-msg="Provide your Address">
-                                       <div class="input-group-prepend">
-                                          <div class="input-group-text"><i class="fa fa-location-arrow"></i></div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="form-row">
-                              <div class="col-12">
-                                 <label> Cover Letter <span class="text-danger">*</span></label>
-                                 <textarea class="form-control" id="bid-textarea" name="cover_letter" rows="3"></textarea>
-                              </div>
-                              <div class="col-12 my-3">
-                                 <div class="form-group">
-                                    <label>Attachments</label>
-                                    <div class="input-group">
-                                       <input type="file" class="form-control" name="attachments[]" id="inputGroupFile01">
-                                       <div class="input-group-prepend">
-                                          <div class="input-group-text"><i class="fa fa-image"></i></div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-12">
-                                 <button type="submit" class="btn btn-theme btn-loading" id="btn_project_bid" data-post-id="225">Submit Proposal</button>
-                              </div>
-                           </div>
-                     </form>
-                </div>
-             </div>
-          </div>
+            @if (session()->get('role') == 'freelancer')
+            <div class="fr-project-lastest-product">
+               <div class="fr-project-place" id="fr-bid-form">
+                  <h3> Send Your Proposal</h3>
+                    <form method="POST" action="/store_proposal" enctype="multipart/form-data">
+                       @csrf
+                       <input type="hidden" name="project_id" value="{{ $project->id }}">
+                       <input type="hidden" name="employer_id" value="{{ $project->employer_id }}">
+                          <div class="row g-3">
+                             <div class="col">
+                                <div class="form-group">
+                                   <label>Your Price <span class="text-danger">*</span></label>
+                                   <div class="input-group">
+                                      <input type="number" class="form-control" id="bidding-price" name="offer_price" required="" data-smk-msg="Provide your price in numbers only" data-smk-type="number">
+                                      <div class="input-group-prepend">
+                                         <div class="input-group-text">₱ </div>
+                                      </div>
+                                   </div>
+                                </div>
+                             </div>
+                             <div class="col">
+                                <div class="form-group">
+                                   <label> Days to complete <span class="text-danger">*</span></label>
+                                   <div class="input-group">
+                                      <input type="number" class="form-control" name="estimated_days" required="" data-smk-msg="Dasy to complete in numbers only" data-smk-type="number">
+                                      <div class="input-group-prepend">
+                                         <div class="input-group-text">Days</div>
+                                      </div>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                          <div class="form-row">
+                             <div class="col-12">
+                                <div class="form-group">
+                                   <label>Address <span class="text-danger">*</span></label>
+                                   <div class="input-group">
+                                      <input type="text" multiple class="form-control" id="bidding-price" name="address" required="" data-smk-msg="Provide your Address">
+                                      <div class="input-group-prepend">
+                                         <div class="input-group-text"><i class="fa fa-location-arrow"></i></div>
+                                      </div>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                          <div class="form-row">
+                             <div class="col-12">
+                                <label> Cover Letter <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="bid-textarea" name="cover_letter" rows="3"></textarea>
+                             </div>
+                             <div class="col-12 my-3">
+                                <div class="form-group">
+                                   <label>Attachments</label>
+                                   <div class="input-group">
+                                      <input type="file" class="form-control" name="attachments[]" id="inputGroupFile01">
+                                      <div class="input-group-prepend">
+                                         <div class="input-group-text"><i class="fa fa-image"></i></div>
+                                      </div>
+                                   </div>
+                                </div>
+                             </div>
+                             <div class="col-md-12">
+                                <button type="submit" class="btn btn-theme btn-loading" id="btn_project_bid" data-post-id="225">Submit Proposal</button>
+                             </div>
+                          </div>
+                    </form>
+                 </div>
+              </div>
+            @endif
+            </div>
           </div>
           <div class="col-lg-4 col-xl-4 col-xs-12 col-sm-12 col-md-12">
              <div class="project-sidebar position-sticky">
@@ -234,16 +236,14 @@
                       <li>
                          <div class="fr-project-method"> <i class="fal fa-check-square" aria-hidden="true"></i> <span>{{ $project->employer->tagline }}</span> </div>
                       </li>
-                      <li>
-                         <div class="fr-project-method"> <i class="fal fa-shield-check" aria-hidden="true"></i> <span>{{ $project->employer->contactno }}</span> </div>
-                      </li>
                    </ul>
                 </div>
                 <div class="fl-advert-box">
                   <a href="javascript:void(0)"><img src="../../../images/logo/main-logo.png" width="124" alt="exertio theme" class="img-fluid"></a>                    
                 </div>
-                <p class="report-button text-center"> <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#report-modal"><i class="fas fa-exclamation-triangle"></i>Report Project</a></p>
-             </div>
+                <p class="report-button text-center"> 
+                  <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#report-modal"><i class="fas fa-exclamation-triangle"></i>Report Project</a></p>
+               </div>
           </div>
        </div>
     </div>

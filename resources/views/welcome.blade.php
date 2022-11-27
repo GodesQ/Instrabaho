@@ -117,7 +117,7 @@
                                 </ul>
                             </form>
                         </div>
-                        <div class="fr-her3-elemnt">
+                        {{-- <div class="fr-her3-elemnt">
                             Trending Keywords:
                             <a href="search-page.html">React Native</a>
                             <a href="search-page.html">Flutter</a>
@@ -125,7 +125,7 @@
                             <a href="search-page.html">Artist</a>
                             <a href="search-page.html">Singer</a>
                             <a href="search-page.html">Writer</a>
-                        </div>
+                        </div> --}}
                         <div class="fr-hero3-video">
                             <a
                                 href="https://www.youtube.com/watch?v=C0DPdy98e4c"

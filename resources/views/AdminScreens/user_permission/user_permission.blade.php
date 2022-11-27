@@ -42,7 +42,7 @@
     <script>
     let table = $('.data-table').DataTable({
         processing: true,
-        pageLength: 25,
+        pageLength: 10,
         responsive: true,
         serverSide: true,
         ajax: {
@@ -78,6 +78,55 @@
                 searchable: true
             },
         ],
+    });
+
+    $(document).on("click", ".delete_user_permission", function (e) {
+        e.preventDefault();
+        let id = $(this).attr("id");
+        let csrf = "{{ csrf_token() }}";
+        Swal.fire({
+            title: "Delete Permission",
+            text: "Are you sure you want to delete this?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#000",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "{{ route('admin.user_permissions.destroy') }}",
+                    method: 'DELETE',
+                    data: {
+                        'id': id,
+                        '_token': csrf
+                    },
+                    success: function (response) {
+                        if(response.status == 201) {
+                            Swal.fire(
+                                "Deleted!",
+                                `${response.message}`,
+                                "success"
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            Swal.fire(
+                                "Error!",
+                                `Something went wrong! Please Try Again.`,
+                                "error"
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        }
+                    },
+                });
+            }
+        });
     });
     </script>
 @endpush

@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-                                        <form action="{{ route('freelancer.save_role_form ')}}" method="POST">
+                                        <form action="{{ route('freelancer.save_role_form')}}" method="POST">
                                             @csrf
                                             <!-- Step 1 -->
                                             <h6><i class="step-icon fa fa-user"></i> Account Information</h6>

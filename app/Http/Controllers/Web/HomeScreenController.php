@@ -61,8 +61,15 @@ class HomeScreenController extends Controller
     }
 
     public function services(Request $request) {
+        $services = Service::with('category')->paginate(3);
+        $service_categories = ServiceCategory::toBase()->get();
+
+        return view('CustomerScreens.home_screens.service.service-search', compact('services', 'service_categories'));
+    }
+
+    public function fetch_services(Request $request) {
         $title = $request->input('title');
-        $categories = $request->input('categories') ? $request->input('categories') : [];
+        $categories = $request->input('categories') ? json_decode($request->input('categories')) : [];
         $price_min = $request->input('price-min');
         $price_max = $request->input('price-max');
         $my_range = $request->input('my_range');
@@ -71,13 +78,10 @@ class HomeScreenController extends Controller
         $longitude = $request->input('longitude');
         $type = $request->input('type');
 
-        $services = Service::select('*')->when($title, function ($q) use ($title) {
-            return $q->where(DB::raw('lower(name)'), 'like', '%' . strtolower($title) . '%');
-        })
+        $services = Service::select('*')
+        ->where(DB::raw('lower(name)'), 'like', '%' . strtolower($title) . '%')
         ->when($categories, function ($q) use ($categories) {
-            if($categories[0]) {
-                return $q->whereIn('service_category', $categories);
-            }
+            if($categories[0]) return $q->whereIn('service_category', $categories);
         })
         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
             return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
@@ -93,25 +97,15 @@ class HomeScreenController extends Controller
             $range = explode(';', $my_range);
             return $q->whereBetween('cost', [$range[0], $range[1]]);
         })
-        ->where('expiration_date', '>' , Carbon::now())
-        ->where('isDeleted', 0)
-        ->with('category')
-        ->cursorPaginate(10);
-        $service_categories = ServiceCategory::all();
+        ->with('category', 'freelancer')
+        ->latest('id')
+        ->paginate(3);
+        
+        $view_data = view('CustomerScreens.home_screens.service.services', compact('services'))->render();
 
-        $queries = [
-            'title' => $title,
-            'categories' => $categories,
-            'price_min' => $price_min,
-            'price_max' => $price_max,
-            'address' => $address,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-            'my_range' => $my_range,
-            'type' => $type,
-        ];
-
-        return view('CustomerScreens.home_screens.service.service-search', compact('services', 'service_categories', 'queries'));
+        return response()->json([
+            'view_data' => $view_data
+        ]);
     }
 
     public function service(Request $request) {
@@ -121,18 +115,8 @@ class HomeScreenController extends Controller
     }
 
     public function projects(Request $request) {
-        $title = $request->input('title');
-        $categories = $request->input('categories') ? json_decode($request->input('categories')) : [];
-        $price_min = $request->input('price-min');
-        $price_max = $request->input('price-max');
-        $my_range = $request->input('my_range');
-        $address = $request->input('address');
-        $latitude = $request->input('latitude');
-        $longitude = $request->input('longitude');
-        $type = $request->input('type');
 
-        $projects = Project::select('*')
-        ->where('expiration_date', '>' , Carbon::now())
+        $projects = Project::where('expiration_date', '>' , Carbon::now())
         ->where('isExpired', 0)
         ->with('category', 'employer')
         ->latest('id')

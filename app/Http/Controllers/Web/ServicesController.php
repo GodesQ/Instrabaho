@@ -29,8 +29,9 @@ class ServicesController extends Controller
     }
 
     public function create() {
+        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
         $categories = ServiceCategory::all();
-        return view('UserAuthScreens.services.create-service', compact('categories'));
+        return view('UserAuthScreens.services.create-service', compact('categories', 'freelancer'));
     }
 
     public function store(StoreServiceRequest $request) {

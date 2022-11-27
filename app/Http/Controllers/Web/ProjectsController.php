@@ -33,6 +33,7 @@ class ProjectsController extends Controller
     }
 
     public function store(StoreProjectRequest $request) {
+
         //check if the current plan is exceed in limit
         if($this->checkAvailableProject($request->project_type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
 
@@ -48,29 +49,14 @@ class ProjectsController extends Controller
 
         $employer = Employer::where('user_id', $user_id)->first();
 
-        $create = Project::create([
+        $create = Project::create(array_merge($request->validated(), [
             'employer_id' => $employer->id,
-            'title' => $request->title,
-            'category_id' => $request->category_id,
-            'description' => $request->description,
             'attachments' => $json_images,
-            'project_level' => $request->project_level,
-            'project_cost_type' => $request->project_cost_type,
-            'cost' => $request->cost,
-            'project_duration' => $request->project_duration,
-            'freelancer_type' => $request->freelancer_type,
-            'english_level' => $request->english_level,
             'skills' => json_encode($request->skills),
-            'location' => $request->location,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'project_type' => $request->project_type,
             'expiration_date' => $employer->package_date_expiration > Carbon::now() || $employer->package_date_expiration ? $employer->package_date_expiration : Carbon::now()
-        ]);
+        ]));
 
-        if($create) {
-            return redirect('/projects')->with('success', 'Project Created Successfully');
-        }
+        if($create) return redirect()->route('freelancer.projects.index')->with('success', 'Project Created Successfully');
     }
 
     public function user_edit(Request $request) {
