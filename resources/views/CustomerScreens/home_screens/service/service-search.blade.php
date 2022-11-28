@@ -6,6 +6,11 @@
        height: 200px;
        width: 100%;
    }
+   #services-locations {
+      height: 500px;
+      width: 100%;
+   }
+   .labels { color: black; background-color: #FF8075; font-family: Arial; font-size: 11px; font-weight: bold; text-align: center; width: 12px; }
 </style>
 <section class="fr-list-product bg-img">
    <div class="container">
@@ -177,15 +182,13 @@
         <div class="modal-content">
             <div class="card">
                 <div class="card-body">
-                    Oat cake ice cream candy chocolate cake chocolate cake cotton candy dragée apple pie. Brownie carrot cake candy canes bonbon fruitcake topping halvah. Cake sweet roll cake cheesecake cookie chocolate cake liquorice. Apple pie sugar plum powder donut soufflé.
-Sweet roll biscuit donut cake gingerbread. Chocolate cupcake chocolate bar ice cream. Danish candy cake.
+                    <div id="services-locations"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script src="../../../js/user-location.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection
 
 @push('scripts')
@@ -226,10 +229,68 @@ Sweet roll biscuit donut cake gingerbread. Chocolate cupcake chocolate bar ice c
                 success: function (data) {
                   $('.services-data').html(data.view_data);
                   $('.protip-container').remove();
+                  setLocations(data.services);
                 }
             })
-
         }
+
+        function setLocations(services) {
+            if(services.length == 0) return console.log(services);
+
+            let latEl = document.querySelector( '.latitude' )
+            let longEl = document.querySelector( '.longitude' )
+            var mapOptions = {
+               center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
+               zoom: 12,
+               disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
+               scrollWheel: true, // If set to false disables the scrolling on the map.
+               draggable: true, // If set to false , you cannot move the map around.
+            };
+            var map = new google.maps.Map(document.getElementById("services-locations"), mapOptions);
+
+            var infoWindow = new google.maps.InfoWindow(); 
+
+            let my_marker = new google.maps.Marker({
+               position:  new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
+               map: map,
+               icon: 'https://img.icons8.com/fluency/48/null/google-maps-new.png'
+            })
+
+            let circle = new google.maps.Circle({
+               center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
+               radius: 10000,
+               strokeColor: '#0000FF',
+               strokeOpacity: 1,
+               strokeWeight: 2,
+               fillColor: '#FFFFFF',
+               fillOpacity: 0.4,
+               map: map
+            })
+            
+            circle.bindTo('center', my_marker, 'position');
+            
+            for (i = 0; i <= services.data.length; i++) {
+               var data = services.data[i]
+               var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
+               
+               let marker = new google.maps.Marker({
+                  position: myLatlng,
+                  map: map,
+                  labelContent: data.name, 
+                  labelAnchor: new google.maps.Point(7, 30),
+                  labelClass: "labels", // the CSS class for the label
+                  labelInBackground: true
+               });
+
+               (function (marker, data) {
+                     google.maps.event.addListener(marker, "click", function (e) {
+                        infoWindow.setContent(data.name);
+                        infoWindow.open(map, marker);
+                     });
+               })(marker, data);
+
+            }
+         }
       })
    </script>
 @endpush

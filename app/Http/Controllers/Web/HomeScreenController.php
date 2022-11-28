@@ -104,7 +104,8 @@ class HomeScreenController extends Controller
         $view_data = view('CustomerScreens.home_screens.service.services', compact('services'))->render();
 
         return response()->json([
-            'view_data' => $view_data
+            'view_data' => $view_data,
+            'services' => $latitude && $longitude ? $services->toArray() : []
         ]);
     }
 
