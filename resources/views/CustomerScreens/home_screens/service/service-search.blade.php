@@ -25,7 +25,7 @@
          </div>
       </div>
    </div>
-</section>  
+</section>
 <section class="fr-top-srvices section-padding padding-top-bottom-3  actionbar_space">
    <div class="container">
       <div class="row">
@@ -147,14 +147,16 @@
                         </div>
                         <div class=" float-right">
                            <ul class="top-filters">
-                              <li>
-                                 <a href="" class="services-grid-icon protip active list-style" data-pt-position="top" data-pt-scheme="black" data-pt-title="Grid View" data-list-style="grid">
-                                 <span></span>
-                                 <span></span>
-                                 <span></span>
-                                 </a>
-                              </li>
-                              <button type="button" class="btn btn-primary">View Map</button>
+                                <li>
+                                    <a href="" class="services-grid-icon protip active list-style" data-pt-position="top" data-pt-scheme="black" data-pt-title="Grid View" data-list-style="grid">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    </a>
+                                </li>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">
+                                    View Map
+                                </button>
                            </ul>
                         </div>
                      </form>
@@ -170,6 +172,18 @@
       </div>
    </div>
 </section>
+<div class="modal fade " id="create" tabindex="-1" role="dialog" aria-labelledby="create" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    Oat cake ice cream candy chocolate cake chocolate cake cotton candy dragée apple pie. Brownie carrot cake candy canes bonbon fruitcake topping halvah. Cake sweet roll cake cheesecake cookie chocolate cake liquorice. Apple pie sugar plum powder donut soufflé.
+Sweet roll biscuit donut cake gingerbread. Chocolate cupcake chocolate bar ice cream. Danish candy cake.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="../../../js/user-location.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection
@@ -192,7 +206,7 @@
 
         function fetchServices(page) {
             let selected_categories = [];
-            
+
             $.each($("#categories:checked"), function(){
                selected_categories.push($(this).val());
             });
@@ -206,9 +220,7 @@
                 type: $('#type').val(),
                 categories: encodeURIComponent(JSON.stringify(selected_categories)),
             }
-
             let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
-            
             $.ajax({
                 url: "/search_services/fetch_data?page="+page+'&'+filter_parameters,
                 success: function (data) {

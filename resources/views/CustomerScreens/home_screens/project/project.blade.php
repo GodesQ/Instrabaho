@@ -38,7 +38,7 @@
                       </ul>
                       <h2>{{ $project->title }}</h2>
                       <div class="fr-project-style">
-                        <a href="{{ $save_project ? 'javascript:void(0)' : '/freelancer/save_project/' . $project->id . '/' . $project->employer_id }}" class="mark_fav protip" data-post-id="225" 
+                        <a href="{{ $save_project ? 'javascript:void(0)' : '/freelancer/save_project/' . $project->id . '/' . $project->employer_id }}" class="mark_fav protip" data-post-id="225"
                            data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Project">
                            <i class="{{ $save_project ? 'fa' : 'far' }} fa-heart text-danger"></i>
                         </a>
@@ -50,26 +50,26 @@
                          <ul class="">
                             <li>
                                <div class="short-detail-icon"> <i class="fas fa-id-card-alt"></i> </div>
-                               <div class="short-detail-meta"> <small>Freelancer Type </small> 
-                                    <strong>{{ $project->freelancer_type }}</strong> 
+                               <div class="short-detail-meta"> <small>Freelancer Type </small>
+                                    <strong>{{ $project->freelancer_type }}</strong>
                                </div>
                             </li>
                             <li>
                                <div class="short-detail-icon"> <i class="far fa-calendar-check"></i> </div>
-                               <div class="short-detail-meta"> <small>Project Duration</small> 
-                                    <strong>{{ $project->project_duration }}</strong> 
+                               <div class="short-detail-meta"> <small>Project Duration</small>
+                                    <strong>{{ $project->project_duration }}</strong>
                                </div>
                             </li>
                             <li>
                                <div class="short-detail-icon"> <i class="fas fa-bezier-curve"></i> </div>
-                               <div class="short-detail-meta"> <small>Level</small> 
-                                <strong>{{ $project->project_level }}</strong> 
+                               <div class="short-detail-meta"> <small>Level</small>
+                                <strong>{{ $project->project_level }}</strong>
                                </div>
                             </li>
                             <li>
                                <div class="short-detail-icon"> <i class="fas fa-headset"></i> </div>
-                               <div class="short-detail-meta"> <small>English Level </small> 
-                                <strong>{{ $project->english_level }}</strong> 
+                               <div class="short-detail-meta"> <small>English Level </small>
+                                <strong>{{ $project->english_level }}</strong>
                                </div>
                             </li>
                          </ul>
@@ -93,11 +93,11 @@
                    <div class="fr-project-attachments">
                       <h3>{{ $project->quantity }}</h3>
                       <div class="attacment-box">
-                        
-                        @php 
+
+                        @php
                            //transform json arrays to real arrays
                            $attachments = json_decode($project->attachments);
-                        @endphp 
+                        @endphp
 
                         @foreach($attachments as $attachment)
                            <div class="attachments">
@@ -105,7 +105,7 @@
                                  <img src="{{ '../../../images/projects/' . $attachment }}" alt="">
                                  <div class="attachment-data">
                                     <h6 title="file-sample_100kB.docx">{{ $attachment }}</h6>
-                                    
+
                                  </div>
                               </a>
                               <a target="_blank" href="{{ '../../../images/projects/' . $attachment }}" class="download-icon"><i class="fas fa-eye"></i></a>
@@ -114,7 +114,7 @@
                    </div>
                    <!-- <div class="fr-project-ids">
                       <p>
-                         Project ID: {{ $project->id }}                    
+                         Project ID: {{ $project->id }}
                       </p>
                    </div> -->
                 </div>
@@ -219,9 +219,9 @@
                       <a href="">
                          <h3><i class="fa fa-check protip" data-pt-position="top" data-pt-scheme="black" data-pt-title=" Verified" aria-hidden="true"></i>{{ $project->employer->display_name }}</h3>
                       </a>
-                      <span>Member since {{ date_format(new DateTime($project->employer->created_at), "F d, Y")}}</span> 
+                      <span>Member since {{ date_format(new DateTime($project->employer->created_at), "F d, Y")}}</span>
                    </div>
-                   <a href="/employer/view/{{ $project->employer->user_id }}" class="btn-style">View Profile</a> 
+                   <a href="/employer/view/{{ $project->employer->user_id }}" class="btn-style">View Profile</a>
                 </div>
                 <div class="fr-project-f-employers">
                    <div class="fr-project-employer-details">
@@ -229,8 +229,8 @@
                    </div>
                    <ul>
                       <li>
-                         <div class="fr-project-method"> <i class="fal fa-globe" aria-hidden="true"></i> 
-                           <span>{{ $project->employer->address }}</span> 
+                         <div class="fr-project-method"> <i class="fal fa-globe" aria-hidden="true"></i>
+                           <span>{{ $project->employer->address }}</span>
                          </div>
                       </li>
                       <li>
@@ -239,16 +239,53 @@
                    </ul>
                 </div>
                 <div class="fl-advert-box">
-                  <a href="javascript:void(0)"><img src="../../../images/logo/main-logo.png" width="124" alt="exertio theme" class="img-fluid"></a>                    
+                  <a href="javascript:void(0)"><img src="../../../images/logo/main-logo.png" width="124" alt="exertio theme" class="img-fluid"></a>
                 </div>
-                <p class="report-button text-center"> 
-                  <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#report-modal"><i class="fas fa-exclamation-triangle"></i>Report Project</a></p>
+                <p class="report-button text-center">
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#report-modal"><i class="fas fa-exclamation-triangle"></i>Report Project</a>
+                </p>
                </div>
           </div>
        </div>
     </div>
- </section>
+</section>
+<div class="modal fade forget_pwd show" id="report-modal" data-backdrop="static" data-keyboard="false" aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <form class="modal-from report-form" method="POST" id="report-form">
+             <div class="modal-header">
+                <h5 class="modal-title">Report this Project</h5>
+                <button type="button" class="close" data-bs-dismiss="modal"><span>×</span></button>
+             </div>
+             <div class="modal-body">
+                <div class="fr-report-form">
+                   <div class="form-group">
+                      <label>Choose Reason</label>
+                      <select name="report_category" class="form-control general_select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                         <option value="357">
+                            Duplicate
+                         </option>
+                         <option value="356">
+                            Fake
+                         </option>
+                      </select>
+                   </div>
+                   <div class="form-group">
+                      <label>Provide details</label>
+                      <textarea name="report_desc" class="form-control" id="" required="" data-smk-msg="Required field"></textarea>
+                   </div>
+                   <div class="form-group">
+                      <input type="hidden" id="fl_report_nonce" value="bf19104017">
+                      <button type="button" id="btn-report" class="btn btn-theme btn-loading btn-report" data-post-id="225 ">Save &amp; Submit<span class="bubbles"> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"></i> </span></button>
+                   </div>
+                </div>
+             </div>
+          </form>
+       </div>
+    </div>
+</div>
 @endsection
+
 
 @push('scripts')
 <script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
