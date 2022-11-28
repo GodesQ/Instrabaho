@@ -573,6 +573,7 @@
         <!-- BEGIN: Page JS-->
         <script src="../../../app-assets/js/scripts/forms/switch.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
         <script type="text/javascript" src="../../../js/jquery-migrate-3.3.2.js"></script>
         <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
         <script type="text/javascript" src="../../../js/select2.full.min.js"></script>
