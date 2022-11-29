@@ -107,7 +107,17 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <div class="form-label font-weight-bold my-1">Cost</div>
-                                    <input type="number" name="cost" class="form-control">
+                                    <div class="controls">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="number" min="100" name="onlyNum" class="form-control" required="" data-validation-required-message="This field is required" aria-invalid="false">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">.00</span>
+                                            </div>
+                                        </div>
+                                    <div class="help-block"></div></div>
                                 </div>
                             </div>
                             <div class="col-md-3">

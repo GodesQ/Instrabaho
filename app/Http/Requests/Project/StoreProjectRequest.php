@@ -29,7 +29,7 @@ class StoreProjectRequest extends FormRequest
             'description' => 'required',
             'project_level' => 'required',
             'project_cost_type' => 'required',
-            'cost' => 'required|numeric',
+            'cost' => 'required|numeric|min:100',
             'project_duration' => 'required',
             'freelancer_type' => 'required',
             'english_level' => 'required',

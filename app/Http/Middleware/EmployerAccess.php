@@ -21,7 +21,7 @@ class EmployerAccess
 
         $user_id = session()->get('id');
         $employer_exist = Employer::where('user_id', $user_id)->exists();
-        if(!$employer_exist) return redirect()->route('employer.role_form')->with('Oops! Looks like you dont have a employer account. Create first to continue');
+        if(!$employer_exist) return redirect()->route('employer.role_form')->with('fail', "Oops! Looks like you do not have an employer account. Create first to continue");
         return $next($request);
     }
 }

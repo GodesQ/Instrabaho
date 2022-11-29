@@ -39,15 +39,15 @@
                                             <h4 class="font-weight-bold">{{ $project->title }}</h4>
                                             <p>{{ substr($project->description, 0, 8) . '...' }}</p>
                                             <div class="d-flex align-items-center">
-                                                <a href="/edit_project/{{ $project->id }}" class="btn btn-outline-primary btn-sm mr-50"><i class="fa fa-edit"></i> Edit</a>
+                                                <a href="/employer/edit_project/{{ $project->id }}" class="btn btn-outline-primary btn-sm mr-50"><i class="fa fa-edit"></i> Edit</a>
                                                 <button id="{{ $project->id }}" class="delete-project btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
                                             </div>
                                         </div>
                                     </td>
-                                    <td> 
+                                    <td>
                                         <h3 style="font-size: 15px;">{{ date_format(new DateTime($project->created_at), "F d, Y")}}</h3>
                                     </td>
-                                    <td> 
+                                    <td>
                                         <h3 style="font-size: 15px;">{{ date_format(new DateTime($project->expiration_date), "F d, Y")}}</h3>
                                     </td>
                                     <td valign="center">

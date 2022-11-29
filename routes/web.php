@@ -49,7 +49,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
     Route::get('/search_services', [HomeScreenController::class, 'services']);
     Route::get('/search_services/fetch_data', [HomeScreenController::class, 'fetch_services']);
-    
+
     Route::get('/search_projects', [HomeScreenController::class, 'projects']);
     Route::get('/search_projects/fetch_data', [HomeScreenController::class, 'fetch_projects']);
 
@@ -94,14 +94,14 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('freelancer/role_form', [FreelancerController::class, 'freelancer_role_form'])->name('freelancer.role_form');
         Route::post('freelancer/role_form', [FreelancerController::class, 'save_freelancer_role_form'])->name('freelancer.save_role_form');
 
-        Route::get('/employer/role_form', [EmployerController::class, 'employer_role_form'])->name('employer.role_form');
-        Route::post('/employer/role_form', [EmployerController::class, 'save_employer_role_form'])->name('employer.save_role_form');
+        Route::get('/employer/role_form', [EmployerController::class, 'role_form'])->name('employer.role_form');
+        Route::post('/employer/role_form', [EmployerController::class, 'save_role_form'])->name('employer.save_role_form');
 
         Route::get('/package_checkout', [PackageCheckoutController::class, 'package_checkout'])->name('package_checkout');
         Route::post('/store_package_checkout', [PackageCheckoutController::class, 'store_package_checkout'])->name('store_package_checkout');
 
         Route::group(['prefix'=>'freelancer', 'middleware'=>['freelancer.access']], function(){
-            Route::get('dashboard', [FreelancerController::class, 'dashboard'])->name('freelancer.dashboard');
+            Route::get('dashboard', [FreelancerController::class, 'dashboard'])->name('employer.dashboard');
             Route::get('profile', [FreelancerController::class, 'profile'])->name('freelancer.profile');
             Route::post('profile', [FreelancerController::class, 'update_profile'])->name('freelancer.profile.update');
             Route::get('addons', [AddonsController::class, 'index'])->name('freelancer.addons.index');
@@ -232,8 +232,8 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
         Route::get('freelancers', [FreelancerController::class, 'index'])->name('freelancers')->middleware('can:manage_freelancers');
         Route::get('freelancers/data_table', [FreelancerController::class, 'data_table'])->name('freelancers.data_table')->middleware('can:manage_freelancers');
-        Route::get('freelancers/edit/{id}', [FreelancerController::class, 'edit'])->name('freelancers.edit')->middleware('can:edit_freelancer');;
-        Route::put('freelancers/update', [FreelancerController::class, 'update'])->name('freelancers.update');
+        Route::get('freelancers/edit/{id}', [FreelancerController::class, 'edit'])->name('freelancers.edit')->middleware('can:edit_freelancer');
+        Route::put('freelancers/update', [FreelancerController::class, 'update'])->name('freelancers.update')->middleware('can:edit_freelancer');
         Route::get('freelancers/search', [FreelancerController::class, 'search'])->name('freelancers.search');
 
         Route::get('employers', [EmployerController::class, 'index'])->name('employers');
