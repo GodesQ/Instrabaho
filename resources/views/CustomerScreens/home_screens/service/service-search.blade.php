@@ -148,7 +148,7 @@
                   <div class="services-filter-2">
                      <form class="d-flex justify-content-between align-items-center">
                         <div class="heading-area">
-                           <h4 >Found {{ count($services) }} {{ count($services) > 1 ? 'Results' : 'Result' }} </h4>
+                           <h4 >Found Results </h4>
                         </div>
                         <div class=" float-right">
                            <ul class="top-filters">
@@ -159,7 +159,7 @@
                                     <span></span>
                                     </a>
                                 </li>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">
+                                <button type="button" class="btn btn-primary view-map-btn" data-toggle="modal" style="display: none;" data-target="#create">
                                     View Map
                                 </button>
                            </ul>
@@ -179,6 +179,12 @@
 </section>
 <div class="modal fade " id="create" tabindex="-1" role="dialog" aria-labelledby="create" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-header bg-primary white">
+            <h4 class="modal-title text-white" id="myModalLabel8">Services Location</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
         <div class="modal-content">
             <div class="card">
                 <div class="card-body">
@@ -192,106 +198,6 @@
 @endsection
 
 @push('scripts')
-   <script>
-      $(document).ready(function() {
-
-        $(document).on('click', '.pagination .page-item a', function(event) {
-            event.preventDefault();
-            let page = $(this).attr('href').split('page=')[1];
-            $('#page_count').val(page);
-            fetchServices(page);
-        })
-
-        $(document).on('submit', '#services-filter-form', function(event) {
-            event.preventDefault();
-            fetchServices(1);
-        })
-
-        function fetchServices(page) {
-            let selected_categories = [];
-
-            $.each($("#categories:checked"), function(){
-               selected_categories.push($(this).val());
-            });
-
-            let filter_data = {
-                title: $('#title').val(),
-                address: $('#map-search').val(),
-                latitude: $('.latitude').val(),
-                longitude: $('.longitude').val(),
-                my_range: $('#my_range').val(),
-                type: $('#type').val(),
-                categories: encodeURIComponent(JSON.stringify(selected_categories)),
-            }
-            let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
-            $.ajax({
-                url: "/search_services/fetch_data?page="+page+'&'+filter_parameters,
-                success: function (data) {
-                  $('.services-data').html(data.view_data);
-                  $('.protip-container').remove();
-                  setLocations(data.services);
-                }
-            })
-        }
-
-        function setLocations(services) {
-            if(services.length == 0) return console.log(services);
-
-            let latEl = document.querySelector( '.latitude' )
-            let longEl = document.querySelector( '.longitude' )
-            var mapOptions = {
-               center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
-               zoom: 12,
-               disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
-               scrollWheel: true, // If set to false disables the scrolling on the map.
-               draggable: true, // If set to false , you cannot move the map around.
-            };
-            var map = new google.maps.Map(document.getElementById("services-locations"), mapOptions);
-
-            var infoWindow = new google.maps.InfoWindow(); 
-
-            let my_marker = new google.maps.Marker({
-               position:  new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
-               map: map,
-               icon: 'https://img.icons8.com/fluency/48/null/google-maps-new.png'
-            })
-
-            let circle = new google.maps.Circle({
-               center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
-               radius: 10000,
-               strokeColor: '#0000FF',
-               strokeOpacity: 1,
-               strokeWeight: 2,
-               fillColor: '#FFFFFF',
-               fillOpacity: 0.4,
-               map: map
-            })
-            
-            circle.bindTo('center', my_marker, 'position');
-            
-            for (i = 0; i <= services.data.length; i++) {
-               var data = services.data[i]
-               var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
-               
-               let marker = new google.maps.Marker({
-                  position: myLatlng,
-                  map: map,
-                  labelContent: data.name, 
-                  labelAnchor: new google.maps.Point(7, 30),
-                  labelClass: "labels", // the CSS class for the label
-                  labelInBackground: true
-               });
-
-               (function (marker, data) {
-                     google.maps.event.addListener(marker, "click", function (e) {
-                        infoWindow.setContent(data.name);
-                        infoWindow.open(map, marker);
-                     });
-               })(marker, data);
-
-            }
-         }
-      })
-   </script>
+   <script src="../../../assets/js/custom_js/homescreen/services_search.js"></script>
 @endpush
 

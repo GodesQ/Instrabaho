@@ -18,6 +18,8 @@ use App\Models\Transaction;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 
+use DB;
+
 class PackageCheckoutController extends Controller
 {
     public function package_checkout(Request $request) {
@@ -38,7 +40,7 @@ class PackageCheckoutController extends Controller
         $model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
         $user = $model::where('user_id', session()->get('id'))->first();
         $userPackageCheckout = PackageCheckout::where('id', $user->package_checkout_id)->first();
-        
+
         if($userPackageCheckout) {
             if(!$userPackageCheckout->isExpired) return back()->with('fail', 'Your Current Plan is not expired. Please wait to expire to purchase again.');
         }
@@ -55,7 +57,7 @@ class PackageCheckoutController extends Controller
                     /* Get the date expiration based on the package of user */
                     $package = session()->get('role') == 'freelancer' ? FreelancePackage::where('id', $request->package_type)->first() : EmployerPackage::where('id', $request->package_type)->first();;
                     $date_expiration = Carbon::now()->addDays($package->expiry_days);
-                    
+
                     /* Once we have a date expiration of package, update user package_checkout_id & package_date_expiration column */
                     $model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
                     $user_update = $model::where('id', $request->user_role_id)->update([
@@ -66,38 +68,44 @@ class PackageCheckoutController extends Controller
 
             case 'gcash':
                 return back();
-            
+
         }
     }
 
     private function PaidByWallet($data) {
-        $package_checkout_data = $data;
-        $user_wallet = UserWallet::where('user_id', session()->get('id'))->first();
-        
-        $remove_values = ['_token', 'longitude', 'latitude', 'package_id'];
-        foreach ($remove_values as $key => $value) {
-            unset($package_checkout_data[$value]);
-        }
 
-        // store packagecheckout in database
-        $checkout_id = PackageCheckout::insertGetId($package_checkout_data);
-        // update the date of packagecheckout
-        PackageCheckout::where('id', $checkout_id)->update([
-            'created_at' => Carbon::now()
-        ]);
+        DB::transaction(function () use ($data) {
+            $package_checkout_data = $data;
+            $user_wallet = UserWallet::where('user_id', session()->get('id'))->first();
 
-        /* Get the date expiration based on the package of user */
-        $package = session()->get('role') == 'freelancer' ? FreelancePackage::where('id', $data['package_type'])->first() : EmployerPackage::where('id', $data['package_type'])->first();;
-        $date_expiration = Carbon::now()->addDays($package->expiry_days);
-        
-        /* Once we have a date expiration of package, update user package_checkout_id & package_date_expiration column */
-        $model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
-        $user_update = $model::where('id', $data['user_role_id'])->update([
-            'package_checkout_id' => $checkout_id,
-            'package_date_expiration' => $date_expiration
-        ]);
+            /* Get the date expiration based on the package of user */
+            $package = session()->get('role') == 'freelancer' ? FreelancePackage::where('id', $data['package_type'])->first() : EmployerPackage::where('id', $data['package_type'])->first();
+            $date_expiration = Carbon::now()->addDays($package->expiry_days);
 
-        if($user_update && $checkout_id) {
+            if(!$user_wallet) return back()->with('fail', "Your Wallet doesn't exists. Create Your Wallet First before sending a transaction. Thankyou.");
+
+            if($user_wallet->amount < $package->price) return back()->with('fail', 'Your wallet amount is less than in package price.');
+
+            $remove_values = ['_token', 'longitude', 'latitude', 'package_id'];
+            foreach ($remove_values as $key => $value) {
+                unset($package_checkout_data[$value]);
+            }
+
+            // store packagecheckout in database
+            $checkout_id = PackageCheckout::insertGetId($package_checkout_data);
+            // update the date of packagecheckout
+            PackageCheckout::where('id', $checkout_id)->update([
+                'created_at' => Carbon::now()
+            ]);
+
+            /* Once we have a date expiration of package, update user package_checkout_id & package_date_expiration column */
+            $model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
+            $user_update = $model::where('id', $data['user_role_id'])->update([
+                'package_checkout_id' => $checkout_id,
+                'package_date_expiration' => $date_expiration
+            ]);
+
+
             // Generate Transaction Code
             $transaction_code = strtoupper(Str::random(8));
 
@@ -126,7 +134,7 @@ class PackageCheckoutController extends Controller
                 'payment_method' => 'paid_by_wallet',
                 'invoice_date' => Carbon::now(),
             ])->id;
-            
+
             // Create Invoice Item
             $create_invoice_item = InvoiceItem::create([
                 'invoice_id' => $invoice,
@@ -135,19 +143,11 @@ class PackageCheckoutController extends Controller
                 'amount' => $package->price,
             ]);
 
-            if(!$user_wallet) {
-                return back()->with('fail', "Your Wallet doesn't exists. Create Your Wallet First before sending a transaction. Thankyou.");
-            } else {
-                $create_wallet = UserWallet::where('user_id', $user_wallet->user_id)->update([
-                    'amount' => $user_wallet->amount - $package->price,
-                ]);
-            }
-
-            return redirect('/transaction-message')->with('success', 'Package Successfully Added');
-        }
-
-
-
+            $create_wallet = UserWallet::where('user_id', $user_wallet->user_id)->update([
+                'amount' => $user_wallet->amount - $package->price,
+            ]);
+        });
+        return redirect('/transaction-message')->with('success', 'Package Successfully Added');
     }
 
     public function employer_package_checkout(Request $request) {

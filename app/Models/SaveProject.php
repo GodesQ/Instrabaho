@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Freelancer;
+
 class SaveProject extends Model
 {
     use HasFactory;
@@ -21,5 +23,9 @@ class SaveProject extends Model
 
     public function followers() {
         return $this->hasMany(Freelancer::class, 'id', 'follower_id');
+    }
+
+    public function scopeGetAllFollowers($query, $id) {
+        return SaveProject::where('project_id', $id)->with('followers');
     }
 }

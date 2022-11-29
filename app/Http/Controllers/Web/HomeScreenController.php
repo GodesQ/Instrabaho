@@ -100,7 +100,7 @@ class HomeScreenController extends Controller
         ->with('category', 'freelancer')
         ->latest('id')
         ->paginate(3);
-        
+
         $view_data = view('CustomerScreens.home_screens.service.services', compact('services'))->render();
 
         return response()->json([
@@ -164,7 +164,12 @@ class HomeScreenController extends Controller
         ->latest('id')
         ->paginate(7);
 
-        return view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
+        $view_data = view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
+
+        return response()->json([
+            'view_data' => $view_data,
+            'projects' => $projects
+        ]);
     }
 
     public function project(Request $request) {
@@ -172,7 +177,7 @@ class HomeScreenController extends Controller
         $project->setSkills(json_decode($project->skills));
         $project->getSkills();
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $save_project = session()->has('id') ? SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first() : null;
+        $save_project = $freelancer ? SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first() : null;
         $skills_array = Skill::whereIn('id', json_decode($project->skills))->get();
         return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project'));
     }

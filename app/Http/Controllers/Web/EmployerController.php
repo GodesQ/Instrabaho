@@ -9,6 +9,7 @@ use App\Models\Employer;
 use App\Models\Project;
 use App\Models\Freelancer;
 use App\Models\EmployerFollower;
+use App\Http\Requests\EmployerRegisterForm\RegisterEmployerRequest;
 use DB;
 
 use Yajra\DataTables\Facades\DataTables;
@@ -20,32 +21,13 @@ class EmployerController extends Controller
         return view('AllScreens.misc.employer-form', compact('id'));
     }
 
-    public function save_role_form(Request $request) {
-        $request->validate([
-            'display_name' => 'required',
-            'tagline' => 'required',
-            'number_employees' => 'required',
-            'contactno' => 'required',
-            'description' => 'required',
-            'address' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required'
-        ]);
-
+    public function save_role_form(RegisterEmployerRequest $request) {
         $id = session()->get('id');
-        $save = Employer::create([
+        $save = Employer::create(array_merge($request->validated(), [
             'user_id' => $id,
-            'display_name' => $request->display_name,
-            'number_employees' => $request->number_employees,
-            'contactno' => $request->contactno,
-            'tagline' => $request->tagline,
-            'description' => $request->description,
-            'address' => $request->address,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude
-        ]);
+        ]));
 
-        return redirect()->route('freelancer.dashboard')->with('success', 'Freelancer Account Successfully Created.');
+        return redirect()->route('employer.dashboard')->with('success', 'Employer Account Successfully Created.');
     }
 
     public function dashboard() {

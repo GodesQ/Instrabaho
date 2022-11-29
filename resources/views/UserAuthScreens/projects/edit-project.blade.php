@@ -26,7 +26,7 @@
                 <input type="hidden" name="employer" value="{{ $project->employer_id }}">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">CREATE PROJECT</div>
+                        <div class="card-title">EDIT PROJECT</div>
                     </div>
                     <hr>
                     <div class="card-body">
@@ -74,28 +74,6 @@
                                         @endforeach
                                     </select>
                                     <span class="danger text-danger">@error('category_id'){{ $message }}@enderror</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="form-label font-weight-bold my-1">Address</div>
-                                    <input type="text" value="{{ $project->location }}" name="location" class="form-control " id="map-search">
-                                    <span class="danger text-danger">@error('location'){{ $message }}@enderror</span>
-                                </div>
-                                <div class="col-md-12">
-                                    <div id="map-canvas"></div>
-                                </div>
-                                <div class="col-md-6 d-none">
-                                    <div class="form-group d-none">
-                                        <div class="form-label font-weight-bold my-50">Latitude</div>
-                                        <input type="text" name="latitude" value="{{ $project->latitude }}" class="form-control latitude">
-                                    </div>
-                                </div>
-                                <div class="col-md-6d-none">
-                                    <div class="form-group d-none">
-                                        <div class="form-label font-weight-bold my-50">Longitude</div>
-                                        <input type="text" name="longitude" class="form-control longitude" value="{{ $project->longitude }}">
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -152,11 +130,21 @@
                                     <span class="danger text-danger">@error('project_cost_type'){{ $message }}@enderror</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <div class="form-label font-weight-bold my-1">Cost</div>
                                     <input value="{{ $project->cost }}" type="number" name="cost" class="form-control">
                                     <span class="danger text-danger">@error('cost'){{ $message }}@enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="form-label font-weight-bold my-1">Type</div>
+                                    <select name="project_type" id="" class="select2 form-control">
+                                        <option {{ $project->project_type == 'simple' ? 'selected' : null }} value="simple">Simple</option>
+                                        <option {{ $project->project_type == 'featured' ? 'selected' : null }} value="featured">Featured</option>
+                                    </select>
+                                    <span class="danger text-danger">@error('project_type'){{ $message }}@enderror</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -175,19 +163,31 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <div class="form-label font-weight-bold my-1">Type</div>
-                                    <select name="project_type" id="" class="select2 form-control">
-                                        <option {{ $project->project_type == 'simple' ? 'selected' : null }} value="simple">Simple</option>
-                                        <option {{ $project->project_type == 'featured' ? 'selected' : null }} value="featured">Featured</option>
-                                    </select>
-                                    <span class="danger text-danger">@error('project_type'){{ $message }}@enderror</span>
+                                    <div class="form-label font-weight-bold my-1">Description</div>
+                                    <textarea name="description" class="form-control" id="tinymce_description" cols="30" rows="8">{{ $project->description }}</textarea>
+                                    <span class="danger text-danger">@error('description'){{ $message }}@enderror</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <div class="form-label font-weight-bold my-1">Description</div>
-                                    <textarea name="description" class="form-control" id="tinymce_description" cols="30" rows="8">{{ $project->description }}</textarea>
-                                    <span class="danger text-danger">@error('description'){{ $message }}@enderror</span>
+                                    <div class="form-label font-weight-bold my-1">Address</div>
+                                    <input type="text" value="{{ $project->location }}" name="location" class="form-control " id="map-search">
+                                    <span class="danger text-danger">@error('location'){{ $message }}@enderror</span>
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="map-canvas"></div>
+                                </div>
+                                <div class="col-md-6 d-none">
+                                    <div class="form-group d-none">
+                                        <div class="form-label font-weight-bold my-50">Latitude</div>
+                                        <input type="text" name="latitude" value="{{ $project->latitude }}" class="form-control latitude">
+                                    </div>
+                                </div>
+                                <div class="col-md-6d-none">
+                                    <div class="form-group d-none">
+                                        <div class="form-label font-weight-bold my-50">Longitude</div>
+                                        <input type="text" name="longitude" class="form-control longitude" value="{{ $project->longitude }}">
+                                    </div>
                                 </div>
                             </div>
                         </div>

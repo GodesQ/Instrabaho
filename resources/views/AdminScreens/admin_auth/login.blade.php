@@ -15,7 +15,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
 
-    
+
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/vendors.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/apexcharts.css') }}">
@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
     <link
         rel="icon"
-        href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png"  
+        href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png"
         sizes="32x32"
     />
 
@@ -113,7 +113,7 @@
                                                     <i class="fa fa-key"></i>
                                                 </div>
                                             </fieldset>
-                                            <button type="submit" class="btn btn-outline-primary btn-block"><i class="feather icon-unlock"></i> Login</button>
+                                            <button type="submit" class="btn btn-primary btn-block"><i class="icon-login mr-50"></i> Login</button>
                                         </form>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@
     <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
     <script src="../../../app-assets/vendors/js/charts/apexcharts/apexcharts.min.js"></script>
     <script src="../../../app-assets/js/scripts/forms/custom-file-input.js"></script>
-    <!-- END: Page Vendor JS--> 
+    <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
     <script src="../../../app-assets/js/core/app-menu.js"></script>

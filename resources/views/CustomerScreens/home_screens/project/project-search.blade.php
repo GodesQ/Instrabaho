@@ -19,10 +19,192 @@
 @endif
 
 <style>
+    :root {
+        --building-color: #FF9800;
+        --house-color: #0288D1;
+        --shop-color: #7B1FA2;
+        --warehouse-color: #558B2F;
+    }
    #map-canvas {
        height: 200px;
        width: 100%;
    }
+   #projects-locations {
+      height: 500px;
+      width: 100%;
+   }
+   .labels { color: black; background-color: #FF8075; font-family: Arial; font-size: 11px; font-weight: bold; text-align: center; width: 12px; }
+    .property {
+    align-items: center;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    color: #263238;
+    display: flex;
+    font-size: 14px;
+    gap: 15px;
+    height: 30px;
+    justify-content: center;
+    padding: 4px;
+    position: relative;
+    position: relative;
+    transition: all 0.3s ease-out;
+    width: 30px;
+    }
+
+    .property::after {
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 9px solid #FFFFFF;
+    content: "";
+    height: 0;
+    left: 50%;
+    position: absolute;
+    top: 95%;
+    transform: translate(-50%, 0);
+    transition: all 0.3s ease-out;
+    width: 0;
+    z-index: 1;
+    }
+
+    .property .icon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: #FFFFFF;
+    }
+
+    .property .icon svg {
+    height: 20px;
+    width: auto;
+    }
+
+    .property .details {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    }
+
+    .property .address {
+    color: #9E9E9E;
+    font-size: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    }
+
+    .property .features {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    }
+
+    .property .features > div {
+    align-items: center;
+    background: #F5F5F5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    display: flex;
+    font-size: 10px;
+    gap: 5px;
+    padding: 5px;
+    }
+
+    /*
+    * Property styles in highlighted state.
+    */
+    .property.highlight {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+    height: 80px;
+    padding: 8px 15px;
+    width: auto;
+    }
+
+    .property.highlight::after {
+    border-top: 9px solid #FFFFFF;
+    }
+
+    .property.highlight .details {
+    display: flex;
+    }
+
+    .property.highlight .icon svg {
+    width: 50px;
+    height: 50px;
+    }
+
+    .property .bed {
+    color: #FFA000;
+    }
+
+    .property .bath {
+    color: #03A9F4;
+    }
+
+    .property .size {
+    color: #388E3C;
+    }
+
+    /*
+    * House icon colors.
+    */
+    .property.highlight:has(.fa-house) .icon {
+    color: var(--house-color);
+    }
+
+    .property:not(.highlight):has(.fa-house) {
+    background-color: var(--house-color);
+    }
+
+    .property:not(.highlight):has(.fa-house)::after {
+    border-top: 9px solid var(--house-color);
+    }
+
+    /*
+    * Building icon colors.
+    */
+    .property.highlight:has(.fa-building) .icon {
+    color: var(--building-color);
+    }
+
+    .property:not(.highlight):has(.fa-building) {
+        background-color: var(--building-color);
+    }
+
+    .property:not(.highlight):has(.fa-building)::after {
+        border-top: 9px solid var(--building-color);
+    }
+
+    /*
+    * Warehouse icon colors.
+    */
+    .property.highlight:has(.fa-warehouse) .icon {
+        color: var(--warehouse-color);
+    }
+
+    .property:not(.highlight):has(.fa-warehouse) {
+        background-color: var(--warehouse-color);
+    }
+
+    .property:not(.highlight):has(.fa-warehouse)::after {
+        border-top: 9px solid var(--warehouse-color);
+    }
+
+    /*
+    * Shop icon colors.
+    */
+    .property.highlight:has(.fa-shop) .icon {
+        color: var(--shop-color);
+    }
+
+    .property:not(.highlight):has(.fa-shop) {
+        background-color: var(--shop-color);
+    }
+
+    .property:not(.highlight):has(.fa-shop)::after {
+        border-top: 9px solid var(--shop-color);
+    }
 </style>
 
 <section class="fr-list-product bg-img">
@@ -172,6 +354,9 @@
                                   <span></span>
                                   </a>
                                </li>
+                                <button type="button" class="btn btn-primary view-map-btn" data-toggle="modal" style="display: none;" data-target="#create">
+                                    View Map
+                                </button>
                             </ul>
                          </div>
                       </form>
@@ -186,55 +371,35 @@
           </div>
        </div>
     </div>
-
  </section>
+ <div class="modal fade " id="create" tabindex="-1" role="dialog" aria-labelledby="create" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-header bg-primary white">
+            <h4 class="modal-title text-white" id="myModalLabel8">Projects Location</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <div id="projects-locations"></div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-left">
+                            <button class="btn btn-secondary hide-boundary-btn" type="button">Hide Boundary</button>
+                            <button class="btn btn-primary show-boundary-btn" type="button">Show Boundary</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
  <script src="../../../js/user-location.js"></script>
- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection
 
 @push('scripts')
-   <script>
-      $(document).ready(function() {
-
-        $(document).on('click', '.pagination .page-item a', function(event) {
-            event.preventDefault();
-            let page = $(this).attr('href').split('page=')[1];
-            $('#page_count').val(page);
-            fetchProjects(page);
-        })
-
-        $(document).on('submit', '#projects-filter-form', function(event) {
-            event.preventDefault();
-            $.each($("#categories:checked"), function(){
-                selected_categories.push($(this).val());
-            });
-            fetchProjects(1);
-        })
-
-        function fetchProjects(page) {
-            let selected_categories = [];
-            $.each($("#categories:checked"), function(){
-               selected_categories.push($(this).val());
-            });
-            let filter_data = {
-                title: $('#title').val(),
-                address: $('#map-search').val(),
-                latitude: $('.latitude').val(),
-                longitude: $('.longitude').val(),
-                my_range: $('#my_range').val(),
-                type: $('#type').val(),
-                categories: encodeURIComponent(JSON.stringify(selected_categories)),
-            }
-            let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
-            $.ajax({
-                url: "/search_projects/fetch_data?page="+page+'&'+filter_parameters,
-                success: function (data) {
-                    $('.projects-data').html(data);
-                    $('.protip-container').remove();
-                }
-            })
-
-        }
-      })
-   </script>
+<script src="../../../assets/js/custom_js/homescreen/projects_search.js"></script>
 @endpush
