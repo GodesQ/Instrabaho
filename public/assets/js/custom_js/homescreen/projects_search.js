@@ -80,62 +80,30 @@ $(document).ready(function() {
             var data = projects.data[i]
             var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-            const advancedMarkerView = new google.maps.marker.AdvancedMarkerView({
-                map,
-                content: buildContent(data),
+            let attachments = JSON.parse(data.attachments);
+
+            const project_icon_marker = {
+                url: `../../../images/projects/${attachments[0]}`,
+                scaledSize: new google.maps.Size(36, 36), // scaled size
+            };
+
+            let marker = new google.maps.Marker({
                 position: myLatlng,
-                title: data.title,
+                map: map,
+                icon: 'https://img.icons8.com/ios-filled/40/ff7e00/marker-p.png',
+                labelContent: data.name,
+                labelAnchor: new google.maps.Point(7, 30),
+                labelClass: "labels",
+                labelInBackground: true
             });
 
-            const element = advancedMarkerView.element;
-
-            ["focus", "pointerenter"].forEach((event) => {
-                element.addEventListener(event, () => {
-                    highlight(advancedMarkerView, data);
-                });
-            });
-
-            ["blur", "pointerleave"].forEach((event) => {
-                element.addEventListener(event, () => {
-                    unhighlight(advancedMarkerView, data);
-                });
-            });
-
-            advancedMarkerView.addListener("click", (event) => {
-                unhighlight(advancedMarkerView, data);
-            });
-
-
-            // var data = projects.data[i]
-            // var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
-
-            // let attachments = JSON.parse(data.attachments);
-
-            // const project_icon_marker = {
-            //     url: `../../../images/projects/${attachments[0]}`,
-            //     scaledSize: new google.maps.Size(36, 36), // scaled size
-            // };
-
-            // let marker = new google.maps.Marker({
-            //     position: myLatlng,
-            //     map: map,
-            //     icon: 'https://img.icons8.com/ios-filled/40/ff7e00/marker-p.png',
-            //     icon: project_icon_marker,
-            //     labelContent: data.name,
-            //     labelAnchor: new google.maps.Point(7, 30),
-            //     labelClass: "labels",
-            //     labelInBackground: true
-            // });
-
-
-
-            // (function (marker, data) {
-            //         google.maps.event.addListener(marker, "click", function (e) {
-            //         infoWindow.setContent(`<a href="/project/view/${data.id}" class="font-weight-bold">${data.title}</a><br>
-            //             ${data.location}`);
-            //         infoWindow.open(map, marker);
-            //         });
-            // })(marker, data);
+            (function (marker, data) {
+                    google.maps.event.addListener(marker, "click", function (e) {
+                    infoWindow.setContent(`<a href="/project/view/${data.id}" class="font-weight-bold">${data.title}</a><br>
+                        ${data.location}`);
+                    infoWindow.open(map, marker);
+                    });
+            })(marker, data);
 
         }
 
