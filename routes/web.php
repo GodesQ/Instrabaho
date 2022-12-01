@@ -100,8 +100,8 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('/package_checkout', [PackageCheckoutController::class, 'package_checkout'])->name('package_checkout');
         Route::post('/store_package_checkout', [PackageCheckoutController::class, 'store_package_checkout'])->name('store_package_checkout');
 
-        Route::group(['prefix'=>'freelancer', 'middleware'=>['freelancer.access']], function(){
-            Route::get('dashboard', [FreelancerController::class, 'dashboard'])->name('employer.dashboard');
+        Route::group(['prefix'=> 'freelancer', 'middleware'=>['freelancer.access']], function(){
+            Route::get('dashboard', [FreelancerController::class, 'dashboard'])->name('freelancer.dashboard');
             Route::get('profile', [FreelancerController::class, 'profile'])->name('freelancer.profile');
             Route::post('profile', [FreelancerController::class, 'update_profile'])->name('freelancer.profile.update');
             Route::get('addons', [AddonsController::class, 'index'])->name('freelancer.addons.index');
@@ -125,12 +125,15 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::post('/store_skills', [FreelancerController::class, 'store_skills'])->name('freelancer.store_skills');
 
         Route::group(['prefix' => 'employer', 'middleware' => ['employer.access']], function() {
-            Route::get('dashboard', [EmployerController::class, 'dashboard'])->name('user.dashboard');
+            Route::get('dashboard', [EmployerController::class, 'dashboard'])->name('employer.dashboard');
             Route::get('profile', [EmployerController::class, 'profile'])->name('employer.profile');
             Route::post('profile', [EmployerController::class, 'update_profile'])->name('employer.profile.update');
             Route::get('projects', [ProjectsController::class, 'index'])->name('freelancer.projects.index');
             Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create')->middleware('plan.expiration');
             Route::get('edit_project/{id}', [ProjectsController::class, 'user_edit'])->name('freelancer.project.edit');
+
+            Route::get('proposals', [ProjectProposalController::class, 'proposals_for_employers'])->name('employer.proposals');
+            Route::get('proposals/fetch_data', [ProjectProposalController::class, 'fetch_proposals_for_employers'])->name('employer.fetch_proposals');
         });
 
 
@@ -187,8 +190,8 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('store_proposal');
         Route::post('/update_proposal_status', [ProjectProposalController::class, 'update_proposal_status'])->name('update_proposal_status');
 
-        Route::get('/project_proposals/approved', [ProjectProposalController::class, 'approved'])->name('proposal_approved');
-        Route::get('/project_proposals/get_approved_proposals', [ProjectProposalController::class, 'get_approved_proposals'])->name('get_approved_proposals');
+        // Route::get('/project_proposals/approved', [ProjectProposalController::class, 'approved'])->name('proposal_approved');
+        // Route::get('/project_proposals/get_approved_proposals', [ProjectProposalController::class, 'get_approved_proposals'])->name('get_approved_proposals');
         Route::get('/project_proposal_information/{id}', [ProjectProposalController::class, 'project_proposal_information'])->name('project_proposal_information');
 
         // Route::get('/invoices')
