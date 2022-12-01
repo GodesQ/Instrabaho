@@ -43,8 +43,10 @@
                             </div>
                         </div>
                         <div class="col-xl-8 col-md-12">
-                            <div class="proposals">
-                                @include('UserAuthScreens.proposals.employer.proposals')
+                            <div class="proposals card">
+                                <div class="card-body">
+                                    @include('UserAuthScreens.proposals.employer.proposals')
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,7 +75,7 @@ $(document).ready(function() {
         let cost = $('#cost').val();
         let project = $('#project').val();
         $.ajax({
-            url: "/employer/proposals/fetch_data?page="+page+'&'+'cost'+cost+'&'+'project_id'+project,
+            url: "/employer/proposals/fetch_data?page="+page+'&'+'cost='+cost+'&'+'project_id='+project,
             success: function (data) {
                 console.log(data);
                 $('.proposals').html(data.view_data);

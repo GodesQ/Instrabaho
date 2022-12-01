@@ -11,22 +11,15 @@ use App\Models\Employer;
 use App\Models\Project;
 use Carbon\Carbon;
 
+use App\Http\Requests\ProjectProposal\StoreProjectProposal;
+
 use Yajra\DataTables\Facades\DataTables;
 
 class ProjectProposalController extends Controller
 {
-    public function store(Request $request) {
-        $request->validate([
-            'offer_price' => 'required|numeric',
-            'estimated_days' => 'required|numeric',
-            'cover_letter' => 'required',
-            'address' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required'
-        ]);
-
-        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        if(!$freelancer) return back()->with('fail', "The User doesn't exist.");
+    public function store(StoreProjectProposal $request) {
+        
+        $freelancer = Freelancer::where('user_id', session()->get('id'))->firstOrFail();
 
         $images = array();
         if($request->hasFile('attachments')) {
@@ -39,20 +32,14 @@ class ProjectProposalController extends Controller
 
         $json_images = json_encode($images);
 
-        $save = ProjectProposal::create([
+        $save = ProjectProposal::create(array_merge($request->validated(),[
             'project_id' => $request->project_id,
             'employer_id' => $request->employer_id,
             'freelancer_id' => $freelancer->id,
-            'offer_price' => $request->offer_price,
-            'estimated_days' => $request->estimated_days,
-            'address' => $request->address,
-            'cover_letter' => $request->cover_letter,
             'project_cost_type' => 'Fixed',
             'status' => 'pending',
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
             'attachments' => $json_images
-        ]);
+        ]));
 
         if($save) return back()->with('success', 'Proposal sent successfully');
 
@@ -67,14 +54,16 @@ class ProjectProposalController extends Controller
 
     public function fetch_proposals_for_employers(Request $request) {
         abort_if(!$request->ajax(), 404);
+
         $cost = $request->input('cost');
         $proposals = ProjectProposal::where('project_id', $request->project_id)->when($cost, function ($q) use ($cost) {
-            return $q->where('cost', $cost);
-        })->paginate(10);
+            return $q->where('offer_price', $cost);
+        })->with('freelancer')->paginate(10);
 
         $view_data = view('UserAuthScreens.proposals.employer.proposals', compact('proposals'))->render();
         return response()->json([
-            'view_data' => $view_data
+            'view_data' => $view_data,
+            'proposals' => $proposals
         ]);
     }
 

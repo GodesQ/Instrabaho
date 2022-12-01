@@ -179,7 +179,8 @@ class HomeScreenController extends Controller
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
         $save_project = $freelancer ? SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first() : null;
         $skills_array = Skill::whereIn('id', json_decode($project->skills))->get();
-        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project'));
+        $isAlreadySendProposal = $freelancer ? ProjectProposal::where('project_id', $project->id)->where('freelancer_id', $freelancer->id)->exists() : false;
+        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project', 'isAlreadySendProposal'));
     }
 
     public function freelancers(Request $request) {
