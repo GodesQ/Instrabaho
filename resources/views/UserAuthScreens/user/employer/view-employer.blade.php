@@ -22,7 +22,7 @@
         @if($employer->user->cover_image)
             <img width="100%" height="250" style="object-fit: cover; object-position: center;" src="../../../images/user/cover/{{ $employer->user->cover_image }}" alt="">
         @else
-            <img width="100%" height="250" style="object-fit: cover; object-position: center;" src="../../../images/bg-image/employer-bg.jpeg" alt="">
+            <img width="100%" height="250" style="object-fit: cover; object-position: center;" src="../../../images/bg-image/default-cover.png" alt="">
         @endif
 	</section>
     <section class="fr-expert">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-5 col-md-5 col-sm-5 align-self-center">
-                        <div class="fr-expert-content"> 
+                        <div class="fr-expert-content">
                             <a href="/freelancer/follow_employer/{{ $employer->id }}" class="btn btn-danger follow-employer" data-emp-id="804"><i class="fa fa-heart"></i> {{ $follow_employer ? 'Unfollow' : 'Follow' }}</a>
                         </div>
                     </div>
@@ -54,11 +54,11 @@
                     <div class="fr-c-details">
                         <div class="fr-c-detail-box">
                         <div class="fl-profile-img">
-                            @if($employer->user->cover_image)
+                            @if($employer->user->profile_image)
 								<img src="../../../images/user/profile/{{ $employer->user->profile_image }}" alt="" class="img-fluid">
 							@else
 							    <img src="../../../images/user-profile.png" alt="" class="img-fluid">
-							@endif		
+							@endif
                         </div>
                         <p><i class="fa fa-check protip" data-pt-position="top" data-pt-scheme="black" data-pt-title=" Verified" aria-hidden="true"></i>{{ $employer->display_name }}</p>
                         <p>{{ $employer->tagline }}</p>
@@ -85,7 +85,7 @@
                                 <div class="fr-c-full-details">
                                     <span>Department</span>
                                     <p>
-                                    Customer Support					  
+                                    Customer Support
                                     </p>
                                 </div>
                             </li>
@@ -93,7 +93,7 @@
                                 <div class="fr-c-full-details">
                                     <span>Number of Employees</span>
                                     <p>
-                                        {{ $employer->number_employees }} Employees		  
+                                        {{ $employer->number_employees }} Employees
                                     </p>
                                 </div>
                             </li>
@@ -171,7 +171,7 @@
                                         <li>
                                         <p class="heading">Location: </p>
                                             <span>
-                                                {{ $featured_project->location }}  
+                                                {{ $featured_project->location }}
                                             </span>
                                         </li>
                                     </ul>

@@ -25,16 +25,14 @@
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Projects">Manage Projects</span></a>
+            <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Projects">Projects</span></a>
                 <ul class="menu-content">
-                    <li class="{{ Request::path() == 'employer/create_project' ? 'active' : ''  }}"><a class="menu-item" href="/employer/create_project" data-i18n="Create Projects">Create Projects</a>
+                    <li class="{{ Request::path() == 'employer/create_project' ? 'active' : ''  }}"><a class="menu-item" href="/employer/create_project" data-i18n="Create Project">Create Project</a>
                     </li>
+                    <li><a class="menu-item" href="/employer/proposals" data-i18n="Proposals">Proposals</a></li>
                     <li class="{{ Request::path() == 'employer/projects' ? 'active' : ''  }}"><a class="menu-item" href="/employer/projects" data-i18n="Active Projects">Active Projects</a>
                     </li>
-
                     <li class="{{  Request::path() == 'project_proposals/approved' ? 'active' : ''  }}"><a class="menu-item" href="/project_proposals/approved" data-i18n="Approved Projects">Approved Projects</a>
-                    </li>
-                    <li><a class="menu-item" href="" data-i18n="Canceled Projects">Canceled Projects</a>
                     </li>
                 </ul>
             </li>

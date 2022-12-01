@@ -18,6 +18,13 @@
    @endpush
 @endif
 
+<style>
+    #map-canvas {
+        height: 300px;
+        width: 100%;
+    }
+</style>
+
 <section class="fr-project-details section-padding actionbar_space">
     <div class="container">
        <div class="row">
@@ -135,22 +142,32 @@
                                 <div class="form-group">
                                    <label>Your Price <span class="text-danger">*</span></label>
                                    <div class="input-group">
-                                      <input type="number" class="form-control" id="bidding-price" name="offer_price" required="" data-smk-msg="Provide your price in numbers only" data-smk-type="number">
+                                      <input type="number" class="form-control" id="bidding-price" name="offer_price" data-smk-msg="Provide your price in numbers only" data-smk-type="number">
                                       <div class="input-group-prepend">
                                          <div class="input-group-text">₱ </div>
                                       </div>
                                    </div>
+                                   <span class="text-danger danger">
+                                        @error('offer_price')
+                                            {{ $message }}
+                                        @enderror
+                                    </span>
                                 </div>
                              </div>
                              <div class="col">
                                 <div class="form-group">
                                    <label> Days to complete <span class="text-danger">*</span></label>
                                    <div class="input-group">
-                                      <input type="number" class="form-control" name="estimated_days" required="" data-smk-msg="Dasy to complete in numbers only" data-smk-type="number">
+                                      <input type="number" class="form-control" name="estimated_days" data-smk-msg="Dasy to complete in numbers only" data-smk-type="number">
                                       <div class="input-group-prepend">
                                          <div class="input-group-text">Days</div>
                                       </div>
                                    </div>
+                                   <span class="text-danger danger">
+                                        @error('estimated_days')
+                                            {{ $message }}
+                                        @enderror
+                                    </span>
                                 </div>
                              </div>
                           </div>
@@ -159,18 +176,32 @@
                                 <div class="form-group">
                                    <label>Address <span class="text-danger">*</span></label>
                                    <div class="input-group">
-                                      <input type="text" multiple class="form-control" id="bidding-price" name="address" required="" data-smk-msg="Provide your Address">
+                                      <input type="text" multiple class="form-control" id="map-search" name="address">
                                       <div class="input-group-prepend">
                                          <div class="input-group-text"><i class="fa fa-location-arrow"></i></div>
                                       </div>
                                    </div>
+                                   <span class="text-danger danger my-1">
+                                        @error('address')
+                                            {{ $message }}
+                                        @enderror
+                                    </span>
+                                   <br>
+                                   <div id="map-canvas"></div>
+                                   <input type="hidden" name="latitude" class="latitude">
+                                   <input type="hidden" name="longitude" class="longitude">
                                 </div>
                              </div>
                           </div>
                           <div class="form-row">
                              <div class="col-12">
                                 <label> Cover Letter <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="bid-textarea" name="cover_letter" rows="3"></textarea>
+                                <textarea class="form-control" id="bid-textarea" name="cover_letter" rows="5"></textarea>
+                                <span class="text-danger danger">
+                                    @error('cover_letter')
+                                        {{ $message }}
+                                    @enderror
+                                </span>
                              </div>
                              <div class="col-12 my-3">
                                 <div class="form-group">
@@ -284,6 +315,7 @@
        </div>
     </div>
 </div>
+<script src="../../../js/user-location.js"></script>
 @endsection
 
 

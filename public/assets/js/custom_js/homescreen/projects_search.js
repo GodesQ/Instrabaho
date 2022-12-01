@@ -77,110 +77,38 @@ $(document).ready(function() {
         })
 
         for (i = 0; i <= projects.data.length; i++) {
+
             var data = projects.data[i]
             var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-            const advancedMarkerView = new google.maps.marker.AdvancedMarkerView({
-                map,
-                content: buildContent(data),
+            let attachments = JSON.parse(data.attachments);
+
+            const project_icon_marker = {
+                url: `../../../images/projects/${attachments[0]}`,
+                scaledSize: new google.maps.Size(36, 36), // scaled size
+            };
+
+            let marker = new google.maps.Marker({
                 position: myLatlng,
-                title: data.title,
-            });
-
-            const element = advancedMarkerView.element;
-
-            ["focus", "pointerenter"].forEach((event) => {
-                element.addEventListener(event, () => {
-                    highlight(advancedMarkerView, data);
-                });
-            });
-
-            ["blur", "pointerleave"].forEach((event) => {
-                element.addEventListener(event, () => {
-                    unhighlight(advancedMarkerView, data);
-                });
-            });
-
-            advancedMarkerView.addListener("click", (event) => {
-                unhighlight(advancedMarkerView, data);
+                map: map,
+                icon: 'https://img.icons8.com/ios-filled/40/ff7e00/marker-p.png',
+                labelContent: data.name,
+                labelAnchor: new google.maps.Point(7, 30),
+                labelClass: "labels",
+                labelInBackground: true
             });
 
 
-            // var data = projects.data[i]
-            // var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
 
-            // let attachments = JSON.parse(data.attachments);
-
-            // const project_icon_marker = {
-            //     url: `../../../images/projects/${attachments[0]}`,
-            //     scaledSize: new google.maps.Size(36, 36), // scaled size
-            // };
-
-            // let marker = new google.maps.Marker({
-            //     position: myLatlng,
-            //     map: map,
-            //     icon: 'https://img.icons8.com/ios-filled/40/ff7e00/marker-p.png',
-            //     icon: project_icon_marker,
-            //     labelContent: data.name,
-            //     labelAnchor: new google.maps.Point(7, 30),
-            //     labelClass: "labels",
-            //     labelInBackground: true
-            // });
-
-
-
-            // (function (marker, data) {
-            //         google.maps.event.addListener(marker, "click", function (e) {
-            //         infoWindow.setContent(`<a href="/project/view/${data.id}" class="font-weight-bold">${data.title}</a><br>
-            //             ${data.location}`);
-            //         infoWindow.open(map, marker);
-            //         });
-            // })(marker, data);
+            (function (marker, data) {
+                    google.maps.event.addListener(marker, "click", function (e) {
+                    infoWindow.setContent(`<a href="/project/view/${data.id}" class="font-weight-bold">${data.title}</a><br>
+                        ${data.location}`);
+                    infoWindow.open(map, marker);
+                    });
+            })(marker, data);
 
         }
-
-        function highlight(markerView, property) {
-            markerView.content.classList.add("highlight");
-            markerView.element.style.zIndex = 1;
-          }
-
-          function unhighlight(markerView, property) {
-            markerView.content.classList.remove("highlight");
-            markerView.element.style.zIndex = "";
-          }
-
-          function buildContent(data) {
-            const content = document.createElement("div");
-            let attachments = JSON.parse(data.attachments);
-            content.classList.add("data");
-            content.innerHTML = `
-              <div class="icon">
-                <img src="../../../images/projects/${attachments[0]}" />
-              </div>
-              <div class="details">
-                  <div class="price">${data.cost}</div>
-                  <div class="address">${data.location}</div>
-                  <div class="features">
-                  <div>
-                      <i aria-hidden="true" class="fa fa-bed fa-lg bed" title="bedroom"></i>
-                      <span class="fa-sr-only">bedroom</span>
-                      <span>${data.freelancer_type}</span>
-                  </div>
-                  <div>
-                      <i aria-hidden="true" class="fa fa-bath fa-lg bath" title="bathroom"></i>
-                      <span class="fa-sr-only">bathroom</span>
-                      <span>${data.project_duration}</span>
-                  </div>
-                  <div>
-                      <i aria-hidden="true" class="fa fa-ruler fa-lg size" title="size"></i>
-                      <span class="fa-sr-only">size</span>
-                      <span>${data.project_level} ft<sup>2</sup></span>
-                  </div>
-                  </div>
-              </div>
-              `;
-            return content;
-          }
     }
 
     $(document).on('click', '.show-boundary-btn', function(event) {

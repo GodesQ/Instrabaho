@@ -68,7 +68,7 @@
                             </p>
                         </div>
                         <div class="fr-hero3-srch">
-                            <form
+                            {{-- <form
                                 class="hero-one-form"
                                 action="search-page.html"
                             >
@@ -115,7 +115,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </form>
+                            </form> --}}
                         </div>
                         {{-- <div class="fr-her3-elemnt">
                             Trending Keywords:

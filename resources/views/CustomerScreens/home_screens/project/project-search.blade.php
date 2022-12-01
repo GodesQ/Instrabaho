@@ -19,192 +19,10 @@
 @endif
 
 <style>
-    :root {
-        --building-color: #FF9800;
-        --house-color: #0288D1;
-        --shop-color: #7B1FA2;
-        --warehouse-color: #558B2F;
-    }
    #map-canvas {
-       height: 200px;
+       height: 400px;
        width: 100%;
    }
-   #projects-locations {
-      height: 500px;
-      width: 100%;
-   }
-   .labels { color: black; background-color: #FF8075; font-family: Arial; font-size: 11px; font-weight: bold; text-align: center; width: 12px; }
-    .property {
-    align-items: center;
-    background-color: #FFFFFF;
-    border-radius: 50%;
-    color: #263238;
-    display: flex;
-    font-size: 14px;
-    gap: 15px;
-    height: 30px;
-    justify-content: center;
-    padding: 4px;
-    position: relative;
-    position: relative;
-    transition: all 0.3s ease-out;
-    width: 30px;
-    }
-
-    .property::after {
-    border-left: 9px solid transparent;
-    border-right: 9px solid transparent;
-    border-top: 9px solid #FFFFFF;
-    content: "";
-    height: 0;
-    left: 50%;
-    position: absolute;
-    top: 95%;
-    transform: translate(-50%, 0);
-    transition: all 0.3s ease-out;
-    width: 0;
-    z-index: 1;
-    }
-
-    .property .icon {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    color: #FFFFFF;
-    }
-
-    .property .icon svg {
-    height: 20px;
-    width: auto;
-    }
-
-    .property .details {
-    display: none;
-    flex-direction: column;
-    flex: 1;
-    }
-
-    .property .address {
-    color: #9E9E9E;
-    font-size: 10px;
-    margin-bottom: 10px;
-    margin-top: 5px;
-    }
-
-    .property .features {
-    align-items: flex-end;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    }
-
-    .property .features > div {
-    align-items: center;
-    background: #F5F5F5;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    display: flex;
-    font-size: 10px;
-    gap: 5px;
-    padding: 5px;
-    }
-
-    /*
-    * Property styles in highlighted state.
-    */
-    .property.highlight {
-    background-color: #FFFFFF;
-    border-radius: 8px;
-    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
-    height: 80px;
-    padding: 8px 15px;
-    width: auto;
-    }
-
-    .property.highlight::after {
-    border-top: 9px solid #FFFFFF;
-    }
-
-    .property.highlight .details {
-    display: flex;
-    }
-
-    .property.highlight .icon svg {
-    width: 50px;
-    height: 50px;
-    }
-
-    .property .bed {
-    color: #FFA000;
-    }
-
-    .property .bath {
-    color: #03A9F4;
-    }
-
-    .property .size {
-    color: #388E3C;
-    }
-
-    /*
-    * House icon colors.
-    */
-    .property.highlight:has(.fa-house) .icon {
-    color: var(--house-color);
-    }
-
-    .property:not(.highlight):has(.fa-house) {
-    background-color: var(--house-color);
-    }
-
-    .property:not(.highlight):has(.fa-house)::after {
-    border-top: 9px solid var(--house-color);
-    }
-
-    /*
-    * Building icon colors.
-    */
-    .property.highlight:has(.fa-building) .icon {
-    color: var(--building-color);
-    }
-
-    .property:not(.highlight):has(.fa-building) {
-        background-color: var(--building-color);
-    }
-
-    .property:not(.highlight):has(.fa-building)::after {
-        border-top: 9px solid var(--building-color);
-    }
-
-    /*
-    * Warehouse icon colors.
-    */
-    .property.highlight:has(.fa-warehouse) .icon {
-        color: var(--warehouse-color);
-    }
-
-    .property:not(.highlight):has(.fa-warehouse) {
-        background-color: var(--warehouse-color);
-    }
-
-    .property:not(.highlight):has(.fa-warehouse)::after {
-        border-top: 9px solid var(--warehouse-color);
-    }
-
-    /*
-    * Shop icon colors.
-    */
-    .property.highlight:has(.fa-shop) .icon {
-        color: var(--shop-color);
-    }
-
-    .property:not(.highlight):has(.fa-shop) {
-        background-color: var(--shop-color);
-    }
-
-    .property:not(.highlight):has(.fa-shop)::after {
-        border-top: 9px solid var(--shop-color);
-    }
 </style>
 
 <section class="fr-list-product bg-img">
@@ -238,8 +56,8 @@
                 <div class="service-widget">
                    <form action="#" id="projects-filter-form">
                       <div class="panel panel-default">
-                         <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#search-widget"> Keywords </a> </div>
-                         <div id="search-widget" class="panel-collapse collapse show" role="tabpanel">
+                         <div class="panel-heading "> <a role="button" class="" data-bs-toggle="collapse" href="#search-widget"> Keywords </a> </div>
+                         <div id="search-widget" class="panel-collapse collapse " role="tabpanel">
                             <div class="panel-body" tabindex="1">
                                <div class="form-group">
                                   <input type="text" class="form-control" value="" id="title" name="title" placeholder="What are you looking for" value="">
@@ -282,8 +100,8 @@
                         </div>
                      </div>
                       <div class="panel panel-default">
-                         <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#category-widget"> Search by category </a> </div>
-                         <div id="category-widget" class="panel-collapse collapse show" role="tabpanel">
+                         <div class="panel-heading"> <a role="button" class="" data-bs-toggle="collapse" href="#category-widget"> Search by category </a> </div>
+                         <div id="category-widget" class="panel-collapse collapse" role="tabpanel">
                             <div class="panel-body" tabindex="2">
                                <ul>
                                   @foreach($service_categories as $category)
@@ -303,8 +121,8 @@
                          </div>
                       </div>
                       <div class="panel panel-default">
-                         <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#price-widget"> Price </a> </div>
-                         <div id="price-widget" class="panel-collapse collapse show" role="tabpanel">
+                         <div class="panel-heading"> <a role="button" class="" data-bs-toggle="collapse" href="#price-widget"> Price </a> </div>
+                         <div id="price-widget" class="panel-collapse collapse" role="tabpanel">
                             <div class="panel-body" tabindex="4">
                                <div class="range-slider">
                                  <input type="text" class="services-range-slider" id="my_range" name="my_range" value="" />
@@ -343,7 +161,7 @@
                    <div class="services-filter-2">
                       <form class="d-flex justify-content-between align-items-center">
                          <div class="heading-area">
-                            <h4 >Found {{ count($projects) }} {{ count($projects) > 1 ? 'Results' : 'Result' }} </h4>
+                            <h4 >Found Results</h4>
                          </div>
                          <div class=" float-right">
                             <ul class="top-filters">
