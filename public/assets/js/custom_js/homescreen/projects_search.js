@@ -77,6 +77,7 @@ $(document).ready(function() {
         })
 
         for (i = 0; i <= projects.data.length; i++) {
+
             var data = projects.data[i]
             var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
 
@@ -97,6 +98,8 @@ $(document).ready(function() {
                 labelInBackground: true
             });
 
+
+
             (function (marker, data) {
                     google.maps.event.addListener(marker, "click", function (e) {
                     infoWindow.setContent(`<a href="/project/view/${data.id}" class="font-weight-bold">${data.title}</a><br>
@@ -106,49 +109,6 @@ $(document).ready(function() {
             })(marker, data);
 
         }
-
-        function highlight(markerView, property) {
-            markerView.content.classList.add("highlight");
-            markerView.element.style.zIndex = 1;
-          }
-
-          function unhighlight(markerView, property) {
-            markerView.content.classList.remove("highlight");
-            markerView.element.style.zIndex = "";
-          }
-
-          function buildContent(data) {
-            const content = document.createElement("div");
-            let attachments = JSON.parse(data.attachments);
-            content.classList.add("data");
-            content.innerHTML = `
-              <div class="icon">
-                <img src="../../../images/projects/${attachments[0]}" />
-              </div>
-              <div class="details">
-                  <div class="price">${data.cost}</div>
-                  <div class="address">${data.location}</div>
-                  <div class="features">
-                  <div>
-                      <i aria-hidden="true" class="fa fa-bed fa-lg bed" title="bedroom"></i>
-                      <span class="fa-sr-only">bedroom</span>
-                      <span>${data.freelancer_type}</span>
-                  </div>
-                  <div>
-                      <i aria-hidden="true" class="fa fa-bath fa-lg bath" title="bathroom"></i>
-                      <span class="fa-sr-only">bathroom</span>
-                      <span>${data.project_duration}</span>
-                  </div>
-                  <div>
-                      <i aria-hidden="true" class="fa fa-ruler fa-lg size" title="size"></i>
-                      <span class="fa-sr-only">size</span>
-                      <span>${data.project_level} ft<sup>2</sup></span>
-                  </div>
-                  </div>
-              </div>
-              `;
-            return content;
-          }
     }
 
     $(document).on('click', '.show-boundary-btn', function(event) {

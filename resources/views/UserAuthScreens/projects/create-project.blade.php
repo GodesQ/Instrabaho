@@ -110,7 +110,7 @@
                                     <div class="controls">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">$</span>
+                                                <span class="input-group-text">₱</span>
                                             </div>
                                             <input type="number" min="100" name="onlyNum" class="form-control" required="" data-validation-required-message="This field is required" aria-invalid="false">
                                             <div class="input-group-append">

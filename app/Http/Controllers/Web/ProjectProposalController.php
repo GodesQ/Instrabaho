@@ -20,12 +20,14 @@ class ProjectProposalController extends Controller
             'offer_price' => 'required|numeric',
             'estimated_days' => 'required|numeric',
             'cover_letter' => 'required',
-            'address' => 'required'
+            'address' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required'
         ]);
-        
+
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
         if(!$freelancer) return back()->with('fail', "The User doesn't exist.");
-        
+
         $images = array();
         if($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $key => $attachment) {
@@ -47,6 +49,8 @@ class ProjectProposalController extends Controller
             'cover_letter' => $request->cover_letter,
             'project_cost_type' => 'Fixed',
             'status' => 'pending',
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'attachments' => $json_images
         ]);
 
@@ -57,10 +61,21 @@ class ProjectProposalController extends Controller
 
     public function proposals_for_employers() {
         $employer = Employer::where('user_id', session()->get('id'))->first();
-        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'pending')->with('employer', 'freelancer', 'project')->whereHas('project', function($query) {
-            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
-        })->cursorPaginate(10);
-        return view('UserAuthScreens.proposals.employer-proposals', compact('proposals'));
+        $projects = Project::where('employer_id', $employer->id)->where('expiration_date', '>=', Carbon::now())->toBase()->get();
+        return view('UserAuthScreens.proposals.employer.index-proposals', compact('projects'));
+    }
+
+    public function fetch_proposals_for_employers(Request $request) {
+        abort_if(!$request->ajax(), 404);
+        $cost = $request->input('cost');
+        $proposals = ProjectProposal::where('project_id', $request->project_id)->when($cost, function ($q) use ($cost) {
+            return $q->where('cost', $cost);
+        })->paginate(10);
+
+        $view_data = view('UserAuthScreens.proposals.employer.proposals', compact('proposals'))->render();
+        return response()->json([
+            'view_data' => $view_data
+        ]);
     }
 
     public function proposals_for_freelancers() {
@@ -76,16 +91,16 @@ class ProjectProposalController extends Controller
         $role = session()->get('role');
         $proposal = ProjectProposal::where('id', $request->id)->with('employer', 'freelancer', 'project')->first();
         // $user_model = $role == 'freelancer' ? Employer::class : Freelancer::class;
-        
+
         $receiver = Employer::where('id', $proposal->employer_id)->with('user')->first();
 
         if($role == 'employer') {
             $receiver = Freelancer::where('id', $proposal->freelancer_id)->with('user')->first();
-        } 
-        
+        }
+
         $incoming_msg_id = $role == 'freelancer' ? $proposal->employer_id : $proposal->freelancer_id;
         $outgoing_msg_id = $role == 'freelancer' ? $proposal->freelancer_id : $proposal->employer_id;
-        
+
         return view('UserAuthScreens.proposals.proposal-view', compact('proposal', 'receiver', 'incoming_msg_id', 'outgoing_msg_id'));
     }
 
@@ -108,11 +123,11 @@ class ProjectProposalController extends Controller
                 'message' => 'Update Status Successfully'
             ]);
         }
-        
+
         return response()->json([
             'status' => 500,
             'message' => 'Failed to Update'
-        ]); 
+        ]);
     }
 
     public function ongoing(Request $request) {
@@ -188,7 +203,7 @@ class ProjectProposalController extends Controller
                     if(session()->get('role') == 'employer') {
                         return $row->freelancer->display_name;
                     }
-                    return $row->employer->display_name; 
+                    return $row->employer->display_name;
                 })
                 ->addColumn('offer_price', function($row){
                     return number_format($row->offer_price, 2);
@@ -196,11 +211,11 @@ class ProjectProposalController extends Controller
                 ->addColumn('estimated_days', function($row){
                     return $row->estimated_days . " Days";
                 })
-                ->addColumn('status', function($row){     
+                ->addColumn('status', function($row){
                     $status = "<div class='badge badge-info'>$row->status</div>";
                     return $status;
                 })
-                ->addColumn('action', function($row){     
+                ->addColumn('action', function($row){
                     $btn = '<a href="/project_proposal_information/'. $row->id .'" class="edit btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
                             <a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Cancel Service</a>';
                     return $btn;

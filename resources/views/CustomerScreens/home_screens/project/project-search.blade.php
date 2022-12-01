@@ -19,21 +19,10 @@
 @endif
 
 <style>
-    :root {
-        --building-color: #FF9800;
-        --house-color: #0288D1;
-        --shop-color: #7B1FA2;
-        --warehouse-color: #558B2F;
-    }
    #map-canvas {
-       height: 200px;
+       height: 400px;
        width: 100%;
    }
-   #projects-locations {
-      height: 500px;
-      width: 100%;
-   }
-   .labels { color: black; background-color: #FF8075; font-family: Arial; font-size: 11px; font-weight: bold; text-align: center; width: 12px; }
 </style>
 
 <section class="fr-list-product bg-img">
@@ -67,8 +56,8 @@
                 <div class="service-widget">
                    <form action="#" id="projects-filter-form">
                       <div class="panel panel-default">
-                         <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#search-widget"> Keywords </a> </div>
-                         <div id="search-widget" class="panel-collapse collapse show" role="tabpanel">
+                         <div class="panel-heading "> <a role="button" class="" data-bs-toggle="collapse" href="#search-widget"> Keywords </a> </div>
+                         <div id="search-widget" class="panel-collapse collapse " role="tabpanel">
                             <div class="panel-body" tabindex="1">
                                <div class="form-group">
                                   <input type="text" class="form-control" value="" id="title" name="title" placeholder="What are you looking for" value="">
@@ -111,8 +100,8 @@
                         </div>
                      </div>
                       <div class="panel panel-default">
-                         <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#category-widget"> Search by category </a> </div>
-                         <div id="category-widget" class="panel-collapse collapse show" role="tabpanel">
+                         <div class="panel-heading"> <a role="button" class="" data-bs-toggle="collapse" href="#category-widget"> Search by category </a> </div>
+                         <div id="category-widget" class="panel-collapse collapse" role="tabpanel">
                             <div class="panel-body" tabindex="2">
                                <ul>
                                   @foreach($service_categories as $category)
@@ -132,8 +121,8 @@
                          </div>
                       </div>
                       <div class="panel panel-default">
-                         <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#price-widget"> Price </a> </div>
-                         <div id="price-widget" class="panel-collapse collapse show" role="tabpanel">
+                         <div class="panel-heading"> <a role="button" class="" data-bs-toggle="collapse" href="#price-widget"> Price </a> </div>
+                         <div id="price-widget" class="panel-collapse collapse" role="tabpanel">
                             <div class="panel-body" tabindex="4">
                                <div class="range-slider">
                                  <input type="text" class="services-range-slider" id="my_range" name="my_range" value="" />
@@ -172,7 +161,7 @@
                    <div class="services-filter-2">
                       <form class="d-flex justify-content-between align-items-center">
                          <div class="heading-area">
-                            <h4 >Found {{ count($projects) }} {{ count($projects) > 1 ? 'Results' : 'Result' }} </h4>
+                            <h4 >Found Results</h4>
                          </div>
                          <div class=" float-right">
                             <ul class="top-filters">
