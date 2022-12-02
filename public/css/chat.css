@@ -394,11 +394,12 @@
   .chat-box .chat p{
     font-size: 15px;
   }
+
   .chat-box .outogoing .details{
-    max-width: 230px;
+    max-width: 300px !important;
   }
   .chat-box .incoming .details{
-    max-width: 265px;
+    max-width: 300px !important;
   }
   .incoming .details img{
     height: 30px;

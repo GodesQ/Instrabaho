@@ -151,7 +151,7 @@
           <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
              <div class="heading-panel  section-center">
                 <div class="heading-meta">
-                   <h2>Most Hired Freelancers</h2>
+                   <h2>TOP RATED SKILLED WORKERS</h2>
                    <p>Work with talented people at the most affordable price to get your job done</p>
                 </div>
              </div>

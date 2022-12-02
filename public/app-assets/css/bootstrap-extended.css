@@ -224,9 +224,9 @@ form {
   form .form-group {
     margin-bottom: 1.5rem; }
   form .form-control {
-    background: transparent;
-    border: 1px solid #dadada;
-    color: #3f587e; }
+    background:  #f3f7fd;
+    border: 1px solid #cecece;
+    color: #000; }
     form .form-control::-webkit-input-placeholder {
       color: #b1c1d8; }
     form .form-control:-moz-placeholder {

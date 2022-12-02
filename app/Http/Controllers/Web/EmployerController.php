@@ -48,6 +48,7 @@ class EmployerController extends Controller
         $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
         $employer = Employer::where('user_id', $request->id)->first();
         $employer->update($data);
+
         $employer->user()->update([
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,

@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
-        Hello World
+        Success
     </div>
 </div>
 @endsection

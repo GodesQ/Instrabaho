@@ -7,6 +7,17 @@
         width: 100%;
     }
 </style>
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        @push('scripts')
+            <script>
+                toastr.error('{{ $error }}', 'Error')
+            </script>
+        @endpush
+    @endforeach
+@endif
+
 <div class="page-wrapper">
     <div class="page-content">
         <div class="container-fluid">
@@ -112,7 +123,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">₱</span>
                                             </div>
-                                            <input type="number" min="100" name="onlyNum" class="form-control" required="" data-validation-required-message="This field is required" aria-invalid="false">
+                                            <input type="number" min="100" name="cost" class="form-control"  data-validation-required-message="This field is required" aria-invalid="false">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">.00</span>
                                             </div>

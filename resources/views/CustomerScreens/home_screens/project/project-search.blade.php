@@ -23,6 +23,10 @@
        height: 400px;
        width: 100%;
    }
+   #projects-locations {
+        height: 500px;
+       width: 100%;
+   }
 </style>
 
 <section class="fr-list-product bg-img">

@@ -7,18 +7,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Stack admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, stack admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="PIXINVENT">
+    <meta name="description" content="Instrabaho is a community where you can post a project if you are an employer or you may post service if you are a skilled worker. This initiative is to help people who lose their job during the time of the pandemic.">
+    <meta name="keywords" content="instrabaho, blue collars, skilled workers, Online Platform for skilled workers, Online Job Portal">
+    <meta name="author" content="GODESQ DIGITAL MARKETING SERVICES">
     <title>INSTRABAHO</title>
-    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
 
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/vendors.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/apexcharts.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/icheck/icheck.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/icheck/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/toggle/switchery.min.css') }}">
@@ -48,6 +46,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/users.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/app-chat.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/chat.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/proposals.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/custom-step.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/app-todo.css') }}">
@@ -59,25 +58,12 @@
     <!-- END: Custom CSS-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
-    <link
-        rel="icon"
-        href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png"
-        sizes="32x32"
-    />
+    <link rel="icon" href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png" sizes="32x32" />
 
     <style>
         .hide-profile-menu {
             display: none !important;
         }
-        /* .select2-container--default .select2-selection--single {
-            border: 1px solid #003066 !important;
-        }
-        .select2-container--default .select2-selection--multiple {
-            border: 1px solid #003066 !important;
-        }
-        .select2-container--classic.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
-            border: 1px solid #003066 !important;
-        } */
     </style>
 
 </head>
@@ -125,7 +111,11 @@
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="/profile"><i class="feather icon-user"></i> Edit Profile</a>
+                                @if(Session::get('role') == 'employer')
+                                    <a class="dropdown-item" href="/employer/profile"><i class="feather icon-user"></i> Edit Profile</a>
+                                @else
+                                    <a class="dropdown-item" href="/freelancer/profile"><i class="feather icon-user"></i> Edit Profile</a>
+                                @endif
                                 <a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
                                 @if(Session::get('role') == 'employer')
                                     <div class="dropdown-divider"></div><a class="dropdown-item" href="/change_login"><i class="feather icon-power"></i> Login as Freelancer</a>
@@ -180,7 +170,6 @@
 
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="../../../app-assets/vendors/js/charts/apexcharts/apexcharts.min.js"></script>
 
     <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
     <script src="../../../app-assets/vendors/js/forms/repeater/jquery.repeater.min.js"></script>
@@ -191,7 +180,6 @@
     <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
     <script src="../../../app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/apexcharts/apexcharts.min.js"></script>
     <script src="../../../app-assets/js/scripts/forms/custom-file-input.js"></script>
     <script src="../../../app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js"></script>
     <script src="../../../app-assets/vendors/js/forms/toggle/switchery.min.js"></script>
@@ -201,7 +189,6 @@
     <script src="../../../app-assets/js/core/app-menu.js"></script>
     <script src="../../../app-assets/js/core/app.js"></script>
 
-    <script src="../../../app-assets/js/scripts/charts/apexcharts/charts-apexcharts.js"></script>
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
@@ -221,7 +208,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="../../../app-assets/js/scripts/forms/checkbox-radio.js"></script>
-    <!-- END: Page JS-->
 
     @stack('scripts')
 </body>

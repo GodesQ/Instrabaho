@@ -22,7 +22,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="form-label font-weight-bold my-50">Lastname</div>
-                        <input type="text" name="email" class="form-control" value="{{ $freelancer->user->lastname }}">
+                        <input type="text" name="lastname" class="form-control" value="{{ $freelancer->user->lastname }}">
                     </div>
                 </div>
             </div>

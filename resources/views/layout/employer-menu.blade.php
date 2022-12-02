@@ -1,16 +1,19 @@
 <div class="main-menu menu-fixed menu-light menu-accordion" data-scroll-to-active="true">
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="profile-menu d-flex justify-content-center flex-column align-items-center my-2 bg-gradient-x-primary p-2 m-2 rounded">
-                <div class="avatar avatar-xl profile-menu-avatar">
-                    @if(Session::get('profile_image'))
-                        <img class="brand-text" style="width: 70px; height: 70px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
-                    @else
-                        <img class="brand-text" src="../../../images/user-profile.png" alt="Avatar Image">
-                    @endif
+            <li class="profile-menu my-2 card p-1 m-2 rounded">
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                    <div class="avatar avatar-xl profile-menu-avatar" style="width: 30% !important;">
+                        @if(Session::get('profile_image'))
+                            <img class="brand-text" style="width: 50px; height: 50px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
+                        @else
+                            <img class="brand-text" src="../../../images/user-profile.png" alt="Avatar Image">
+                        @endif
+                    </div>
+                    <div style="width: 70% !important;">
+                        <h6 class="mt-75 profile-menu-text text-center" style="color: #000; line-height: 0px;" data-i18n="Name">{{ Session::get('username') }}</h6>
+                    </div>
                 </div>
-                <h4 class="mt-50 profile-menu-text" style="color: #ffffff; line-height: 10px;" data-i18n="Name">James Garnfil</h4>
-                <span style="font-size: 10px; color: #ffffff;" class="profile-menu-text">jamesgarnfil@gmail.com</span>
             </li>
             <li class="{{  Request::path() == 'employer/dashboard' ? 'active' : ''  }} nav-item">
                 <a href="/employer/dashboard"><i class="feather icon-home"></i>
@@ -36,7 +39,7 @@
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Services">Services</span></a>
+            <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Services">Services</span></a>
                 <ul class="menu-content">
                     <li class="{{ Request::path() == 'services_offer/pending' ? 'active' : '' }}">
                         <a class="menu-item" href="/services_offer/pending" data-i18n="Ongoing Services">My Offers / Proposals</a>
@@ -46,12 +49,6 @@
                     <li><a class="menu-item" href="" data-i18n="Canceled Services">Canceled Services</a>
                     </li>
                 </ul>
-            </li>
-            <li class="{{ Request::path() == 'proposal_lists/employer' ? 'active' : '' }} nav-item">
-                <a class="menu-item" href="/proposal_lists/employer" data-i18n="Project Proposals">
-                    <i class="fa fa-book"></i>
-                    <span class="menu-title" data-i18n="Project Proposals">Project Proposals</span>
-                </a>
             </li>
             <li class=" nav-item">
                 <a href=""><i class="feather icon-book"></i>
@@ -69,16 +66,7 @@
                     <span class="menu-title" data-i18n="Fund Deposit & Transactions">Funds, Deposit & Transactions</span>
                 </a>
             </li>
-            <li class=" nav-item">
-                <a href=""><i class="feather icon-shield"></i>
-                    <span class="menu-title" data-i18n="Disputes">Disputes</span>
-                </a>
-            </li>
-            <li class=" nav-item">
-                <a href=""><i class="feather icon-user-check"></i>
-                    <span class="menu-title" data-i18n="Verify Identity">Verify Identity</span>
-                </a>
-            </li>
+
         </ul>
     </div>
 </div>

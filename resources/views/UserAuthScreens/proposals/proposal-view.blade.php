@@ -10,25 +10,25 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row my-1">
-                                    <div class="col-xl-3 col-lg-10">
+                                    <div class="col-xl-3 col-lg-2">
                                         <img src="../../../images/user/profile/{{ $proposal->freelancer->user->profile_image }}" alt="" width="100" height="100" style="object-fit: cover;border-radius: 50px; border: 1px solid black;">
                                     </div>
-                                    <div class="col-xl-9 col-lg-2">
+                                    <div class="col-xl-9 col-lg-10">
                                         <h4 class="font-weight-bold">{{ $proposal->freelancer->user->firstname }} {{ $proposal->freelancer->user->lastname }}</h4>
                                         <div class="font-weight-bold">{{ $proposal->freelancer->tagline }}</div>
                                         <div>{{ $proposal->freelancer->location }}</div>
                                     </div>
                                 </div>
                                 <div class="row my-3">
-                                    <div class="col-md-3">
+                                    <div class="col-xl-3 col-lg-4">
                                         <div class="font-weight-bold">Hourly</div>
                                         <h4>₱ {{ number_format($proposal->freelancer->hourly_rate, 2) }}</h4>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-xl-3 col-lg-4">
                                         <div class="font-weight-bold">Gender</div>
                                         <h4>{{ $proposal->freelancer->gender }}</h4>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-xl-4 col-lg-4">
                                         <div class="font-weight-bold">Freelancer Type</div>
                                         <h4>{{ $proposal->freelancer->freelancer_type }}</h4>
                                     </div>
@@ -58,27 +58,17 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-md-6 col-lg-7">
-                                        <a href="/freelancer/view/{{ $proposal->freelancer->user->id }}" class="btn btn-secondary">View Profile</a>
+                                    <div class="col-md-12 col-lg-7">
+                                        <a href="/employer/proposals" class="btn btn-secondary">Back to Proposals</a>
                                     </div>
-                                    @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
-                                        <div class="col-md-2 col-lg-2">
-                                            <select name="status" id="" class="form-control select2" onchange="updateStatus(this)">
-                                                <option {{ $proposal->status == 'pending' ? 'selected' : null }} value="pending">For Approval</option>
-                                                <option {{ $proposal->status == 'approved' ? 'selected' : null }} value="approved">Approved</option>
-                                                <option {{ $proposal->status == 'cancel' ? 'selected' : null }} value="cancel">Cancel</option>
-                                            </select>
-                                        </div>
-                                        @if($proposal->status == 'approved')
-                                            <div class="col-lg-3 col-md-3">
+                                    <div class="col-md-12 col-lg-5 text-lg-right my-2">
+                                        @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
+                                                <button class="btn btn-success">Hire Freelancer  <i class="fa fa-thumbs-up"></i></button>
+                                            @if($proposal->status == 'approved')
                                                 <a href="/pay_job/project/{{ $proposal->id }}" class="btn btn-primary">Set to Complete & Pay Job</a>
-                                            </div>
+                                            @endif
                                         @endif
-                                    @else
-                                        <span class="col-lg-2 badge badge-primary d-flex justify-content-center align-items-center">Status :
-                                            <span class="font-weight-bold text-uppercase">{{ $proposal->status }}</span>
-                                        </span>
-                                    @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -137,7 +127,7 @@
                                         <h3 class="font-weight-bold my-1">Proposal Info</h3>
                                         <div class="row">
                                             <div class="col-md-12 my-25">
-                                                <div class="font-weight-bold">Offer Price : <span class="font-weight-normal mx-1">{{ number_format($proposal->offer_price, 2) }}</span></div>
+                                                <div class="font-weight-bold">Offer Price : <span class="font-weight-normal mx-1" style="font-size: 30px;">₱ {{ number_format($proposal->offer_price, 2) }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25">
                                                 <div class="font-weight-bold">Estimated Days : <span class="font-weight-normal mx-1">{{ $proposal->estimated_days }} Days</span></div>
@@ -156,14 +146,14 @@
                                                     @forelse($attachments as $attachment)
                                                         <a href="./../../images/projects/proposal_attachments/{{ $attachment }}" target="_blank" class="badge badge-secondary p-75">{{ $attachment }}</a>
                                                     @empty
+                                                        <span class="font-weight-normal">No Attachment Found</span>
                                                     @endforelse
 
                                                 </div>
                                             </div>
                                             <div class="col-md-12 my-1 p-2 rounded" style="background:#f3f5f8;">
-                                                <div class="font-weight-bold">Cover Letter :
-                                                    <span class="font-weight-normal mx-50">@php echo nl2br($proposal->cover_letter); @endphp</span>
-                                                </div>
+                                                <div class="font-weight-bold h2 my-1">Described Proposal</div>
+                                                <div class="font-weight-normal ">@php echo nl2br($proposal->cover_letter); @endphp</div>
                                             </div>
                                         </div>
                                     </div>
@@ -177,7 +167,7 @@
                                                         style="width: 60%"
                                                         class="d-flex align-items-center header-content"
                                                     >
-                                                        <a href="" class="back-icon"
+                                                        <a href="/employer/proposals" class="back-icon"
                                                             ><i class="fa fa-arrow-left"></i
                                                         ></a>
                                                         <img
@@ -193,33 +183,10 @@
                                                 <div class="chat-box"></div>
                                                 <form action="#" class="typing-area">
                                                     @csrf
-                                                    <input
-                                                        type="hidden"
-                                                        value="{{ $proposal->id }}"
-                                                        id="msg_id"
-                                                        name="msg_id"
-                                                    />
-                                                    <input
-                                                        type="text"
-                                                        class="incoming_id"
-                                                        name="incoming_id"
-                                                        value="{{ $incoming_msg_id }}"
-                                                        hidden
-                                                    />
-                                                    <input
-                                                        type="text"
-                                                        class="outgoing_id"
-                                                        name="outgoing_id"
-                                                        value="{{ $outgoing_msg_id }}"
-                                                        hidden
-                                                    />
-                                                    <input
-                                                        type="text"
-                                                        name="message"
-                                                        class="input-field"
-                                                        id="message_input"
-                                                        placeholder="Type a message here..."
-                                                    />
+                                                    <input type="hidden" value="{{ $proposal->id }}" id="msg_id" name="msg_id" />
+                                                    <input type="text" class="incoming_id" name="incoming_id" value="{{ $incoming_msg_id }}" hidden />
+                                                    <input type="text" class="outgoing_id" name="outgoing_id" value="{{ $outgoing_msg_id }}" hidden />
+                                                    <input type="text" name="message" class="input-field" id="message_input" placeholder="Type a message here..."/>
                                                     <button><i class="fa fa-send"></i></button>
                                                 </form>
                                             </section>
@@ -239,6 +206,17 @@
 @push('scripts')
 <script src="../../../js/project-chat.js"></script>
 <script>
+
+    window.addEventListener('load', () => {
+        let url_string = location.href;
+        let url = new URL(url_string);
+        var action = url.searchParams.get("act");
+        if(action == 'message') {
+            $('#base-tab32').click();
+        }
+    });
+
+
     function updateStatus(e) {
         Swal.fire({
             title: "Update Status",

@@ -13,6 +13,10 @@
         .form-control {
             background-color: #fff !important;
         }
+        #map-canvas {
+            height: 300px;
+            width: 100%;
+        }
     </style>
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -99,15 +103,28 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="form-label font-weight-bold my-50">Address <span class="danger text-danger">*</span></div>
+                                                        <input type="text" name="address" id="map-search" class="form-control controls" style="border: {{$errors->has('address') ? '1px solid #ff7588 !important' : 'none'}};" value="{{ old('address') }}">
+                                                    </div>
                                                     <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="address">Address:</label>
-                                                            <input type="text" class="form-control" id="address" name="address">
+                                                        <div id="map-canvas"></div>
+                                                    </div>
+                                                    <div class="col-md-6 d-none">
+                                                        <div class="form-group d-none">
+                                                            <div class="form-label font-weight-bold my-50">Latitude</div>
+                                                            <input type="text" name="latitude" class="form-control latitude" value="{{ old('latitude') }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6d-none">
+                                                        <div class="form-group d-none">
+                                                            <div class="form-label font-weight-bold my-50">Longitude</div>
+                                                            <input type="text" name="longitude" class="form-control longitude" value="{{ old('longitude') }}">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
-                                            <div class="form-footer">
+                                            <div class="form-footer my-4">
                                                 <button class="btn btn-secondary btn-solid" type="reset">Reset</button>
                                                 <button class="btn btn-primary btn-solid" type="submit">Save</button>
                                             </div>
@@ -124,4 +141,5 @@
         </div>
     </div>
     <!-- END: Content-->
+    <script src="../../../js/user-location.js"></script>
 @endsection

@@ -33,7 +33,6 @@ class ProjectsController extends Controller
     }
 
     public function store(StoreProjectRequest $request) {
-
         //check if the current plan is exceed in limit
         if($this->checkAvailableProject($request->project_type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
 

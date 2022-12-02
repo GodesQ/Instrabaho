@@ -12,7 +12,7 @@
                                     <div class="card-title">Filter Projects Proposals</div>
                                     <form action="#" class="form" id="filter-project-form" method="POST">
                                         <div class="form-group">
-                                            <label for="project" class="form-label">Select Project</label>
+                                            <label for="project" class="form-label font-weight-bold">Select Project</label>
                                             <select name="project" id="project" class="select2">
                                                     <option value="">Select Project</option>
                                                 @forelse ($projects as $project)
@@ -23,15 +23,33 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="cost" class="form-label">Proposal Price</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">₱</span>
+                                            <label for="cost" class="form-label font-weight-bold">Proposal Price</label>
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-12">
+                                                    <label for="cost" class="form-label">Min</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">₱</span>
+                                                        </div>
+                                                        <input type="number" min="100" name="min" class="form-control" id="min">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">.00</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <input type="number" min="100" name="onlyNum" class="form-control" id="cost">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">.00</span>
+                                                <div class="col-xl-6 col-lg-12">
+                                                    <label for="cost" class="form-label">Max</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">₱</span>
+                                                        </div>
+                                                        <input type="number" min="100" name="max" class="form-control" id="max">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">.00</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <div class="col-md-6"></div>
                                             </div>
                                             <input type="hidden" name="page" id="page_count" value="1">
                                         </div>
@@ -72,12 +90,23 @@ $(document).ready(function() {
     })
 
     function fetchProposals(page) {
-        let cost = $('#cost').val();
+        let min = $('#min').val();
+        let max = $('#max').val();
         let project = $('#project').val();
+
+        let errors = [];
+
+        // validation
+        if(min > max) errors.push('It shows that the minimum cost is greater than maximum cost');
+        if(!project) errors.push('Project is required.');
+
+        if(errors.length != 0) return errors.forEach(error => {
+            toastr.warning(error, 'Fail');
+        });
+
         $.ajax({
-            url: "/employer/proposals/fetch_data?page="+page+'&'+'cost='+cost+'&'+'project_id='+project,
+            url: "/employer/proposals/fetch_data?page="+page+'&'+'min='+min+'&'+'max='+max+'&'+'project_id='+project,
             success: function (data) {
-                console.log(data);
                 $('.proposals').html(data.view_data);
                 $('.protip-container').remove();
             }

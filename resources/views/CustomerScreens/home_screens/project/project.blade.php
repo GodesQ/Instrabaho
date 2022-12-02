@@ -129,99 +129,99 @@
             <div class="fl-advert-box">
                <a href="javascript:void(0)"><img src="../../../images/logo/main-logo.png" width="124" alt="exertio theme" class="img-fluid"></a>
             </div>
-            @if (session()->get('role') == 'freelancer' && $isAlreadySendProposal == false)
-            <div class="fr-project-lastest-product">
-               <div class="fr-project-place" id="fr-bid-form">
-                  <h3> Send Your Proposal</h3>
-                    <form method="POST" action="/store_proposal" enctype="multipart/form-data">
-                       @csrf
-                       <input type="hidden" name="project_id" value="{{ $project->id }}">
-                       <input type="hidden" name="employer_id" value="{{ $project->employer_id }}">
-                          <div class="row g-3">
-                             <div class="col">
-                                <div class="form-group">
-                                   <label>Your Price <span class="text-danger">*</span></label>
-                                   <div class="input-group">
-                                      <input type="number" class="form-control" id="bidding-price" name="offer_price" data-smk-msg="Provide your price in numbers only" data-smk-type="number">
-                                      <div class="input-group-prepend">
-                                         <div class="input-group-text">₱ </div>
-                                      </div>
-                                   </div>
-                                   <span class="text-danger danger">
-                                        @error('offer_price')
+            @if (session()->get('role') == 'freelancer' && !$isAlreadySendProposal && !$isExpiredPlan)
+                <div class="fr-project-lastest-product">
+                    <div class="fr-project-place" id="fr-bid-form">
+                        <h3> Send Your Proposal</h3>
+                        <form method="POST" action="/store_proposal" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="project_id" value="{{ $project->id }}">
+                        <input type="hidden" name="employer_id" value="{{ $project->employer_id }}">
+                            <div class="row g-3">
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label>Your Price <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="bidding-price" name="offer_price" data-smk-msg="Provide your price in numbers only" data-smk-type="number">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">₱ </div>
+                                        </div>
+                                    </div>
+                                    <span class="text-danger danger">
+                                            @error('offer_price')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label> Days to complete <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" name="estimated_days" data-smk-msg="Dasy to complete in numbers only" data-smk-type="number">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Days</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-danger danger">
+                                            @error('estimated_days')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                    <label>Address <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" multiple class="form-control" id="map-search" name="address">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fa fa-location-arrow"></i></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-danger danger my-1">
+                                            @error('address')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    <br>
+                                    <div id="map-canvas"></div>
+                                    <input type="hidden" name="latitude" class="latitude">
+                                    <input type="hidden" name="longitude" class="longitude">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <label> Cover Letter <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="bid-textarea" name="cover_letter" rows="5"></textarea>
+                                    <span class="text-danger danger">
+                                        @error('cover_letter')
                                             {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
-                             </div>
-                             <div class="col">
-                                <div class="form-group">
-                                   <label> Days to complete <span class="text-danger">*</span></label>
-                                   <div class="input-group">
-                                      <input type="number" class="form-control" name="estimated_days" data-smk-msg="Dasy to complete in numbers only" data-smk-type="number">
-                                      <div class="input-group-prepend">
-                                         <div class="input-group-text">Days</div>
-                                      </div>
-                                   </div>
-                                   <span class="text-danger danger">
-                                        @error('estimated_days')
-                                            {{ $message }}
-                                        @enderror
-                                    </span>
+                                <div class="col-12 my-3">
+                                    <div class="form-group">
+                                    <label>Attachments</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" name="attachments[]" id="inputGroupFile01">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fa fa-image"></i></div>
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
-                             </div>
-                          </div>
-                          <div class="form-row">
-                             <div class="col-12">
-                                <div class="form-group">
-                                   <label>Address <span class="text-danger">*</span></label>
-                                   <div class="input-group">
-                                      <input type="text" multiple class="form-control" id="map-search" name="address">
-                                      <div class="input-group-prepend">
-                                         <div class="input-group-text"><i class="fa fa-location-arrow"></i></div>
-                                      </div>
-                                   </div>
-                                   <span class="text-danger danger my-1">
-                                        @error('address')
-                                            {{ $message }}
-                                        @enderror
-                                    </span>
-                                   <br>
-                                   <div id="map-canvas"></div>
-                                   <input type="hidden" name="latitude" class="latitude">
-                                   <input type="hidden" name="longitude" class="longitude">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-theme btn-loading" id="btn_project_bid" data-post-id="225">Submit Proposal</button>
                                 </div>
-                             </div>
-                          </div>
-                          <div class="form-row">
-                             <div class="col-12">
-                                <label> Cover Letter <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="bid-textarea" name="cover_letter" rows="5"></textarea>
-                                <span class="text-danger danger">
-                                    @error('cover_letter')
-                                        {{ $message }}
-                                    @enderror
-                                </span>
-                             </div>
-                             <div class="col-12 my-3">
-                                <div class="form-group">
-                                   <label>Attachments</label>
-                                   <div class="input-group">
-                                      <input type="file" class="form-control" name="attachments[]" id="inputGroupFile01">
-                                      <div class="input-group-prepend">
-                                         <div class="input-group-text"><i class="fa fa-image"></i></div>
-                                      </div>
-                                   </div>
-                                </div>
-                             </div>
-                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-theme btn-loading" id="btn_project_bid" data-post-id="225">Submit Proposal</button>
-                             </div>
-                          </div>
-                    </form>
-                 </div>
-              </div>
-            @endif
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                @endif
             </div>
           </div>
           <div class="col-lg-4 col-xl-4 col-xs-12 col-sm-12 col-md-12">

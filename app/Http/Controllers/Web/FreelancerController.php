@@ -30,6 +30,20 @@ class FreelancerController extends Controller
     }
 
     public function save_freelancer_role_form(Request $request) {
+
+        $request->validate([
+            'display_name' => 'required',
+            'freelancer_type' => 'required',
+            'hourly_rate' => 'required',
+            'contactno' => 'required',
+            'gender' => 'required',
+            'tagline' => 'required',
+            'description' => 'required',
+            'address' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required'
+        ]);
+
         $id = session()->get('id');
 
         $save = Freelancer::create([
@@ -42,9 +56,11 @@ class FreelancerController extends Controller
             'tagline' => $request->tagline,
             'description' => $request->description,
             'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude
         ]);
 
-        if($save) return redirect('/');
+        if($save) return redirect('/freelancer/dashboard')->with('success', 'Register as Worker Successfully');
     }
 
     public function dashboard() {

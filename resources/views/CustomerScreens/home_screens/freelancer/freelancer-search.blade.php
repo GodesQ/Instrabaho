@@ -280,6 +280,5 @@
     </div>
  </section>
  <script src="../../../js/user-location.js"></script>
- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 @endsection
 
