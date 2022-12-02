@@ -24,7 +24,8 @@ class AuthController extends Controller
     public function save_login(Request $request) {
         $request->validate([
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'role' => 'in:freelancer,employer'
         ]);
 
 
@@ -60,8 +61,8 @@ class AuthController extends Controller
     }
 
     public function save_register(RegisterRequest $request) {
-
-        $save = User::create(array_merge($request->validated(),[
+        $data = array_diff($request->validated(), [$request->password_confirmation]);
+        $save = User::create(array_merge($data,[
             'middlename' => $request->middlename,
             'password' => Hash::make($request->password),
             'isVerify' => false,

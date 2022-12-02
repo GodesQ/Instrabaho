@@ -61,7 +61,7 @@ class HomeScreenController extends Controller
     }
 
     public function services(Request $request) {
-        $services = Service::with('category')->paginate(3);
+        $services = Service::with('category')->paginate(10);
         $service_categories = ServiceCategory::toBase()->get();
 
         return view('CustomerScreens.home_screens.service.service-search', compact('services', 'service_categories'));
@@ -99,7 +99,7 @@ class HomeScreenController extends Controller
         })
         ->with('category', 'freelancer')
         ->latest('id')
-        ->paginate(3);
+        ->paginate(10);
 
         $view_data = view('CustomerScreens.home_screens.service.services', compact('services'))->render();
 
@@ -176,11 +176,15 @@ class HomeScreenController extends Controller
         $project =  Project::where('id', $request->id)->with('employer', 'category')->firstOrFail();
         $project->setSkills(json_decode($project->skills));
         $project->getSkills();
-        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $save_project = $freelancer ? SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first() : null;
         $skills_array = Skill::whereIn('id', json_decode($project->skills))->get();
+
+        # if the user is login as freelancer
+        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
+        $isExpiredPlan = $freelancer ? $freelancer->isExpiredPlan($freelancer) : false;
+        $save_project = $freelancer ? SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first() : null;
         $isAlreadySendProposal = $freelancer ? ProjectProposal::where('project_id', $project->id)->where('freelancer_id', $freelancer->id)->exists() : false;
-        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project', 'isAlreadySendProposal'));
+
+        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project', 'isAlreadySendProposal', 'isExpiredPlan'));
     }
 
     public function freelancers(Request $request) {

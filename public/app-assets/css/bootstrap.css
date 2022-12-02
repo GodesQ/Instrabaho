@@ -1568,8 +1568,7 @@ pre {
     text-shadow: 0 0 0 #4e5154; }
   .form-control:focus {
     color: #4e5154;
-    background-color: #fff;
-    border-color: #003066;
+    border-color: #dadada;
     outline: 0;
     box-shadow: none; }
   .form-control::placeholder {

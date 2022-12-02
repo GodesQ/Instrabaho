@@ -9,11 +9,7 @@
         <div class="card-title">Profile Basics</div>
     </div>
     <div class="card-body">
-<<<<<<< HEAD
-        <form action="{{ route('freelancer.profile.update') }}" method="POST">
-=======
         <form action="{{ route('employer.profile') }}" method="POST">
->>>>>>> dba521396ddb9031bdca8193b1e7a254b8811efa
             @csrf
             <input type="hidden" name="id" value="{{ $employer->user->id }}">
             <div class="row">
@@ -26,7 +22,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="form-label font-weight-bold my-50">Lastname</div>
-                        <input type="text" name="email" class="form-control" value="{{ $employer->user->lastname }}">
+                        <input type="text" name="lastname" class="form-control" value="{{ $employer->user->lastname }}">
                     </div>
                 </div>
             </div>
@@ -63,20 +59,6 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="form-label font-weight-bold my-50">Department</div>
-                        <input type="text" name="department" value="{{ $employer->department }}" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="form-label font-weight-bold my-50">Contact No</div>
-                        <input type="text" name="contactno" class="form-control" value="{{ $employer->contactno }}">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
                         <div class="form-label font-weight-bold my-50">Number of Employees</div>
                         <select name="number_employees" id="" class="custom-select form-control">
                             <option value="">Select number of employees</option>
@@ -91,8 +73,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="form-label font-weight-bold my-50">Location (Region)</div>
-                        <input type="text" name="location" class="form-control" value="{{ $employer->location }}">
+                        <div class="form-label font-weight-bold my-50">Contact No</div>
+                        <input type="text" name="contactno" class="form-control" value="{{ $employer->contactno }}">
                     </div>
                 </div>
             </div>

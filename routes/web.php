@@ -91,6 +91,10 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
         Route::get('/change_login', [AuthController::class, 'change_login'])->name('user.change_login');
 
+        Route::post('/user_change_password', [UserController::class, 'user_change_password'])->name('user_change_password');
+        Route::post('/change_user_picture', [UserController::class, 'change_user_picture'])->name('change_user_picture');
+        Route::post('/update_payment_method', [UserController::class, 'change_user_payment_method'])->name('change_user_payment_method');
+
         Route::get('freelancer/role_form', [FreelancerController::class, 'freelancer_role_form'])->name('freelancer.role_form');
         Route::post('freelancer/role_form', [FreelancerController::class, 'save_freelancer_role_form'])->name('freelancer.save_role_form');
 
@@ -115,6 +119,9 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
             Route::get('proposal_lists', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('freelancer.proposals');
             Route::get('follow_employer/{employer_id}', [FollowEmployerController::class, 'freleancer.follow_employer']);
             Route::get('followed_employers', [FollowEmployerController::class, 'followed_employers'])->name('freelancer.followed_employer');
+
+            Route::get('proposals', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('freelancer.proposals');
+            Route::get('proposals/fetch_data', [ProjectProposalController::class, 'fetch_proposals_for_freelancers'])->name('freelancer.fetch_proposals');
         });
 
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
@@ -136,10 +143,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
             Route::get('proposals/fetch_data', [ProjectProposalController::class, 'fetch_proposals_for_employers'])->name('employer.fetch_proposals');
         });
 
-
-        Route::post('/user_change_password', [UserController::class, 'user_change_password'])->name('user_change_password');
-        Route::post('/change_user_picture', [UserController::class, 'change_user_picture'])->name('change_user_picture');
-        Route::post('/update_payment_method', [UserController::class, 'change_user_payment_method'])->name('change_user_payment_method');
+        Route::get('/proposal/info/{id}', [ProjectProposalController::class, 'proposal'])->name('proposal.view');
 
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');
@@ -192,7 +196,6 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
         // Route::get('/project_proposals/approved', [ProjectProposalController::class, 'approved'])->name('proposal_approved');
         // Route::get('/project_proposals/get_approved_proposals', [ProjectProposalController::class, 'get_approved_proposals'])->name('get_approved_proposals');
-        Route::get('/project_proposal_information/{id}', [ProjectProposalController::class, 'project_proposal_information'])->name('project_proposal_information');
 
         // Route::get('/invoices')
         Route::get('/project_get_chat/{id}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');

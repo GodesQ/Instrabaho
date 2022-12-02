@@ -64,8 +64,9 @@ class PackageCheckoutController extends Controller
                         'package_checkout_id' => $checkout_id,
                         'package_date_expiration' => $date_expiration
                     ]);
-                return redirect('/dashboard')->with('success', 'Plan Added Successfully');
 
+                if(session()->get('role') == 'freelancer') redirect('/freelancer/dashboard')->with('success', 'Plan Added Successfully');
+                return redirect('employer/dashboard')->with('success', 'Plan Added Successfully');
             case 'gcash':
                 return back();
 
@@ -74,17 +75,18 @@ class PackageCheckoutController extends Controller
 
     private function PaidByWallet($data) {
 
-        DB::transaction(function () use ($data) {
-            $package_checkout_data = $data;
-            $user_wallet = UserWallet::where('user_id', session()->get('id'))->first();
+        $package_checkout_data = $data;
+        $user_wallet = UserWallet::where('user_id', session()->get('id'))->first();
 
-            /* Get the date expiration based on the package of user */
-            $package = session()->get('role') == 'freelancer' ? FreelancePackage::where('id', $data['package_type'])->first() : EmployerPackage::where('id', $data['package_type'])->first();
-            $date_expiration = Carbon::now()->addDays($package->expiry_days);
+        /* Get the date expiration based on the package of user */
+        $package = session()->get('role') == 'freelancer' ? FreelancePackage::where('id', $data['package_type'])->first() : EmployerPackage::where('id', $data['package_type'])->first();
+        $date_expiration = Carbon::now()->addDays($package->expiry_days);
 
-            if(!$user_wallet) return back()->with('fail', "Your Wallet doesn't exists. Create Your Wallet First before sending a transaction. Thankyou.");
+        if(!$user_wallet) return back()->with('fail', "Your Wallet doesn't exists. Create Your Wallet First before sending a transaction. Thankyou.");
 
-            if($user_wallet->amount < $package->price) return back()->with('fail', 'Your wallet amount is less than in package price.');
+        if($user_wallet->amount < $package->price) return back()->with('fail', 'Your wallet amount is less than in package price.');
+
+        DB::transaction(function () use ($data, $package_checkout_data, $user_wallet, $package, $date_expiration) {
 
             $remove_values = ['_token', 'longitude', 'latitude', 'package_id'];
             foreach ($remove_values as $key => $value) {

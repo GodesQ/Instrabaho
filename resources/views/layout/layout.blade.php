@@ -203,27 +203,6 @@
             </div>
         </div>
         @yield('content')
-        <section class="fr-bg-style2">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12">
-                    <div class="fr-bg-style">
-                        <div class="row">
-                          <div class="col-xl-8 col-lg-8">
-                            <div class="fr-gt-content">
-                              <h3>Handa Ka Na Ba?</h3>
-                              <p>Join now in our trending community of blue-collar freelancers that lost their job in this time of the pandemic. Lets help our kapwa pinoy to survive in this time where everyone is struggling.
-                                    Tara na! Join naaaaa!</p>
-                            </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 align-self-center">
-                            <div class="fr-gt-btn"> <a href="https://instrabaho.com/login/" class="btn btn-theme">Join Now!</a> </div>
-                          </div>
-                        </div>
-                      </div>
-                </div>
-            </div>
-        </section>
         <section class="fr-browse-category">
             <div class="container">
                 <div class="row">
