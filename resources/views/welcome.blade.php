@@ -151,31 +151,39 @@
           <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
              <div class="heading-panel  section-center">
                 <div class="heading-meta">
-                   <h2>TOP RATED SKILLED WORKERS</h2>
-                   <p>Work with talented people at the most affordable price to get your job done</p>
+                   <h2>TOP RATED SKILLED WORKERS <br> NEAR YOU</h2>
+                   <p>Work with skilled people at the most affordable price to get your job done</p>
                 </div>
              </div>
              <div class="row grid">
                @forelse($freelancers as $freelancer)
-                  <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
+                  <div class="col-xl-4 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
                      <div class="fr-latest-grid">
                         <div class="fr-latest-img d-flex justify-content-center">
-                           <img src="../../../images/user/profile/{{ $freelancer->freelancer->user->profile_image }}" class="rounded" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                           <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" class="rounded" alt="" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
                         </div>
                         <div class="fr-latest-details">
                            <div class="fr-latest-content-service">
                               <div class="fr-latest-profile">
-                                 <a class="user-image" href="/freelancer/view/{{ $freelancer->freelancer->user_id }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                                 <div class="fr-latest-profile-data">
-                                    <span class="fr-latest-name"><a href="/freelancer/view/{{ $freelancer->freelancer->user_id }}">{{ $freelancer->freelancer->display_name }}</a></span>
+                                 <a class="user-image" href="/freelancer/view/{{ $freelancer->user_id }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
+                                 <div class=" text-center">
+                                    <span class="fr-latest-name">{{ $freelancer->tagline }}</span>
+                                    <h4>
+                                       <a href="/freelancer/view/{{ $freelancer->user_id }}" class="h4">{{ $freelancer->display_name }}</a>
+                                    </h4>
                                  </div>
                               </div>
-                              <p><a href="/freelancer/view/{{ $freelancer->freelancer->user_id }}">{{ substr($freelancer->freelancer->description, 0, 50) . '...' }}</a></p>
-                              <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
+                              <div class="d-flex justify-content-between align-items-center">
+                                 <div>Starting from : <span class="info">₱ {{ number_format($freelancer->hourly_rate, 2) }}</span></div>
+                                 <div class="text-right">Reviews : 20</div>
+                              </div>
                            </div>
-                           <div class="fr-latest-bottom">
-                              <p>Starting From<span><span class="currency">₱</span><span class="price">{{ number_format($freelancer->freelancer->hourly_rate, 2) }}</span></span></p>
-                              <a href="/freelancer/view/{{ $freelancer->freelancer->user_id }}" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow Freelancer" data-post-id="182"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                           <div class="mt-3 p-1 px-2 d-flex justify-content-around align-items-center flex-column" style="background: #f8f8f8 !important; height: 200px;">
+                              <p>{{ substr($freelancer->description, 0, 100) }}...</p>
+                              <div class="group-buttons">
+                                 <a href="/freelancer/view/{{ $freelancer->user_id add}}" class="btn btn-outline-primary" style="width: 100% !important">View Profile</a>
+                                 <button class="btn btn-primary mt-2" style="width: 100% !important">Send Offer</button>
+                              </div>
                            </div>
                         </div>
                      </div>
