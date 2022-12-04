@@ -25,7 +25,7 @@
                                         <div class="form-group">
                                             <label for="cost" class="form-label font-weight-bold">Proposal Price</label>
                                             <div class="row">
-                                                <div class="col-xl-6 col-lg-12">
+                                                <div class="col-xl-12 col-lg-12 my-50">
                                                     <label for="cost" class="form-label">Min</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -37,7 +37,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-6 col-lg-12">
+                                                <div class="col-xl-12 col-lg-12 my-50">
                                                     <label for="cost" class="form-label">Max</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">

@@ -11,9 +11,9 @@
                         <h3 class="text-secondary">{{ $proposal->freelancer->tagline }}</h3>
                         <p class="font-weight-light">{{ strlen($proposal->freelancer->description) > 250 ? substr($proposal->freelancer->description, 0, 250) . "..." : $proposal->freelancer->description }} </p>
                         <div class="mt-2">
+                            <a href="/proposal/info/{{ $proposal->id }}?act=message" class="btn btn-outline-primary">Chat </a>
                             <a href="/proposal/info/{{ $proposal->id }}" class="btn btn-primary">View Proposal</a>
-                            <a href="/proposal/info/{{ $proposal->id }}?act=message" class="btn btn-primary">Chat </a>
-                            <a href="/service_proposal_information/" class="btn btn-success">Hire Freelancer <i class="fa fa-thumbs-up"></i></a>
+                            <a href="/project/proposal/{{ $proposal->id }}/create-contract/" class="btn btn-success">Hire</a>
                         </div>
                     </div>
                 </div>

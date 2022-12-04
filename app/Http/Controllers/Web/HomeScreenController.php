@@ -24,13 +24,14 @@ class HomeScreenController extends Controller
 {
 
     public function index() {
-        $freelancers = ProjectProposal::select('freelancer_id', DB::raw('COUNT(freelancer_id) AS occurrences'))
-        ->groupBy('freelancer_id')
-        ->where('status', 'completed')
-        ->orderBy('occurrences', 'DESC')
-        ->limit(10)
-        ->with('freelancer')
-        ->get();
+        // $freelancers = ProjectProposal::select('freelancer_id', DB::raw('COUNT(freelancer_id) AS occurrences'))
+        // ->groupBy('freelancer_id')
+        // ->where('status', 'completed')
+        // ->orderBy('occurrences', 'DESC')
+        // ->limit(10)
+        // ->with('freelancer')
+        // ->get();
+        $freelancers = Freelancer::limit(10)->get();
         return view('welcome', compact('freelancers'));
     }
 

@@ -11,7 +11,7 @@
                             <div class="card-body">
                                 <div class="row my-1">
                                     <div class="col-xl-3 col-lg-2">
-                                        <img src="../../../images/user/profile/{{ $proposal->freelancer->user->profile_image }}" alt="" width="100" height="100" style="object-fit: cover;border-radius: 50px; border: 1px solid black;">
+                                        <img src="../../../images/user/profile/{{ $proposal->freelancer->user->profile_image }}" alt="" width="80" height="80" style="object-fit: cover;border-radius: 50px; border: 1px solid black;">
                                     </div>
                                     <div class="col-xl-9 col-lg-10">
                                         <h4 class="font-weight-bold">{{ $proposal->freelancer->user->firstname }} {{ $proposal->freelancer->user->lastname }}</h4>
@@ -41,7 +41,7 @@
                                         <div>{{ date_format(new DateTime($proposal->freelancer->created_at), "F d, Y")}}</div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-md-12 font-weight-bold">Skills</div>
                                     <div class="col-md-12">
                                         @forelse($proposal->freelancer->skills as $skill)
@@ -50,7 +50,7 @@
 
                                         @endforelse
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -58,10 +58,10 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-md-12 col-lg-7">
-                                        <a href="/employer/proposals" class="btn btn-secondary">Back to Proposals</a>
+                                    <div class="col-md-12 col-lg-6">
+                                        <a href="/{{session()->get('role')}}/proposals" class="btn btn-secondary">Back to Proposals</a>
                                     </div>
-                                    <div class="col-md-12 col-lg-5 text-lg-right my-2">
+                                    <div class="col-md-12 col-lg-6 text-lg-right my-2">
                                         @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
                                                 <button class="btn btn-success">Hire Freelancer  <i class="fa fa-thumbs-up"></i></button>
                                             @if($proposal->status == 'approved')

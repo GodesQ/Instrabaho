@@ -22,4 +22,8 @@ class ProjectProposal extends Model
     public function project() {
         return $this->belongsTo(Project::class, 'project_id', 'id');
     }
+
+    public function contract() {
+        return $this->belongsTo(ProjectContract::class, 'id', 'proposal_id');
+    }
 }

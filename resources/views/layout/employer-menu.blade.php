@@ -33,9 +33,9 @@
                     <li class="{{ Request::path() == 'employer/create_project' ? 'active' : ''  }}"><a class="menu-item" href="/employer/create_project" data-i18n="Create Project">Create Project</a>
                     </li>
                     <li><a class="menu-item" href="/employer/proposals" data-i18n="Proposals">Proposals</a></li>
-                    <li class="{{ Request::path() == 'employer/projects' ? 'active' : ''  }}"><a class="menu-item" href="/employer/projects" data-i18n="Active Projects">Active Projects</a>
+                    <li class="{{ Request::path() == 'employer/projects' ? 'active' : ''  }}"><a class="menu-item" href="/employer/projects" data-i18n="My Projects">My Projects</a>
                     </li>
-                    <li class="{{  Request::path() == 'project_proposals/approved' ? 'active' : ''  }}"><a class="menu-item" href="/project_proposals/approved" data-i18n="Approved Projects">Approved Projects</a>
+                    <li class="{{  Request::path() == 'employer/projects/ongoing' ? 'active' : ''  }}"><a class="menu-item" href="/employer/projects/ongoing" data-i18n="Ongoing Projects">Ongoing Projects</a>
                     </li>
                 </ul>
             </li>
@@ -49,17 +49,6 @@
                     <li><a class="menu-item" href="" data-i18n="Canceled Services">Canceled Services</a>
                     </li>
                 </ul>
-            </li>
-            <li class=" nav-item">
-                <a href=""><i class="feather icon-book"></i>
-                    <span class="menu-title" data-i18n="Saved Services">Saved Services</span>
-                </a>
-            </li>
-            <li class="{{ Request::path() == 'followed_freelancer' ? 'active' : '' }} nav-item">
-                <a href="/followed_freelancer"><i class="feather icon-heart"></i>
-                    <span class="menu-title" data-i18n="Followed Freelancers">Followed Freelancers</span>
-                </a>
-
             </li>
             <li  class="{{ Request::path() == 'user_fund' ? 'active' : '' }} nav-item">
                 <a href="/user_fund"><i class="feather icon-file"></i>

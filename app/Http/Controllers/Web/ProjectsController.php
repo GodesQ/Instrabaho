@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\ServiceCategory;
 use App\Models\Skill;
 use App\Models\Project;
+use App\Models\ProjectProposal;
 use App\Models\Employer;
 use App\Models\EmployerPackage;
 use App\Http\Requests\Project\StoreProjectRequest;
@@ -24,6 +25,14 @@ class ProjectsController extends Controller
         $employer = Employer::where('user_id', $user_id)->first();
         $projects = Project::where('employer_id', $employer->id)->where('expiration_date', '>=' , Carbon::now())->latest('id')->cursorPaginate(10);
         return view('UserAuthScreens.projects.projects', compact('projects'));
+    }
+
+    public function employer_ongoing(Request $request) {
+        $employer = Employer::where('user_id', session()->get('id'))->first();
+        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'approved')->with('project', 'contract')->whereHas('project', function($query) {
+            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+        })->get();
+        return view('UserAuthScreens.projects.employer.ongoing.ongoing', compact('proposals'));
     }
 
     public function create() {
