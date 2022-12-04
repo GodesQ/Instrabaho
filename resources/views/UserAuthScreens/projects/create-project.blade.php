@@ -117,7 +117,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <div class="form-label font-weight-bold my-1">Cost</div>
+                                    <div class="form-label font-weight-bold my-1">Project Budget</div>
                                     <div class="controls">
                                         <div class="input-group">
                                             <div class="input-group-prepend">

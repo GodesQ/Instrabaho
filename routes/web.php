@@ -30,6 +30,8 @@ use App\Http\Controllers\Web\UserFundsController;
 use App\Http\Controllers\Web\TransactionsController;
 use App\Http\Controllers\Web\SkillsController;
 use App\Http\Controllers\Web\ServiceCategoriesController;
+use App\Http\Controllers\Web\ProjectContractController;
+
 
 use App\Http\Controllers\Web\Admin\AdminAuthController;
 use App\Http\Controllers\Web\Admin\AdminController;
@@ -135,7 +137,8 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
             Route::get('dashboard', [EmployerController::class, 'dashboard'])->name('employer.dashboard');
             Route::get('profile', [EmployerController::class, 'profile'])->name('employer.profile');
             Route::post('profile', [EmployerController::class, 'update_profile'])->name('employer.profile.update');
-            Route::get('projects', [ProjectsController::class, 'index'])->name('freelancer.projects.index');
+            Route::get('projects', [ProjectsController::class, 'index'])->name('employer.projects.index');
+            Route::get('projects/ongoing', [ProjectsController::class, 'employer_ongoing'])->name('employer.projects.ongoing');
             Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create')->middleware('plan.expiration');
             Route::get('edit_project/{id}', [ProjectsController::class, 'user_edit'])->name('freelancer.project.edit');
 
@@ -144,6 +147,9 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
         });
 
         Route::get('/proposal/info/{id}', [ProjectProposalController::class, 'proposal'])->name('proposal.view');
+
+        Route::get('/project/proposal/{id}/create-contract/', [ProjectContractController::class, 'create'])->name('create.contract')->middleware('employer.access');
+        Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract');
 
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');

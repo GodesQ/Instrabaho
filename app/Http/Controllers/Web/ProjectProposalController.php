@@ -67,7 +67,7 @@ class ProjectProposalController extends Controller
 
         # get the proposal lists and create pagination
         $proposals = ProjectProposal::where('project_id', $project_id)->when($min && $max, function ($q) use ($min, $max) {
-            return $q->whereBetween('cost', [$min, $max]);
+            return $q->whereBetween('offer_price', [$min, $max]);
         })->with('freelancer')->paginate(10);
 
         # create a html to render in proposals lists
@@ -82,7 +82,11 @@ class ProjectProposalController extends Controller
     public function proposals_for_freelancers() {
         #get the freelancer data
         $freelancer = Freelancer::where('user_id', session()->get('id'))->with('project_proposals')->firstOrFail();
-        return view('UserAuthScreens.proposals.freelancer.index-proposals', compact('freelancer'));
+        $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->whereHas('project', function($query) {
+            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+        })->get();
+        $approved_proposals = $freelancer->project_proposals()->where('status', 'approved')->get();
+        return view('UserAuthScreens.proposals.freelancer.index-proposals', compact('freelancer', 'pending_proposals', 'approved_proposals'));
     }
 
 

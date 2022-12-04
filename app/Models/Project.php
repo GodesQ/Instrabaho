@@ -21,11 +21,19 @@ class Project extends Model
         return $this->skills_name = $skills;
     }
 
+    // public function freelancer() {
+    //     return $this->belongsTo(Freelancer::class);
+    // }
+
     public function employer() {
         return $this->belongsTo(Employer::class);
     }
 
     public function category() {
         return $this->hasOne(ServiceCategory::class, 'id', 'category_id');
+    }
+
+    public function contract() {
+        return $this->hasOne(ProjectContract::class, 'project_id', 'id');
     }
 }
