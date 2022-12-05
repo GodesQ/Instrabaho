@@ -79,7 +79,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-label font-weight-bold my-1">Attachment</div>
-                                    <input type="file" multiple class="custom-file-input" id="pass" name="attachments[]" placeholder="Attachment Name">
+                                    <input type="file" multiple class="form-control" id="pass" name="attachments[]" placeholder="Attachment Name">
                                     <span class="danger text-danger">@error('attachments'){{ $message }}@enderror</span>
                                 </div>
                             </div>

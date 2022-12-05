@@ -10,6 +10,7 @@ use App\Models\Skill;
 use App\Models\Project;
 use App\Models\ProjectProposal;
 use App\Models\Employer;
+use App\Models\Freelancer;
 use App\Models\EmployerPackage;
 use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
@@ -35,9 +36,35 @@ class ProjectsController extends Controller
         return view('UserAuthScreens.projects.employer.ongoing.ongoing', compact('proposals'));
     }
 
+    public function employer_completed(Request $request) {
+        $employer = Employer::where('user_id', session()->get('id'))->first();
+        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'completed')->with('project', 'contract')->whereHas('project', function($query) {
+            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+        })->get();
+
+        return view('UserAuthScreens.projects.employer.completed.completed', compact('proposals'));
+    }
+
+    public function freelancer_ongoing(Request $request) {
+        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
+        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'approved')->with('project', 'contract')->whereHas('project', function($query) {
+            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+        })->get();
+        return view('UserAuthScreens.projects.freelancer.ongoing.ongoing', compact('proposals'));
+    }
+
+    public function freelancer_completed(Request $request) {
+        $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
+        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'completed')->with('project', 'contract')->whereHas('project', function($query) {
+            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+        })->get();
+
+        return view('UserAuthScreens.projects.freelancer.completed.completed', compact('proposals'));
+    }
+
     public function create() {
         $categories = ServiceCategory::all();
-        $skills = Skill::all();
+        $skills = Skill::toBase()->get();
         return view('UserAuthScreens.projects.create-project', compact('categories', 'skills'));
     }
 
@@ -218,12 +245,19 @@ class ProjectsController extends Controller
                 ->addColumn('employer', function($row) {
                     return $row->employer->user->firstname . " " . $row->employer->user->lastname;
                 })
+                ->addColumn('status', function($row) {
+                    if($row->status == 'approved' || $row->status == 'completed') {
+                        return '<div class="badge badge-success">'.$row->status.'</div>';
+                    } else {
+                        return '<div class="badge badge-primary">'.$row->status.'</div>';
+                    }
+                })
                 ->addColumn('action', function($row){
                     $btn = '<a href="/admin/projects/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
                             <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['action', 'type'])
+                ->rawColumns(['action', 'type', 'status'])
                 ->toJson();
     }
 

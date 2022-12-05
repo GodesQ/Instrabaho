@@ -37,6 +37,8 @@
                     </li>
                     <li class="{{  Request::path() == 'employer/projects/ongoing' ? 'active' : ''  }}"><a class="menu-item" href="/employer/projects/ongoing" data-i18n="Ongoing Projects">Ongoing Projects</a>
                     </li>
+                    <li class="{{  Request::path() == 'employer/projects/completed' ? 'active' : ''  }}"><a class="menu-item" href="/employer/projects/completed" data-i18n="Completed Projects">Completed Projects</a>
+                    </li>
                 </ul>
             </li>
             <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Services">Services</span></a>

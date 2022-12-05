@@ -20,6 +20,7 @@
                                 <th>Project Cost</th>
                                 <th>Cost</th>
                                 <th>Project Type</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -77,6 +78,12 @@
             {
                 data: 'type',
                 name: 'type',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'status',
+                name: 'status',
                 orderable: true,
                 searchable: true
             },

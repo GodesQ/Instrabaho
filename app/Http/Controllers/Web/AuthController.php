@@ -18,6 +18,7 @@ use App\Models\Employer;
 class AuthController extends Controller
 {
     public function login() {
+        if(Auth::guard('user')->user()) return redirect('/');
         return view('AllScreens.auth.login');
     }
 
@@ -57,6 +58,7 @@ class AuthController extends Controller
     }
 
     public function register() {
+        if(Auth::guard('user')->user()) return redirect('/');
         return view('AllScreens.auth.register');
     }
 

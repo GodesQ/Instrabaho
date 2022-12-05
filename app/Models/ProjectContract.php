@@ -15,4 +15,8 @@ class ProjectContract extends Model
         return $this->hasOne(ProjectProposal::class, 'id', 'proposal_id');
     }
 
+    public function project() {
+        return $this->hasOne(Project::class, 'id', 'project_id');
+    }
+
 }

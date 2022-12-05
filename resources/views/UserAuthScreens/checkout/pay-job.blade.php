@@ -125,7 +125,7 @@
                                     <input type="hidden" name="job_id" value="{{ $job_data['job_id'] }}">
                                     <input type="hidden" name="job_type" value="{{ $job_data['job_type'] }}">
                                     <button class="btn btn-primary float-right" type="submit">Pay</button>
-                                    <a class="btn btn-secondary float-right mx-50" href="/purchased_service/approved">Cancel</a>
+                                    <a class="btn btn-secondary float-right mx-50" href="{{ $job_data['job_type'] == 'project' ? '/employer/projects/ongoing' : null }}">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                 case 'gcash':
                     $('.payment_method_display').text('GCASH');
                     break;
-            
+
                 case 'paymaya':
                     $('.payment_method_display').text('PAYMAYA');
                     break;
@@ -155,7 +155,7 @@
                 case 'online_bank':
                     $('.payment_method_display').text('ONLINE BANK');
                     break;
-                
+
                 case 'credit_card':
                     $('.payment_method_display').text('CREDIT CARD');
                     break;
@@ -169,14 +169,13 @@
 
         function setSystemDeduction() {
             let job_cost = $('#job_cost').val();
-            let system_deduction = Number(job_cost) * 0.05;
+            let system_deduction = Number(job_cost) * 0.15;
             $('.system_deduction_display').text(system_deduction.toFixed(2));
             $('#system_deduction').val(system_deduction.toFixed(2));
             let total_cost = job_cost - system_deduction;
             $('.total_display').text(total_cost.toFixed(2));
             $('#total').val(total_cost.toFixed(2));
         }
-
         setSystemDeduction();
     </script>
 @endpush

@@ -63,7 +63,9 @@
                                     </div>
                                     <div class="col-md-12 col-lg-6 text-lg-right my-2">
                                         @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
+                                            @if ($proposal->status == 'pending')
                                                 <button class="btn btn-success">Hire Freelancer  <i class="fa fa-thumbs-up"></i></button>
+                                            @endif
                                             @if($proposal->status == 'approved')
                                                 <a href="/pay_job/project/{{ $proposal->id }}" class="btn btn-primary">Set to Complete & Pay Job</a>
                                             @endif

@@ -53,7 +53,7 @@ class HomeScreenController extends Controller
         $employer = Employer::where('user_id', $request->id)->with('user', 'projects')->firstOrFail();
         $featured_projects = Project::where('employer_id', $employer->id)->where('project_type', 'featured')->get();
 
-        $my_profile = Freelancer::where('user_id', session()->get('id'))->firstOrFail();
+        $my_profile = Freelancer::where('user_id', session()->get('id'))->first();
         $follow_employer = false;
         if($my_profile) {
             $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $my_profile->id)->exists();
@@ -69,6 +69,8 @@ class HomeScreenController extends Controller
     }
 
     public function fetch_services(Request $request) {
+        abort_if(!$request->ajax(), 403);
+
         $title = $request->input('title');
         $categories = $request->input('categories') ? json_decode($request->input('categories')) : [];
         $price_min = $request->input('price-min');
@@ -120,6 +122,7 @@ class HomeScreenController extends Controller
 
         $projects = Project::where('expiration_date', '>' , Carbon::now())
         ->where('isExpired', 0)
+        ->where('status', 'pending')
         ->with('category', 'employer')
         ->latest('id')
         ->paginate(7);
@@ -129,9 +132,7 @@ class HomeScreenController extends Controller
     }
 
     public function fetch_projects(Request $request) {
-
         abort_if(!$request->ajax(), 404);
-
         $title = $request->get('title');
         $categories = $request->get('categories') ? json_decode($request->get('categories')) : [];
         $my_range = $request->get('my_range');
@@ -183,9 +184,9 @@ class HomeScreenController extends Controller
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
         $isExpiredPlan = $freelancer ? $freelancer->isExpiredPlan($freelancer) : false;
         $save_project = $freelancer ? SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first() : null;
-        $isAlreadySendProposal = $freelancer ? ProjectProposal::where('project_id', $project->id)->where('freelancer_id', $freelancer->id)->exists() : false;
+        $proposal = $freelancer ? ProjectProposal::where('project_id', $project->id)->where('freelancer_id', $freelancer->id)->first() : false;
 
-        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project', 'isAlreadySendProposal', 'isExpiredPlan'));
+        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project', 'proposal', 'isExpiredPlan'));
     }
 
     public function freelancers(Request $request) {

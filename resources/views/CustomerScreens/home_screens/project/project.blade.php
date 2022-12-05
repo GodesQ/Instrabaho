@@ -221,7 +221,7 @@
                         </form>
                     </div>
                 </div>
-                @endif
+            @endif
             </div>
           </div>
           <div class="col-lg-4 col-xl-4 col-xs-12 col-sm-12 col-md-12">

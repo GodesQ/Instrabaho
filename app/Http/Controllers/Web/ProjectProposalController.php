@@ -51,7 +51,7 @@ class ProjectProposalController extends Controller
         $employer = Employer::where('user_id', session()->get('id'))->firstOrFail();
 
         #get the projects lists data
-        $projects = Project::where('employer_id', $employer->id)->where('expiration_date', '>=', Carbon::now())->toBase()->get();
+        $projects = Project::where('employer_id', $employer->id)->where('status', 'pending')->where('expiration_date', '>=', Carbon::now())->toBase()->get();
 
         return view('UserAuthScreens.proposals.employer.index-proposals', compact('projects'));
     }
