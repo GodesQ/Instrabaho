@@ -16,6 +16,12 @@ use App\Http\Requests\ProjectContract\StoreProjectContract;
 
 class ProjectContractController extends Controller
 {
+
+    public function contract(Request $request) {
+        $contract = ProjectContract::where('id', $request->id)->with('proposal', 'project')->firstOrFail();
+        return view("UserAuthScreens.contracts.contract", compact('contract'));
+    }
+
     public function create(Request $request) {
         $proposal = ProjectProposal::where('id', $request->id)->with('project')->firstOrFail();
         return view('UserAuthScreens.contracts.create-contract', compact('proposal'));

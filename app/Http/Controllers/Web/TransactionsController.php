@@ -57,10 +57,10 @@ class TransactionsController extends Controller
         if(!$request->type || !$request->id) return view('fail', 'Fail to direct in payment section');
         $user = User::where('id', session()->get('id'))->first();
 
-        //check what type of job 
+        //check what type of job
         if($request->type == 'service') {
             $job = ServicesProposal::where('id', $request->id)->with('service', 'freelancer', 'employer')->first();
-            
+
             $job_data = [
                 'title' => $job->service->name,
                 'cost' => $job->service->cost,
@@ -72,10 +72,10 @@ class TransactionsController extends Controller
         }
 
         if($request->type == 'project') {
-            $job = ProjectProposal::where('id', $request->id)->with('project', 'freelancer', 'employer')->first();
+            $job = ProjectProposal::where('id', $request->id)->with('project', 'freelancer', 'employer', 'contract')->first();
             $job_data = [
                 'title' => $job->project->title,
-                'cost' => $job->project->cost,
+                'cost' => $job->contract->cost,
                 'job_type' => $request->type,
                 'job_id' => $job->id,
                 'from_id' => $job->employer_id,
@@ -93,7 +93,6 @@ class TransactionsController extends Controller
         ->limit(10)
         ->with('freelancer')
         ->get();
-        dd($freelancers);
     }
 
     public function pay_job(Request $request) {
@@ -103,11 +102,15 @@ class TransactionsController extends Controller
             'total' => 'required|numeric',
             'employer_id' => 'required|numeric',
             'freelancer_id' => 'required|numeric',
-            'payment_method' => 'required'
+            'payment_method' => 'required',
+            'job_type' => 'required|in:project,service'
         ]);
 
         $services_proposal = null;
         $project_proposal = null;
+
+        $system_deduction = $request->job_cost * 0.15;
+        $total = $request->job_cost - $system_deduction;
 
         //check if the employer exist
         $employer = Employer::where('id', $request->employer_id)->with('user')->first();
@@ -118,14 +121,12 @@ class TransactionsController extends Controller
         if(!$freelancer) return back()->with('fail', "Freelancer doesn't exists.");
 
         if($request->job_type == 'service') {
-            $services_proposal = ServicesProposal::where('id', $request->job_id)->with('service')->first();
-            if(!$services_proposal) return back()->with('fail', "Service doesn't exists");
+            $services_proposal = ServicesProposal::where('id', $request->job_id)->with('service')->firstOrFail();
             if($services_proposal->status == 'completed') return back()->with('fail', "This Job is already completed.");
         }
 
         if($request->job_type == 'project') {
-            $project_proposal = ProjectProposal::where('id', $request->job_id)->with('project')->first();
-            if(!$project_proposal) return back()->with('fail', "Project doesn't exists");
+            $project_proposal = ProjectProposal::where('id', $request->job_id)->with('project')->firstOrFail();
             if($project_proposal->status == 'completed') return back()->with('fail', "This Job is already completed.");
         }
 
@@ -140,7 +141,7 @@ class TransactionsController extends Controller
         $create_transaction = Transaction::create([
             'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
             'transaction_code' => $transaction_code,
-            'amount' => $request->total,
+            'amount' => $total,
             'from_id' => $employer->user_id,
             'to_id' => $freelancer->user_id,
             'payment_method' => $request->payment_method,
@@ -161,14 +162,14 @@ class TransactionsController extends Controller
             'payment_method' => $request->payment_method,
             'invoice_date' => Carbon::now(),
         ])->id;
-        
+
         // Create Invoice Item
         $create_invoice_item = InvoiceItem::create([
             'invoice_id' => $invoice,
             'item' => $request->job_type == 'service' ? $services_proposal->service->name : $project_proposal->project->title,
             'quantity' => 1,
             'deduction' => $request->system_deduction,
-            'amount' => $request->total
+            'amount' => $total
         ]);
 
         // check if the freelancer has a wallet and if doesn't exist the system will auto generate a wallet for freelancer
@@ -177,11 +178,11 @@ class TransactionsController extends Controller
         if(!$freelancer_wallet) {
             $create_wallet = UserWallet::create([
                 'user_id' => $freelancer->user_id,
-                'amount' =>  $request->total,
+                'amount' =>  $total,
             ]);
         } else {
             $create_wallet = UserWallet::where('user_id', $freelancer_wallet->user_id)->update([
-                'amount' => $freelancer_wallet->amount + $request->total,
+                'amount' => $freelancer_wallet->amount + $total,
             ]);
         }
 
@@ -195,13 +196,16 @@ class TransactionsController extends Controller
         } else {
             $project_proposal->status = 'completed';
             $project_proposal->save();
+            $project = $project_proposal->project()->update([
+                'status' => 'completed'
+            ]);
         }
-        
+
         return redirect('/transaction-message')->with('success', 'Success Sending Payment');
     }
 
     private function PayJoBUsingWallet() {
-        
+
     }
 
     private function DeductToEmployer($employer_wallet, $employer, $job_cost) {
@@ -212,11 +216,11 @@ class TransactionsController extends Controller
                 'amount' =>  $employer_wallet->amount - $job_cost,
             ]);
         } else {
-            return back()->with('fail', "The amount of your wallet will not less than to the job cost.");
+            return back()->with('fail', "The amount in your wallet will not less than the job cost.");
         }
 
         if($update_wallet) {
-            return ['status' => true, 'message' => "The Service Payment has been successfully deduct to employer"];
+            return ['status' => true, 'message' => "The Service Payment has been successfully deducted from the employer"];
         } else {
             return ['status' => false, 'message' => "Oops! The wallet doesn't update. Please Try Again"];
         }

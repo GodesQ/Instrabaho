@@ -26,6 +26,8 @@
                                     <th>Date Created</th>
                                     <th>Date Expiration</th>
                                     <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,11 +39,7 @@
                                                 <div class="badge badge-warning my-50">Featured</div>
                                             @endif
                                             <h4 class="font-weight-bold">{{ $project->title }}</h4>
-                                            <p>{{ substr($project->description, 0, 8) . '...' }}</p>
-                                            <div class="d-flex align-items-center">
-                                                <a href="/employer/edit_project/{{ $project->id }}" class="btn btn-outline-primary btn-sm mr-50"><i class="fa fa-edit"></i> Edit</a>
-                                                <button id="{{ $project->id }}" class="delete-project btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
-                                            </div>
+                                            <p>{{ substr($project->description, 0, 30) . '...' }}</p>
                                         </div>
                                     </td>
                                     <td>
@@ -54,6 +52,19 @@
                                         <h3 class="font-weight-bold">
                                             ₱ {{ $project->cost }}
                                         </h3>
+                                    </td>
+                                    <td>
+                                        @if ($project->status == 'approved' || $project->status == 'approved')
+                                            <div class="badge badge-success">{{ $project->status }}</div>
+                                        @else
+                                            <div class="badge badge-primary">{{ $project->status }}</div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <a href="/employer/edit_project/{{ $project->id }}" class="btn btn-outline-primary btn-sm mr-50"><i class="fa fa-edit"></i> Edit</a>
+                                            <button id="{{ $project->id }}" class="delete-project btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
+                                        </div>
                                     </td>
                                 </tr>
                                 @empty

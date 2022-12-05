@@ -26,7 +26,6 @@
                                                     <i class="feather icon-edit-2 primary"></i>
                                                     Edit Contract</a> --}}
                                                 <a href="#" class="dropdown-item delete"><i class="feather icon-x danger"></i> Cancel Project</a>
-                                                <a href="/pay_job/project/{{$proposal->id}}" class="dropdown-item"><i class="feather icon-check success"></i> Set to Complete and Pay Job</a>
                                             </span>
                                         </span>
                                     </div>

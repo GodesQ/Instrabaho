@@ -124,6 +124,9 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
             Route::get('proposals', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('freelancer.proposals');
             Route::get('proposals/fetch_data', [ProjectProposalController::class, 'fetch_proposals_for_freelancers'])->name('freelancer.fetch_proposals');
+
+            Route::get('projects/ongoing', [ProjectsController::class, 'freelancer_ongoing'])->name('freelancer.projects.ongoing');
+            Route::get('projects/completed', [ProjectsController::class, 'freelancer_completed'])->name('freelancer.projects.completed');
         });
 
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
@@ -139,6 +142,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
             Route::post('profile', [EmployerController::class, 'update_profile'])->name('employer.profile.update');
             Route::get('projects', [ProjectsController::class, 'index'])->name('employer.projects.index');
             Route::get('projects/ongoing', [ProjectsController::class, 'employer_ongoing'])->name('employer.projects.ongoing');
+            Route::get('projects/completed', [ProjectsController::class, 'employer_completed'])->name('employer.projects.completed');
             Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create')->middleware('plan.expiration');
             Route::get('edit_project/{id}', [ProjectsController::class, 'user_edit'])->name('freelancer.project.edit');
 
@@ -148,8 +152,9 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
         Route::get('/proposal/info/{id}', [ProjectProposalController::class, 'proposal'])->name('proposal.view');
 
+        Route::get('/project/contract/{id}', [ProjectContractController::class, 'contract'])->name('contract');
         Route::get('/project/proposal/{id}/create-contract/', [ProjectContractController::class, 'create'])->name('create.contract')->middleware('employer.access');
-        Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract');
+        Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract')->middleware('employer.access');
 
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');

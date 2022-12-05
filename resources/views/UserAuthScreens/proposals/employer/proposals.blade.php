@@ -2,7 +2,7 @@
     @forelse ($proposals as $proposal)
         <div class="d-flex justify-content-center my-1">
             <div class="container" style="width: 95% !important;">
-                <div class="d-flex p-2" style="gap: 20px; box-shadow: 1px 0px 20px rgb(0 0 0 / 7%);">
+                <div class="d-flex p-2" style="gap: 20px; box-shadow: 1px 0px 20px rgb(0 0 0 / 7%); position: relative !important;">
                     <div>
                         <img class="rounded" src="../../../images/user/profile/{{$proposal->freelancer->user->profile_image}}" alt="employer_image" style="height: 100px !important;">
                     </div>
@@ -13,8 +13,13 @@
                         <div class="mt-2">
                             <a href="/proposal/info/{{ $proposal->id }}?act=message" class="btn btn-outline-primary">Chat </a>
                             <a href="/proposal/info/{{ $proposal->id }}" class="btn btn-primary">View Proposal</a>
-                            <a href="/project/proposal/{{ $proposal->id }}/create-contract/" class="btn btn-success">Hire</a>
+                            @if ($proposal->status == 'pending')
+                                <a href="/project/proposal/{{ $proposal->id }}/create-contract/" class="btn btn-success">Hire</a>
+                            @endif
                         </div>
+                    </div>
+                    <div class="badge badge-{{$proposal->status == 'approved' ? 'success' : 'primary'}} position-absolute" style="right: 20px;">
+                        {{ $proposal->status }}
                     </div>
                 </div>
             </div>

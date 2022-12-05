@@ -151,100 +151,34 @@
           <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
              <div class="heading-panel  section-center">
                 <div class="heading-meta">
-                   <h2>TOP RATED SKILLED WORKERS <br> NEAR YOU</h2>
-                   <p>Work with skilled people at the most affordable price to get your job done</p>
-                </div>
-             </div>
-             <div class="row grid">
-               @forelse($freelancers as $freelancer)
-                  <div class="col-xl-4 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                     <div class="fr-latest-grid">
-                        <div class="fr-latest-img d-flex justify-content-center">
-                           <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" class="rounded" alt="" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
-                        </div>
-                        <div class="fr-latest-details">
-                           <div class="fr-latest-content-service">
-                              <div class="fr-latest-profile">
-                                 <a class="user-image" href="/freelancer/view/{{ $freelancer->user_id }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                                 <div class=" text-center">
-                                    <span class="fr-latest-name">{{ $freelancer->tagline }}</span>
-                                    <h4>
-                                       <a href="/freelancer/view/{{ $freelancer->user_id }}" class="h4">{{ $freelancer->display_name }}</a>
-                                    </h4>
-                                 </div>
-                              </div>
-                              <div class="d-flex justify-content-between align-items-center">
-                                 <div>Starting from : <span class="info">₱ {{ number_format($freelancer->hourly_rate, 2) }}</span></div>
-                                 <div class="text-right">Reviews : 20</div>
-                              </div>
-                           </div>
-                           <div class="mt-3 p-1 px-2 d-flex justify-content-around align-items-center flex-column" style="background: #f8f8f8 !important; height: 200px;">
-                              <p>{{ substr($freelancer->description, 0, 100) }}...</p>
-                              <div class="group-buttons">
-                                 <a href="/freelancer/view/{{ $freelancer->user_id add}}" class="btn btn-outline-primary" style="width: 100% !important">View Profile</a>
-                                 <button class="btn btn-primary mt-2" style="width: 100% !important">Send Offer</button>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               @empty
-
-               @endforelse
-            </div>
-         </div>
-       </div>
-    </div>
- </section>
- <div class="section-padding-extra text-center call-actionz">
-    <div class="container">
-        <div class="row">
-           <div class="col-xs-12 col-sm-12 col-md-12">
-              <div class="parallex-text">
-                 <h5>Since the Start </h5>
-                 <h4>We Provide Stable Service With Experts</h4>
-                 <p>Freelancers around the globe, are looking for work and provide the best they have. Start now </p>
-                 <a href="/search_projects" class="btn btn-theme-secondary">View Projects</a>
-                 <a href="/search_services" class="btn btn-theme">View Services</a>
-              </div>
-           </div>
-        </div>
-    </div>
-</div>
-<section class="fr-serv-2 fr-services-content-2">
-    <div class="container">
-       <div class="row fr-serv2">
-          <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
-             <div class="heading-panel  section-center">
-                <div class="heading-meta">
                    <h2>Boss! Kailangan mo ng tulong?</h2>
                    <p>Most viewed and top rated services</p>
                 </div>
              </div>
              <div class="row grid">
                 <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/link-building.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
-                               </div>
+                    <div class="fr-latest-grid">
+                        <div class="fr-latest-img">
+                            <img src="img/services-imgs/link-building.jpg" alt="" class="img-fluid">
+                        </div>
+                        <div class="fr-latest-details">
+                            <div class="fr-latest-content-service">
+                                <div class="fr-latest-profile">
+                                <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
+                                <div class="fr-latest-profile-data">
+                                    <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
+                                </div>
+                                </div>
+                                <p><a href="services-details-page.html">Website link building and trafic generat....</a></p>
+                                <a href="javascript:void(0)" class="queue">0 Order in queue</a>
+                                <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
                             </div>
-                            <p><a href="services-details-page.html">Website link building and trafic generat....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">300.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="182"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
+                            <div class="fr-latest-bottom">
+                                <p>Starting From<span><span class="currency">$</span><span class="price">300.00</span></span></p>
+                                <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="182"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
                    <div class="fr-latest-grid">
@@ -254,10 +188,10 @@
                       <div class="fr-latest-details">
                          <div class="fr-latest-content-service">
                             <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
-                               </div>
+                                <a class="user-image" href=""><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
+                                <div class="fr-latest-profile-data">
+                                    <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
+                                </div>
                             </div>
                             <p><a href="services-details-page.html" title="Generate Leads and Social Media Marketing">Generate Leads and Social Media Marketin....</a></p>
                             <a href="javascript:void(0)" class="queue">0 Order in queue</a>
@@ -416,6 +350,72 @@
                 </div>
              </div>
           </div>
+       </div>
+    </div>
+ </section>
+ <div class="section-padding-extra text-center call-actionz">
+    <div class="container">
+        <div class="row">
+           <div class="col-xs-12 col-sm-12 col-md-12">
+              <div class="parallex-text">
+                 <h5>Since the Start </h5>
+                 <h4>We Provide Stable Service With Experts</h4>
+                 <p>Freelancers around the globe, are looking for work and provide the best they have. Start now </p>
+                 <a href="/search_projects" class="btn btn-theme-secondary">View Projects</a>
+                 <a href="/search_services" class="btn btn-theme">View Services</a>
+              </div>
+           </div>
+        </div>
+    </div>
+</div>
+<section class="fr-serv-2 fr-services-content-2">
+    <div class="container">
+       <div class="row fr-serv2">
+          <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
+             <div class="heading-panel  section-center">
+                <div class="heading-meta">
+                   <h2>TOP RATED SKILLED WORKERS <br> NEAR YOU</h2>
+                   <p>Work with skilled people at the most affordable price to get your job done</p>
+                </div>
+             </div>
+             <div class="row grid">
+               @forelse($freelancers as $freelancer)
+                  <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
+                     <div class="fr-latest-grid">
+                        <div class="fr-latest-img d-flex justify-content-center">
+                           <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" class="rounded" alt="" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
+                        </div>
+                        <div class="fr-latest-details">
+                           <div class="fr-latest-content-service">
+                              <div class="fr-latest-profile">
+                                 <a class="user-image" href="/freelancer/view/{{ $freelancer->user_id }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
+                                 <div class=" text-center">
+                                    <span class="fr-latest-name">{{ $freelancer->tagline }}</span>
+                                    <h4>
+                                       <a href="/freelancer/view/{{ $freelancer->user_id }}" class="h4">{{ $freelancer->display_name }}</a>
+                                    </h4>
+                                 </div>
+                              </div>
+                              <div class="d-flex justify-content-between align-items-center">
+                                 <div>Starting from : <span class="info">₱ {{ number_format($freelancer->hourly_rate, 2) }}</span></div>
+                                 <div class="text-right">Reviews : 20</div>
+                              </div>
+                           </div>
+                           <div class="mt-3 p-1 px-2 d-flex justify-content-around align-items-center flex-column" style="background: #f8f8f8 !important; height: 200px;">
+                              <p class="text-center">{{ strlen($freelancer->description) > 100 ? substr($freelancer->description, 0, 100) . '...' : $freelancer->description }}</p>
+                              <div class="group-buttons">
+                                 <a href="/freelancer/view/{{ $freelancer->user_id}}" class="btn btn-outline-primary" style="width: 100% !important">View Profile</a>
+                                 <button class="btn btn-primary mt-2" style="width: 100% !important">Send Offer</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               @empty
+
+               @endforelse
+            </div>
+         </div>
        </div>
     </div>
  </section>

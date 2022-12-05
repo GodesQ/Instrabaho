@@ -52,11 +52,11 @@
                     <li class="{{ Request::path() == 'freelancer/proposals' ? 'active' : '' }}">
                         <a class="menu-item" href="/freelancer/proposals" data-i18n="Proposals">Proposals</a>
                     </li>
-                    <li class="{{ Request::path() == 'project_proposals/approved' ? 'active' : '' }}">
-                        <a class="menu-item" href="/project_proposals/approved" data-i18n="Approved Projects">Approved Projects</a>
+                    <li class="{{ Request::path() == 'freelancer/projects/ongoing' ? 'active' : '' }}">
+                        <a class="menu-item" href="/freelancer/projects/ongoing" data-i18n="Ongoing Projects">Ongoing Projects</a>
                     </li>
-                    <li>
-                        <a class="menu-item" href="" data-i18n="Canceled Projects">Canceled Projects</a>
+                    <li class="{{ Request::path() == 'freelancer/projects/completed' ? 'active' : '' }}">
+                        <a class="menu-item" href="/freelancer/projects/completed" data-i18n="Completed Projects">Completed Projects</a>
                     </li>
                 </ul>
             </li>
