@@ -306,7 +306,7 @@
 		                        <i class="fas fa-location-arrow"></i>
 		                        <div class="meta">
 		                           <span>Location</span>
-		                           <p>{{ $freelancer->location }}</p>
+		                           <p>{{ $freelancer->address }}</p>
 		                        </div>
 		                     </li>
 							 <li>

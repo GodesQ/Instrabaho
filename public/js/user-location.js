@@ -12,7 +12,7 @@ function initialize() {
 
     mapOptions = {
         // How far the maps zooms in.
-        zoom: 10,
+        zoom: 15,
         // Current Lat and Long position of the pin/
         center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
         disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
@@ -112,7 +112,7 @@ function initialize() {
                 var currentLocation = { lat: currentLatitude, lng: currentLongitude };
                 // infoWindow.setPosition(currentLocation);
                 marker.setPosition(currentLocation);
-                console.log(currentLocation);
+                map.setZoom( 15 );
                 var geocoder = new google.maps.Geocoder();
                 geocoder.geocode( { latLng: marker.getPosition() }, function ( result, status ) {
                     if ( 'OK' === status ) {  // This line can also be written like if ( status == google.maps.GeocoderStatus.OK ) {
