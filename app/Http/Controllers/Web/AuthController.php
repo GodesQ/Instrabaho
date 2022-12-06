@@ -18,7 +18,7 @@ use App\Models\Employer;
 class AuthController extends Controller
 {
     public function login() {
-        if(Auth::guard('user')->user()) return redirect('/');
+        if(session()->get('role')) return redirect('/');
         return view('AllScreens.auth.login');
     }
 
@@ -89,7 +89,7 @@ class AuthController extends Controller
         $save = $user->save();
 
         if ($save) {
-            return redirect('/login')->with(
+            return redirect('/success-verify-message')->with(
                 'success',
                 'Your Email Address was successfully verified.'
             );
@@ -100,7 +100,12 @@ class AuthController extends Controller
         return view('AllScreens.misc.verify-message');
     }
 
+    public function success_verify_message() {
+        return view('AllScreens.misc.success-email-verification');
+    }
+
     public function logout() {
+        Auth::logout();
         if (session()->has(['role']) && session()->has(['id'])) {
             session()->flush();
             return redirect('/login')->with('success', "Logout Successfully.");

@@ -91,7 +91,7 @@ class ProjectsController extends Controller
             'expiration_date' => $employer->package_date_expiration > Carbon::now() || $employer->package_date_expiration ? $employer->package_date_expiration : Carbon::now()
         ]));
 
-        if($create) return redirect()->route('freelancer.projects.index')->with('success', 'Project Created Successfully');
+        if($create) return redirect()->route('employer.projects.index')->with('success', 'Project Created Successfully');
     }
 
     public function user_edit(Request $request) {

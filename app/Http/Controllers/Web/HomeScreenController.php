@@ -192,17 +192,22 @@ class HomeScreenController extends Controller
 
     public function freelancers(Request $request) {
         $skills = Skill::all();
+        $freelancers = Freelancer::paginate(10);
+
+        return view('CustomerScreens.home_screens.freelancer.freelancer-search', compact('freelancers', 'skills'));
+    }
+
+    public function fetch_freelancers(Request $request) {
+        abort_if(!$request->ajax(), 404);
 
         // filters
         $title = $request->input('title');
         $address = $request->input('address');
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
-        $my_range = $request->input('my_range');
-        $price_min = $request->input('price-min');
-        $price_max = $request->input('price-max');
-        $freelancer_skills = $request->input('skill') ? $request->input('skill') : [];
-        $freelance_type = $request->input('freelance_type') ? $request->input('freelance_type') : [];
+        $my_range = $request->input('hourly_rate');
+        $freelancer_skills = $request->input('skills') ? json_decode($request->input('skill')) : [];
+        $freelance_type = $request->input('freelance_type') ? json_decode($request->input('freelance_type')) : [];
 
         $freelancers = Freelancer::select('*')->when($title, function ($q) use ($title) {
             return $q->where(DB::raw('lower(display_name)'), 'like', '%' . strtolower($title) . '%');
@@ -219,9 +224,7 @@ class HomeScreenController extends Controller
             return $q->whereBetween('hourly_rate', [intval($range[0]), intval($range[1])]);
         })
         ->when($freelance_type, function ($q) use ($freelance_type) {
-            if($freelance_type[0]) {
-                return $q->whereIn('freelancer_type', $freelance_type);
-            }
+            if($freelance_type[0])  return $q->whereIn('freelancer_type', $freelance_type);
         })
         ->with('user', 'certificates', 'experiences', 'educations', 'skills', 'services')
         ->when($freelancer_skills, function ($q) use ($freelancer_skills) {
@@ -233,19 +236,13 @@ class HomeScreenController extends Controller
         })
         ->paginate(10);
 
-        $queries = [
-            'title' => $title,
-            'address' => $address,
-            'price_min' => $price_min,
-            'price_max' => $price_max,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-            'my_range' => $my_range,
-            'freelancer_skills' => $freelancer_skills,
-            'freelance_type' => $freelance_type,
-        ];
+        $view_data = view('CustomerScreens.home_screens.freelancer.freelancers', compact('freelancers'))->render();
 
-        return view('CustomerScreens.home_screens.freelancer.freelancer-search', compact('freelancers', 'skills', 'queries'));
+        return response()->json([
+            'view_data' => $view_data,
+            'freelancers' => $freelancers,
+        ]);
+
     }
 
     public function contact_us() {

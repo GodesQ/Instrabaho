@@ -158,10 +158,10 @@
             <div class="row">
                 @forelse ($projects as $project)
                     <div class="col-xl-6 col-lg-6">
-                        <div class="fr-project-details">
-                            <div class="d-flex justify-content-between align-items-start border-bottom p-3" style="height: 220px;">
+                        <div class="fr-project-details bg-white">
+                            <div class="d-flex justify-content-between align-items-start border-bottom p-3" style="min-height: 150px;">
                                 <div style="width: 14%">
-                                    <img src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 60px; height: 60px; border-radius: 50%;">
+                                    <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 80px; height: 80px; border-radius: 50%;">
                                 </div>
                                 <div style="width: 70%" class="fr-project-content">
                                     <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important;">
@@ -169,26 +169,23 @@
                                             <a href="/project/view/{{ $project->id }}" style="color: black; font-weight: 500;">{{ $project->title }}</a>
                                         </h6>
                                         <div style="color: #000;">{{ $project->employer->display_name }}</div>
-                                        <div class="mb-2">{{ $project->location }}</div>
-                                        <div class="fr-project-skills">
-                                            <!-- convert the json array ids into model and get to fetch in blade -->
-                                            @php $project->setSkills(json_decode($project->skills)) @endphp
-                                            @php $project->getSkills() @endphp
+                                        <div>{{ $project->location }}</div>
+                                        <div class="my-2">
+                                            <div class="font-weight-medium"><i class="feather icon-target success"></i> Actively Looking for</div>
+                                            <div class="fr-project-skills" style="margin-top: 10px;">
+                                                <!-- convert the json array ids into model and get to fetch in blade -->
+                                                @php $project->setSkills(json_decode($project->skills)) @endphp
+                                                @php $project->getSkills() @endphp
 
-                                            @foreach($project->skills_name as $skill)
-                                                <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
-                                            @endforeach
-                                         </div>
-                                        <div class="fr-right-product">
-                                            <ul class="skills">
-
-
-                                            </ul>
+                                                @foreach($project->skills_name as $skill)
+                                                    <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <button class="btn btn-primary" style="border-radius: 25px;">Save</button>
+                                    <button class="btn btn-primary " style="border-radius: 25px;">Save</button>
                                 </div>
                             </div>
                         </div>

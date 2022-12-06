@@ -18,6 +18,7 @@
             <ul class="dropdown-menu">
                 <li data-menu=""><a class="dropdown-item" href="/employer/create_project" data-i18n="Create Project" data-toggle="dropdown">Create Project</a>
                 </li>
+                <li data-menu=""><a class="dropdown-item" href="/employer/proposals" data-i18n="Proposals" data-toggle="dropdown">Proposals</a></li>
                 <li data-menu=""><a class="dropdown-item" href="/employer/projects" data-i18n="My Projects" data-toggle="dropdown">My Projects</a>
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="/employer/projects/ongoing" data-i18n="Ongoing Projects" data-toggle="dropdown">Ongoing Projects</a>
@@ -30,7 +31,8 @@
             <ul class="dropdown-menu">
                 <li data-menu=""><a class="dropdown-item" href="/employer/create_project" data-i18n="My Offers / Proposals" data-toggle="dropdown">My Offers / Proposals</a>
                 </li>
-                <li data-menu=""><a class="dropdown-item" href="#" data-i18n="Ongoing Services" data-toggle="dropdown">Ongoing Services</a>
+                <li data-menu=""><a class="dropdown-item" href="#" data-i18n=".......
+                     Services" data-toggle="dropdown">Ongoing Services</a>
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="#" data-i18n="Completed Services" data-toggle="dropdown">Completed Services</a>
                 </li>
