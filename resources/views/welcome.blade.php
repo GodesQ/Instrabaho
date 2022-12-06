@@ -152,203 +152,48 @@
              <div class="heading-panel  section-center">
                 <div class="heading-meta">
                    <h2>Boss! Kailangan mo ng tulong?</h2>
-                   <p>Most viewed and top rated services</p>
+                   <p>Recent Posted Projects</p>
                 </div>
              </div>
-             <div class="row grid">
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                    <div class="fr-latest-grid">
-                        <div class="fr-latest-img">
-                            <img src="img/services-imgs/link-building.jpg" alt="" class="img-fluid">
-                        </div>
-                        <div class="fr-latest-details">
-                            <div class="fr-latest-content-service">
-                                <div class="fr-latest-profile">
-                                <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                                <div class="fr-latest-profile-data">
-                                    <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
+            <div class="row">
+                @forelse ($projects as $project)
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="fr-project-details bg-white">
+                            <div class="d-flex justify-content-between align-items-start border-bottom p-3" style="min-height: 150px;">
+                                <div style="width: 14%">
+                                    <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 80px; height: 80px; border-radius: 50%;">
                                 </div>
+                                <div style="width: 70%" class="fr-project-content">
+                                    <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important;">
+                                        <h6>
+                                            <a href="/project/view/{{ $project->id }}" style="color: black; font-weight: 500;">{{ $project->title }}</a>
+                                        </h6>
+                                        <div style="color: #000;">{{ $project->employer->display_name }}</div>
+                                        <div>{{ $project->location }}</div>
+                                        <div class="my-2">
+                                            <div class="font-weight-medium"><i class="feather icon-target success"></i> Actively Looking for</div>
+                                            <div class="fr-project-skills" style="margin-top: 10px;">
+                                                <!-- convert the json array ids into model and get to fetch in blade -->
+                                                @php $project->setSkills(json_decode($project->skills)) @endphp
+                                                @php $project->getSkills() @endphp
+
+                                                @foreach($project->skills_name as $skill)
+                                                    <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p><a href="services-details-page.html">Website link building and trafic generat....</a></p>
-                                <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                                <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                            </div>
-                            <div class="fr-latest-bottom">
-                                <p>Starting From<span><span class="currency">$</span><span class="price">300.00</span></span></p>
-                                <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="182"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                <div>
+                                    <button class="btn btn-primary " style="border-radius: 25px;">Save</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/link-service.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                                <a class="user-image" href=""><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                                <div class="fr-latest-profile-data">
-                                    <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
-                                </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="Generate Leads and Social Media Marketing">Generate Leads and Social Media Marketin....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">150.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="194"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/seo-1image.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Eshaal Mehta<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i> </a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="Looking to hire an digital marketing champ">Looking to hire an digital marketing cha....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">350.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="195"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/pile-3d-popular1-1.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/jason-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Voorhees Jason<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will share your post to a large social media audience">I will share your post to a large social....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">6.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="302"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/language1.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/jason-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Voorhees Jason<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will impeccably translate any content from English to French">I will impeccably translate any content ....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">10.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="305"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/programming1.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/jason-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Voorhees Jason<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will create a responsive WordPress website design">I will create a responsive WordPress web....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">980.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="307"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/social-link-img.png" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/lara-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Hannah Finn<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will build up your android and ios application in react native">I will build up your android and ios app....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">400.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="319"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                   <div class="fr-latest-grid">
-                      <div class="fr-latest-img">
-                         <img src="img/services-imgs/social1-icons.jpg" alt="" class="img-fluid">
-                      </div>
-                      <div class="fr-latest-details">
-                         <div class="fr-latest-content-service">
-                            <div class="fr-latest-profile">
-                               <a class="user-image" href="freelancer-detail.html"><img src="img/services-imgs/lara-dp.jpg" alt="" class="img-fluid"></a>
-                               <div class="fr-latest-profile-data">
-                                  <span class="fr-latest-name"><a href="freelancer-detail.html">Hannah Finn<i class="fa fa-check" aria-hidden="true"></i></a></span>
-                               </div>
-                            </div>
-                            <p><a href="services-details-page.html" title="I will be your social media marketing manager and content creator">I will be your social media marketing ma....</a></p>
-                            <a href="javascript:void(0)" class="queue">0 Order in queue</a>
-                            <span class="reviews"><i class="fa fa-star" aria-hidden="true"></i> No Reviews</span>
-                         </div>
-                         <div class="fr-latest-bottom">
-                            <p>Starting From<span><span class="currency">$</span><span class="price">100.00</span></span></p>
-                            <a href="services-details-page.html" class="save_service protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Save Service" data-post-id="323"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-             </div>
+                @empty
+
+                @endforelse
+            </div>
           </div>
        </div>
     </div>

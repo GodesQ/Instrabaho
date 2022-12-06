@@ -6,6 +6,10 @@
         height: 200px;
         width: 100%;
     }
+    #freelancers-locations {
+        height: 500px;
+       width: 100%;
+   }
 </style>
 <section class="fr-list-product bg-img">
     <div class="container">
@@ -36,14 +40,14 @@
                     <a href="/search_freelancers">Clear Result</a>
                     </div>
                     <div class="project-widgets">
-                    <form action="#">
+                    <form action="#"  id="freelancer-filter-form">
                         <div class="panel panel-default">
                             <div class="panel-heading active"> <a role="button" class="collapsed" data-bs-toggle="collapse" href="#search-widget"> Search by Keyword </a> </div>
                             <div id="search-widget" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="title" placeholder="Keyword or freelancer name" value="{{ $queries['title'] }}">
-                                </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="title" placeholder="Keyword or freelancer name" value="" id="title">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +59,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <div class="form-label font-weight-bold my-50">Address</div>
-                                                <input type="text" name="address" id="map-search" class="form-control controls" value="{{ $queries['address'] }}">
+                                                <input type="text" name="address" id="map-search" class="form-control controls" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -68,13 +72,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <!-- <div class="form-label font-weight-bold my-50">Latitude</div> -->
-                                                <input type="hidden" name="latitude" value="{{ $queries['latitude'] }}" class="form-control latitude">
+                                                <input type="hidden" name="latitude" value="" class="form-control latitude">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <!-- <div class="form-label font-weight-bold my-50">Longitude</div> -->
-                                                <input type="hidden" name="longitude" class="form-control longitude" value="{{ $queries['longitude'] }}">
+                                                <input type="hidden" name="longitude" class="form-control longitude" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -86,11 +90,11 @@
                                 <div id="price-widget" class="panel-collapse collapse show" role="tabpanel">
                                     <div class="panel-body" tabindex="2">
                                     <div class="range-slider">
-                                        <input type="text" class="services-range-slider" name="my_range" value="{{ $queries['my_range'] }}" />
+                                        <input type="text" class="services-range-slider" name="my_range" id="my_range" value="" />
                                     </div>
                                     <div class="extra-controls">
-                                        <input type="text" class="services-input-from form-control" value="{{ $queries['price_min'] }}" name="price-min">
-                                        <input type="text" class="services-input-to form-control" value="{{ $queries['price_max'] }}" name="price-max">
+                                        <input type="text" class="services-input-from form-control" value="" name="price-min">
+                                        <input type="text" class="services-input-to form-control" value="" name="price-max">
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +107,7 @@
                                         @foreach($skills as $skill)
                                             <li class="">
                                                 <div class="pretty p-icon p-thick p-curve">
-                                                <input {{ in_array($skill->id, $queries['freelancer_skills']) ? 'checked' : null }} type="checkbox" name="skill[]" value="{{ $skill->id }}" id="132">
+                                                <input type="checkbox" name="skill[]" value="{{ $skill->id }}" id="skills">
                                                 <div class="state p-warning">
                                                     <i class="icon fa fa-check" aria-hidden="true"></i>
                                                     <label></label>
@@ -123,7 +127,7 @@
                                 <ul class="main">
                                     <li class="">
                                         <div class="pretty p-icon p-thick p-curve">
-                                            <input {{ in_array("company", $queries['freelance_type']) ? 'checked' : null }} type="checkbox" name="freelance_type[]" value="company" id="154">
+                                            <input type="checkbox" name="freelance_type[]" id="freelancer_type" value="company" id="154">
                                             <div class="state p-warning">
                                             <i class="icon fa fa-check" aria-hidden="true"></i>
                                             <label></label>
@@ -133,7 +137,7 @@
                                     </li>
                                     <li class="">
                                         <div class="pretty p-icon p-thick p-curve">
-                                            <input {{ in_array("group", $queries['freelance_type']) ? 'checked' : null }} type="checkbox" name="freelance_type[]" value="group" id="153">
+                                            <input type="checkbox" name="freelance_type[]" value="group" id="freelancer_type">
                                             <div class="state p-warning">
                                             <i class="icon fa fa-check" aria-hidden="true"></i>
                                             <label></label>
@@ -143,7 +147,7 @@
                                     </li>
                                     <li class="">
                                         <div class="pretty p-icon p-thick p-curve">
-                                            <input {{ in_array("individual", $queries['freelance_type']) ? 'checked' : null }} type="checkbox" name="freelance_type[]" value="individual" id="152">
+                                            <input type="checkbox" name="freelance_type[]" value="individual" id="freelancer_type">
                                             <div class="state p-warning">
                                             <i class="icon fa fa-check" aria-hidden="true"></i>
                                             <label></label>
@@ -153,7 +157,7 @@
                                     </li>
                                     <li class="">
                                         <div class="pretty p-icon p-thick p-curve">
-                                            <input {{ in_array("student", $queries['freelance_type']) ? 'checked' : null }} type="checkbox" name="freelance_type[]" value="student" id="198">
+                                            <input type="checkbox" name="freelance_type[]" value="student" id="freelancer_type">
                                             <div class="state p-warning">
                                             <i class="icon fa fa-check" aria-hidden="true"></i>
                                             <label></label>
@@ -184,101 +188,59 @@
                             </div>
                             <div class="filters">
                                 <ul class="top-filters">
-                                <li>
-                                    <a href="freelancer-grid.html" class="services-grid-icon protip active list-style" data-pt-position="top" data-pt-scheme="black" data-pt-title="Grid View" data-list-style="grid">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a href="" class="services-grid-icon protip active list-style" data-pt-position="top" data-pt-scheme="black" data-pt-title="Grid View" data-list-style="grid">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        </a>
+                                    </li>
+                                    <button type="button" class="btn btn-primary view-map-btn" data-toggle="modal" style="display: none;" data-target="#create">
+                                        View Map
+                                    </button>
                                 </ul>
-                                <select class="default-select select2-hidden-accessible" name="sort" id="order_by" tabindex="-1" aria-hidden="true">
-                                <option value="">Sort by</option>
-                                <option value="desc"> Date: Descending</option>
-                                <option value="asc"> Name: Ascending</option>
-                                </select>
                             </div>
                         </form>
                     </div>
                     </div>
                     <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="row">
-                            @forelse($freelancers as $freelancer)
-                                <div class="col-xl-12 col-lg-12 grid-item">
-                                    <div class="fr3-details">
-                                    <div class="fr3-job-detail">
-                                        <div class="fr3-job-img">
-                                            <a href="/freelancer/view/{{ $freelancer->user_id }}">
-                                                @if($freelancer->user->profile_image)
-                                                    <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" alt="profile pic" style="width: 100%; height: 90px; object-fit: cover;">
-                                                @else
-                                                    <img src="../../../images/user-profile.png" alt="profile pic" style="width: 100%; height: 100px; object-fit: cover;">
-                                                @endif
-                                            </a>
-                                            <p class="mb-2"><i class="fas fa-star colored" aria-hidden="true"></i> No Reviews</p>
-                                            <!-- <a class="follow follow-freelancer protip text-danger" style="border: 1px solid rgb(255, 0, 0); padding: 0.3rem 1rem;" data-fid="177" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow">
-                                                 <i class="fas fa-heart mr-50 text-danger" aria-hidden="true"></i> Follow
-                                            </a> -->
-                                        </div>
-                                        <div class="fr3-job-text">
-                                            <span class="name"><a href="/freelancer/view/{{ $freelancer->user_id }}">	<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i>{{ $freelancer->display_name }}</a></span>
-                                            <a href="#">
-                                                <h3>{{ $freelancer->tagline }}</h3>
-                                            </a>
-                                            <p class="excerpt">{{ htmlentities(substr($freelancer->description, 0, 200)) }}...</p>
-                                            <p class="price-tag"><span class="currency">₱ </span><span class="price">{{ number_format($freelancer->hourly_rate, 2) }}</span><span class="bottom-text"> / hr</span></p>
-                                            <ul class="lists d-flex justify-content-between" style="gap: 10px;">
-                                                <li style="width: 25%;">
-                                                    @if($freelancer->distance)
-                                                        <div class="font-weight-bold" style="color: #000;">Distance :</div>
-                                                        {{ number_format($freelancer->distance, 2) }} km
-                                                    @else
-                                                        <div class="font-weight-bold" style="color: #000;">Member Since :</div>
-                                                        {{ date_format(new DateTime($freelancer->created_at), "F d, Y") }}
-                                                     @endif
-                                                </li>
-                                                <li style="width: 33%;">
-                                                    <div class="font-weight-bold" style="color: #000;">Location : </div>
-                                                    {{ $freelancer->address }}
-                                                </li>
-                                                <li style="width: 33%;">
-                                                    <div class="font-weight-bold" style="color: #000;">Freelancer Type : </div>
-                                                    {{ $freelancer->freelancer_type }}
-                                                </li>
-                                            </ul>
-                                            <hr>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="fr3-product-skills">
-                                                    @forelse($freelancer->skills as $skill)
-                                                        <a href="">{{ $skill->skill->skill_name }}</a>
-                                                    @empty
-                                                    <a href="#" class="bg-info text-white">No Skills Found</a>
-                                                    @endforelse
-                                                 </div>
-                                                <a href="/freelancer/view/{{ $freelancer->user_id }}" class="btn btn-theme btn-sm btn-outline-primary">View Profile <i class="fa fa-chevron-right ml-1"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    </div>
-                                </div>
-                            @empty
-
-                            @endforelse
+                        <div class="row freelancers-data">
+                            @include('CustomerScreens.home_screens.freelancer.freelancers');
                         </div>
-                        <div class="row">
-                            <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12">
-                               <div class="fl-navigation">
-                                  {{ $freelancers->links() }}
-                               </div>
-                            </div>
-                         </div>
                     </div>
                 </div>
             </div>
        </div>
     </div>
  </section>
+ <div class="modal fade " id="create" tabindex="-1" role="dialog" aria-labelledby="create" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-header bg-primary white">
+            <h4 class="modal-title text-white" id="myModalLabel8">Freelancers Location</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <div id="freelancers-locations"></div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-left">
+                            <button class="btn btn-secondary hide-boundary-btn" type="button">Hide Boundary</button>
+                            <button class="btn btn-primary show-boundary-btn" type="button">Show Boundary</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
  <script src="../../../js/user-location.js"></script>
 @endsection
 
+@push('scripts')
+<script src="../../../assets/js/custom_js/homescreen/freelancer_search.js"></script>
+@endpush

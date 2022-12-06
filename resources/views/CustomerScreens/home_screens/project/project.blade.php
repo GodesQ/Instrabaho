@@ -129,7 +129,7 @@
             <div class="fl-advert-box">
                <a href="javascript:void(0)"><img src="../../../images/logo/main-logo.png" width="124" alt="exertio theme" class="img-fluid"></a>
             </div>
-            @if (session()->get('role') == 'freelancer' && !$isAlreadySendProposal && !$isExpiredPlan)
+            @if (session()->get('role') == 'freelancer' && !$proposal && !$isExpiredPlan)
                 <div class="fr-project-lastest-product">
                     <div class="fr-project-place" id="fr-bid-form">
                         <h3> Send Your Proposal</h3>

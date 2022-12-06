@@ -56,6 +56,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     Route::get('/search_projects/fetch_data', [HomeScreenController::class, 'fetch_projects']);
 
     Route::get('/search_freelancers', [HomeScreenController::class, 'freelancers']);
+    Route::get('/search_freelancers/fetch_data', [HomeScreenController::class, 'fetch_freelancers']);
 
     Route::get('/project/view/{id}', [HomeScreenController::class, 'project'])->name('project.view');
     Route::get('/service/view/{id}', [HomeScreenController::class, 'service'])->name('service.view');
@@ -74,6 +75,7 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
     Route::post('/register', [AuthController::class, 'save_register'])->name('register.post');
     Route::get('/verify_email', [AuthController::class, 'verify_email'])->name('verify');
     Route::get('/verify-message', [AuthController::class, 'verify_message'])->name('verify-message');
+    Route::get('/success-verify-message', [AuthController::class, 'success_verify_message'])->name('success-verify-message');
 
     Route::post('/send_forgot_form', [ForgotPasswordController::class, 'send_forgot_form'])->name('send_forgot_form');
     Route::get('/forgot-message', [ForgotPasswordController::class, 'forgot_ message']);

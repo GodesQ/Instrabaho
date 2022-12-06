@@ -193,7 +193,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
-                        <a href="/projects" class="btn btn-solid btn-warning float-right">Cancel</a>
+                        <a href="/employer/projects" class="btn btn-solid btn-warning float-right">Cancel</a>
                         <button type="submit" class="btn btn-solid btn-primary float-right mx-50">Save</button>
                     </div>
                 </div>
