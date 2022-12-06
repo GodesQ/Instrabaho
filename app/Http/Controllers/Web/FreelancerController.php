@@ -111,7 +111,6 @@ class FreelancerController extends Controller
             FreelancerCertificate::where('freelancer_id', $freelancer->id)->delete();
         }
 
-
         foreach ($request->certificates as $key => $certifacate) {
             $image_name = $certifacate['old_image'];
             if(isset($certifacate['certificate_image'])) {
@@ -128,6 +127,7 @@ class FreelancerController extends Controller
                 'certificate_image' => $image_name
             ]);
         }
+
         return back()->with('success', 'Certificates Added Successfully');
     }
 
