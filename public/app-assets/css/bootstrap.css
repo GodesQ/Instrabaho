@@ -2397,7 +2397,9 @@ input[type="button"].btn-block {
 .dropright,
 .dropdown,
 .dropleft {
-  position: relative; }
+  position: relative;
+    padding: 0 40px 0 0;
+}
 
 .dropdown-toggle {
   white-space: nowrap; }
