@@ -29,6 +29,7 @@
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/bootstrap-extended.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/menu/menu-types/horizontal-menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/colors.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/components.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/plugins/forms/checkboxes-radios.css') }}">
@@ -38,7 +39,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/card-statistics.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/vertical-timeline.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}"> --}}
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-gradient.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-climacon.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/fonts/simple-line-icons/style.min.css') }}">
@@ -71,9 +72,81 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns">
+<body class="horizontal-layout horizontal-menu 2-columns" data-open="click" data-menu="horizontal-menu" data-col="2-columns">
+    <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-static-top navbar-light navbar-border navbar-brand-center">
+        <div class="navbar-wrapper">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav flex-row">
+                    <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="feather icon-menu font-large-1"></i></a></li>
+                    <li class="nav-item d-lg-flex justify-content-center align-items-center w-100">
+                        <a class="navbar-brand" href="/">
+                            <img class="brand-text" alt="stack admin logo" src="../../../images/logo/main-logo.png" style="width: 140px;">
+                        </a>
+                    </li>
+                    <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="fa fa-ellipsis-v"></i></a></li>
+                </ul>
+            </div>
+            <div class="navbar-container container center-layout">
+                <div class="collapse navbar-collapse" id="navbar-mobile">
+                    <ul class="nav navbar-nav mr-auto float-left">
+                        <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="feather icon-menu"></i></a></li>
+                        <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon feather icon-maximize"></i></a></li>
+                        <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon feather icon-search"></i></a>
+                            <div class="search-input">
+                                <input class="input" type="text" placeholder="Explore Stack..." tabindex="0" data-search="template-search">
+                                <div class="search-input-close"><i class="feather icon-x"></i></div>
+                                <ul class="search-list"></ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav float-right">
+                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    @if(Session::get('profile_image'))
+                                        <img class="brand-text" style="width: 30px; height: 30px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
+                                    @else
+                                        <img class="brand-text" src="../../../images/user-profile.png" style="width: 30px; height: 30px; object-fit: cover;" alt="Avatar Image">
+                                    @endif<i></i>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if(Session::get('role') == 'employer')
+                                    <a class="dropdown-item" href="/employer/profile"><i class="feather icon-user"></i> Edit Profile</a>
+                                @else
+                                    <a class="dropdown-item" href="/freelancer/profile"><i class="feather icon-user"></i> Edit Profile</a>
+                                @endif
+                                <a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
+                                @if(Session::get('role') == 'employer')
+                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="/change_login"><i class="feather icon-power"></i> Login as Freelancer</a>
+                                @else
+                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="/change_login"><i class="feather icon-log-in"></i> Login as Employer</a>
+                                @endif
+                                <a class="dropdown-item" href="/"><i class="feather icon-home"></i>Go to Home</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="/logout"><i class="feather icon-power"></i> Logout</a>
+                            </div>
+                        </li>
+                        <li class="d-flex justify-content-center align-items-center">
+                            <button class="btn btn-sm btn-primary text-uppercase">{{ Session::get('role') }}</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END: Header-->
 
-    <!-- BEGIN: Header-->
+
+    <!-- BEGIN: Main Menu-->
+    <div class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-static navbar-light navbar-without-dd-arrow navbar-shadow menu-border" role="navigation" data-menu="menu-wrapper">
+        <!-- Horizontal menu content-->
+        @if(Session::get('role') == 'employer')
+            @include('layout.horizontal-employer-menu')
+        @else
+            @include('layout.horizontal-freelancer-menu')
+        @endif
+        <!-- /horizontal menu content-->
+    </div>
+    {{-- <!-- BEGIN: Header-->
     <nav class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-light navbar-border">
         <div class="navbar-wrapper">
             <div class="navbar-header">
@@ -143,7 +216,7 @@
         @else
             @include('layout.freelancer-menu')
         @endif
-    <!-- END: Main Menu-->
+    <!-- END: Main Menu--> --}}
 
     <div class="app-content content">
         <div class="content-overlay"></div>
@@ -170,7 +243,7 @@
 
 
     <!-- BEGIN: Page Vendor JS-->
-
+    <script src="../../../app-assets/vendors/js/ui/jquery.sticky.js"></script>
     <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
     <script src="../../../app-assets/vendors/js/forms/repeater/jquery.repeater.min.js"></script>
     <script src="../../../app-assets/vendors/js/charts/leaflet/leaflet.js"></script>

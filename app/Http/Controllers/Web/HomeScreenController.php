@@ -32,7 +32,8 @@ class HomeScreenController extends Controller
         // ->with('freelancer')
         // ->get();
         $freelancers = Freelancer::limit(10)->get();
-        return view('welcome', compact('freelancers'));
+        $projects = Project::where('expiration_date', '>', Carbon::now())->limit(8)->with('category', 'employer')->latest('id')->get();
+        return view('welcome', compact('freelancers', 'projects'));
     }
 
     public function freelancer(Request $request) {
