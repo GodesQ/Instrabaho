@@ -141,18 +141,20 @@ class HomeScreenController extends Controller
         $latitude = $request->get('latitude');
         $longitude = $request->get('longitude');
         $type = $request->get('type');
+        $radius = $request->input('radius');
+        $result = $request->input('result');
 
         $projects = Project::select('*')
         ->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%')
         ->when($categories, function ($q) use ($categories) {
             if($categories[0]) return $q->whereIn('category_id', $categories);
         })
-        ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
+        ->when($latitude and $longitude, function ($q) use ($latitude, $longitude, $radius) {
             return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
             * cos(radians(projects.latitude))
             * cos(radians(projects.longitude) - radians(" . $longitude . "))
             + sin(radians(" .$latitude. "))
-            * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
+            * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', $radius)->orderBy("distance", 'asc');
         })
         ->when($type, function ($q) use ($type) {
             return $q->where('project_type', $type);
@@ -165,13 +167,14 @@ class HomeScreenController extends Controller
         ->where('isExpired', 0)
         ->with('category', 'employer')
         ->latest('id')
-        ->paginate(7);
+        ->paginate($result);
 
         $view_data = view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
 
         return response()->json([
             'view_data' => $view_data,
-            'projects' => $projects
+            'projects' => $projects,
+            'radius' => $radius
         ]);
     }
 
@@ -230,15 +233,20 @@ class HomeScreenController extends Controller
                     ->orWhere(DB::raw('lower(description)'), 'like', '%' . strtolower($title) . '%');
         })
         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude, $radius, $sort) {
-            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
+            $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
             * cos(radians(user_freelancer.latitude))
             * cos(radians(user_freelancer.longitude) - radians(" . $longitude . "))
             + sin(radians(" .$latitude. "))
-            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', $radius)->orderBy("distance", $sort);
+            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', $radius);
+
+            if($sort == 'asc') $q->orderBy("distance", $sort);
+            return $q;
         })
         ->when($my_range, function ($q) use ($my_range) {
             $range = explode(';', $my_range);
             return $q->whereBetween('hourly_rate', [intval($range[0]), intval($range[1])]);
+            if($sort == 'hourly_rate') $q->orderBy("hourly_rate", 'asc');
+            return $q;
         })
         ->when($freelance_type, function ($q) use ($freelance_type) {
             if($freelance_type[0])  return $q->whereIn('freelancer_type', $freelance_type);

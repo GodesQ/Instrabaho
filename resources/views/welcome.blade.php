@@ -83,13 +83,13 @@
                 alt="1558"
             />
         </div>
-        <div class="carousel-item">
+        {{-- <div class="carousel-item">
             <img
                 class="d-block w-100"
                 src="../../../images/slider/Instrabaho_Slider_01_WEB17.png"
                 alt="1558"
             />
-        </div>
+        </div> --}}
     </div>
     <div class="fr-hero3 hero-slider logoslider" style="z-index: 2;">
         <div class="container">

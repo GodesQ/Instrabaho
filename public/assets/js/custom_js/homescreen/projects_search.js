@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    // set the default radius
+    var radius = $('#radius').val();
+
     $(document).on('click', '.pagination .page-item a', function(event) {
         event.preventDefault();
         let page = $(this).attr('href').split('page=')[1];
@@ -9,6 +12,7 @@ $(document).ready(function() {
 
     $(document).on('submit', '#projects-filter-form', function(event) {
         event.preventDefault();
+        if(!$('#map-search').val() && !$('.latitude').val() && !$('.longitude').val()) return toastr.warning('The location is invalid please input a correct value', 'Fail');
         fetchProjects(1);
     })
 
@@ -24,14 +28,19 @@ $(document).ready(function() {
             longitude: $('.longitude').val(),
             my_range: $('#my_range').val(),
             type: $('#type').val(),
+            radius: $('#radius').val(),
+            result: $('#result').val(),
             categories: encodeURIComponent(JSON.stringify(selected_categories)),
         }
-        let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}`;
+
+        let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&my_range=${filter_data.my_range}&type=${filter_data.type}&categories=${filter_data.categories}&radius=${filter_data.radius}&result=${filter_data.result}`;
+        $('.projects-data').html('<h1>Loading...</h1>');
         $.ajax({
             url: "/search_projects/fetch_data?page="+page+'&'+filter_parameters,
             success: function (data) {
                 $('.projects-data').html(data.view_data);
                 $('.protip-container').remove();
+                radius = data.radius;
                 data.projects.length == 0 || data.projects.data.length == 0 ? $('.view-map-btn').css('display', 'none') : $('.view-map-btn').css('display', 'block');
                 setLocations(data.projects);
             }
@@ -112,10 +121,11 @@ $(document).ready(function() {
     }
 
     $(document).on('click', '.show-boundary-btn', function(event) {
-        if(!circle) {
+        let modal_map = document.querySelector('#modal-map');
+        if(!circle || modal_map.classList.contains('show')) {
             circle = new google.maps.Circle({
                 center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
-                radius: 10000,
+                radius: Number(radius) * 1000,
                 strokeColor: '#04bbff',
                 strokeOpacity: 1,
                 strokeWeight: 1,
@@ -124,6 +134,10 @@ $(document).ready(function() {
                 map: map
             })
             circle.bindTo('center', my_marker, 'position');
+            map.setZoom( 13 );
+        } else {
+            circle.setMap(null);
+            circle = null;
         }
     })
 

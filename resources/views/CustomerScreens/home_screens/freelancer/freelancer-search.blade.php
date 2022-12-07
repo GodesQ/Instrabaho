@@ -201,8 +201,8 @@
                         </div>
                         <div style="width: 50%">
                             <select name="sort" id="sort" class="form-control">
-                                <option value="asc">Nearest from Location</option>
-                                <option value="desc">Farthest from Location</option>
+                                <option value="asc">Sort by Nearest</option>
+                                <option value="hourly_rate">Sort By Lowest Price</option>
                             </select>
                         </div>
                     </div>

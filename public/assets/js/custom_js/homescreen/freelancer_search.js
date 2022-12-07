@@ -50,7 +50,7 @@ $(document).ready(function() {
         }
 
         let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&radius=${filter_data.radius}&result=${filter_data.result}&hourly_rate=${filter_data.hourly_rate}&skills=${filter_data.skills}&freelance_type=${filter_data.freelance_type}&sort=${filter_data.sort}`;
-
+        $('.freelancers-data').html('<h1>Searching...</h1>');
         $.ajax({
             url: "/search_freelancers/fetch_data?page="+page+'&'+filter_parameters,
             success: function (data) {
