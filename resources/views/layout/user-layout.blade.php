@@ -10,7 +10,7 @@
     <meta name="description" content="Instrabaho is a community where you can post a project if you are an employer or you may post service if you are a skilled worker. This initiative is to help people who lose their job during the time of the pandemic.">
     <meta name="keywords" content="instrabaho, blue collars, skilled workers, Online Platform for skilled workers, Online Job Portal">
     <meta name="author" content="GODESQ DIGITAL MARKETING SERVICES">
-    <title>INSTRABAHO</title>
+    <title>@yield('title')</title>
     <link rel="shortcut icon" type="image/x-icon" href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
 

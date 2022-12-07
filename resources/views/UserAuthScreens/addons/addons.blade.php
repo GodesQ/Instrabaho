@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Addons - INSTRABAHO')
+
 @section('content')
 @if(Session::get('success'))
     @push('scripts')
@@ -8,6 +10,7 @@
         </script>
     @endpush
 @endif
+
 <div class="page-wrapper">
     <div class="page-content">
         <div class="container-fluid">

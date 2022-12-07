@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Pay Job - INSTRABAHO')
+
 @section('content')
 @if(Session::get('fail'))
     @push('scripts')

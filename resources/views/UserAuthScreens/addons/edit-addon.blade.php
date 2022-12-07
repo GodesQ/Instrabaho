@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Edit Addon - INSTRABAHO')
+
 @section('content')
 @if(Session::get('success'))
     @push('scripts')
