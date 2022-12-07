@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Create Contract - INSTRABAHO')
+
 @section('content')
 @if ($errors->any())
     @foreach ($errors->all() as $error)

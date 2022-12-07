@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Contract - INSTRABAHO')
+
 @section('content')
     <div class="page-wrapper">
         <div class="page-content">

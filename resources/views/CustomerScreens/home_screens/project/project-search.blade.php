@@ -48,7 +48,7 @@
        </div>
     </div>
 </section> --}}
-<section class="fr-top-srvices section-padding padding-top-bottom-3  actionbar_space">
+<section class="fr-top-srvices section-padding ">
     <div class="container">
        <div class="row">
           <div class="col-xl-4 col-xs-12 col-sm-12 col-md-12">

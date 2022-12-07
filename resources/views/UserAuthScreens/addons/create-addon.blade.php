@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Create Addon - INSTRABAHO')
+
 @section('content')
 
 @if ($errors->any())
