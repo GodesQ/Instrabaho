@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    // set the default radius
+    var radius = $('#radius').val();
+
     $(document).on('click', '.pagination .page-item a', function(event) {
         event.preventDefault();
         let page = $(this).attr('href').split('page=')[1];
@@ -9,6 +12,11 @@ $(document).ready(function() {
 
     $(document).on('submit', '#freelancer-filter-form', function(event) {
         event.preventDefault();
+        if(!$('#map-search').val() && !$('.latitude').val() && !$('.longitude').val()) return toastr.warning('The location is invalid please input a correct value', 'Fail');
+        fetchFreelancers(1);
+    })
+
+    $(document).on('change', '#sort', function(event) {
         fetchFreelancers(1);
     })
 
@@ -35,13 +43,17 @@ $(document).ready(function() {
             hourly_rate: $('#my_range').val(),
             freelance_type: encodeURIComponent(JSON.stringify(selected_freelancer_type)),
             skills: encodeURIComponent(JSON.stringify(selected_skills)),
+            radius: $('#radius').val(),
+            result: $('#result').val(),
+            sort: $('#sort').val()
         }
 
-        let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&hourly_rate=${filter_data.hourly_rate}&skills=${filter_data.skills}&freelance_type=${filter_data.freelance_type}`;
+        let filter_parameters = `title=${filter_data.title}&address=${filter_data.address}&latitude=${filter_data.latitude}&longitude=${filter_data.longitude}&radius=${filter_data.radius}&result=${filter_data.result}&hourly_rate=${filter_data.hourly_rate}&skills=${filter_data.skills}&freelance_type=${filter_data.freelance_type}&sort=${filter_data.sort}`;
 
         $.ajax({
             url: "/search_freelancers/fetch_data?page="+page+'&'+filter_parameters,
             success: function (data) {
+                radius = data.radius;
                 $('.freelancers-data').html(data.view_data);
                 $('.protip-container').remove();
                 data.freelancers.length == 0 || data.freelancers.data.length == 0 ? $('.view-map-btn').css('display', 'none') : $('.view-map-btn').css('display', 'block');
@@ -68,7 +80,6 @@ $(document).ready(function() {
         };
 
         map = new google.maps.Map(document.getElementById("freelancers-locations"), mapOptions);
-
         var infoWindow = new google.maps.InfoWindow();
 
 
@@ -115,18 +126,23 @@ $(document).ready(function() {
     }
 
     $(document).on('click', '.show-boundary-btn', function(event) {
-        if(!circle) {
+        let modal_map = document.querySelector('#modal-map');
+        if(!circle || modal_map.classList.contains('show')) {
             circle = new google.maps.Circle({
                 center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
-                radius: 10000,
+                radius: Number(radius) * 1000,
                 strokeColor: '#04bbff',
                 strokeOpacity: 1,
                 strokeWeight: 1,
                 fillColor: '#e6f0ff',
-                fillOpacity: 0.3,
+                fillOpacity: 0.5,
                 map: map
             })
             circle.bindTo('center', my_marker, 'position');
+            map.setZoom( 13 );
+        } else {
+            circle.setMap(null);
+            circle = null;
         }
     })
 
@@ -134,4 +150,5 @@ $(document).ready(function() {
         circle.setMap(null);
         circle = null;
     })
+
 })

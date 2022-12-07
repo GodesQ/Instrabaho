@@ -149,53 +149,53 @@
                                 <a href="/contact-us">Contact Us</a>
                             </li>
                             @if(!Session::get('role') && !Session::get('id') || Session::get('role') == 'admin')
-                            <li class="fr-list">
-                                <a
-                                    href="/register"
-                                    class="btn-theme-warning style-1" style="padding: 0.7rem 1rem !important;"
-                                >
-                                    Register
-                                </a>
-                                <a href="/login" class="btn btn-theme" style="padding: 0.7rem 1rem !important;"
-                                    >Sign in</a
-                                >
-                            </li>
+                                <li class="fr-list">
+                                    <a
+                                        href="/register"
+                                        class="btn-theme-warning style-1" style="padding: 0.7rem 1rem !important;"
+                                    >
+                                        Register
+                                    </a>
+                                    <a href="/login" class="btn btn-theme" style="padding: 0.7rem 1rem !important;"
+                                        >Sign in</a
+                                    >
+                                </li>
                             @else
-                            <li class="dropdown dropdown-user nav-item fr-list loggedin">
-                                <a
-                                    class="dropdown-toggle nav-link dropdown-user-link"
-                                    href="#"
-                                    data-toggle="dropdown"
-                                >
-                                    <div class="avatar avatar-online">
-                                        @if(Session::get('profile_image'))
-                                            <img class="brand-text" style="width: 30px; height: 30px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
+                                <li class="dropdown dropdown-user nav-item fr-list loggedin">
+                                    <a
+                                        class="dropdown-toggle nav-link dropdown-user-link"
+                                        href="#"
+                                        data-toggle="dropdown"
+                                    >
+                                        <div class="avatar avatar-online">
+                                            @if(Session::get('profile_image'))
+                                                <img class="brand-text" style="width: 30px; height: 30px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
+                                            @else
+                                                <img class="brand-text" src="../../../images/user-profile.png" style="width: 30px; height: 30px; object-fit: cover;" alt="Avatar Image">
+                                            @endif<i></i>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right p-3" style="width: 300px;">
+                                        <!-- <a href="/" class="container">
+                                            <h6 class="h6 text-black-50">Wallet Funds</h6>
+                                            <h3 class="text-primary">₱ 1000.00</h3>
+                                        </a> -->
+                                        <a href="/{{session()->get('role') == 'freelancer' ? 'freelancer' : 'employer'}}/dashboard" class="dropdown-item" style="color: #000000 !important;">
+                                            <i class="fa fa-home"></i> Dashboard
+                                        </a>
+                                        <a href="{{ session()->get('role') == 'freelancer' ? route('freelancer.profile') : route('employer.profile')}}" class="dropdown-item" style="color: #000000 !important;">
+                                            <i class="fa fa-user"></i> Edit Profile
+                                        </a>
+                                        @if(Session::get('role') == 'employer')
+                                            <a class="dropdown-item" href="/change_login" style="color: #000000 !important;"><i class="feather icon-log-in"></i> Login as Freelancer</a>
                                         @else
-                                            <img class="brand-text" src="../../../images/user-profile.png" style="width: 30px; height: 30px; object-fit: cover;" alt="Avatar Image">
-                                        @endif<i></i>
+                                            <a class="dropdown-item" href="/change_login" style="color: #000000 !important;"><i class="feather icon-log-in"></i> Login as Employer</a>
+                                        @endif
+                                        <a href="/logout" class="dropdown-item" style="color: #000000 !important;">
+                                            <i class="feather icon-log-out"></i> Logout
+                                        </a>
                                     </div>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right p-3" style="width: 300px;">
-									<!-- <a href="/" class="container">
-										<h6 class="h6 text-black-50">Wallet Funds</h6>
-										<h3 class="text-primary">₱ 1000.00</h3>
-									</a> -->
-									<a href="/{{session()->get('role') == 'freelancer' ? 'freelancer' : 'employer'}}/dashboard" class="dropdown-item" style="color: #000000 !important;">
-										<i class="fa fa-home"></i> Dashboard
-									</a>
-                                    <a href="" class="dropdown-item" style="color: #000000 !important;">
-										<i class="fa fa-user"></i> Edit Profile
-									</a>
-                                    @if(Session::get('role') == 'employer')
-                                        <a class="dropdown-item" href="/change_login" style="color: #000000 !important;"><i class="feather icon-log-in"></i> Login as Freelancer</a>
-                                    @else
-                                        <a class="dropdown-item" href="/change_login" style="color: #000000 !important;"><i class="feather icon-log-in"></i> Login as Employer</a>
-                                    @endif
-									<a href="/logout" class="dropdown-item" style="color: #000000 !important;">
-										<i class="feather icon-log-out"></i> Logout
-									</a>
-                                </div>
-                            </li>
+                                </li>
                             @endif
                         </ul>
                     </nav>
@@ -203,7 +203,7 @@
             </div>
         </div>
         @yield('content')
-        <section class="fr-browse-category">
+        {{-- <section class="fr-browse-category">
             <div class="container">
                 <div class="row">
                     <div
@@ -399,7 +399,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <section class="fr-footer padding-top-80">
             <div class="container">
                 <div class="row padding-bottom-80">

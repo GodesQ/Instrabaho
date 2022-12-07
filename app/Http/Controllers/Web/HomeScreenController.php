@@ -192,7 +192,19 @@ class HomeScreenController extends Controller
 
     public function freelancers(Request $request) {
         $skills = Skill::all();
-        $freelancers = Freelancer::paginate(10);
+
+        #get user data
+        $user_id = session()->get('id');
+        $user = session()->get('role') == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
+
+        #get all freelancers and create pagination
+        $freelancers = Freelancer::select('*')->when($user_id, function ($q) use ($user, $user_id) {
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $user->latitude . "))
+            * cos(radians(user_freelancer.latitude))
+            * cos(radians(user_freelancer.longitude) - radians(" . $user->longitude . "))
+            + sin(radians(" .$user->latitude. "))
+            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
+        })->paginate(10);
 
         return view('CustomerScreens.home_screens.freelancer.freelancer-search', compact('freelancers', 'skills'));
     }
@@ -200,24 +212,29 @@ class HomeScreenController extends Controller
     public function fetch_freelancers(Request $request) {
         abort_if(!$request->ajax(), 404);
 
-        // filters
+        // data filters
         $title = $request->input('title');
         $address = $request->input('address');
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
         $my_range = $request->input('hourly_rate');
+        $radius = $request->input('radius');
+        $result = $request->input('result');
+        $sort = $request->input('sort');
         $freelancer_skills = $request->input('skills') ? json_decode($request->input('skill')) : [];
         $freelance_type = $request->input('freelance_type') ? json_decode($request->input('freelance_type')) : [];
 
         $freelancers = Freelancer::select('*')->when($title, function ($q) use ($title) {
-            return $q->where(DB::raw('lower(display_name)'), 'like', '%' . strtolower($title) . '%');
+            return $q->where(DB::raw('lower(display_name)'), 'like', '%' . strtolower($title) . '%')
+                    ->orWhere(DB::raw('lower(tagline)'), 'like', '%' . strtolower($title) . '%')
+                    ->orWhere(DB::raw('lower(description)'), 'like', '%' . strtolower($title) . '%');
         })
-        ->when($latitude and $longitude, function ($q) use ($latitude, $longitude) {
+        ->when($latitude and $longitude, function ($q) use ($latitude, $longitude, $radius, $sort) {
             return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
             * cos(radians(user_freelancer.latitude))
             * cos(radians(user_freelancer.longitude) - radians(" . $longitude . "))
             + sin(radians(" .$latitude. "))
-            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
+            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', $radius)->orderBy("distance", $sort);
         })
         ->when($my_range, function ($q) use ($my_range) {
             $range = explode(';', $my_range);
@@ -234,13 +251,14 @@ class HomeScreenController extends Controller
                 });
             }
         })
-        ->paginate(10);
+        ->paginate($result);
 
         $view_data = view('CustomerScreens.home_screens.freelancer.freelancers', compact('freelancers'))->render();
 
         return response()->json([
             'view_data' => $view_data,
             'freelancers' => $freelancers,
+            'radius' => $radius,
         ]);
 
     }

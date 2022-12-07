@@ -313,23 +313,9 @@
 		                        <i class="fas fa-phone"></i>
 		                        <div class="meta">
 		                           <span>Contact No.</span>
-		                           <p>{{ $freelancer->contactno }}</p>
+		                           <p>{{$freelancer->contactno}}</p>
 		                        </div>
 		                     </li>
-		                     <!-- <li>
-		                        <i class="fas fa-tasks"></i>
-		                        <div class="meta">
-		                           <span>English Level</span>
-		                           <p>Tag C</p>
-		                        </div>
-		                     </li>
-		                     <li>
-		                        <i class="fas fa-language"></i>
-		                        <div class="meta">
-		                           <span>Languages</span>
-		                           <p>renegade</p>
-		                        </div>
-		                     </li> -->
 		                  </ul>
 		               </div>
 		               <div class="fr-product-progress sidebar-box">
