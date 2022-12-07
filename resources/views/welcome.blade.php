@@ -8,6 +8,44 @@
         </script>
     @endpush
 @endif
+
+<style>
+    .btn-home {
+        border: 1px solid #04bbff;
+        background-image: linear-gradient(to right, #04bbff 11%, #08303e81 89%) !important;
+        padding: 1rem 1.3rem;
+        font-weight: 800;
+        color: #fff;
+        font-size: 20px;
+        border-radius: 10px;
+    }
+    .btn-home:hover {
+        color: #fff;
+        transition: 0.5s;
+        background: #04bbff;
+    }
+
+    .second-span {
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+    @media (max-width: 567px) {
+        .btn-home {
+            border: 1px solid #04bbff;
+            background-image: linear-gradient(to right, #04bbff 21%, #08303e81 79%) !important;
+            padding: 1rem 1.3rem;
+            font-weight: 800;
+            color: #fff;
+            font-size: 15px;
+            border-radius: 10px;
+        }
+        .second-span {
+            font-size: 10px;
+            font-weight: 400;
+        }
+    }
+</style>
 <div
     id="exertio-carousal"
     class="carousel slide carousel-fade pointer-event"
@@ -186,7 +224,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button class="btn btn-primary " style="border-radius: 25px;">Save</button>
+                                    {{-- <button class="btn btn-primary " style="border-radius: 25px;">Save</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -203,12 +241,24 @@
     <div class="container">
         <div class="row">
            <div class="col-xs-12 col-sm-12 col-md-12">
-              <div class="parallex-text">
+              <div class="parallex-text text-left">
                  <h5>Since the Start </h5>
-                 <h4>We Provide Stable Service With Experts</h4>
-                 <p>Freelancers around the globe, are looking for work and provide the best they have. Start now </p>
-                 <a href="/search_projects" class="btn btn-theme-secondary">View Projects</a>
-                 <a href="/search_services" class="btn btn-theme">View Services</a>
+                 <h4 class="font-weight-bold">We Provide <br> Stable Service <br> With Skilled Workers</h4>
+                 <p>Skilled Workers around the Philippines, are looking for work and provide the <br> best they have. Start now </p>
+                 <div class="d-flex justify-content-start px-2 gap-2">
+                    <a href="/search_projects" class="btn-home d-flex justify-content-center flex-column">
+                        <span>Explore Projects</span>
+                        <span class="second-span">
+                            View Projects Catalog <i class="fa fa-arrow-right ml-xl-1"></i>
+                        </span>
+                    </a>
+                     <a href="/search_services" class="btn-home d-flex justify-content-center flex-column">
+                        <span>Explore Services</span>
+                        <span class="second-span">
+                            View Services Catalog <i class="fa fa-arrow-right ml-xl-1"></i>
+                        </span>
+                    </a>
+                 </div>
               </div>
            </div>
         </div>
@@ -220,7 +270,7 @@
           <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
              <div class="heading-panel  section-center">
                 <div class="heading-meta">
-                   <h2>TOP RATED SKILLED WORKERS <br> NEAR YOU</h2>
+                   <h2>TOP RATED SKILLED WORKERS</h2>
                    <p>Work with skilled people at the most affordable price to get your job done</p>
                 </div>
              </div>

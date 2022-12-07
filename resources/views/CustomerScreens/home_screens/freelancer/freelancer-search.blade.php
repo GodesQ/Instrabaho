@@ -209,7 +209,7 @@
                     </div>
                     <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="row freelancers-data">
-                            @include('CustomerScreens.home_screens.freelancer.freelancers');
+                            @include('CustomerScreens.home_screens.freelancer.freelancers')
                         </div>
                     </div>
                 </div>

@@ -13397,19 +13397,19 @@ ins, mark {
     margin-bottom: 0;
 }
 .call-actionz .parallex-text h4 {
-    font-size: 40px;
+    font-size: 50px;
     margin: 0 0 20px;
     color: #fff;
     text-transform: capitalize;
     line-height: 1.5;
 }
 .call-actionz p {
-    width: 60%;
+    width: 100%;
     margin: 0 auto;
         margin-bottom: 0px;
     margin-bottom: 0;
     margin-bottom: 40px;
-    font-size: 22px;
+    font-size: 18px;
     color: #fff;
     line-height: 1.8em;
 }
@@ -13570,8 +13570,8 @@ ins, mark {
 }
 .section-padding-extra
 {
-	padding: 100px 0px 100px 0px;
-	background-image: url("../../../images/bg-image/home-banner.jpg");
+	padding: 70px 0px 70px 0px;
+	background-image: url("../../../images/bg-image/banner-home.png");
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;

@@ -57,7 +57,10 @@
         </div>
     </div>
 @empty
-
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        <img src="../../../images/illustrations/no-data.png" style="width: 300px;" alt="">
+        <h2>No Freelancer Found</h2>
+    </div>
 @endforelse
 
 <div class="fl-navigation">
