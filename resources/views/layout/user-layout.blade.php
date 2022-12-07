@@ -20,10 +20,13 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/icheck/icheck.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/icheck/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/toggle/switchery.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/apexcharts.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/jquery-jvectormap-2.0.3.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/morris.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/leaflet.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/extensions/unslider.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/weather-icons/climacons.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/leaflet.css') }}">
+
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -59,7 +62,7 @@
     <!-- END: Custom CSS-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
-    <link rel="icon" href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" href="../../../images/cropped-favicon-32x32.png" sizes="32x32" />
 
     <style>
         .hide-profile-menu {
@@ -246,6 +249,7 @@
     <script src="../../../app-assets/vendors/js/ui/jquery.sticky.js"></script>
     <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
     <script src="../../../app-assets/vendors/js/forms/repeater/jquery.repeater.min.js"></script>
+    <script src="../../../app-assets/vendors/js/charts/apexcharts/apexcharts.min.js"></script>
     <script src="../../../app-assets/vendors/js/charts/leaflet/leaflet.js"></script>
     <script src="../../../app-assets/vendors/js/forms/icheck/icheck.min.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>

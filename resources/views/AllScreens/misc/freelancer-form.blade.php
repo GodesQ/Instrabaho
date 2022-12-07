@@ -106,6 +106,7 @@
                                                     <div class="form-group">
                                                         <div class="form-label font-weight-bold my-50">Address <span class="danger text-danger">*</span></div>
                                                         <input type="text" name="address" id="map-search" class="form-control controls" style="border: {{$errors->has('address') ? '1px solid #ff7588 !important' : 'none'}};" value="{{ old('address') }}">
+                                                        <button type="button" class="btn btn-primary my-3" id="get-current-location">Current <i class="fa fa-map-marker"></i></button>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div id="map-canvas"></div>

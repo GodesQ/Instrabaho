@@ -17,6 +17,7 @@ $(document).ready(function() {
     })
 
     $(document).on('change', '#sort', function(event) {
+        if(!$('#map-search').val() && !$('.latitude').val() && !$('.longitude').val()) return toastr.warning('The location is invalid please input a correct value', 'Fail');
         fetchFreelancers(1);
     })
 

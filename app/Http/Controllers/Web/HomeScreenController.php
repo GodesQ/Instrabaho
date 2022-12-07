@@ -203,7 +203,7 @@ class HomeScreenController extends Controller
             * cos(radians(user_freelancer.latitude))
             * cos(radians(user_freelancer.longitude) - radians(" . $user->longitude . "))
             + sin(radians(" .$user->latitude. "))
-            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc');
+            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $user->id);
         })->paginate(10);
 
         return view('CustomerScreens.home_screens.freelancer.freelancer-search', compact('freelancers', 'skills'));

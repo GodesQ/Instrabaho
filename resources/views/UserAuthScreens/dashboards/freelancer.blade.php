@@ -74,23 +74,9 @@
     <div class="row minimal-modern-charts">
         <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-12 col-12 power-consumption-stats-chart">
             <div class="card">
-                <div class="card-content pt-2 px-1">
-                    <div class="row">
-                        <div class="col-8 d-flex">
-                            <div class="ml-1">
-                                <h4 class="power-consumption-stats-title text-bold-500">Profile Views</h4>
-                            </div>
-                        </div>
-                        <div class="col-4 d-flex justify-content-end pr-3">
-                            <div class="dark-text">
-                                <h5 class="power-consumption-active-tab text-bold-500">Week</h5>
-                            </div>
-                            <div class="light-text ml-2">
-                                <h5>Month</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="spline-chart"></div>
+                <div class="card-body">
+                    <div class="card-title">MY PROJECTS IN EVERY MONTH</div>
+                    <div id="column-basic-chart"></div>
                 </div>
             </div>
         </div>
@@ -143,7 +129,7 @@
                                 </li>
                                 <hr>
                             @else
-                                <p> No, Stats available</p>		
+                                <p> No, Stats available</p>
                             @endif
                         </ul>
                     </div>
@@ -152,3 +138,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script src="../../../app-assets/js/scripts/charts/apexcharts/charts-apexcharts.js"></script>
+@endpush
