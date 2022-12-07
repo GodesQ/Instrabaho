@@ -5,7 +5,7 @@
                 <div class="fr3-job-img">
                     <a href="/freelancer/view/{{ $freelancer->user_id }}">
                         @if($freelancer->user->profile_image)
-                            <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" alt="profile pic" style="width: 100%; height: 90px; object-fit: cover;">
+                            <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" alt="profile pic" style="width: 100px; height: 90px; object-fit: cover;">
                         @else
                             <img src="../../../images/user-profile.png" alt="profile pic" style="width: 100%; height: 100px; object-fit: cover;">
                         @endif

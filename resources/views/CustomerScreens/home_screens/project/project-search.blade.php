@@ -29,7 +29,7 @@
    }
 </style>
 
-<section class="fr-list-product bg-img">
+{{-- <section class="fr-list-product bg-img">
     <div class="container">
        <div class="row">
           <div class="col-xl-12 col-lg-12 col-sm-12 col-md-12 col-xs-12">
@@ -47,7 +47,7 @@
           </div>
        </div>
     </div>
-</section>
+</section> --}}
 <section class="fr-top-srvices section-padding padding-top-bottom-3  actionbar_space">
     <div class="container">
        <div class="row">
@@ -59,50 +59,65 @@
                 </div>
                 <div class="service-widget">
                    <form action="#" id="projects-filter-form">
-                      <div class="panel panel-default">
-                         <div class="panel-heading "> <a role="button" class="" data-bs-toggle="collapse" href="#search-widget"> Keywords </a> </div>
-                         <div id="search-widget" class="panel-collapse collapse " role="tabpanel">
-                            <div class="panel-body" tabindex="1">
-                               <div class="form-group">
-                                  <input type="text" class="form-control" value="" id="title" name="title" placeholder="What are you looking for" value="">
-                               </div>
+                        <div class="row px-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="font-weight-bold mt-2" style="color: #000;">Address</div>
+                                            <div class="mb-3">Street, City or State</div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" id="get-current-location">Current <i class=""></i></button>
+                                    </div>
+                                    <input type="text" name="address" id="map-search" class="form-control controls" value="" placeholder="Enter Address">
+                                </div>
                             </div>
-                         </div>
-                      </div>
-                     <div class="panel panel-default">
-                        <div class="panel-heading active"> <a role="button" class="collapsed" data-bs-toggle="collapse" href="#freelancer-location">Location </a> </div>
-                        <div id="freelancer-location" class="panel-collapse collapse show" role="tabpanel">
-                           <div class="panel-body" tabindex="7">
-                              <div class="row">
-                                    <div class="col-md-12">
-                                       <div class="form-group">
-                                          <div class="form-label font-weight-bold my-50">Address</div>
-                                          <input type="text" name="address" id="map-search" class="form-control controls" value="">
-                                       </div>
-                                    </div>
-                              </div>
-                              <div class="row">
-                                    <div class="col-md-12">
-                                       <div id="map-canvas"></div>
-                                    </div>
-                              </div>
-                              <div class="row">
-                                    <div class="col-md-6">
-                                       <div class="form-group">
-                                          <!-- <div class="form-label font-weight-bold my-50">Latitude</div> -->
-                                          <input type="hidden" name="latitude" value="" class="form-control latitude">
-                                       </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                       <div class="form-group">
-                                          <!-- <div class="form-label font-weight-bold my-50">Longitude</div> -->
-                                          <input type="hidden" name="longitude" class="form-control longitude" value="">
-                                       </div>
-                                    </div>
-                              </div>
-                           </div>
+                            <div class="col-md-12">
+                                <div id="map-canvas"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <!-- <div class="form-label font-weight-bold my-50">Latitude</div> -->
+                                    <input type="hidden" name="latitude" class="form-control latitude">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <!-- <div class="form-label font-weight-bold my-50">Longitude</div> -->
+                                    <input type="hidden" name="longitude" class="form-control longitude">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="font-weight-bold" style="color: #000;">Radius</div>
+                                    <select name="radius" id="radius" class="form-control">
+                                        <option value="5">5 km</option>
+                                        <option value="10">10 km</option>
+                                        <option value="25">25 km</option>
+                                        <option value="50">50 km</option>
+                                        <option value="75">75 km</option>
+                                        <option value="100">100 km</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="font-weight-bold" style="color: #000;">Result Per Page</div>
+                                    <select name="result" id="result" class="form-control">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 my-3">
+                                <div class="form-group">
+                                    <div class="font-weight-bold mt-2" style="color: #000;">Keyword</div>
+                                    <div class="mb-3">Project Title, keywords</div>
+                                    <input type="text" class="form-control" name="title" placeholder="Keyword or freelancer name" id="title">
+                                </div>
+                            </div>
                         </div>
-                     </div>
                       <div class="panel panel-default">
                          <div class="panel-heading"> <a role="button" class="" data-bs-toggle="collapse" href="#category-widget"> Search by category </a> </div>
                          <div id="category-widget" class="panel-collapse collapse" role="tabpanel">
@@ -176,7 +191,7 @@
                                   <span></span>
                                   </a>
                                </li>
-                                <button type="button" class="btn btn-primary view-map-btn" data-toggle="modal" style="display: none;" data-target="#create">
+                                <button type="button" class="btn btn-primary view-map-btn" data-toggle="modal" style="display: none;" data-target="#modal-map">
                                     View Map
                                 </button>
                             </ul>
@@ -194,7 +209,7 @@
        </div>
     </div>
  </section>
- <div class="modal fade " id="create" tabindex="-1" role="dialog" aria-labelledby="create" aria-hidden="true">
+ <div class="modal fade " id="modal-map" tabindex="-1" role="dialog" aria-labelledby="modal-map" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-header bg-primary white">
             <h4 class="modal-title text-white" id="myModalLabel8">Projects Location</h4>
