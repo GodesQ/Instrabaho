@@ -224,6 +224,7 @@ class HomeScreenController extends Controller
         $radius = $request->input('radius');
         $result = $request->input('result');
         $sort = $request->input('sort');
+
         $freelancer_skills = $request->input('skills') ? json_decode($request->input('skill')) : [];
         $freelance_type = $request->input('freelance_type') ? json_decode($request->input('freelance_type')) : [];
 
