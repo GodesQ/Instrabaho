@@ -17,6 +17,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ProjectProposalController extends Controller
 {
+    public function employer_create_proposal(Request $request) {
+        $user_id = session()->get('id');
+        $employer = Employer::where('user_id', $user_id)->with('projects')->firstOrFail();
+        $freelancer = Freelancer::where('display_name', $request->freelancer)->orWhere('id', $request->id)->firstOrFail();
+
+        return view('UserAuthScreens.proposals.employer.create-proposal', compact('employer', 'freelancer'));
+    }
+
     public function store(StoreProjectProposal $request) {
 
         $freelancer = Freelancer::where('user_id', session()->get('id'))->firstOrFail();
