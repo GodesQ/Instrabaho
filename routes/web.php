@@ -156,12 +156,17 @@ use App\Events\ProjectMessageEvent;
             Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create')->middleware('plan.expiration');
             Route::get('edit_project/{id}', [ProjectsController::class, 'user_edit'])->name('freelancer.project.edit');
 
+            Route::get('/proposal/create_proposal/{freelancer}/{id}', [ProjectProposalController::class, 'employer_create_proposal'])->name('proposal.employer.create');
+
             Route::get('proposals', [ProjectProposalController::class, 'proposals_for_employers'])->name('employer.proposals');
             Route::get('proposals/fetch_data', [ProjectProposalController::class, 'fetch_proposals_for_employers'])->name('employer.fetch_proposals');
         });
 
+        # proposal routes
+        Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('proposal.store');
         Route::get('/proposal/info/{id}', [ProjectProposalController::class, 'proposal'])->name('proposal.view');
 
+        # contract routes
         Route::get('/project/contract/{id}', [ProjectContractController::class, 'contract'])->name('contract');
         Route::get('/project/proposal/{id}/create-contract/', [ProjectContractController::class, 'create'])->name('create.contract')->middleware('employer.access');
         Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract')->middleware('employer.access');
@@ -200,8 +205,6 @@ use App\Events\ProjectMessageEvent;
         Route::get('/destroy_project/{id}', [ProjectsController::class, 'destroy'])->name('project.destroy');
 
         Route::get('/followed_freelancer', [FollowFreelancerController::class, 'followed_freelancer'])->name('followed_freelancer');
-        Route::get('/proposal_lists/employer', [ProjectProposalController::class, 'proposals_for_employers'])->name('proposals_for_employers');
-
 
         Route::post('/submit_proposal', [ServicesProposalController::class, 'submit_proposal'])->name('submit_proposal');
         Route::post('/purchased_service/change_status', [ServicesProposalController::class, 'change_status'])->name('change_status');
@@ -212,13 +215,6 @@ use App\Events\ProjectMessageEvent;
 
         Route::get('/follow_freelancer/{freelancer_id}', [FollowFreelancerController::class, 'follow_freelancer']);
 
-        Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('store_proposal');
-        Route::post('/update_proposal_status', [ProjectProposalController::class, 'update_proposal_status'])->name('update_proposal_status');
-
-        // Route::get('/project_proposals/approved', [ProjectProposalController::class, 'approved'])->name('proposal_approved');
-        // Route::get('/project_proposals/get_approved_proposals', [ProjectProposalController::class, 'get_approved_proposals'])->name('get_approved_proposals');
-
-        // Route::get('/invoices')
         Route::get('/project_get_chat/{id}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');
         Route::post('/send_project_chat', [ProjectChatController::class, 'send_project_chat'])->name('send_project_chat');
 
