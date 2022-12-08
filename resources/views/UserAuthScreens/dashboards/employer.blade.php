@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'EMPLOYER DASHBOARD')
+
 @section('content')
 
 @if(Session::get('success'))
@@ -156,8 +158,8 @@
                                 </li>
                                 <hr>
                             @else
-                                <p> No, Stats available</p>		
-                            @endif				
+                                <p> No, Stats available</p>
+                            @endif
                         </ul>
                     </div>
                 </div>

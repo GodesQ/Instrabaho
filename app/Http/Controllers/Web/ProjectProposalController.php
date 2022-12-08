@@ -82,10 +82,14 @@ class ProjectProposalController extends Controller
     public function proposals_for_freelancers() {
         #get the freelancer data
         $freelancer = Freelancer::where('user_id', session()->get('id'))->with('project_proposals')->firstOrFail();
-        $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->whereHas('project', function($query) {
-            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
+        $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->with('project')->whereHas('project', function($query) {
+            $query->where('expiration_date', '>', Carbon::now())->where('status', 'pending');
         })->get();
-        $approved_proposals = $freelancer->project_proposals()->where('status', 'approved')->get();
+
+        $approved_proposals = $freelancer->project_proposals()->where('status', 'approved')->with('project')->whereHas('project', function($query) {
+            $query->where('expiration_date', '>', Carbon::now())->where('status', 'pending');
+        })->get();
+
         return view('UserAuthScreens.proposals.freelancer.index-proposals', compact('freelancer', 'pending_proposals', 'approved_proposals'));
     }
 
@@ -106,7 +110,7 @@ class ProjectProposalController extends Controller
         $incoming_msg_id = $proposal->freelancer_id;
         $outgoing_msg_id = $proposal->employer_id;
 
-        # if the login user is freelancer then the change the outgoing and incoming messages user id
+        # if the login user is freelancer then change the outgoing and incoming messages user id
         if($role == 'freelancer') {
             $incoming_msg_id = $proposal->employer_id ;
             $outgoing_msg_id = $proposal->freelancer_id;
@@ -142,99 +146,4 @@ class ProjectProposalController extends Controller
             'message' => 'Failed to Update'
         ]);
     }
-
-    public function ongoing(Request $request) {
-        if(session()->get('role') == 'freelancer') {
-            $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-            $ongoing_projects = ProjectProposal::where('freelancer_id', $freelancer->id)
-            ->where('status', 'approved')
-            ->with('project')
-            ->whereHas('project', function($query) {
-                $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
-            })
-            ->cursorPaginate(10);
-        } else {
-            $employer = Employer::where('user_id', session()->get('id'))->first();
-            $ongoing_projects = ProjectProposal::where('employer_id', $employer->id)
-            ->where('status', 'approved')
-            ->with('project')
-            ->whereHas('project', function($query) {
-                $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
-            })
-            ->cursorPaginate(10);
-        }
-
-        return view('UserAuthScreens.proposals.ongoing.ongoing-project', compact('ongoing_projects'));
-    }
-
-    public function completed(Request $request) {
-        if(session()->get('role') == 'freelancer') {
-            $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-            $completed_projects = ProjectProposal::where('freelancer_id', $freelancer->id)
-            ->where('status', 'completed')
-            ->with('project')
-            ->cursorPaginate(10);
-        } else {
-            $employer = Employer::where('user_id', session()->get('id'))->first();
-            $completed_projects = ProjectProposal::where('employer_id', $employer->id)
-            ->where('status', 'completed')
-            ->with('project')
-            ->cursorPaginate(10);
-        }
-
-        return view('UserAuthScreens.proposals.completed.completed-project', compact('completed_projects'));
-    }
-
-    // public function approved(Request $request) {
-    //     return view('UserAuthScreens.proposals.approved-proposals');
-    // }
-
-    // public function get_approved_proposals(Request $request) {
-    //     $today = date('Y-m-d');
-    //     if($request->ajax()) {
-    //         $role = session()->get('role');
-    //         $user_id = session()->get('id');
-    //         $user = $role == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
-    //         $data = ProjectProposal::where(function($query) use ($role, $user) {
-    //             if($role == 'freelancer') {
-    //                 $query->where('freelancer_id', $user->id);
-    //             } else{
-    //                 $query->where('employer_id', $user->id);
-    //             }
-    //         })->where('status', '!=', 'pending')
-    //         ->with('project', 'employer', 'freelancer')
-    //         ->whereHas('project', function ($query) use ($today) {
-    //             $query->where('expiration_date', '>', $today);
-    //         });
-
-    //         return Datatables::of($data)
-    //             ->addIndexColumn()
-    //             ->addColumn('title', function($row){
-    //                 return $row->project->title;
-    //             })
-    //             ->addColumn('user', function($row){
-    //                 if(session()->get('role') == 'employer') {
-    //                     return $row->freelancer->display_name;
-    //                 }
-    //                 return $row->employer->display_name;
-    //             })
-    //             ->addColumn('offer_price', function($row){
-    //                 return number_format($row->offer_price, 2);
-    //             })
-    //             ->addColumn('estimated_days', function($row){
-    //                 return $row->estimated_days . " Days";
-    //             })
-    //             ->addColumn('status', function($row){
-    //                 $status = "<div class='badge badge-info'>$row->status</div>";
-    //                 return $status;
-    //             })
-    //             ->addColumn('action', function($row){
-    //                 $btn = '<a href="/project_proposal_information/'. $row->id .'" class="edit btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
-    //                         <a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Cancel Service</a>';
-    //                 return $btn;
-    //             })
-    //             ->rawColumns(['action', 'status'])
-    //             ->toJson();
-    //     }
-    // }
 }

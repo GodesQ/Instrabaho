@@ -218,7 +218,7 @@
     </div>
  </section>
  <div class="modal fade" id="modal-map" tabindex="-1" role="dialog" aria-labelledby="modal-map" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-header bg-primary white">
             <h4 class="modal-title text-white" id="myModalLabel8">Freelancers Location</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

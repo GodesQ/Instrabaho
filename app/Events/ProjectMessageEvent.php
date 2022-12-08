@@ -20,9 +20,9 @@ class ProjectMessageEvent
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $message)
     {
-        //
+        $this->message = $message;
     }
 
     /**

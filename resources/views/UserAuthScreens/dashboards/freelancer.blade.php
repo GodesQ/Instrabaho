@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'WORKER DASHBOARD')
+
 @section('content')
 @if(Session::get('success'))
     @push('scripts')

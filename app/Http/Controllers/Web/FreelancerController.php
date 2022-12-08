@@ -94,6 +94,12 @@ class FreelancerController extends Controller
     }
 
     public function store_certificates(Request $request) {
+
+        $request->validate([
+            "certificates"    => "required",
+            "certificates.*"  => "required|min:3",
+        ]);
+
         if(!isset($request->certificates)) return back()->with('fail', 'Add atleast one certificate.');
         if(count($request->certificates) < 0) return back()->with('fail', 'Add atleast one certificate.');
 
@@ -112,6 +118,7 @@ class FreelancerController extends Controller
         }
 
         foreach ($request->certificates as $key => $certifacate) {
+
             $image_name = $certifacate['old_image'];
             if(isset($certifacate['certificate_image'])) {
                 // uploading image in public directory
@@ -136,14 +143,20 @@ class FreelancerController extends Controller
     }
 
     public function store_experiences(Request $request) {
+
+        $request->validate([
+            "experiences"    => "required",
+            "experiences.*"  => "required",
+        ]);
+
         if(!isset($request->experiences)) return back()->with('fail', 'Add atleast one experiences.');
 
-        $validation = $request->validate([
-            'experiences.*.experience' => 'required',
-            'experiences.*.company_name' => 'required',
-            'experiences.*.start_date' => 'required',
-            'experiences.*.description' => 'required|min:10',
-        ]);
+        // $validation = $request->validate([
+        //     'experiences.*.experience' => 'required',
+        //     'experiences.*.company_name' => 'required',
+        //     'experiences.*.start_date' => 'required',
+        //     'experiences.*.description' => 'required|min:10',
+        // ]);
 
 
         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
@@ -165,13 +178,12 @@ class FreelancerController extends Controller
     }
 
     public function store_educations(Request $request) {
+
         if(!isset($request->educations)) return back()->with('fail', 'Add atleast one education.');
 
-        $validation = $request->validate([
-            'educations.*.education_title' => 'required',
-            'educations.*.institute_name' => 'required',
-            'educations.*.start_date' => 'required',
-            'educations.*.description' => 'required|min:10',
+        $request->validate([
+            "educations"    => "required",
+            "educations.*"  => "required",
         ]);
 
          $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
@@ -193,11 +205,14 @@ class FreelancerController extends Controller
     }
 
     public function store_skills(Request $request) {
-        if(!isset($request->skills)) return back()->with('fail', 'Add atleast one skills.');
+
         $validation = $request->validate([
-            'skills.*.skill' => 'required',
-            'skills.*.skill_percentage' => 'required',
+            'skills' => 'required',
+            'skills.*' => 'required',
         ]);
+
+        if(!isset($request->skills)) return back()->with('fail', 'Add atleast one skills.');
+
         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
         $freelancer = Freelancer::where('user_id', $user_id)->first();
         $past_skills = FreelancerSkill::whereIn('freelancer_id', [$freelancer->id])->delete();

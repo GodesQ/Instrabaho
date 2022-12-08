@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Worker Proposals')
+
 @section('content')
     <div class="page-wrapper">
         <div class="page-content">
@@ -33,7 +35,7 @@
                             <div id="accordion12" role="tabpanel" data-parent="#proposals" aria-labelledby="heading12" class="collapse" aria-expanded="false">
                                 <div class="card-content">
                                     <div class="card-body">
-                                        
+
                                     </div>
                                 </div>
                             </div>
