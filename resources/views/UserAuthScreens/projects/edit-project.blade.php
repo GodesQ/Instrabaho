@@ -164,7 +164,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-label font-weight-bold my-1">Description</div>
-                                    <textarea name="description" class="form-control" id="tinymce_description" cols="30" rows="8">{{ $project->description }}</textarea>
+                                    <textarea name="description" class="form-control" id="tinymce_description" cols="30" rows="15">{{ $project->description }}</textarea>
                                     <span class="danger text-danger">@error('description'){{ $message }}@enderror</span>
                                 </div>
                             </div>

@@ -119,49 +119,46 @@
                             </div>
                         </div>
                       <div class="panel panel-default">
-                         <div class="panel-heading"> <a role="button" class="" data-bs-toggle="collapse" href="#category-widget"> Search by category </a> </div>
+                         <div class="panel-heading"> <a role="button" class="" data-bs-toggle="collapse" href="#category-widget"> Advance Filter </a> </div>
                          <div id="category-widget" class="panel-collapse collapse" role="tabpanel">
                             <div class="panel-body" tabindex="2">
-                               <ul>
-                                  @foreach($service_categories as $category)
-                                     <li class="">
-                                        <div class="pretty p-icon p-thick p-curve">
-                                           <input type="checkbox" id="categories" name="categories[]" value="{{ $category->id }}" id="{{ $category->id }}">
-                                           <div class="state p-warning">
-                                              <i class="icon fa fa-check" aria-hidden="true"></i>
-                                              <label></label>
-                                           </div>
-                                        </div>
-                                        <span>{{ $category->name }}</span>
-                                     </li>
-                                  @endforeach
-                               </ul>
-                            </div>
-                         </div>
-                      </div>
-                      <div class="panel panel-default">
-                         <div class="panel-heading"> <a role="button" class="" data-bs-toggle="collapse" href="#price-widget"> Price </a> </div>
-                         <div id="price-widget" class="panel-collapse collapse" role="tabpanel">
-                            <div class="panel-body" tabindex="4">
-                               <div class="range-slider">
-                                 <input type="text" class="services-range-slider" id="my_range" name="my_range" value="" />
-                               </div>
-                               <div class="extra-controls">
-                                  <input type="text" class="services-input-from form-control" value="" id="price-min" name="price-min">
-                                  <input type="text" class="services-input-to form-control" value="" name="price-max" id="price-max">
-                               </div>
-                            </div>
-                         </div>
-                      </div>
-                      <div class="panel panel-default">
-                         <div class="panel-heading active"> <a role="button" class="" data-bs-toggle="collapse" href="#type-widget"> Type </a> </div>
-                         <div id="type-widget" class="panel-collapse collapse show" role="tabpanel">
-                            <div class="" tabindex="5">
-                               <select name="type" id="type" class="select2 form-control">
-                                  <option value="">Select Type</option>
-                                  <option value="simple">Simple</option>
-                                  <option value="featured">Featured</option>
-                               </select>
+                                <div class="form-group my-2">
+                                    <div class="font-weight-bold mt-4" style="color: #000;">Categories</div>
+                                    <ul>
+                                        @foreach($service_categories as $category)
+                                           <li class="">
+                                              <div class="pretty p-icon p-thick p-curve">
+                                                 <input type="checkbox" id="categories" name="categories[]" value="{{ $category->id }}" id="{{ $category->id }}">
+                                                 <div class="state p-warning">
+                                                    <i class="icon fa fa-check" aria-hidden="true"></i>
+                                                    <label></label>
+                                                 </div>
+                                              </div>
+                                              <span>{{ $category->name }}</span>
+                                           </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="form-group my-2">
+                                    <div class="font-weight-bold mt-4" style="color: #000;">Price</div>
+                                    <div class="range-slider">
+                                        <input type="text" class="services-range-slider" id="my_range" name="my_range" value="" />
+                                    </div>
+                                    <div class="extra-controls">
+                                        <input type="text" class="services-input-from form-control" value="" id="price-min" name="price-min">
+                                        <input type="text" class="services-input-to form-control" value="" name="price-max" id="price-max">
+                                    </div>
+                                </div>
+                                <div class="form-group my-2">
+                                    <div class="font-weight-bold mt-4" style="color: #000;">Type</div>
+                                    <div class="" >
+                                        <select name="type" id="type" class="select2 form-control">
+                                           <option value="">Select Type</option>
+                                           <option value="simple">Simple</option>
+                                           <option value="featured">Featured</option>
+                                        </select>
+                                     </div>
+                                </div>
                             </div>
                          </div>
                       </div>
@@ -210,7 +207,7 @@
     </div>
  </section>
  <div class="modal fade " id="modal-map" tabindex="-1" role="dialog" aria-labelledby="modal-map" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-header bg-primary white">
             <h4 class="modal-title text-white" id="myModalLabel8">Projects Location</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

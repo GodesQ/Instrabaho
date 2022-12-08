@@ -12,7 +12,7 @@
     <div class="card-content collapse show">
         <div class="card-body">
             <div class="repeater-default">
-                <form action="/store_skills" method="POST">
+                <form action="/store_skills" method="POST" novalidate>
                     @csrf
                     @if(session()->get('role') == 'admin')
                         <input type="number" hidden name="user_id" value="{{ $freelancer->user_id }}">
@@ -24,7 +24,7 @@
                                     <div class="form-group mb-1 col-sm-12 col-md-5">
                                         <label for="email-addr">Skill</label>
                                         <br>
-                                        <select name="skill" class=" form-control" required id="profession">
+                                        <select name="skill" class=" form-control" id="profession">
                                             <option value="">Select Skills</option>
                                             @foreach($skills as $skill)
                                                 <option {{ $skill->id == $freelancer_skill->skill_id ? 'selected' : null }} value="{{ $skill->id }}">{{ $skill->skill_name }}</option>
@@ -37,7 +37,7 @@
                                             <span class="text-primary" style="font-size: 12px; font-style: italic;">(Up to 100%)</span>
                                         </label>
                                         <br>
-                                        <input type="number" max="100" value="{{ $freelancer_skill->skill_percentage }}" class="form-control" required id="pass" name="skill_percentage" placeholder="Skill Percentage">
+                                        <input type="number" max="100" value="{{ $freelancer_skill->skill_percentage }}" class="form-control" id="pass" name="skill_percentage" placeholder="Skill Percentage">
                                         <span class="text-danger danger">@error('skill_percentage'){{ $message }}@enderror</span>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-2 text-center mt-2">

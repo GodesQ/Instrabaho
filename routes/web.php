@@ -38,6 +38,7 @@ use App\Http\Controllers\Web\Admin\AdminController;
 use App\Http\Controllers\Web\Admin\UserPermissionController;
 use App\Http\Controllers\Web\Admin\UserTypesController;
 
+use App\Events\ProjectMessageEvent;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC Routes
@@ -84,6 +85,13 @@ use App\Http\Controllers\Web\Admin\UserTypesController;
 
     Route::get('/freelance_packages', [FreelancePackagesController::class, 'freelance_packages'])->name('freelance_package');
     Route::get('/employer_packages', [EmployerPackagesController::class, 'employer_package'])->name('employer_package');
+
+    Route::get('/event', function () {
+        $array = ['name' => 'Ekpono Ambrose']; //data we want to pass
+        $event = broadcast(new ProjectMessageEvent($array));
+
+        return 'done';
+    });
 
     /*
     |--------------------------------------------------------------------------

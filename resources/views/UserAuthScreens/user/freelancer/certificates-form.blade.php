@@ -12,7 +12,7 @@
     <div class="card-content collapse show">
         <div class="card-body">
             <div class="repeater-default">
-                <form action="/store_certificates" enctype="multipart/form-data" method="POST">
+                <form action="/store_certificates" enctype="multipart/form-data" method="POST" novalidate>
                     @csrf
                     <div data-repeater-list="certificates">
                         @forelse($freelancer->certificates as $certificate)
@@ -123,7 +123,7 @@
                                         "Record has been removed.",
                                         "success"
                                     ).then((result) => {
-                                        
+
                                     });
                                 } else {
                                     Swal.fire(
@@ -131,7 +131,7 @@
                                         `${response.message}`,
                                         "error"
                                     ).then((result) => {
-                                        
+
                                     });
                                 }
                             },

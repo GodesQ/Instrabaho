@@ -315,4 +315,32 @@
        </div>
     </div>
  </section>
+
+ <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+ <script>
+    //  // Enable pusher logging - don't include this in production
+    //  Pusher.logToConsole = true;
+    // let backendBaseUrl = "http://127.0.0.1:8000";
+
+    // var pusher = new Pusher('0a303fc13dbe529739fa', {
+    //     cluster: 'ap1',
+    //     encrypted: true,
+    // });
+
+    // var channel = pusher.subscribe('private-project-chats');
+
+    // channel.bind('new-project-chats', function(data) {
+    //     console.log(JSON.stringify(data.data))
+    //     alert(JSON.stringify(data))
+    // });
+
+    // channel.bind('pusher:subscription_succeeded', function(members) {
+    //     alert('successfully subscribed!');
+    // });
+
+    // channel.bind('pusher:subscription_error', function(data) {
+    //     console.log(data);
+    // });
+
+ </script>
 @endsection

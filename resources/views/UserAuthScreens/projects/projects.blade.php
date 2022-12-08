@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Projects')
+
 @section('content')
 @if(Session::get('success'))
     @push('scripts')
