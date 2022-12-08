@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Edit Profile')
+
 @section('content')
 <style>
     .icon-con-circle {

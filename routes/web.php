@@ -62,8 +62,8 @@ use App\Events\ProjectMessageEvent;
     Route::get('/project/view/{id}', [HomeScreenController::class, 'project'])->name('project.view');
     Route::get('/service/view/{id}', [HomeScreenController::class, 'service'])->name('service.view');
 
-    Route::get('/freelancer/view/{id}', [HomeScreenController::class, 'freelancer'])->name('freelancer.view');
-    Route::get('/employer/view/{id}', [HomeScreenController::class, 'employer'])->name('employer.view');
+    Route::get('/freelancer/view/{display_name}', [HomeScreenController::class, 'freelancer'])->name('freelancer.view');
+    Route::get('/employer/view/{display_name}', [HomeScreenController::class, 'employer'])->name('employer.view');
 
     /*
     |--------------------------------------------------------------------------

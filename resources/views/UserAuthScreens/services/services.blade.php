@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Worker Services')
+
 @section('content')
 @if(Session::get('success'))
     @push('scripts')
@@ -41,10 +43,10 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td> 
+                                    <td>
                                         <h3 style="font-size: 15px;">{{ date_format(new DateTime($service->created_at), "F d, Y")}}</h3>
                                     </td>
-                                    <td> 
+                                    <td>
                                         <h3 style="font-size: 15px;">{{ date_format(new DateTime($service->expiration_date), "F d, Y")}}</h3>
                                     </td>
                                     <td valign="center">

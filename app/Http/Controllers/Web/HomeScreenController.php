@@ -38,7 +38,7 @@ class HomeScreenController extends Controller
 
     public function freelancer(Request $request) {
         // Data of Freelancer
-        $freelancer = Freelancer::where('user_id', $request->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->firstOrFail();
+        $freelancer = Freelancer::where('display_name', $request->display_name)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->firstOrFail();
         $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
         $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
 

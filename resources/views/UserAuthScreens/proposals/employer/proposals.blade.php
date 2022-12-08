@@ -7,7 +7,7 @@
                         <img class="rounded" src="../../../images/user/profile/{{$proposal->freelancer->user->profile_image}}" alt="employer_image" style="height: 100px !important;">
                     </div>
                     <div>
-                        <a href="/freelancer/view/{{ $proposal->freelancer->user_id }}" style="color: #003066;">{{ $proposal->freelancer->user->firstname . " " . $proposal->freelancer->user->lastname }}</a>
+                        <a href="/freelancer/view/{{ $proposal->freelancer->display_name }}" style="color: #003066;">{{ $proposal->freelancer->user->firstname . " " . $proposal->freelancer->user->lastname }}</a>
                         <h3 class="text-secondary">{{ $proposal->freelancer->tagline }}</h3>
                         <p class="font-weight-light">{{ strlen($proposal->freelancer->description) > 250 ? substr($proposal->freelancer->description, 0, 250) . "..." : $proposal->freelancer->description }} </p>
                         <div class="mt-2">

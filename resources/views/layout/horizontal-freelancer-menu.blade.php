@@ -8,8 +8,8 @@
         </li>
         <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-user"></i><span data-i18n="Profile">Profile</span></a>
             <ul class="dropdown-menu">
-                <li data-menu="" class=""><a class="dropdown-item" href="/freelancer/view/{{ session()->get('id') }}" target="_blank" data-i18n="View Profile" data-toggle="dropdown">View Profile</a>
-                </li>
+                {{-- <li data-menu="" class=""><a class="dropdown-item" href="/freelancer/view/{{ optional(\App\Model\User::User }}" target="_blank" data-i18n="View Profile" data-toggle="dropdown">View Profile</a>
+                </li> --}}
                 <li data-menu="" class="{{ Request::path() == 'employer/profile' ? 'active' : ''  }}"><a class="dropdown-item" href="/freelancer/profile" data-i18n="Edit Profile" data-toggle="dropdown">Edit Profile</a>
                 </li>
             </ul>

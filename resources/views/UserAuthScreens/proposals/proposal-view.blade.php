@@ -1,5 +1,10 @@
 @extends('layout.user-layout')
 
+
+@section('title')
+    {{ $proposal->project->title }}
+@endsection
+
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">

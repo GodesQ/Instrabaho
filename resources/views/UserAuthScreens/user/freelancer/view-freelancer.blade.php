@@ -61,7 +61,9 @@
 		                     <a href="/follow_freelancer/view/{{ $freelancer->id }}" class="follow-freelancer protip" data-fid="171" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow Freelancer">
 		                     <i class="{{ $follow_freelancer ? 'fa' : 'far' }} fa-heart text-danger"></i>
 		                     </a>
-		                     <a href="" class="btn btn-theme hire-freelancer" data-bs-toggle="" data-bs-target="">Hire Now</a>
+		                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#hire-now">
+                                Hire Now
+                            </button>
 		                  </div>
 		               </div>
 		            </div>
@@ -327,4 +329,33 @@
 		      </div>
 		   </div>
 		</section>
+        <div class="modal fade " id="hire-now" tabindex="-1" role="dialog" aria-labelledby="hire-now" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-header bg-primary white">
+                    <h4 class="modal-title text-white" id="myModalLabel8">Create Offer</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-content">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="POST" action="#" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <div class="font-label font-weight-bold" style="color: #000;">Select Projects</div>
+                                            <label for="">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi quidem, voluptas voluptatem adipisci repellendus.</label>
+                                            <div class="select2">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 @endsection

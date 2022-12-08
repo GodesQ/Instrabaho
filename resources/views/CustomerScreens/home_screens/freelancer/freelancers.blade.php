@@ -3,7 +3,7 @@
         <div class="fr3-details">
             <div class="fr3-job-detail">
                 <div class="fr3-job-img">
-                    <a href="/freelancer/view/{{ $freelancer->user_id }}">
+                    <a href="/freelancer/view/{{ $freelancer->display_name }}">
                         @if($freelancer->user->profile_image)
                             <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" alt="profile pic" style="width: 100px; height: 90px; object-fit: cover;">
                         @else
@@ -16,7 +16,7 @@
                     </a> -->
                 </div>
                 <div class="fr3-job-text">
-                    <span class="name"><a href="/freelancer/view/{{ $freelancer->user_id }}">	<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i>{{ $freelancer->display_name }}</a></span>
+                    <span class="name"><a href="/freelancer/view/{{ $freelancer->display_name }}">	<i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i>{{ $freelancer->display_name }}</a></span>
                     <a href="#">
                         <h3>{{ $freelancer->tagline }}</h3>
                     </a>
@@ -50,7 +50,7 @@
                             <a href="#" class="bg-info text-white">No Skills Found</a>
                             @endforelse
                             </div>
-                        <a href="/freelancer/view/{{ $freelancer->user_id }}" class="btn btn-theme btn-sm btn-outline-primary">View Profile <i class="fa fa-chevron-right ml-1"></i></a>
+                        <a href="/freelancer/view/{{ $freelancer->display_name }}" class="btn btn-theme btn-sm btn-outline-primary">View Profile <i class="fa fa-chevron-right ml-1"></i></a>
                     </div>
                 </div>
             </div>

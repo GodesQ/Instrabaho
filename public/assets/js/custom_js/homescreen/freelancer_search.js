@@ -125,7 +125,7 @@ $(document).ready(function() {
 
             (function (marker, data) {
                     google.maps.event.addListener(marker, "click", function (e) {
-                    infoWindow.setContent(`<a href="/freelancer/view/${data.user_id}" class="font-weight-bold">${data.display_name}</a><br>
+                    infoWindow.setContent(`<a href="/freelancer/view/${data.display_name}" class="font-weight-bold">${data.display_name}</a><br>
                         ${data.address}`);
                     infoWindow.open(map, marker);
                     });
