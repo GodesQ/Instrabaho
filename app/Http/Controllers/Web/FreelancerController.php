@@ -18,6 +18,8 @@ use App\Models\FreelancerEducation;
 use App\Models\FreelancerSkill;
 use App\Models\Skill;
 
+use App\Http\Requests\Freelancer\UpdateFreelancerRequest;
+
 use Yajra\DataTables\Facades\DataTables;
 
 class FreelancerController extends Controller
@@ -84,7 +86,9 @@ class FreelancerController extends Controller
         ]);
         $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
         $freelancer = Freelancer::where('user_id', $request->id)->first();
+
         $freelancer->update($data);
+
         $freelancer->user()->update([
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
@@ -144,19 +148,16 @@ class FreelancerController extends Controller
 
     public function store_experiences(Request $request) {
 
-        $request->validate([
-            "experiences"    => "required",
-            "experiences.*"  => "required",
+         $validation = $request->validate([
+            'experiences.*.experience' => 'required',
+            'experiences.*.company_name' => 'required',
+            'experiences.*.start_date' => 'required',
+            'experiences.*.description' => 'required|min:10',
         ]);
 
         if(!isset($request->experiences)) return back()->with('fail', 'Add atleast one experiences.');
 
-        // $validation = $request->validate([
-        //     'experiences.*.experience' => 'required',
-        //     'experiences.*.company_name' => 'required',
-        //     'experiences.*.start_date' => 'required',
-        //     'experiences.*.description' => 'required|min:10',
-        // ]);
+
 
 
         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
@@ -186,7 +187,7 @@ class FreelancerController extends Controller
             "educations.*"  => "required",
         ]);
 
-         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
+        $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
         $freelancer = Freelancer::where('user_id', $user_id)->first();
 
         $past_educations = FreelancerEducation::whereIn('freelancer_id', [$freelancer->id])->delete();
@@ -270,27 +271,12 @@ class FreelancerController extends Controller
         return view('AdminScreens.freelancers.edit-freelancer', compact('freelancer', 'skills'));
     }
 
-    public function update(Request $request) {
+    public function update(UpdateFreelancerRequest $request) {
 
-        $request->validate([
-            'id' => 'required',
-            'username' => 'required',
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'display_name' => 'required',
-            'tagline' => 'required',
-            'freelancer_type' => 'required|in:Individual,Group,Student',
-            'hourly_rate' => 'required|numeric',
-            'gender' => 'required|in:Male,Female',
-            'contactno' => 'required',
-            'description' => 'required',
-            'address' => 'required',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-        ]);
-
+        #get the freelancer
         $freelancer = Freelancer::where('id', $request->id)->first();
 
+        #update main freelancer
         $update_user = $freelancer->user()->update([
             'username' => $request->username,
             'firstname' => $request->firstname,
@@ -299,6 +285,8 @@ class FreelancerController extends Controller
         ]);
 
         $freelancer_inputs = $request->except('id', 'username', 'lastname', 'middlename', 'firstname', 'email', '_token');
+
+        #update freelancer data
         $update_freelancer = $freelancer->update($freelancer_inputs);
 
         return back()->with('success', 'Data Information Update Successfully');

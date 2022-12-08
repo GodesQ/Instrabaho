@@ -99,6 +99,12 @@
             href="../../../images/cropped-favicon-32x32.png"
             sizes="32x32"
         />
+
+        <style>
+            .active-link {
+                color: #04bbff !important;
+            }
+        </style>
     </head>
     <body>
         <div class="fr-menu sb-header header-shadow viewport-lg exer-menu">
@@ -136,8 +142,8 @@
                             <li class="">
                                 <a href="/the-process">The Process</a>
                             </li>
-                            <li class="">
-                                <a href="/search_freelancers">Freelance Search</a>
+                            <li class="active-link">
+                                <a href="/search_freelancers" >Freelance Search</a>
                             </li>
                             <li class="">
                                 <a href="/search_projects">Projects Search</a>

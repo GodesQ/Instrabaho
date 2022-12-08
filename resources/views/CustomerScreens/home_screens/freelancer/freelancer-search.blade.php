@@ -1,16 +1,18 @@
 @extends('layout.layout')
 
 @section('content')
+
 <style>
     #map-canvas {
         height: 200px;
         width: 100%;
     }
     #freelancers-locations {
-        height: 500px;
+        height: 600px;
        width: 100%;
    }
 </style>
+
 {{-- <section class="fr-list-product bg-img">
     <div class="container">
        <div class="row">
