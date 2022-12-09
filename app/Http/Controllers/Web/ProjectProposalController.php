@@ -9,6 +9,7 @@ use App\Models\ProjectProposal;
 use App\Models\Freelancer;
 use App\Models\Employer;
 use App\Models\Project;
+use App\Models\ProjectMessage;
 use Carbon\Carbon;
 
 use App\Http\Requests\ProjectProposal\StoreProjectProposal;
@@ -20,7 +21,7 @@ class ProjectProposalController extends Controller
     public function employer_create_proposal(Request $request) {
         $user_id = session()->get('id');
         $employer = Employer::where('user_id', $user_id)->with('projects')->firstOrFail();
-        $freelancer = Freelancer::where('display_name', $request->freelancer)->orWhere('id', $request->id)->firstOrFail();
+        $freelancer = Freelancer::where('display_name', $request->freelancer)->firstOrFail();
 
         return view('UserAuthScreens.proposals.employer.create-proposal', compact('employer', 'freelancer'));
     }
@@ -41,16 +42,27 @@ class ProjectProposalController extends Controller
         $json_images = json_encode($images);
 
         $save = ProjectProposal::create(array_merge($request->validated(),[
-            'project_id' => $request->project_id,
             'employer_id' => $request->employer_id,
             'freelancer_id' => $freelancer->id,
-            'project_cost_type' => 'Fixed',
+            'project_cost_type' => $request->project_cost_type,
             'status' => 'pending',
-            'attachments' => $json_images
+            'attachments' => $json_images,
+            'sender_role' => $request->proposal_user_token ? base64_decode($request->proposal_user_token) : 'freelancer'
         ]));
+
+        if(isset($request->private_message)) {
+            $send_message = ProjectMessage::create([
+                'msg_id' => $save->id,
+                'incoming_msg_id' => $request->freelancer_id,
+                'outgoing_msg_id' => $request->employer_id,
+                'message' => $request->private_message,
+                'role' => base64_decode($request->proposal_user_token)
+            ]);
+        }
 
         if($save) return back()->with('success', 'Proposal sent successfully');
 
+        #if the proposal is not save
         return back()->with('fail', 'Something went wrong.');
     }
 
@@ -88,6 +100,7 @@ class ProjectProposalController extends Controller
     }
 
     public function proposals_for_freelancers() {
+
         #get the freelancer data
         $freelancer = Freelancer::where('user_id', session()->get('id'))->with('project_proposals')->firstOrFail();
         $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->with('project')->whereHas('project', function($query) {

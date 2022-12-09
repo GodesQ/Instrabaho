@@ -123,47 +123,6 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-header d-flex justify-content-between">
-                        <h4 class="card-title">Current Plan Detail</h4>
-                        @if($employer->package_checkout)
-                            @if(!$employer->package_checkout->isExpired)
-                                <a href="#">{{ $employer->package_checkout->package_name }}</a>
-                            @else
-                                <a href="/employer_packages">View Plans</a>
-                            @endif
-                        @else
-                            <a href="/employer_packages">View Plans</a>
-                        @endif
-                    </div>
-                    <div class="listing-widgets">
-                        <ul>
-                            @if($employer->package_checkout && !$employer->package_checkout->isExpired)
-                                <hr>
-                                <li class="my-1">
-                                    <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Projects Allowed To Create: <span style="color: #091a3b; font-weight: 600;">{{ $employer->package_checkout->employer_package->total_projects }}</span></h4>
-                                </li>
-                                <hr>
-                                <li class="my-1">
-                                    <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Projects Services Allowed To Create: <span style="color: #091a3b; font-weight: 600;">{{ $employer->package_checkout->employer_package->total_feature_services }}</span></h4>
-                                </li>
-                                <hr>
-                                <li class="my-1">
-                                    <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Featured Profile: <span style="color: #091a3b; font-weight: 600;">{{ $employer->package_checkout->employer_package->isProfileFeatured ? 'Yes' : 'No' }}</span></h4>
-                                </li>
-                                <hr>
-                                <li class="my-1">
-                                    <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Expired Date: <span style="color: #091a3b; font-weight: 600;">{{ date_format(new DateTime($employer->package_date_expiration), "F d, Y")}}</span></h4>
-                                </li>
-                                <hr>
-                            @else
-                                <p> No, Stats available</p>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 @endsection

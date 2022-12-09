@@ -59,7 +59,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
     <link
         rel="icon"
-        href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png"
+        href="../../../images/cropped-favicon-32x32.png"
         sizes="32x32"
     />
 
@@ -375,8 +375,8 @@
                     </li>
                     <li><a class="menu-item" href="#" data-i18n="Freelancer"><i class="feather icon-heart"></i> Followed Users</a>
                         <ul class="menu-content">
-                            <li>
-                                <a class="menu-item" href="" data-i18n="Followed Freelancers">Followed Freelancers</a>
+                            <li class="{{ Request::path() == 'admin/freelancers_followers' ? 'active' : '' }}">
+                                <a class="menu-item" href="/admin/freelancers_followers" data-i18n="Followed Freelancers">Followed Freelancers</a>
                             </li>
                             <li>
                                 <a class="menu-item" href="" data-i18n="Followed Employers">Followed Employers</a>

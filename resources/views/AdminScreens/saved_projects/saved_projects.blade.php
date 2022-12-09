@@ -11,7 +11,7 @@
                                 <tr>
                                     <th>Project</th>
                                     <th>Project Owner</th>
-                                    <th>Followers</th>
+                                    <th>Total Followers</th>
                                     <th>Saved Date</th>
                                 </tr>
                             </thead>
