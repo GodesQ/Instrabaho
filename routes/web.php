@@ -124,7 +124,7 @@ use App\Events\ProjectMessageEvent;
             Route::get('create_addon', [AddonsController::class, 'create'])->name('freelancer.addon.create');
             Route::get('edit_addon/{id}', [AddonsController::class, 'edit'])->name('freelancder.addon.edit');
             Route::get('services', [ServicesController::class, 'index'])->name('freelancer.services.index');
-            Route::get('create_service', [ServicesController::class, 'create'])->name('freelancer.service.create')->middleware('plan.expiration');
+            Route::get('create_service', [ServicesController::class, 'create'])->name('freelancer.service.create');
             Route::get('edit_service/{id}', [ServicesController::class, 'edit'])->name('service.edit');
             Route::get('save_project/{id}/{owner_id}', [SaveProjectController::class, 'save_project'])->name('save_project');
             Route::get('saved_projects', [SaveProjectController::class, 'freelancer_saved_projects'])->name('freelancer.saved_projects');
@@ -153,18 +153,19 @@ use App\Events\ProjectMessageEvent;
             Route::get('projects', [ProjectsController::class, 'index'])->name('employer.projects.index');
             Route::get('projects/ongoing', [ProjectsController::class, 'employer_ongoing'])->name('employer.projects.ongoing');
             Route::get('projects/completed', [ProjectsController::class, 'employer_completed'])->name('employer.projects.completed');
-            Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create')->middleware('plan.expiration');
+            Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create');
             Route::get('edit_project/{id}', [ProjectsController::class, 'user_edit'])->name('freelancer.project.edit');
-
-            Route::get('/proposal/create_proposal/{freelancer}/{id}', [ProjectProposalController::class, 'employer_create_proposal'])->name('proposal.employer.create');
-
+            Route::get('/proposal/create_proposal/{freelancer}', [ProjectProposalController::class, 'employer_create_proposal'])->name('proposal.employer.create');
             Route::get('proposals', [ProjectProposalController::class, 'proposals_for_employers'])->name('employer.proposals');
             Route::get('proposals/fetch_data', [ProjectProposalController::class, 'fetch_proposals_for_employers'])->name('employer.fetch_proposals');
         });
 
         # proposal routes
         Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('proposal.store');
+
         Route::get('/proposal/info/{id}', [ProjectProposalController::class, 'proposal'])->name('proposal.view');
+
+        Route::get('/offer/info/{id}', [ProjectProposalController::class, 'proposal'])->name('proposal.view');
 
         # contract routes
         Route::get('/project/contract/{id}', [ProjectContractController::class, 'contract'])->name('contract');
@@ -185,9 +186,9 @@ use App\Events\ProjectMessageEvent;
         Route::post('/update_addon', [AddonsController::class, 'update'])->name('addon.update');
         Route::delete('/destroy_addon', [AddonsController::class, 'destroy'])->name('addon.destroy');
 
-        Route::post('/store_service', [ServicesController::class, 'store'])->name('service.store')->middleware('plan.expiration');
+        Route::post('/store_service', [ServicesController::class, 'store'])->name('service.store');
         Route::post('/update_service', [ServicesController::class, 'update'])->name('service.update')->middleware('plan.expiration', 'admin.access');
-        Route::get('/service/remove_image/{id}/{key_id}', [ServicesController::class, 'remove_image'])->name('service.remove_image')->middleware('plan.expiration');
+        Route::get('/service/remove_image/{id}/{key_id}', [ServicesController::class, 'remove_image'])->name('service.remove_image');
         Route::delete('/destroy_service', [ServicesController::class, 'destroy'])->name('service.destroy');
 
         Route::get('/services_offer/employer', [ServicesProposalController::class, 'employer_proposals'])->name('employer_proposals')->middleware('employer.access');
@@ -199,9 +200,9 @@ use App\Events\ProjectMessageEvent;
         Route::delete('saved_projects/delete/{id}', [SaveProjectController::class, 'destroy'])->name('saved_project.destroy');
 
 
-        Route::post('/store_project', [ProjectsController::class, 'store'])->name('project.store')->middleware('plan.expiration');
-        Route::post('/update_project', [ProjectsController::class, 'update'])->name('project.update')->middleware('plan.expiration');
-        Route::get('/remove_project_image/{id}/{key_id}', [ProjectsController::class, 'remove_project_image'])->name('project.remove_image')->middleware('plan.expiration');
+        Route::post('/store_project', [ProjectsController::class, 'store'])->name('project.store');
+        Route::post('/update_project', [ProjectsController::class, 'update'])->name('project.update');
+        Route::get('/remove_project_image/{id}/{key_id}', [ProjectsController::class, 'remove_project_image'])->name('project.remove_image');
         Route::get('/destroy_project/{id}', [ProjectsController::class, 'destroy'])->name('project.destroy');
 
         Route::get('/followed_freelancer', [FollowFreelancerController::class, 'followed_freelancer'])->name('followed_freelancer');
@@ -297,6 +298,14 @@ use App\Events\ProjectMessageEvent;
         Route::get('saved_projects', [SaveProjectController::class, 'admin_index'])->name('saved_projects');
         Route::get('saved_projects/data_table', [SaveProjectController::class, 'data_table'])->name('saved_projects.datatables');
 
+        Route::get('saved_categories', [SaveServiceController::class, 'admin_index'])->name('saved_categories');
+        Route::get('saved_categories/data_table', [SaveServiceController::class, 'data_table'])->name('saved_categories.datatables');
+
+        Route::get('freelancers_followers', [FollowFreelancerController::class, 'admin_index'])->name('freelancers_followers');
+        Route::get('freelancers_followers/data_table', [FollowFreelancerController::class, 'data_table'])->name('freelancers_followers.datatables');
+
+        Route::get('employers_followers', [FollowEmployerController::class, 'admin_index'])->name('employers_followers');
+        Route::get('employers_followers/data_table', [FollowEmployerController::class, 'data_table'])->name('employers_followers.datatables');
 
         Route::get('saved_services', [SaveServiceController::class, 'admin_index'])->name('saved_services');
 

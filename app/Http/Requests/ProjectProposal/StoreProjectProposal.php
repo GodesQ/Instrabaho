@@ -24,9 +24,9 @@ class StoreProjectProposal extends FormRequest
     public function rules()
     {
         return [
+            'project_id' => 'required',
             'offer_price' => 'required|numeric',
             'estimated_days' => 'required|numeric',
-            'cover_letter' => 'required',
             'address' => 'required',
             'latitude' => 'required',
             'longitude' => 'required'

@@ -14,4 +14,8 @@ class FreelancerFollower extends Model
     public function freelancer() {
         return $this->belongsTo(Freelancer::class, 'freelancer_id', 'id');
     }
+
+    public function followers() {
+        return $this->hasMany(Employer::class, 'id', 'follower_id');
+    }
 }

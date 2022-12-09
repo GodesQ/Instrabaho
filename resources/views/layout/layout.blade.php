@@ -154,17 +154,16 @@
                             <li class="">
                                 <a href="/contact-us">Contact Us</a>
                             </li>
-                            @if(!Session::get('role') && !Session::get('id') || Session::get('role') == 'admin')
+                            @php
+                                $user_role = ['employer', 'freelancer'];
+                            @endphp
+                            @if(!Session::get('role') && !Session::get('id') || !in_array(Session::get('role'), $user_role))
+
                                 <li class="fr-list">
-                                    <a
-                                        href="/register"
-                                        class="btn-theme-warning style-1" style="padding: 0.7rem 1rem !important;"
-                                    >
+                                    <a href="/register" class="btn-theme-warning style-1" style="padding: 0.7rem 1rem !important;">
                                         Register
                                     </a>
-                                    <a href="/login" class="btn btn-theme" style="padding: 0.7rem 1rem !important;"
-                                        >Sign in</a
-                                    >
+                                    <a href="/login" class="btn btn-theme" style="padding: 0.7rem 1rem !important;">Sign in</a>
                                 </li>
                             @else
                                 <li class="dropdown dropdown-user nav-item fr-list loggedin">
@@ -209,203 +208,6 @@
             </div>
         </div>
         @yield('content')
-        {{-- <section class="fr-browse-category">
-            <div class="container">
-                <div class="row">
-                    <div
-                        class="col-xl-12 col-lg-12 col-xs-12 col-md-12 col-xs-12"
-                    >
-                        <div class="heading-panel section-center">
-                            <div class="heading-meta">
-                                <h2>Browse Skills and Locations</h2>
-                                <p>
-                                    Look for the best meeting your skills and
-                                    most preferred locations
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row grid">
-                    <div
-                        class="col-xxl-2 col-xl-4 col-6 col-sm-4 col-md-4 col-lg-4 grid-item"
-                    >
-                        <div class="fr-browse-content browse-style">
-                            <h3>Project Skills</h3>
-                            <ul>
-                                <li>
-                                    <a href="search-page.html">Developer</a>
-                                </li>
-                                <li><a href="search-page.html">Designer</a></li>
-                                <li>
-                                    <a href="search-page.html"
-                                        >QA Speciallist</a
-                                    >
-                                </li>
-                                <li>
-                                    <a href="search-page.html">Support Agent</a>
-                                </li>
-                                <li><a href="search-page.html">Writter</a></li>
-                                <li><a href="search-page.html">Singer</a></li>
-                                <li>
-                                    <a href="search-page.html" class="view-more"
-                                        >View More</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div
-                        class="col-xxl-2 col-xl-4 col-6 col-sm-4 col-md-4 col-lg-4 grid-item"
-                    >
-                        <div class="fr-browse-content browse-style">
-                            <h3>Trending skills</h3>
-                            <ul>
-                                <li><a href="search-page.html">Designer</a></li>
-                                <li>
-                                    <a href="search-page.html">Support Agent</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html"
-                                        >Android Developer</a
-                                    >
-                                </li>
-                                <li>
-                                    <a href="search-page.html">IOS Developer</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html">Data Entry</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html">Logo Design</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html" class="view-more"
-                                        >View More</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div
-                        class="col-xxl-2 col-xl-4 col-6 col-sm-4 col-md-4 col-lg-4 grid-item"
-                    >
-                        <div class="fr-browse-content browse-style">
-                            <h3>Top Skills in US</h3>
-                            <ul>
-                                <li>
-                                    <a href="search-page.html"
-                                        >Content writter</a
-                                    >
-                                </li>
-                                <li><a href="search-page.html">Musician</a></li>
-                                <li>
-                                    <a href="search-page.html">IOS Developer</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html"
-                                        >Android Developer</a
-                                    >
-                                </li>
-                                <li>
-                                    <a href="search-page.html">Video Editor</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html">Data Entry</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html" class="view-more"
-                                        >View More</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div
-                        class="col-xxl-2 col-xl-4 col-6 col-sm-4 col-md-4 col-lg-4 grid-item"
-                    >
-                        <div class="fr-browse-content browse-style">
-                            <h3>Jobs in Cities</h3>
-                            <ul>
-                                <li>
-                                    <a href="search-page.html">California</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html">Sacramento</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html"
-                                        >Citrus Heights</a
-                                    >
-                                </li>
-                                <li><a href="search-page.html">Germany</a></li>
-                                <li><a href="search-page.html">Pakistan</a></li>
-                                <li>
-                                    <a href="search-page.html">Abu Dhabi</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html" class="view-more"
-                                        >View More</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div
-                        class="col-xxl-2 col-xl-4 col-6 col-sm-4 col-md-4 col-lg-4 grid-item"
-                    >
-                        <div class="fr-browse-content browse-style">
-                            <h3>Local Companies</h3>
-                            <ul>
-                                <li><a href="search-page.html">Muharraq</a></li>
-                                <li>
-                                    <a href="search-page.html">Arad, Bahrain</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html">Abu Dhabi</a>
-                                </li>
-                                <li><a href="search-page.html">Pakistan</a></li>
-                                <li><a href="search-page.html">Punjab</a></li>
-                                <li>
-                                    <a href="search-page.html">Australia</a>
-                                </li>
-                                <li>
-                                    <a href="search-page.html" class="view-more"
-                                        >View More</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div
-                        class="col-xxl-2 col-xl-4 col-6 col-sm-4 col-md-4 col-lg-4 grid-item"
-                    >
-                        <div class="fr-browse-content browse-style">
-                            <h3>Workers From</h3>
-                            <ul>
-                                <li>
-                                    <a href="search-page.html">Australia</a>
-                                </li>
-                                <li><a href="search-page.html">Germany</a></li>
-                                <li>
-                                    <a href="search-page.html">Frankfurt</a>
-                                </li>
-                                <li><a href="search-page.html">Pakistan</a></li>
-                                <li>
-                                    <a href="search-page.html">Arad, Bahrain</a>
-                                </li>
-                                <li><a href="search-page.html">Sharjah</a></li>
-                                <li>
-                                    <a href="search-page.html" class="view-more"
-                                        >View More</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
         <section class="fr-footer padding-top-80">
             <div class="container">
                 <div class="row padding-bottom-80">
@@ -560,21 +362,20 @@
         <!-- BEGIN: Page JS-->
         <script src="../../../app-assets/js/scripts/forms/switch.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?v=beta&key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places,marker&callback=initialize"></script>
-        <script type="text/javascript" src="../../../js/jquery-migrate-3.3.2.js"></script>
-        <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
-        <script type="text/javascript" src="../../../js/select2.full.min.js"></script>
-        <script type="text/javascript" src="../../../js/protip.min.js"></script>
-        <script type="text/javascript" src="js/youtube-popup-jquery.js"></script>
-        <script type="text/javascript" src="../../../js/masonry.min.js"></script>
-        <script type="text/javascript" src="../../../js/imagesloaded.min.js"></script>
-        <script type="text/javascript" src="../../../js/counter.js"></script>
-        <script type="text/javascript" src="../../../js/flexslider.js"></script>
-        <script type="text/javascript" src="../../../js/sbmenu.js"></script>
-        <script type="text/javascript" src="../../../js/owl.carousel.min.js"></script>
-        <script type="text/javascript" src="../../../js/rangeslider.min.js"></script>
-        <script type="text/javascript" src="../../../js/custom-script.js"></script>
-        <script src="../../../app-assets/js/scripts/tinymce/js/tinymce.min.js"></script>
+        <script type="text/javascript" src="{{ asset('/js/jquery-migrate-3.3.2.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/bootstrap.bundle.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/select2.full.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/protip.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/youtube-popup-jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/masonry.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/imagesloaded.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/counter.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/flexslider.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/sbmenu.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/owl.carousel.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/rangeslider.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/custom-script.js') }}"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
         @stack('scripts')
     </body>
 </html>

@@ -79,11 +79,13 @@ class SaveProjectController extends Controller
                 return $row->owner->display_name;
             })
             ->addColumn('followers', function($row) {
-                $followers_div = '';
-                foreach ($row->followers as $key => $follower) {
-                    $followers_div .= '<img src=".../../../images/user/profile/'.$follower->user->profile_image.'" alt="" class="avatar avatar-sm" style="margin-left: -10px;">';
-                }
-               return $followers_div;
+                // $followers_div = '';
+                // foreach ($row->followers as $key => $follower) {
+                //     $followers_div .= '<img src=".../../../images/user/profile/'.$follower->user->profile_image.'" alt="" class="avatar avatar-sm" style="margin-left: -10px;">';
+                // }
+
+                $follower_label = $row->followers->count() > 1 ? 'Followers' : 'Follower';
+                return $row->followers->count() . ' ' . $follower_label;
             })
             ->addColumn('saved_date', function($row) {
                 return date_format($row->created_at, 'F d, Y');

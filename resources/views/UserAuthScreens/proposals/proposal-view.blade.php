@@ -177,10 +177,7 @@
                                                         <a href="/employer/proposals" class="back-icon"
                                                             ><i class="fa fa-arrow-left"></i
                                                         ></a>
-                                                        <img
-                                                            src="../../../images/user/profile/{{ $receiver->user->profile_image }}"
-                                                            alt=""
-                                                        />
+                                                        <img src="../../../images/user/profile/{{ $receiver->user->profile_image }}" alt="" />
                                                         <div class="details">
                                                             <span>{{ $receiver->user->firstname }} {{ $receiver->user->lastname }}</span>
                                                             <p>{{ $receiver->tagline }}</p>

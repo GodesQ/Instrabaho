@@ -69,9 +69,6 @@ class ProjectsController extends Controller
     }
 
     public function store(StoreProjectRequest $request) {
-        //check if the current plan is exceed in limit
-        if($this->checkAvailableProject($request->project_type)) return back()->with('fail', 'Sorry but your current plan exceed the limit. Wait for expiration then buy again');
-
         $images = array();
         foreach ($request->file('attachments') as $key => $attachment) {
             $image_name = $attachment->getClientOriginalName();
@@ -203,26 +200,26 @@ class ProjectsController extends Controller
         }
     }
 
-    private function checkAvailableProject($type) {
+    // private function checkAvailableProject($type) {
 
-        // get the data of user
-        $user = Employer::where('user_id', session()->get('id'))->with('package_checkout', 'user')->first();
+    //     // get the data of user
+    //     $user = Employer::where('user_id', session()->get('id'))->with('package_checkout', 'user')->first();
 
-        // Get the current purchased plan of user
-        $purchased_plan = EmployerPackage::where('id', $user->package_checkout->package_type)->first();
+    //     // Get the current purchased plan of user
+    //     $purchased_plan = EmployerPackage::where('id', $user->package_checkout->package_type)->first();
 
-        // Get the current created projects of user
-        $current_user_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->count();
-        $current_user_featured_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->where('project_type', 'featured')->count();
+    //     // Get the current created projects of user
+    //     $current_user_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->count();
+    //     $current_user_featured_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->where('project_type', 'featured')->count();
 
-        if($current_user_projects == $purchased_plan->total_projects) return true;
+    //     if($current_user_projects == $purchased_plan->total_projects) return true;
 
-        if($type == 'featured') {
-            if($current_user_featured_projects == $purchased_plan->total_feature_projects) return true;
-        }
+    //     if($type == 'featured') {
+    //         if($current_user_featured_projects == $purchased_plan->total_feature_projects) return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     public function admin_index() {
         return view("AdminScreens.projects.projects");
