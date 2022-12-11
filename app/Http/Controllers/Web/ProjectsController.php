@@ -64,8 +64,9 @@ class ProjectsController extends Controller
 
     public function create() {
         $categories = ServiceCategory::all();
-        $skills = Skill::toBase()->get();
-        return view('UserAuthScreens.projects.create-project', compact('categories', 'skills'));
+        $skills = Skill::toBase()->get(); 
+        $employer = Employer::where('user_id', auth('user')->user()->id)->first();
+        return view('UserAuthScreens.projects.create-project', compact('categories', 'skills', 'employer'));
     }
 
     public function store(StoreProjectRequest $request) {

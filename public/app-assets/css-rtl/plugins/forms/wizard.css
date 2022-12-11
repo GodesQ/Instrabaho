@@ -199,16 +199,16 @@
   top : 43px;
   width : 50%;
   height : 5px;
-  background-color : #04bbff;
+  background-color : #FFF;
 }
 .app-content .wizard.wizard-circle > .steps > ul > li.current:after {
-  background-color : #F5F7FA;
+  background-color : #FFF;
 }
 .app-content .wizard.wizard-circle > .steps > ul > li.current ~ li:before {
-  background-color : #F5F7FA;
+  background-color : #FFF;
 }
 .app-content .wizard.wizard-circle > .steps > ul > li.current ~ li:after {
-  background-color : #F5F7FA;
+  background-color : #FFF;
 }
 .app-content .wizard.wizard-circle > .steps .step {
   width : 50px;

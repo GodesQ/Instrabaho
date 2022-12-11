@@ -224,7 +224,7 @@ form {
   form .form-group {
     margin-bottom: 1.5rem; }
   form .form-control {
-    background:  #f3f7fd;
+    background:  #fff;
     border: 1px solid #cecece;
     color: #000; }
     form .form-control::-webkit-input-placeholder {

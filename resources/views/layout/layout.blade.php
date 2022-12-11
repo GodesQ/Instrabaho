@@ -21,6 +21,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/extensions/unslider.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/weather-icons/climacons.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/leaflet.css') }}">
+
 		<!-- END: Vendor CSS-->
 
 		<!-- BEGIN: Theme CSS-->
@@ -37,6 +38,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/fonts/simple-line-icons/style.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/fonts/meteocons/style.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/users.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css-rtl/plugins/forms/wizard.css')}}">
 		<!-- END: Page CSS-->
 
 		<!-- BEGIN: Custom CSS-->
@@ -316,9 +318,7 @@
                                 <li><a href="search-page.html">Blog</a></li>
                                 <li><a href="search-page.html">About Us</a></li>
                                 <li>
-                                    <a href="search-page.html"
-                                        >Services Search</a
-                                    >
+                                    <a href="search-page.html">Services Search</a>
                                 </li>
                                 <li>
                                     <a href="search-page.html"
@@ -347,6 +347,7 @@
         <script type="text/javascript" src="js/jquery-3.6.0.js"></script>
         <!-- BEGIN: Vendor JS-->
         <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+        <script src="../../../app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
         <!-- BEGIN Vendor JS-->
 
         <!-- BEGIN: Page Vendor JS-->
@@ -357,10 +358,13 @@
         <!-- BEGIN: Theme JS-->
         <script src="../../../app-assets/js/core/app-menu.js"></script>
         <script src="../../../app-assets/js/core/app.js"></script>
+
+
         <!-- END: Theme JS-->
 
         <!-- BEGIN: Page JS-->
-        <script src="../../../app-assets/js/scripts/forms/switch.js"></script>
+        <script src="{{ asset('app-assets/js/scripts/forms/wizard-steps.js') }}"></script>
+        <script src="{{ asset('app-assets/js/scripts/forms/switch.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script type="text/javascript" src="{{ asset('/js/jquery-migrate-3.3.2.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/bootstrap.bundle.min.js') }}"></script>

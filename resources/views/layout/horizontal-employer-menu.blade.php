@@ -16,7 +16,7 @@
         </li>
         <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Projects">Projects</span></a>
             <ul class="dropdown-menu">
-                <li data-menu=""><a class="dropdown-item" href="/employer/create_project" data-i18n="Create Project" data-toggle="dropdown">Create Project</a>
+                <li data-menu=""><a class="dropdown-item" href="/employer/create_project" data-i18n="Post Project" data-toggle="dropdown">Post Project</a>
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="/employer/proposals" data-i18n="Proposals" data-toggle="dropdown">Proposals</a></li>
                 <li data-menu=""><a class="dropdown-item" href="/employer/projects" data-i18n="My Projects" data-toggle="dropdown">My Projects</a>
