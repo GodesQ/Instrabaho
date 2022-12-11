@@ -103,6 +103,7 @@ function initialize() {
     });
 
     currentLocationButton.addEventListener('click', () => {
+        console.log(this)
         if (navigator.geolocation){
             navigator.geolocation.getCurrentPosition(function(position){
                 var currentLatitude = position.coords.latitude;
