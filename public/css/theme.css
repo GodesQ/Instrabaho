@@ -6640,8 +6640,8 @@ color: #777;
     position: relative;
 	overflow: hidden;
     margin-bottom: 20px;
-	width: 33%;
-	float: left;
+	/* width: 33%;
+	float: left; */
 }
 
 .fr-project-product-features .fr-project-product .short-detail-icon {

@@ -29,8 +29,9 @@ class AuthController extends Controller
             'role' => 'in:freelancer,employer'
         ]);
 
+        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if(!Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password, 'isVerify' => 1])) {
+        if(!Auth::guard('user')->attempt([$fieldType => $request->email, 'password' => $request->password, 'isVerify' => 1])) {
             return back()->withErrors('Fail to Login Maybe your email or password is invalid. Please Try Again.');
         }
 

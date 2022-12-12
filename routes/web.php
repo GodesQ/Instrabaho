@@ -63,7 +63,7 @@ use App\Events\ProjectMessageEvent;
     Route::get('/service/view/{id}', [HomeScreenController::class, 'service'])->name('service.view');
 
     Route::get('/freelancer/view/{display_name}', [HomeScreenController::class, 'freelancer'])->name('freelancer.view');
-    Route::get('/employer/view/{display_name}', [HomeScreenController::class, 'employer'])->name('employer.view');
+    Route::get('/employer/view/{id}', [HomeScreenController::class, 'employer'])->name('employer.view');
 
     /*
     |--------------------------------------------------------------------------
@@ -98,6 +98,7 @@ use App\Events\ProjectMessageEvent;
     | PROTECTED Routes
     |--------------------------------------------------------------------------
     */
+
     Route::middleware(['webauth'])->group( function () {
 
         Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
@@ -159,6 +160,8 @@ use App\Events\ProjectMessageEvent;
             Route::get('proposals', [ProjectProposalController::class, 'proposals_for_employers'])->name('employer.proposals');
             Route::get('proposals/fetch_data', [ProjectProposalController::class, 'fetch_proposals_for_employers'])->name('employer.fetch_proposals');
         });
+
+        Route::get('/projects/selected_dates', [ProjectsController::class, 'selected_dates'])->name('projects.selected_dates');
 
         # proposal routes
         Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('proposal.store');

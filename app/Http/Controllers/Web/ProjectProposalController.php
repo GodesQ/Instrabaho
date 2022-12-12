@@ -71,7 +71,7 @@ class ProjectProposalController extends Controller
         $employer = Employer::where('user_id', session()->get('id'))->firstOrFail();
 
         #get the projects lists data
-        $projects = Project::where('employer_id', $employer->id)->where('status', 'pending')->where('expiration_date', '>=', Carbon::now())->toBase()->get();
+        $projects = Project::where('employer_id', $employer->id)->where('status', 'pending');
 
         return view('UserAuthScreens.proposals.employer.index-proposals', compact('projects'));
     }
@@ -103,14 +103,8 @@ class ProjectProposalController extends Controller
 
         #get the freelancer data
         $freelancer = Freelancer::where('user_id', session()->get('id'))->with('project_proposals')->firstOrFail();
-        $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->with('project')->whereHas('project', function($query) {
-            $query->where('expiration_date', '>', Carbon::now())->where('status', 'pending');
-        })->get();
-
-        $approved_proposals = $freelancer->project_proposals()->where('status', 'approved')->with('project')->whereHas('project', function($query) {
-            $query->where('expiration_date', '>', Carbon::now())->where('status', 'pending');
-        })->get();
-
+        $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->with('project');
+        $approved_proposals = $freelancer->project_proposals()->where('status', 'approved')->with('project');
         return view('UserAuthScreens.proposals.freelancer.index-proposals', compact('freelancer', 'pending_proposals', 'approved_proposals'));
     }
 

@@ -59,7 +59,7 @@ $(document).ready(function() {
         longEl = document.querySelector( '.longitude' )
         var mapOptions = {
             center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
-            zoom: 11,
+            zoom: 12,
             disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
             scrollWheel: true, // If set to false disables the scrolling on the map.
             draggable: true, // If set to false , you cannot move the map around.

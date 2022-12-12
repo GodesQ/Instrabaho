@@ -169,11 +169,7 @@
                                 </li>
                             @else
                                 <li class="dropdown dropdown-user nav-item fr-list loggedin">
-                                    <a
-                                        class="dropdown-toggle nav-link dropdown-user-link"
-                                        href="#"
-                                        data-toggle="dropdown"
-                                    >
+                                    <a class="dropdown-toggle nav-link dropdown-user-link d-flex justify-content-between align-items-center" href="#" data-toggle="dropdown">
                                         <div class="avatar avatar-online">
                                             @if(Session::get('profile_image'))
                                                 <img class="brand-text" style="width: 30px; height: 30px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
@@ -181,6 +177,11 @@
                                                 <img class="brand-text" src="../../../images/user-profile.png" style="width: 30px; height: 30px; object-fit: cover;" alt="Avatar Image">
                                             @endif<i></i>
                                         </div>
+                                        <div style="color: #000000 !important;" class="mx-2">
+                                            {{ Session::get('username') }} <br>
+                                            <div class="badge badge-primary text-uppercase">{{ Session::get('role') }}</div>
+                                        </div>
+
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right p-3" style="width: 300px;">
                                         <!-- <a href="/" class="container">

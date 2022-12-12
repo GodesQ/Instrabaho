@@ -105,8 +105,8 @@
                                 This initiative is to help people who lose their job during the time of the pandemic.
                             </p>
                         </div>
-                        <div class="fr-hero3-srch">
-                            {{-- <form
+                        {{-- <div class="fr-hero3-srch">
+                            <form
                                 class="hero-one-form"
                                 action="search-page.html"
                             >
@@ -153,8 +153,8 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </form> --}}
-                        </div>
+                            </form>
+                        </div> --}}
                         {{-- <div class="fr-her3-elemnt">
                             Trending Keywords:
                             <a href="search-page.html">React Native</a>

@@ -102,8 +102,8 @@ function initialize() {
         });
     });
 
-    currentLocationButton.addEventListener('click', () => {
-        console.log(this)
+    currentLocationButton.addEventListener('click', (e) => {
+        console.log(e);
         if (navigator.geolocation){
             navigator.geolocation.getCurrentPosition(function(position){
                 var currentLatitude = position.coords.latitude;

@@ -27,16 +27,16 @@ class StoreProjectRequest extends FormRequest
             'title' => 'required',
             'category_id' => 'required',
             'description' => 'required',
-            'project_level' => 'required',
             'project_cost_type' => 'required',
             'cost' => 'required|numeric|min:100',
-            'project_duration' => 'required',
-            'freelancer_type' => 'required',
-            'english_level' => 'required',
             'location' => 'required',
             'project_type' => 'required',
             'latitude' => 'required',
-            'longitude' => 'required'
+            'longitude' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'total_dates' => 'required|numeric',
+            'payment_method' => 'required'
         ];
     }
 }
