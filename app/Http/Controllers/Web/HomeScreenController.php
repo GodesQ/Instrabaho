@@ -32,7 +32,7 @@ class HomeScreenController extends Controller
         // ->with('freelancer')
         // ->get();
         $freelancers = Freelancer::limit(10)->get();
-        $projects = Project::where('expiration_date', '>', Carbon::now())->limit(8)->with('category', 'employer')->latest('id')->get();
+        $projects = Project::where('status', 'pending')->limit(8)->with('category', 'employer')->latest('id')->get();
         return view('welcome', compact('freelancers', 'projects'));
     }
 
@@ -41,12 +41,12 @@ class HomeScreenController extends Controller
         $freelancer = Freelancer::where('display_name', $request->display_name)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->firstOrFail();
         $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
         $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
-        
+
         $my_profile = Employer::where('user_id', session()->get('id'))->with('projects')->first();
 
         $follow_freelancer = false;
         if($my_profile)  $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $my_profile->id)->exists();
-        
+
         return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer', 'my_profile'));
     }
 
@@ -121,12 +121,7 @@ class HomeScreenController extends Controller
 
     public function projects(Request $request) {
 
-        $projects = Project::where('expiration_date', '>' , Carbon::now())
-        ->where('isExpired', 0)
-        ->where('status', 'pending')
-        ->with('category', 'employer')
-        ->latest('id')
-        ->paginate(7);
+        $projects = Project::with('category', 'employer')->latest('id')->paginate(7);
 
         $service_categories = ServiceCategory::all();
         return view('CustomerScreens.home_screens.project.project-search', compact('projects', 'service_categories'));
@@ -134,6 +129,7 @@ class HomeScreenController extends Controller
 
     public function fetch_projects(Request $request) {
         abort_if(!$request->ajax(), 404);
+
         $title = $request->get('title');
         $categories = $request->get('categories') ? json_decode($request->get('categories')) : [];
         $my_range = $request->get('my_range');
@@ -163,8 +159,6 @@ class HomeScreenController extends Controller
             $range = explode(';', $my_range);
             return $q->whereBetween('cost', [$range[0], $range[1]]);
         })
-        ->where('expiration_date', '>' , Carbon::now())
-        ->where('isExpired', 0)
         ->with('category', 'employer')
         ->latest('id')
         ->paginate($result);

@@ -61,8 +61,8 @@
                                 <form id="signup-form" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="" class="font-weight-bold">Email Address</label>
-                                        <input type="email" name="email" placeholder="Email address" class="form-control" data-smk-msg="Email address is required">
+                                        <label for="" class="font-weight-bold">Email Address or Username</label>
+                                        <input type="text" name="email" placeholder="" class="form-control" data-smk-msg="Email address is required">
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="font-weight-bold">Password</label>

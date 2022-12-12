@@ -13,7 +13,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,17 @@ class UpdateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => 'required|exists:projects,id',
+            'employer' => 'required',
+            'title' => 'required',
+            'category_id' => 'required',
+            'description' => 'required',
+            'project_level' => 'required',
+            'project_cost_type' => 'required',
+            'cost' => 'required|numeric',
+            'location' => 'required',
+            'project_type' => 'required|in:simple,featured',
+            'skills' => 'required'
         ];
     }
 }

@@ -55,28 +55,12 @@
                    <div class="fr-project-product-features">
                       <div class="fr-project-product">
                          <ul class="">
-                            <li>
-                               <div class="short-detail-icon"> <i class="fas fa-id-card-alt"></i> </div>
-                               <div class="short-detail-meta"> <small>Freelancer Type </small>
-                                    <strong>{{ $project->freelancer_type }}</strong>
-                               </div>
-                            </li>
+
                             <li>
                                <div class="short-detail-icon"> <i class="far fa-calendar-check"></i> </div>
-                               <div class="short-detail-meta"> <small>Project Duration</small>
-                                    <strong>{{ $project->project_duration }}</strong>
-                               </div>
-                            </li>
-                            <li>
-                               <div class="short-detail-icon"> <i class="fas fa-bezier-curve"></i> </div>
-                               <div class="short-detail-meta"> <small>Level</small>
-                                <strong>{{ $project->project_level }}</strong>
-                               </div>
-                            </li>
-                            <li>
-                               <div class="short-detail-icon"> <i class="fas fa-headset"></i> </div>
-                               <div class="short-detail-meta"> <small>English Level </small>
-                                <strong>{{ $project->english_level }}</strong>
+                               <div>
+                                    <small>Project Duration</small> <br>
+                                    <strong>{{ date_format(new DateTime($project->start_date), "F d, Y") }} - {{ date_format(new DateTime($project->end_date), "F d, Y") }} </strong>
                                </div>
                             </li>
                          </ul>

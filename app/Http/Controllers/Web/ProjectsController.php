@@ -24,52 +24,46 @@ class ProjectsController extends Controller
     public function index() {
         $user_id = session()->get('id');
         $employer = Employer::where('user_id', $user_id)->first();
-        $projects = Project::where('employer_id', $employer->id)->where('expiration_date', '>=' , Carbon::now())->latest('id')->cursorPaginate(10);
+        $projects = Project::where('employer_id', $employer->id)->cursorPaginate(10);
         return view('UserAuthScreens.projects.projects', compact('projects'));
     }
 
     public function employer_ongoing(Request $request) {
         $employer = Employer::where('user_id', session()->get('id'))->first();
-        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'approved')->with('project', 'contract')->whereHas('project', function($query) {
-            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
-        })->get();
+        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'approved')->with('project', 'contract')->get();
         return view('UserAuthScreens.projects.employer.ongoing.ongoing', compact('proposals'));
     }
 
     public function employer_completed(Request $request) {
         $employer = Employer::where('user_id', session()->get('id'))->first();
-        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'completed')->with('project', 'contract')->whereHas('project', function($query) {
-            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
-        })->get();
+        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'completed')->with('project', 'contract')->get();
 
         return view('UserAuthScreens.projects.employer.completed.completed', compact('proposals'));
     }
 
     public function freelancer_ongoing(Request $request) {
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'approved')->with('project', 'contract')->whereHas('project', function($query) {
-            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
-        })->get();
+        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'approved')->with('project', 'contract')->get();
         return view('UserAuthScreens.projects.freelancer.ongoing.ongoing', compact('proposals'));
     }
 
     public function freelancer_completed(Request $request) {
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'completed')->with('project', 'contract')->whereHas('project', function($query) {
-            $query->where('expiration_date', '>', Carbon::now())->orWhere('isExpired', 0);
-        })->get();
+        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'completed')->with('project', 'contract')->get();
 
         return view('UserAuthScreens.projects.freelancer.completed.completed', compact('proposals'));
     }
 
     public function create() {
         $categories = ServiceCategory::all();
-        $skills = Skill::toBase()->get(); 
+        $skills = Skill::toBase()->get();
         $employer = Employer::where('user_id', auth('user')->user()->id)->first();
         return view('UserAuthScreens.projects.create-project', compact('categories', 'skills', 'employer'));
     }
 
     public function store(StoreProjectRequest $request) {
+        // dd($request->all());
+
         $images = array();
         foreach ($request->file('attachments') as $key => $attachment) {
             $image_name = $attachment->getClientOriginalName();
@@ -82,11 +76,18 @@ class ProjectsController extends Controller
 
         $employer = Employer::where('user_id', $user_id)->first();
 
+        #compute total cost
+        $system_deduction = intval($request->cost) * 0.10;
+        $total_cost = intval($request->cost) - $system_deduction;
+
         $create = Project::create(array_merge($request->validated(), [
             'employer_id' => $employer->id,
             'attachments' => $json_images,
             'skills' => json_encode($request->skills),
-            'expiration_date' => $employer->package_date_expiration > Carbon::now() || $employer->package_date_expiration ? $employer->package_date_expiration : Carbon::now()
+            'start_date' => date_format($request->start_date, 'Y-m-d'),
+            'end_date' => date_format($request->end_date, 'Y-m-d'),
+            'datetime' => $request->datetime,
+            'total_cost' => $total_cost,
         ]));
 
         if($create) return redirect()->route('employer.projects.index')->with('success', 'Project Created Successfully');
@@ -100,23 +101,7 @@ class ProjectsController extends Controller
         return view('UserAuthScreens.projects.edit-project', compact('project', 'categories', 'skills', 'project_images'));
     }
 
-    public function update(Request $request) {
-        $request->validate([
-            'id' => 'required|exists:projects,id',
-            'employer' => 'required',
-            'title' => 'required',
-            'category_id' => 'required',
-            'description' => 'required',
-            'project_level' => 'required',
-            'project_cost_type' => 'required',
-            'cost' => 'required|numeric',
-            'project_duration' => 'required|in:1-3 Weeks,1-5 Days,Long Term,Short Term,1-2 Months',
-            'freelancer_type' => 'required|in:Company,Group,Individual,Student',
-            'english_level' => 'required|in:Basic,Bilingual,Fluent,Professional',
-            'location' => 'required',
-            'project_type' => 'required|in:simple,featured',
-            'skills' => 'required'
-        ]);
+    public function update(UpdateProjectRequest $request) {
 
         $project = Project::where('id', $request->id)->first();
         $project_images = json_decode($project->attachments);
@@ -201,26 +186,9 @@ class ProjectsController extends Controller
         }
     }
 
-    // private function checkAvailableProject($type) {
-
-    //     // get the data of user
-    //     $user = Employer::where('user_id', session()->get('id'))->with('package_checkout', 'user')->first();
-
-    //     // Get the current purchased plan of user
-    //     $purchased_plan = EmployerPackage::where('id', $user->package_checkout->package_type)->first();
-
-    //     // Get the current created projects of user
-    //     $current_user_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->count();
-    //     $current_user_featured_projects = Project::where('employer_id', $user->id)->where('expiration_date', $user->package_date_expiration)->where('project_type', 'featured')->count();
-
-    //     if($current_user_projects == $purchased_plan->total_projects) return true;
-
-    //     if($type == 'featured') {
-    //         if($current_user_featured_projects == $purchased_plan->total_feature_projects) return true;
-    //     }
-
-    //     return false;
-    // }
+    public function selected_dates(Request $request) {
+        abort_if(!$request->ajax(), 404);
+    }
 
     public function admin_index() {
         return view("AdminScreens.projects.projects");
