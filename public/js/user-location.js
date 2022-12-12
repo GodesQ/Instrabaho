@@ -1,6 +1,6 @@
 var map;
 
-function initialize() {
+function initialize() { 
     var mapOptions, map, marker, searchBox, city,
         infoWindow = '',
         addressEl = document.querySelector( '#map-search' ),
