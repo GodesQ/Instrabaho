@@ -66,7 +66,7 @@ function getChats() {
 
             setTimeout(() =>{
                 getChats();
-            }, 3000);
+            }, 10000);
         },
     });
 }

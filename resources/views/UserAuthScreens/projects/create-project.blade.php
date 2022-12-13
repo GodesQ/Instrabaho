@@ -69,7 +69,7 @@
 
                                             <h6>Project Schedule</h6>
                                             <fieldset class="my-3">
-                                                <div class="form-label font-weight-bold my-50">When do you need to complete this project?</div>
+                                                <div class="form-label font-weight-bold my-50" style="font-size: 20px;">When do you need to complete this project?</div>
                                                     <div class="form-group">
                                                         <div class='input-group'>
                                                             <input type='text' class="form-control datetime" name="datetime" value="{{ old('datetime') }}" readonly/>
@@ -252,8 +252,6 @@
         }
 
         $('.datetime').daterangepicker({
-            timePicker: true,
-            timePickerIncrement: 30,
             locale: {
                 format: 'MM/DD/YYYY ',
                 cancelLabel: 'Clear'

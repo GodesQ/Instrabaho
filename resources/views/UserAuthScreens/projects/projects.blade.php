@@ -26,7 +26,6 @@
                                 <tr>
                                     <th>&nbsp;</th>
                                     <th>Date Created</th>
-                                    <th>Date Expiration</th>
                                     <th>Price</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -47,16 +46,13 @@
                                     <td>
                                         <h3 style="font-size: 15px;">{{ date_format(new DateTime($project->created_at), "F d, Y")}}</h3>
                                     </td>
-                                    <td>
-                                        <h3 style="font-size: 15px;">{{ date_format(new DateTime($project->expiration_date), "F d, Y")}}</h3>
-                                    </td>
                                     <td valign="center">
                                         <h3 class="font-weight-bold">
                                             ₱ {{ $project->cost }}
                                         </h3>
                                     </td>
                                     <td>
-                                        @if ($project->status == 'approved' || $project->status == 'approved')
+                                        @if ($project->status == 'completed' || $project->status == 'approved')
                                             <div class="badge badge-success">{{ $project->status }}</div>
                                         @else
                                             <div class="badge badge-primary">{{ $project->status }}</div>
@@ -64,8 +60,8 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <a href="/employer/edit_project/{{ $project->id }}" class="btn btn-outline-primary btn-sm mr-50"><i class="fa fa-edit"></i> Edit</a>
-                                            <button id="{{ $project->id }}" class="delete-project btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
+                                            <a href="/employer/edit_project/{{ $project->id }}" class="btn btn-primary mr-50"><i class="fa fa-edit"></i> Edit</a>
+                                            <button id="{{ $project->id }}" class="delete-project btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
                                         </div>
                                     </td>
                                 </tr>
