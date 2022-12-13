@@ -84,7 +84,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="contactno">Contact No: <span class="danger text-danger">*</span></label>
-                                                            <input type="number" name="contactno" class="form-control" id="contactno"  style="border: {{$errors->has('contactno') ? '1px solid #ff7588 !important' : 'none'}};" value="{{ old('contactno') }}">
+                                                            <input type="number" name="contactno" class="form-control" id="contactno" maxlength="11" style="border: {{$errors->has('contactno') ? '1px solid #ff7588 !important' : 'none'}};" value="{{ old('contactno') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -99,7 +99,13 @@
                                                 <div class="row">
                                                     <div class="form-group">
                                                         <div class="form-label font-weight-bold my-50">Location <span class="danger text-danger">*</span></div>
-                                                        <input type="text" name="address" id="map-search" class="form-control controls" style="border: {{$errors->has('address') ? '1px solid #ff7588 !important' : 'none'}};" value="{{ old('address') }}">
+
+                                                        <div class="input-group">
+                                                            <input type="text" name="address" id="map-search" class="form-control controls" style="border: {{$errors->has('address') ? '1px solid #ff7588 !important' : 'none'}};" value="{{ old('address') }}">
+                                                            <div class="input-group-append" id="button-addon2">
+                                                                <button class="btn btn-primary" type="button" id="get-current-location">Current Location</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div id="map-canvas"></div>

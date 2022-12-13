@@ -8,7 +8,8 @@
         </div>
         <div class="col-md-4">
             <a href="" class="warning">Cancel Project</a>
-            <a href="/proposal/info/{{ $proposal->id }}?act=message" class="btn btn-primary ml-2">Message</a>
+            <a href="/project/contract/{{ $proposal->contract->id }}" class="btn btn-secondary mx-1">View Contract</a>
+            <a href="/proposal/info/{{ $proposal->id }}?act=message" class="btn btn-primary ml-1">Message</a>
         </div>
     </div>
 @empty

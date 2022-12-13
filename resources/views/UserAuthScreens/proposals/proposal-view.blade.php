@@ -16,7 +16,11 @@
                             <div class="card-body">
                                 <div class="row my-1">
                                     <div class="col-xl-3 col-lg-2">
-                                        <img src="../../../images/user/profile/{{ $proposal->freelancer->user->profile_image }}" alt="" width="80" height="80" style="object-fit: cover;border-radius: 50px; border: 1px solid black;">
+                                        @if($proposal->freelancer->user->profile_image)
+                                            <img src="../../../images/user/profile/{{ $proposal->freelancer->user->profile_image }}" alt="" width="80" height="80" style="object-fit: cover;border-radius: 50px; border: 1px solid black;">
+                                        @else
+                                            <img src="../../../images/user-profile.png" alt="" width="80" height="80" style="object-fit: cover;border-radius: 50px; border: 1px solid black;">
+                                        @endif
                                     </div>
                                     <div class="col-xl-9 col-lg-10">
                                         <h4 class="font-weight-bold">{{ $proposal->freelancer->user->firstname }} {{ $proposal->freelancer->user->lastname }}</h4>
@@ -61,6 +65,14 @@
                     </div>
                     <div class="col-xl-8">
                         <div class="card">
+                            {{-- @if(!$isAvailableDate)
+                                <div class="alert bg-warning alert-icon-right alert-dismissible mb-2" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <strong>Warning!</strong> Better check yourself, you're not <a href="#" class="alert-link">looking too good</a>.
+                                </div>
+                            @endif --}}
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-6">
@@ -69,7 +81,7 @@
                                     <div class="col-md-12 col-lg-6 text-lg-right my-2">
                                         @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
                                             @if ($proposal->status == 'pending')
-                                                <button class="btn btn-success">Hire Freelancer  <i class="fa fa-thumbs-up"></i></button>
+                                                <a href="/project/proposal/create-contract/{{ $proposal->id }}" class="btn btn-success">Hire Worker  <i class="fa fa-thumbs-up"></i></a>
                                             @endif
                                             @if($proposal->status == 'approved')
                                                 <a href="/pay_job/project/{{ $proposal->id }}" class="btn btn-primary">Set to Complete & Pay Job</a>
@@ -119,7 +131,7 @@
                                                 <div class="font-weight-bold">Cost Type : <span class="font-weight-normal mx-1">{{ $proposal->project->project_cost_type }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25">
-                                                <div class="font-weight-bold">Duration : <span class="font-weight-normal mx-1">{{ $proposal->project->project_duration }}</span></div>
+                                                <div class="font-weight-bold">Duration : <span class="font-weight-normal mx-1">{{ date_format(new DateTime($proposal->project->start_date), 'F d, Y') }} - {{ date_format(new DateTime($proposal->project->end_date), 'F d, Y') }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25">
                                                 @php $proposal->project->setSkills(json_decode($proposal->project->skills)) @endphp
@@ -137,7 +149,7 @@
                                                 <div class="font-weight-bold">Offer Price : <span class="font-weight-normal mx-1" style="font-size: 30px;">₱ {{ number_format($proposal->offer_price, 2) }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25">
-                                                <div class="font-weight-bold">Estimated Days : <span class="font-weight-normal mx-1">{{ $proposal->estimated_days }} Days</span></div>
+                                                <div class="font-weight-bold">Estimated Days : <span class="font-weight-normal mx-1">{{ $proposal->estimated_days }} {{ $proposal->estimated_days  > 1 ? 'Days' : 'Day' }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25">
                                                 <div class="font-weight-bold">Freelancer Address : <span class="font-weight-normal mx-1">{{ $proposal->address }}</span></div>
@@ -158,10 +170,12 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 my-1 p-2 rounded" style="background:#f3f5f8;">
-                                                <div class="font-weight-bold h2 my-1">Described Proposal</div>
-                                                <div class="font-weight-normal ">@php echo nl2br($proposal->cover_letter); @endphp</div>
-                                            </div>
+                                            @if ($proposal->cover_letter)
+                                                <div class="col-md-12 my-1 p-2 rounded" style="background:#f3f5f8;">
+                                                    <div class="font-weight-bold h2 my-1">Described Proposal</div>
+                                                    <div class="font-weight-normal ">@php echo nl2br($proposal->cover_letter); @endphp</div>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tab32" role="tabpanel" aria-labelledby="base-tab32">
@@ -174,10 +188,16 @@
                                                         style="width: 60%"
                                                         class="d-flex align-items-center header-content"
                                                     >
-                                                        <a href="/employer/proposals" class="back-icon"
+                                                        {{-- <a href="/employer/proposals" class="back-icon"
                                                             ><i class="fa fa-arrow-left"></i
-                                                        ></a>
-                                                        <img src="../../../images/user/profile/{{ $receiver->user->profile_image }}" alt="" />
+                                                        ></a> --}}
+
+                                                        @if($proposal->freelancer->user->profile_image)
+                                                            <img src="../../../images/user/profile/{{ $receiver->user->profile_image }}" alt="" />
+                                                        @else
+                                                            <img src="../../../images/user-profile.png" alt="" width="80" height="80" style="object-fit: cover;border-radius: 50px; border: 1px solid black;">
+                                                        @endif
+
                                                         <div class="details">
                                                             <span>{{ $receiver->user->firstname }} {{ $receiver->user->lastname }}</span>
                                                             <p>{{ $receiver->tagline }}</p>
@@ -189,7 +209,7 @@
                                                     @csrf
                                                     <input type="hidden" value="{{ $proposal->id }}" id="msg_id" name="msg_id" />
                                                     <input type="text" class="incoming_id" name="incoming_id" value="{{ $incoming_msg_id }}" hidden />
-                                                    <input type="text" class="  " name="outgoing_id" value="{{ $outgoing_msg_id }}" hidden />
+                                                    <input type="text" class="outgoing_id" name="outgoing_id" value="{{ $outgoing_msg_id }}" hidden />
                                                     <input type="text" name="message" class="input-field" id="message_input" placeholder="Type a message here..."/>
                                                     <button><i class="fa fa-send"></i></button>
                                                 </form>
@@ -208,7 +228,7 @@
 @endsection
 
 @push('scripts')
-<script src="../../../js/project-chat.js"></script>
+<script src="../../../js/chat.js"></script>
 <script>
 
     window.addEventListener('load', () => {

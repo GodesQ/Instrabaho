@@ -35,24 +35,7 @@
  <section class="fr-lance-details section-padding">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-xs-12 col-xl-3">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="title" placeholder="Job Title, keywords, Freelancer" id="title">
-                </div>
-            </div>
-            <div class="col-lg-2 col-xs-12 col-xl-2">
-                <select name="radius" id="radius" class="select2">
-                    <option value="5">5 km</option>
-                    <option value="10">10 km</option>
-                    <option value="25">25 km</option>
-                    <option value="50">50 km</option>
-                    <option value="75">75 km</option>
-                    <option value="100">100 km</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            {{-- <div class="col-lg-4 col-xs-12 col-sm-12 col-md-12 col-xl-4">
+            <div class="col-lg-4 col-xs-12 col-sm-12 col-md-12 col-xl-4">
                 <div class="project-sidebar">
                     <div class="heading">
                     <h4>Search Filters</h4>
@@ -91,7 +74,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="font-weight-bold" style="color: #000;">Radius</div>
-                                    
+                                    <select name="radius" id="radius" class="select2">
+                                        <option value="5">5 km</option>
+                                        <option value="10">10 km</option>
+                                        <option value="25">25 km</option>
+                                        <option value="50">50 km</option>
+                                        <option value="75">75 km</option>
+                                        <option value="100">100 km</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -201,8 +191,8 @@
                     </form>
                     </div>
                 </div>
-            </div> --}}
-            <div class="col-lg-6 col-xl-6 col-sm-12 col-md-12 col-xl-6">
+            </div>
+            <div class="col-lg-8 col-xl-8 col-sm-12 col-md-12 col-xl-8">
                 <div class="row">
                     <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12">
                     <div class="services-filter">
@@ -226,13 +216,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 col-sm-12">
-                <div id="freelancers-locations"></div>
-            </div>
        </div>
     </div>
  </section>
- {{-- <div class="modal fade" id="modal-map" tabindex="-1" role="dialog" aria-labelledby="modal-map" aria-hidden="true">
+ <div class="modal fade" id="modal-map" tabindex="-1" role="dialog" aria-labelledby="modal-map" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-header bg-primary white">
             <h4 class="modal-title text-white" id="myModalLabel8">Freelancers Location</h4>
@@ -243,7 +230,7 @@
         <div class="modal-content">
             <div class="card">
                 <div class="card-body">
-                    
+                    <div id="freelancers-locations"></div>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-between align-items-center">
@@ -256,10 +243,11 @@
             </div>
         </div>
     </div>
-</div> --}}
- <script src="../../../js/user-location.js"></script>
+</div>
+
 @endsection
 
 @push('scripts')
+<script src="../../../js/user-location.js"></script>
 <script src="../../../assets/js/custom_js/homescreen/freelancer_search.js"></script>
 @endpush

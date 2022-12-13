@@ -1,6 +1,6 @@
 @extends('layout.user-layout')
 
-@section('title', 'Create Contract - INSTRABAHO')
+@section('title', 'Create Contract')
 
 @section('content')
 @if ($errors->any())
@@ -45,17 +45,17 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="start_date" class="font-weight-bold">Start Date <span class="info ml-50">optional</span></label>
+                                                <label for="start_date" class="font-weight-bold">Start Date </label>
                                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, labore consectetur.</p>
-                                                <input type="date" class="form-control" name="start_date">
+                                                <input type="date" class="form-control" name="start_date" value="{{ $proposal->project->start_date }}">
                                             </div>
                                             <div class="form-group">
-                                                <label for="end_date" class="font-weight-bold">End Date <span class="info ml-50">optional</span></label>
+                                                <label for="end_date" class="font-weight-bold">End Date </label>
                                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, labore consectetur.</p>
-                                                <input type="date" class="form-control" name="end_date">
+                                                <input type="date" class="form-control" name="end_date" value="{{ $proposal->project->start_date }}">
                                             </div>
                                             <div class="form-footer">
-                                                <button class="btn btn-primary">Create Proposal</button>
+                                                <button class="btn btn-primary">Create Contract </button>
                                             </div>
                                         </form>
                                     </div>

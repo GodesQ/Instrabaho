@@ -4,72 +4,6 @@ var latEl, longEl, my_marker, circle;
 latEl = document.querySelector( '.latitude' )
 longEl = document.querySelector( '.longitude' )
 
-function initialize() {
-    var mapOptions = {
-        center: new google.maps.LatLng( 14.5995124, 120.9842195 ),
-        zoom: 11,
-        disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
-        scrollWheel: true, // If set to false disables the scrolling on the map.
-        draggable: true, // If set to false , you cannot move the map around.
-    };
-
-    map = new google.maps.Map(document.getElementById("freelancers-locations"), mapOptions);
-    var infoWindow = new google.maps.InfoWindow();
-
-    const user_icon_marker = {
-        url: '../../../images/icons/red_pin_instrabaho.svg',
-        scaledSize: new google.maps.Size(50,50)
-    }
-
-    my_marker = new google.maps.Marker({
-        position:  new google.maps.LatLng(Number(latEl.value ? latEl.value : 14.5995124), Number(longEl.value ? longEl.value : 120.9842195) ),
-        map: map,
-        icon: user_icon_marker,
-        draggable: true,
-    })
-    
-    console.log(my_marker);
-    
-    google.maps.event.addListener( my_marker, "dragend", function ( event ) {
-        var lat, long, address, resultArray;
-        var addressEl = document.querySelector( '#map-search' );
-        var latEl = document.querySelector( '.latitude' );
-        var longEl = document.querySelector( '.longitude' );
-
-        lat = my_marker.getPosition().lat();
-        long = my_marker.getPosition().lng();
-        
-
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode( { latLng: my_marker.getPosition() }, function ( result, status ) {
-            if ( 'OK' === status ) {  // This line can also be written like if ( status == google.maps.GeocoderStatus.OK ) {
-                address = result[0].formatted_address;
-                resultArray =  result[0].address_components;
-                addressEl.value = address;
-                latEl.value = lat;
-                longEl.value = long;
-                fetchFreelancers(1);
-            } else {
-                console.log( 'Geocode was not successful for the following reason: ' + status );
-            }
-
-            // Closes the previous info window if it already exists
-            if ( infoWindow ) {
-                infoWindow.close();
-            }
-
-            /**
-             * Creates the info Window at the top of the marker
-             */
-            infoWindow = new google.maps.InfoWindow({
-                content: address
-            });
-
-            infoWindow.open( map, marker );
-        });
-    });
-}
-
 
     // set the default radius
     var radius = $('#radius').val();
@@ -134,14 +68,74 @@ function initialize() {
             }
         })
     }
-    
 
-    latEl = document.querySelector( '.latitude' )
-    longEl = document.querySelector( '.longitude' )
 
     function setLocations(freelancers) {
-        console.log(map)
         if(freelancers.length == 0) return;
+
+        var mapOptions = {
+            center: new google.maps.LatLng( 14.5995124, 120.9842195 ),
+            zoom: 11,
+            disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
+            scrollWheel: true, // If set to false disables the scrolling on the map.
+            draggable: true, // If set to false , you cannot move the map around.
+        };
+
+        map = new google.maps.Map(document.getElementById("freelancers-locations"), mapOptions);
+        var infoWindow = new google.maps.InfoWindow();
+
+        const user_icon_marker = {
+            url: '../../../images/icons/red_pin_instrabaho.svg',
+            scaledSize: new google.maps.Size(50,50)
+        }
+
+        my_marker = new google.maps.Marker({
+            position:  new google.maps.LatLng(Number(latEl.value ? latEl.value : 14.5995124), Number(longEl.value ? longEl.value : 120.9842195) ),
+            map: map,
+            icon: user_icon_marker,
+            draggable: true,
+        })
+
+        console.log(my_marker);
+
+        google.maps.event.addListener( my_marker, "dragend", function ( event ) {
+            var lat, long, address, resultArray;
+            var addressEl = document.querySelector( '#map-search' );
+            var latEl = document.querySelector( '.latitude' );
+            var longEl = document.querySelector( '.longitude' );
+
+            lat = my_marker.getPosition().lat();
+            long = my_marker.getPosition().lng();
+
+
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode( { latLng: my_marker.getPosition() }, function ( result, status ) {
+                if ( 'OK' === status ) {  // This line can also be written like if ( status == google.maps.GeocoderStatus.OK ) {
+                    address = result[0].formatted_address;
+                    resultArray =  result[0].address_components;
+                    addressEl.value = address;
+                    latEl.value = lat;
+                    longEl.value = long;
+                    fetchFreelancers(1);
+                } else {
+                    console.log( 'Geocode was not successful for the following reason: ' + status );
+                }
+
+                // Closes the previous info window if it already exists
+                if ( infoWindow ) {
+                    infoWindow.close();
+                }
+
+                /**
+                 * Creates the info Window at the top of the marker
+                 */
+                infoWindow = new google.maps.InfoWindow({
+                    content: address
+                });
+
+                infoWindow.open( map, marker );
+            });
+        });
 
         let directionsService = new google.maps.DirectionsService;
         let directionsDisplay = new google.maps.DirectionsRenderer({

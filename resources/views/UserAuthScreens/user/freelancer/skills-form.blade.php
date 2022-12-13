@@ -37,7 +37,7 @@
                                             <span class="text-primary" style="font-size: 12px; font-style: italic;">(Up to 100%)</span>
                                         </label>
                                         <br>
-                                        <input type="number" max="100" value="{{ $freelancer_skill->skill_percentage }}" class="form-control" id="pass" name="skill_percentage" placeholder="Skill Percentage">
+                                        <input type="number" max="100" min="1" value="{{ $freelancer_skill->skill_percentage }}" class="form-control" id="pass" name="skill_percentage" placeholder="Skill Percentage">
                                         <span class="text-danger danger">@error('skill_percentage'){{ $message }}@enderror</span>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-2 text-center mt-2">
