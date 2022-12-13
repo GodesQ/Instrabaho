@@ -14,22 +14,6 @@
                 </li>
             </ul>
         </li>
-        <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Addons">Addons</span></a>
-            <ul class="dropdown-menu">
-                <li data-menu="" class="{{  Request::path() == 'freelancer/create_addon' ? 'active' : ''  }}"><a class="dropdown-item" href="/freelancer/create_addon" data-i18n="Create Addon" data-toggle="dropdown">Create Addon</a>
-                </li>
-                <li data-menu="" class="{{  Request::path() == 'freelancer/addons' ? 'active' : ''  }}"><a class="dropdown-item" href="/freelancer/addons" data-i18n="My Addons" data-toggle="dropdown">My Addons</a>
-                </li>
-            </ul>
-        </li>
-        <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Services">Services</span></a>
-            <ul class="dropdown-menu">
-                <li data-menu=""><a class="dropdown-item" href="/freelancer/create_service" data-i18n="Create Service" data-toggle="dropdown">Create Service</a>
-                </li>
-                <li data-menu=""><a class="dropdown-item" href="/freelancer/services" data-i18n="My Services" data-toggle="dropdown">My Services</a>
-                </li>
-            </ul>
-        </li>
         <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Projects">Projects</span></a>
             <ul class="dropdown-menu">
                 <li class="{{ Request::path() == 'freelancer/proposals' ? 'active' : '' }}">
@@ -40,6 +24,22 @@
                 </li>
                 <li class="{{ Request::path() == 'freelancer/projects/completed' ? 'active' : '' }}">
                     <a class="dropdown-item" href="/freelancer/projects/completed" data-toggle="dropdown" data-i18n="Completed Projects">Completed Projects</a>
+                </li>
+            </ul>
+        </li>
+        {{-- <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Addons">Addons</span></a>
+            <ul class="dropdown-menu">
+                <li data-menu="" class="{{  Request::path() == 'freelancer/create_addon' ? 'active' : ''  }}"><a class="dropdown-item" href="/freelancer/create_addon" data-i18n="Create Addon" data-toggle="dropdown">Create Addon</a>
+                </li>
+                <li data-menu="" class="{{  Request::path() == 'freelancer/addons' ? 'active' : ''  }}"><a class="dropdown-item" href="/freelancer/addons" data-i18n="My Addons" data-toggle="dropdown">My Addons</a>
+                </li>
+            </ul>
+        </li> --}}
+        <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Services">Services</span></a>
+            <ul class="dropdown-menu">
+                <li data-menu=""><a class="dropdown-item" href="/freelancer/create_service" data-i18n="Create Service" data-toggle="dropdown">Create Service</a>
+                </li>
+                <li data-menu=""><a class="dropdown-item" href="/freelancer/services" data-i18n="My Services" data-toggle="dropdown">My Services</a>
                 </li>
             </ul>
         </li>

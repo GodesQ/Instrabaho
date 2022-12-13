@@ -20,6 +20,7 @@ function initialize() {
         draggable: true, // If set to false , you cannot move the map around.
 
     };
+    
     // Create an object map with the constructor function Map()
     map = new google.maps.Map( element, mapOptions ); // Till this like of code it loads up the map.
 

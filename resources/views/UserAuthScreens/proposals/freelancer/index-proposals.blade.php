@@ -9,10 +9,10 @@
                 <div class="container">
                     <div id="proposals" role="tablist" aria-multiselectable="true">
                         <div class="card accordion collapse-icon accordion-icon-rotate">
-                            <div id="submitted_proposals" class="card-header primary" data-toggle="collapse" href="#accordion11" aria-expanded="true" aria-controls="accordion11">
+                            <div id="submitted_proposals" class="card-header primary" data-toggle="collapse" href="#accordion11" aria-expanded="false" aria-controls="accordion11">
                                 <a class="card-title lead primary" href="#">Submitted Proposals ({{$pending_proposals->count()}})</a>
                             </div>
-                            <div id="accordion11" role="tabpanel" data-parent="#proposals" aria-labelledby="submitted_proposals" class="collapse show">
+                            <div id="accordion11" role="tabpanel" data-parent="#proposals" aria-labelledby="submitted_proposals" class="collapse" aria-expanded="false">
                                 <div class="card-content">
                                     <div class="card-body">
                                         @include('UserAuthScreens.proposals.freelancer.pending.pending')

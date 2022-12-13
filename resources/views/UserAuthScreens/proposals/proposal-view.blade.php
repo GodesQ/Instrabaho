@@ -11,7 +11,7 @@
         <div class="page-body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xl-4">
+                    {{-- <div class="col-xl-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row my-1">
@@ -59,11 +59,11 @@
 
                                         @endforelse
                                     </div>
-                                </div> --}}
+                                </div> 
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-8">
+                    </div> --}}
+                    <div class="col-xl-12">
                         <div class="card">
                             {{-- @if(!$isAvailableDate)
                                 <div class="alert bg-warning alert-icon-right alert-dismissible mb-2" role="alert">
@@ -73,12 +73,12 @@
                                     <strong>Warning!</strong> Better check yourself, you're not <a href="#" class="alert-link">looking too good</a>.
                                 </div>
                             @endif --}}
-                            <div class="card-header">
-                                <div class="row">
+                            <div class="card-body">
+                                <div class="row my-2">
                                     <div class="col-md-12 col-lg-6">
                                         <a href="/{{session()->get('role')}}/proposals" class="btn btn-secondary">Back to Proposals</a>
                                     </div>
-                                    <div class="col-md-12 col-lg-6 text-lg-right my-2">
+                                    <div class="col-md-12 col-lg-6 text-lg-right">
                                         @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
                                             @if ($proposal->status == 'pending')
                                                 <a href="/project/proposal/create-contract/{{ $proposal->id }}" class="btn btn-success">Hire Worker  <i class="fa fa-thumbs-up"></i></a>
@@ -89,8 +89,6 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul class="nav nav-tabs nav-underline no-hover-bg" role="tablist">
@@ -120,12 +118,6 @@
                                         <div class="row">
                                             <div class="col-md-12 my-25">
                                                 <div class="font-weight-bold">Title : <span class="font-weight-normal mx-1">{{ $proposal->project->title }}</span></div>
-                                            </div>
-                                            <div class="col-md-12 my-25">
-                                                <div class="font-weight-bold">Category : <span class="font-weight-normal mx-1">{{ $proposal->project->category->name }}</span></div>
-                                            </div>
-                                            <div class="col-md-12 my-25">
-                                                <div class="font-weight-bold">Level : <span class="font-weight-normal mx-1">{{ $proposal->project->project_level }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25">
                                                 <div class="font-weight-bold">Cost Type : <span class="font-weight-normal mx-1">{{ $proposal->project->project_cost_type }}</span></div>

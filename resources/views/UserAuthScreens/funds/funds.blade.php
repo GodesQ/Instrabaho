@@ -1,5 +1,6 @@
 @extends('layout.user-layout')
 
+@section('title', 'My Funds')
 @section('content')
     <style>
         .payment-method-button {
