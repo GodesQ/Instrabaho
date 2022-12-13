@@ -80,12 +80,15 @@ class ProjectsController extends Controller
         $system_deduction = intval($request->cost) * 0.10;
         $total_cost = intval($request->cost) - $system_deduction;
 
+        $start_date = date_create($request->start_date);
+        $end_date = date_create($request->end_date);
+
         $create = Project::create(array_merge($request->validated(), [
             'employer_id' => $employer->id,
             'attachments' => $json_images,
             'skills' => json_encode($request->skills),
-            'start_date' => date_format($request->start_date, 'Y-m-d'),
-            'end_date' => date_format($request->end_date, 'Y-m-d'),
+            'start_date' => date_format($start_date, 'Y-m-d'),
+            'end_date' => date_format($end_date, 'Y-m-d'),
             'datetime' => $request->datetime,
             'total_cost' => $total_cost,
         ]));
@@ -102,7 +105,6 @@ class ProjectsController extends Controller
     }
 
     public function update(UpdateProjectRequest $request) {
-
         $project = Project::where('id', $request->id)->first();
         $project_images = json_decode($project->attachments);
 
@@ -116,24 +118,22 @@ class ProjectsController extends Controller
 
         $json_images = json_encode($project_images);
 
-        $update = Project::where('id', $request->id)->update([
+        #compute total cost
+        $system_deduction = intval($request->cost) * 0.10;
+        $total_cost = intval($request->cost) - $system_deduction;
+
+        $start_date = date_create($request->start_date);
+        $end_date = date_create($request->end_date);
+
+        $update = Project::where('id', $request->id)->update(array_merge($request->validated(), [
             'employer_id' => $request->employer,
-            'title' => $request->title,
-            'category_id' => $request->category_id,
-            'description' => $request->description,
             'attachments' => $json_images,
-            'project_level' => $request->project_level,
-            'project_cost_type' => $request->project_cost_type,
-            'cost' => $request->cost,
-            'project_duration' => $request->project_duration,
-            'freelancer_type' => $request->freelancer_type,
-            'english_level' => $request->english_level,
             'skills' => json_encode($request->skills),
-            'location' => $request->location,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'project_type' => $request->project_type,
-        ]);
+            'start_date' => date_format($start_date, 'Y-m-d'),
+            'end_date' => date_format($end_date, 'Y-m-d'),
+            'datetime' => $request->datetime,
+            'total_cost' => $total_cost,
+        ]));
 
         if($update) {
             return back()->with('success', 'Update Successfully');

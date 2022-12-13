@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\ProjectContract;
 use App\Models\Project;
 use App\Models\ProjectProposal;
+use App\Models\Freelancer;
+use App\Models\Employer;
 
 use DB;
 
@@ -29,8 +31,8 @@ class ProjectContractController extends Controller
 
     public function store(StoreProjectContract $request) {
 
-        #store contract
         try {
+
             DB::beginTransaction();
             #create project contract
             ProjectContract::create($request->validated());
@@ -46,6 +48,8 @@ class ProjectContractController extends Controller
             ]);
 
             DB::commit();
+
+            return redirect('/employer/projects/ongoing')->with('success', 'Success on creating contract');
 
         } catch (\ValidationException $e) {
             DB::rollback();

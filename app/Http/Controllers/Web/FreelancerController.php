@@ -208,8 +208,8 @@ class FreelancerController extends Controller
     public function store_skills(Request $request) {
 
         $validation = $request->validate([
-            'skills' => 'required',
-            'skills.*' => 'required',
+            'skills.*.skill' => 'required',
+            'skills.*.skill_percentage' => 'required|numeric|min:1|max:100',
         ]);
 
         if(!isset($request->skills)) return back()->with('fail', 'Add atleast one skills.');

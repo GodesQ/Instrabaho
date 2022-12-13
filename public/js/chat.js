@@ -1,8 +1,8 @@
-const form = document.querySelector(".typing-area"),
-incoming_id = form.querySelector(".incoming_id").value,
-outgoing_id = form.querySelector(".outgoing_id").value,
-inputField = form.querySelector(".input-field"),
-sendBtn = form.querySelector("button"),
+const chat_form = document.querySelector(".typing-area"),
+incoming_id = chat_form.querySelector(".incoming_id").value,
+outgoing_id = chat_form.querySelector(".outgoing_id").value,
+inputField = chat_form.querySelector(".input-field"),
+sendBtn = chat_form.querySelector("button"),
 chatBox = document.querySelector(".chat-box");
 
 const token =  document.querySelector('input[name="_token"]').value;
@@ -19,7 +19,7 @@ inputField.onkeyup = ()=>{
     }
 }
 
-form.onsubmit = (e) => {
+chat_form.onsubmit = (e) => {
     e.preventDefault();
     $.ajax({
         url: `/send_chat`,
@@ -35,7 +35,7 @@ form.onsubmit = (e) => {
             if(response.status == 201) {
                 message_input.value = '';
                 getChats();
-                scrollToBottom();  
+                scrollToBottom();
             }
         },
     });
@@ -65,7 +65,7 @@ function getChats() {
             }
 
             setTimeout(() =>{
-                getChats();   
+                getChats();
             }, 3000);
         },
     });
@@ -73,4 +73,3 @@ function getChats() {
 
 // call getChats
 getChats();
-  

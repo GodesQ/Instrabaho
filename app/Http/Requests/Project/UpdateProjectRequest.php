@@ -25,16 +25,20 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:projects,id',
-            'employer' => 'required',
-            'title' => 'required',
+            'title' => 'required|max:100',
             'category_id' => 'required',
             'description' => 'required',
-            'project_level' => 'required',
             'project_cost_type' => 'required',
-            'cost' => 'required|numeric',
+            'cost' => 'required|numeric|min:100',
             'location' => 'required',
-            'project_type' => 'required|in:simple,featured',
-            'skills' => 'required'
+            'project_type' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'total_dates' => 'required|numeric',
+            'payment_method' => 'required',
+            'skills' => 'array|between:1,5'
         ];
     }
 }

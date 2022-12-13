@@ -1,6 +1,9 @@
 @extends('layout.user-layout')
 
-@section('title', 'Edit Project')
+@section('title')
+    Edit Project - {{ $project->title }}
+@endsection
+
 @section('content')
 <style>
     #map-canvas {
@@ -26,11 +29,36 @@
     @endforeach
 @endif
 
+@if(Session::get('success'))
+    @push('scripts')
+        <script>
+            toastr.success('{{ Session::get("success") }}', 'Success');
+        </script>
+    @endpush
+@endif
+
 <div class="page-wrapper pt-5">
     <div class="page-content">
         <div class="container">
              <!-- Form wizard with icon tabs section start -->
              <section id="icon-tabs">
+                <div class="text-right">
+                    <a href="/employer/projects" class="btn btn-secondary">Back to my Projects</a>
+                </div>
+                <div class="row my-1">
+                    <div class="col-md-12">
+                        <h4>Attachments</h4>
+                        <div class="row">
+                            <input type="hidden" name="$service_images">
+                            @foreach($project_images as $key => $image)
+                                <div class="col-lg-1 col-md-2 col-sm-3">
+                                    <img src="../../../images/projects/{{ $image }}" alt="attachment" class="my-75" width="100"> <br>
+                                    <a href="#" id="{{ $key }}" class="remove-attachment btn btn-sm btn-danger">Remove</a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -48,9 +76,10 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <form action="{{ route('project.store') }}" id="create-project" method="POST" class="icons-tab-steps wizard-circle" enctype="multipart/form-data">
+                                    <form action="{{ route('project.update') }}" id="create-project" method="POST" class="icons-tab-steps wizard-circle" enctype="multipart/form-data">
                                         @csrf
-                                        <!-- Step 1 -->
+                                        <input type="hidden" name="id" value="{{ $project->id }}">
+                                        <input type="hidden" name="employer" value="{{ $project->employer_id }}">
                                         <h6>Category of Project</h6>
                                         <fieldset class="my-3">
                                             <div class="form-group">
@@ -65,7 +94,25 @@
                                             </div>
                                             <input type="hidden" name="category_id" value="{{ $project->category_id }}" id="category_id">
                                         </fieldset>
-                                        <!-- Step 2 -->
+
+                                        <h6>Project Schedule</h6>
+                                            <fieldset class="my-3">
+                                                <div class="form-label font-weight-bold my-50">When do you need to complete this project?</div>
+                                                    <div class="form-group">
+                                                        <div class='input-group'>
+                                                            <input type='text' class="form-control datetime" name="datetime" value="{{ $project->datetime }}" readonly/>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <span class="fa fa-calendar"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="start_date" id="start_date" value="{{ $project->start_date }}">
+                                                        <input type="hidden" name="end_date" id="end_date" value="{{ $project->end_date }}">
+                                                        <input type="hidden" name="total_dates" id="total_dates" value="{{ $project->total_dates }}">
+                                                    </div>
+                                            </fieldset>
+
                                         <h6>Information of Project</h6>
                                         <fieldset>
                                             <div class="row">
@@ -131,22 +178,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-label font-weight-bold my-50">When do you need to complete this project?</div>
-                                                    <div class="form-group">
-                                                        <div class='input-group'>
-                                                            <input type='text' class="form-control datetime" name="datetime" value="{{ $project->datetime }}" readonly/>
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">
-                                                                    <span class="fa fa-calendar"></span>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" name="start_date" id="start_date" value="{{ $project->start_date }}">
-                                                        <input type="hidden" name="end_date" id="end_date" value="{{ $project->end_date }}">
-                                                        <input type="hidden" name="total_dates" id="total_dates" value="{{ $project->total_dates }}">
-                                                    </div>
-                                                </div>
                                             </div>
                                         </fieldset>
 
@@ -168,7 +199,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">₱</span>
                                                             </div>
-                                                            <input type="number" class="form-control" value="{{ $project->total_cost }}" placeholder="Rate your Budget" id="cost" aria-label="Amount (to the nearest dollar)" name="cost">
+                                                            <input type="number" class="form-control" value="{{ $project->cost }}" placeholder="Rate your Budget" id="cost" aria-label="Amount (to the nearest dollar)" name="cost">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">.00</span>
                                                             </div>
@@ -178,18 +209,18 @@
                                                         <label class="font-weight-bold" for="eventType2">Select Payment Method:</label>
                                                         <select class="select2 form-control" id="payment_method" name="payment_method">
                                                             <optgroup label="Instrabaho Wallet">
-                                                                <option value="my-wallet">My Wallet</option>
+                                                                <option value="my-wallet" {{ $project->payment_method == 'my-wallet' ? 'selected' : null }}>My Wallet</option>
                                                             </optgroup>
                                                             <optgroup label="E-WALLETS">
-                                                                <option value="gcash">GCASH</option>
-                                                                <option value="grabpay">GrabPay</option>
-                                                                <option value="maya">Maya</option>
+                                                                <option value="gcash" {{ $project->payment_method == 'gcash' ? 'selected' : null }}>GCASH</option>
+                                                                <option value="grabpay" {{ $project->payment_method == 'grabpay' ? 'selected' : null }}>GrabPay</option>
+                                                                <option value="maya" {{ $project->payment_method == 'maya' ? 'selected' : null }}>Maya</option>
                                                             </optgroup>
                                                             <optgroup label="Online Banking">
-                                                                <option value="bpi">BPI BANK</option>
+                                                                <option value="bpi" {{ $project->payment_method == 'bpi' ? 'selected' : null }}>BPI BANK</option>
                                                             </optgroup>
                                                             <optgroup label="Credit Card">
-                                                                <option value="credit_card">Credit Card</option>
+                                                                <option value="credit_card" {{ $project->payment_method == 'credit_card' ? 'selected' : null }}>Credit Card</option>
                                                             </optgroup>
                                                         </select>
                                                     </div>
@@ -197,15 +228,15 @@
                                                         <h4 class="my-1">This is the summary of the project.</h4>
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <h5 class="font-weight-bold">Project's Budget</h5>
-                                                            <h6 class="primary">₱ <span class="text-project-budget">00.00</span></h6>
+                                                            <h6 class="primary">₱ <span class="text-project-budget">{{ number_format($project->cost, 2) }}</span></h6>
                                                         </div>
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <h5 class="font-weight-bold">System Deduction for Employer (10%)</h5>
-                                                            <h6 class="primary">₱ <span class="text-system-deduction">00.00</span></h6>
+                                                            <h6 class="primary">₱ <span class="text-system-deduction">{{ number_format($project->cost * 0.10, 2) }}</span></h6>
                                                         </div>
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <h5 class="font-weight-bold">Total Budget</h5>
-                                                            <h6 class="primary">₱ <span class="text-total-budget">00.00</span></h6>
+                                                            <h6 class="primary">₱ <span class="text-total-budget">{{ number_format($project->total_cost, 2) }}</span></h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -239,6 +270,45 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEmTK1XpJ2VJuylKczq2-49A6_WuUlfe4&libraries=places&callback=initialize"></script>
 
     <script>
+        $(document).ready(function () {
+            $(document).on("click", ".remove-attachment", function (e) {
+                let key_id = $(this).attr("id");
+                let service_id = '{{ $project->id }}';
+                let csrf = "{{ csrf_token() }}";
+                Swal.fire({
+                    title: "Remove Image",
+                    text: "Are you sure you want to remove this?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, remove it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/remove_project_image/${service_id}/${key_id}`,
+                            success: function (response) {
+                                if(response.status == 201) {
+                                    Swal.fire(
+                                        "Removed!",
+                                        "Record has been removed.",
+                                        "success"
+                                    ).then((result) => {
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        "Fail!",
+                                        `${response.message}`,
+                                        "error"
+                                    ).then((result) => {
+                                    });
+                                }
+                            },
+                        });
+                    }
+                });
+            });
+        });
         function selectCategory(e) {
             $('.categories').removeClass('active-category');
             $(e).addClass('active-category');
@@ -247,8 +317,6 @@
         }
 
         $('.datetime').daterangepicker({
-            timePicker: true,
-            timePickerIncrement: 30,
             locale: {
                 format: 'MM/DD/YYYY ',
                 cancelLabel: 'Clear'

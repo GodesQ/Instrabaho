@@ -44,7 +44,30 @@ class Freelancer extends Model
         return $this->hasMany(ProjectProposal::class, 'freelancer_id');
     }
 
-    public function isExpiredPlan($freelancer) {
-        return $this->where('id', $freelancer->id)->where('package_date_expiration', '<', Carbon::now())->exists();
+    public function notAvailableDates() {
+        $allNotAvailableDates = array();
+
+        $contracts = ProjectContract::where('freelancer_id', $this->id)->with('project', 'proposal')->whereHas('project', function($q) {
+            return $q->where('status', '!=', 'cancel')->orWhere('status', '!=', 'pending');
+        })->get();
+
+        foreach ($contracts as $key => $contract) {
+
+            # first we will transfer to array of dates
+            $periods = new \DatePeriod(
+                new \DateTime($contract->start_date),
+                new \DateInterval('P1D'),
+                new \DateTime($contract->end_date . '+1 day'),
+           );
+
+           foreach ($periods as $key => $date) {
+                $allNotAvailableDates[] = $date->format('Y-m-d');
+           }
+
+        }
+
+        return $allNotAvailableDates;
+
     }
+
 }

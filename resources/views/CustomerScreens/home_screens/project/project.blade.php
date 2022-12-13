@@ -73,12 +73,14 @@
                 <div class="fr-project-f-des mb-4">
                    <div class="fr-project-des">
                      <h3>Description</h3>
-                     @php echo nl2br($project->description) @endphp
+                     <p style="font-size: 15px;">
+                        @php echo nl2br($project->description) @endphp
+                     </p>
                    </div>
                    <div class="fr-project-skills">
                       <h3> Skills Required</h3>
                       @foreach($project->skills_name as $skill)
-                        <a href="#">{{ $skill->skill_name }}</a>
+                        <a href="#" style="font-size: 15px !important;">{{ $skill->skill_name }}</a>
                       @endforeach
                    </div>
                    <div class="fr-project-attachments">
@@ -113,7 +115,7 @@
             <div class="fl-advert-box">
                <a href="javascript:void(0)"><img src="../../../images/logo/main-logo.png" width="124" alt="exertio theme" class="img-fluid"></a>
             </div>
-            @if (session()->get('role') == 'freelancer' && !$proposal && !$isExpiredPlan)
+            @if (session()->get('role') == 'freelancer' && !$proposal && $isAvailableDate)
                 <div class="fr-project-lastest-product">
                     <div class="fr-project-place" id="fr-bid-form">
                         <h3> Send Your Proposal</h3>
@@ -124,7 +126,7 @@
                             <div class="row g-3">
                                 <div class="col">
                                     <div class="form-group">
-                                    <label>Your Price <span class="text-danger">*</span></label>
+                                    <label style="font-size: 20px !important;">Your Price <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="bidding-price" name="offer_price" data-smk-msg="Provide your price in numbers only" data-smk-type="number">
                                         <div class="input-group-prepend">
@@ -140,7 +142,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                    <label> Days to complete <span class="text-danger">*</span></label>
+                                    <label style="font-size: 20px !important;"> Days to complete <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" name="estimated_days" data-smk-msg="Dasy to complete in numbers only" data-smk-type="number">
                                         <div class="input-group-prepend">
@@ -158,11 +160,11 @@
                             <div class="form-row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                    <label>Address <span class="text-danger">*</span></label>
+                                    <label style="font-size: 20px !important;">Address <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" multiple class="form-control" id="map-search" name="address">
                                         <div class="input-group-prepend">
-                                            <div class="input-group-text"><i class="fa fa-location-arrow"></i></div>
+                                          <button class="btn btn-primary" type="button" id="get-current-location">Current Location</button>
                                         </div>
                                     </div>
                                     <span class="text-danger danger my-1">
@@ -179,17 +181,12 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-12">
-                                    <label> Cover Letter <span class="text-danger">*</span></label>
+                                    <label style="font-size: 20px !important;"> Proposal Description <span class="text-info text-italic" style="font-size: 15px !important;">(Optional)</span></label>
                                     <textarea class="form-control" id="bid-textarea" name="cover_letter" rows="5"></textarea>
-                                    <span class="text-danger danger">
-                                        @error('cover_letter')
-                                            {{ $message }}
-                                        @enderror
-                                    </span>
                                 </div>
                                 <div class="col-12 my-3">
                                     <div class="form-group">
-                                    <label>Attachments</label>
+                                    <label style="font-size: 20px !important;">Attachments <span class="text-info text-italic" style="font-size: 15px !important;">(Optional)</span></label>
                                     <div class="input-group">
                                         <input type="file" class="form-control" name="attachments[]" id="inputGroupFile01">
                                         <div class="input-group-prepend">
@@ -216,7 +213,7 @@
                          <div class="col">
                             <span class="price-label"> Budget</span>
                             <div class="price">
-                              ₱ {{ number_format($project->cost, 2) }}
+                              ₱ {{ number_format($project->total_cost, 2) }}
                             </div>
                          </div>
                          <div class="feature"> <i class="fas fa-wallet"></i> </div>

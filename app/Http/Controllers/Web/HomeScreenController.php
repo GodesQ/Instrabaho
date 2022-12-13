@@ -180,11 +180,14 @@ class HomeScreenController extends Controller
 
         # if the user is login as freelancer
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $isExpiredPlan = $freelancer ? $freelancer->isExpiredPlan($freelancer) : false;
+
+        $isAvailableDate = true;
+        if($freelancer) $isAvailableDate = in_array($project->start_date, $freelancer->notAvailableDates()) || in_array($project->end_date, $freelancer->notAvailableDates()) ? false : true;
+
         $save_project = $freelancer ? SaveProject::where('project_id', $project->id)->where('follower_id', $freelancer->id)->first() : null;
         $proposal = $freelancer ? ProjectProposal::where('project_id', $project->id)->where('freelancer_id', $freelancer->id)->first() : false;
 
-        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project', 'proposal', 'isExpiredPlan'));
+        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project', 'proposal', 'freelancer', 'isAvailableDate'));
     }
 
     public function freelancers(Request $request) {

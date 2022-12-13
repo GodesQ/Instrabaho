@@ -31,6 +31,8 @@ class ProjectProposalController extends Controller
         $freelancer = Freelancer::where('user_id', session()->get('id'))->firstOrFail();
 
         $images = array();
+
+        # if the image has an attachments then store to public image directory and push the path of image to images variable
         if($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $key => $attachment) {
                 $image_name = $attachment->getClientOriginalName();
@@ -41,6 +43,7 @@ class ProjectProposalController extends Controller
 
         $json_images = json_encode($images);
 
+        # store proposal to database
         $save = ProjectProposal::create(array_merge($request->validated(),[
             'employer_id' => $request->employer_id,
             'freelancer_id' => $freelancer->id,
@@ -62,7 +65,7 @@ class ProjectProposalController extends Controller
 
         if($save) return back()->with('success', 'Proposal sent successfully');
 
-        #if the proposal is not save
+        #if the proposal was not save
         return back()->with('fail', 'Something went wrong.');
     }
 
@@ -71,13 +74,12 @@ class ProjectProposalController extends Controller
         $employer = Employer::where('user_id', session()->get('id'))->firstOrFail();
 
         #get the projects lists data
-        $projects = Project::where('employer_id', $employer->id)->where('status', 'pending');
-
+        $projects = Project::where('employer_id', $employer->id)->where('status', 'pending')->get();
         return view('UserAuthScreens.proposals.employer.index-proposals', compact('projects'));
     }
 
     public function fetch_proposals_for_employers(Request $request) {
-        # if the request is not using ajax
+        # if the request was not able to use ajax
         abort_if(!$request->ajax(), 404);
 
         #get the request data
@@ -103,8 +105,13 @@ class ProjectProposalController extends Controller
 
         #get the freelancer data
         $freelancer = Freelancer::where('user_id', session()->get('id'))->with('project_proposals')->firstOrFail();
-        $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->with('project');
-        $approved_proposals = $freelancer->project_proposals()->where('status', 'approved')->with('project');
+
+        #get the pending proposals
+        $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->with('project')->get();
+
+        #get the approved proposals
+        $approved_proposals = $freelancer->project_proposals()->where('status', 'approved')->with('project')->get();
+
         return view('UserAuthScreens.proposals.freelancer.index-proposals', compact('freelancer', 'pending_proposals', 'approved_proposals'));
     }
 
@@ -118,8 +125,14 @@ class ProjectProposalController extends Controller
         # set initial receiver to employer
         $receiver = Employer::where('id', $proposal->employer_id)->with('user')->first();
 
+        # set initial value for isAvailableDate
+        $isAvailableDate = true;
+
         #if the login user is employer then the receiver is freelancer
-        if($role == 'employer') $receiver = Freelancer::where('id', $proposal->freelancer_id)->with('user')->first();
+        if($role == 'employer') {
+            $receiver = Freelancer::where('id', $proposal->freelancer_id)->with('user')->first();
+            $isAvailableDate = in_array($proposal->project->start_date, $receiver->notAvailableDates()) || in_array($proposal->project->end_date, $receiver->notAvailableDates()) ? false : true;
+        }
 
         # set initial outgoing and incoming messages user id
         $incoming_msg_id = $proposal->freelancer_id;
@@ -132,33 +145,6 @@ class ProjectProposalController extends Controller
         }
 
         # return to view template in UserAuthScreens.proposals.proposal-view
-        return view('UserAuthScreens.proposals.proposal-view', compact('proposal', 'receiver', 'incoming_msg_id', 'outgoing_msg_id'));
-    }
-
-    public function update_proposal_status(Request $request) {
-
-        $update = ProjectProposal::where('id', $request->proposal_id)->update([
-            'status' => $request->status
-        ]);
-
-        $project_id = $request->project_id;
-
-        if($request->status == 'approved') {
-            $update_project = Project::where('id', $project_id)->update([
-                'status' => $request->status,
-            ]);
-        }
-
-        if($update) {
-            return response()->json([
-                'status' => 201,
-                'message' => 'Update Status Successfully'
-            ]);
-        }
-
-        return response()->json([
-            'status' => 500,
-            'message' => 'Failed to Update'
-        ]);
+        return view('UserAuthScreens.proposals.proposal-view', compact('proposal', 'receiver', 'incoming_msg_id', 'outgoing_msg_id', 'isAvailableDate'));
     }
 }

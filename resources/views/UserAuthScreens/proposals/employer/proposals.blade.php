@@ -4,7 +4,12 @@
             <div class="container" style="width: 95% !important;">
                 <div class="d-flex p-2" style="gap: 20px; box-shadow: 1px 0px 20px rgb(0 0 0 / 7%); position: relative !important;">
                     <div>
-                        <img class="rounded" src="../../../images/user/profile/{{$proposal->freelancer->user->profile_image}}" alt="employer_image" style="height: 100px !important;">
+                        @if ($proposal->freelancer->user->profile_image)
+                            <img class="rounded" src="../../../images/user/profile/{{ $proposal->freelancer->user->profile_image }}" alt="employer_image" style="height: 100px !important;">
+                        @else
+                            <img src="../../../images/user-profile.png" alt="" style="height: 100px !important;">
+                        @endif
+
                     </div>
                     <div>
                         <a href="/freelancer/view/{{ $proposal->freelancer->display_name }}" style="color: #003066;">{{ $proposal->freelancer->user->firstname . " " . $proposal->freelancer->user->lastname }}</a>
@@ -14,7 +19,7 @@
                             <a href="/proposal/info/{{ $proposal->id }}?act=message" class="btn btn-outline-primary">Chat </a>
                             <a href="/proposal/info/{{ $proposal->id }}" class="btn btn-primary">View Proposal</a>
                             @if ($proposal->status == 'pending')
-                                <a href="/project/proposal/{{ $proposal->id }}/create-contract/" class="btn btn-success">Hire</a>
+                                <a href="/project/proposal/create-contract/{{ $proposal->id }}" class="btn btn-success">Hire</a>
                             @endif
                         </div>
                     </div>

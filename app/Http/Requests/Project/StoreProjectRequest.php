@@ -24,7 +24,7 @@ class StoreProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
+            'title' => 'required|max:100',
             'category_id' => 'required',
             'description' => 'required',
             'project_cost_type' => 'required',
@@ -36,7 +36,8 @@ class StoreProjectRequest extends FormRequest
             'start_date' => 'required',
             'end_date' => 'required',
             'total_dates' => 'required|numeric',
-            'payment_method' => 'required'
+            'payment_method' => 'required',
+            'skills' => 'array|between:1,5'
         ];
     }
 }
