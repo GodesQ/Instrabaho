@@ -43,7 +43,7 @@ class ProjectContractController extends Controller
             ]);
 
             #update project proposal status
-            ProjectProposal::where('id', $request->project_id)->update([
+            ProjectProposal::where('id', $request->proposal_id)->update([
                 'status' => 'approved'
             ]);
 

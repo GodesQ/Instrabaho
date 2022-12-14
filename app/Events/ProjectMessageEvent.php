@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ProjectMessageEvent
+class ProjectMessageEvent implements ShouldBroadCast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,7 +20,7 @@ class ProjectMessageEvent
      *
      * @return void
      */
-    public function __construct(array $message)
+    public function __construct($message)
     {
         $this->message = $message;
     }
@@ -32,7 +32,7 @@ class ProjectMessageEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('project-chats');
+        return new Channel('project-chats');
     }
 
     public function broadcastAs()

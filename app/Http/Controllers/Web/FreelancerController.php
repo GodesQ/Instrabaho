@@ -17,8 +17,12 @@ use App\Models\FreelancerExperience;
 use App\Models\FreelancerEducation;
 use App\Models\FreelancerSkill;
 use App\Models\Skill;
+use App\Models\ProjectContract;
+use App\Models\ProjectProposal;
+use App\Models\Project;
 
 use App\Http\Requests\Freelancer\UpdateFreelancerRequest;
+use App\Events\ProjectMessageEvent;
 
 use Yajra\DataTables\Facades\DataTables;
 
@@ -26,8 +30,10 @@ class FreelancerController extends Controller
 {
     public function freelancer_role_form() {
         $id = session()->get('id');
-        $freelancer_exists = Freelancer::where('user_id', $id)->exists();
-        if($freelancer_exists) redirect()->route('freelancer.dasboard');
+        $freelancer = Freelancer::where('user_id', $id)->first();
+        if($freelancer) {
+            return redirect()->route('freelancer.dasboard', compact('recent_projects'));
+        }
         return view('AllScreens.misc.freelancer-form', compact('id'));
     }
 
@@ -69,7 +75,44 @@ class FreelancerController extends Controller
         $role = session()->get('role');
         $id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $id)->with('package_checkout')->first();
-        return view('UserAuthScreens.dashboards.freelancer', compact('freelancer'));
+
+        $recent_projects = ProjectContract::where('freelancer_id', $freelancer->id)
+        ->with('project', 'proposal')
+        ->whereHas('project', function($q) {
+            return $q->where('status', 'completed');
+        })->limit(5)->get();
+
+        $projects_schedule_week = ProjectContract::where('freelancer_id', $freelancer->id)
+        ->whereBetween('start_date',
+                        [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
+                    )
+        ->with('project', 'proposal')
+        ->whereHas('project', function($q) {
+            return $q->where('status', 'approved');
+        })
+        ->limit(5)
+        ->get();
+
+        $projects = Project::select('*')
+        ->when($freelancer, function ($q) use ($freelancer) {
+            return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($freelancer->tagline) . '%')
+                    ->orWhere(DB::raw('lower(cost)'), 'like', '%' . strtolower($freelancer->hourly_rate) . '%')
+                    ->orWhere(DB::raw('lower(description)'), 'like', '%' . strtolower($freelancer->tagline) . '%');
+        })
+        ->when($freelancer, function ($q) use ($freelancer) {
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $freelancer->latitude . "))
+            * cos(radians(projects.latitude))
+            * cos(radians(projects.longitude) - radians(" . $freelancer->longitude . "))
+            + sin(radians(" .$freelancer->latitude. "))
+            * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $freelancer->id);
+        })
+        ->where('status', '!=', 'completed')
+        ->where('status', '!=', 'approved')
+        ->with('category', 'employer')
+        ->latest('id')
+        ->get(10);
+
+        return view('UserAuthScreens.dashboards.freelancer', compact('freelancer', 'recent_projects', 'projects_schedule_week', 'projects'));
     }
 
     public function profile(Request $request) {
@@ -81,6 +124,7 @@ class FreelancerController extends Controller
     }
 
     public function update_profile(Request $request) {
+        event(new ProjectMessageEvent('James Garnfil'));
         $request->validate([
             'gender' => 'required|in:Male,Female',
         ]);
@@ -100,50 +144,46 @@ class FreelancerController extends Controller
     public function store_certificates(Request $request) {
 
         $request->validate([
-            "certificates"    => "required",
-            "certificates.*"  => "required|min:3",
+            "certificate"    => "required",
+            "certificate_date"  => "required|date",
+            "certificate_image"  => "file|max:8192|mimes:png,jpg,jpeg,pdf,docs",
         ]);
 
-        if(!isset($request->certificates)) return back()->with('fail', 'Add atleast one certificate.');
-        if(count($request->certificates) < 0) return back()->with('fail', 'Add atleast one certificate.');
-
-         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
+        $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
         $freelancer = Freelancer::where('user_id', $user_id)->first();
 
+        $image_name = null;
 
-        $certificates = FreelancerCertificate::where('freelancer_id', $freelancer->id)->get();
-
-        if($certificates->count() > 0) {
-            foreach ($certificates as $key => $certificate) {
-                $image = public_path('/images/freelancer_certificates') . $certificate->certificate_image;
-                $remove_image = @unlink($image);
-            }
-            FreelancerCertificate::where('freelancer_id', $freelancer->id)->delete();
+        if($request->hasFile('certificate_image')) {
+            $file = $request->file('certificate_image');
+            $image_name = $file->getClientOriginalName();
+            $save_file = $file->move(public_path().'/images/freelancer_certificates', $image_name);
         }
 
-        foreach ($request->certificates as $key => $certifacate) {
-
-            $image_name = $certifacate['old_image'];
-            if(isset($certifacate['certificate_image'])) {
-                // uploading image in public directory
-                $file = $certifacate['certificate_image'];
-                $image_name = $file->getClientOriginalName();
-                $save_file = $file->move(public_path().'/images/freelancer_certificates', $image_name);
-            }
-
-            $save = FreelancerCertificate::create([
-                'freelancer_id' => $freelancer->id,
-                'certificate' => $certifacate['certificate'],
-                'certificate_date' => $certifacate['certificate_date'],
-                'certificate_image' => $image_name
-            ]);
-        }
+        $save = FreelancerCertificate::create([
+            'freelancer_id' => $freelancer->id,
+            'certificate' => $request->certificate,
+            'certificate_date' => $request->certificate_date,
+            'certificate_image' => $image_name
+        ]);
 
         return back()->with('success', 'Certificates Added Successfully');
     }
 
-    public function remove_certificate_image(Request $request) {
+    public function remove_certificate(Request $request) {
+        $certificate = FreelancerCertificate::where('id', $request->certificate_id)->first();
 
+        if($certificate->certificate_image) {
+            $image_path = public_path('/images/projects/') . $certificate->certificate_image;
+            $remove_image = @unlink($image_path);
+        }
+
+        $certificate->delete();
+
+        return response()->json([
+            'status' => 201,
+            'message' => 'Certificate Successfully Deleted'
+        ]);
     }
 
     public function store_experiences(Request $request) {
