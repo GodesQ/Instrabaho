@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="fr-right-information">
-                <div class="fr-right-list">
+                <div class="fr-right-list" style="width: 80%">
                     <ul>
                         <li>
                             <p class="heading font-weight-bold">Proposals</p>
@@ -48,7 +48,7 @@
                         </li>
                         <li>
                             <p class="heading font-weight-bold">Location</p>
-                            <span>{{ $project->location }}</span>
+                            <span>{{ substr($project->location, 0, 30) }}...</span>
                         </li>
                         @if($project->distance)
                             <li>
@@ -58,7 +58,7 @@
                         @endif
                     </ul>
                 </div>
-                <div class="fr-right-bid">
+                <div class="fr-right-bid" style="width: 20%">
                     <ul>
                         <li><a href="{{ route('project.view', $project->id)}}" class="btn btn-theme btn-theme-secondary text-right">View Project </a></li>
                     </ul>
@@ -70,6 +70,9 @@
 
 @endforelse
 
-<div class="fl-navigation">
-    {{ $projects->links() }}
-</div>
+    <div class="fl-navigation">
+        {{ $projects->links() }}
+    </div>
+
+
+

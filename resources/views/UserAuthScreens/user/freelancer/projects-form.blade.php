@@ -11,7 +11,8 @@
     </div>
     <div class="card-content collapse show">
         <div class="card-body">
-            <div class="repeater-default">
+
+            {{-- <div class="repeater-default">
                 <div data-repeater-list="car">
                     <form action="">
                         <div data-repeater-item="">
@@ -61,7 +62,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

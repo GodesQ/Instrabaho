@@ -105,65 +105,6 @@
                                 This initiative is to help people who lose their job during the time of the pandemic.
                             </p>
                         </div>
-                        {{-- <div class="fr-hero3-srch">
-                            <form
-                                class="hero-one-form"
-                                action="search-page.html"
-                            >
-                                <ul>
-                                    <li>
-                                        <div class="form-group">
-                                            <input
-                                                type="text"
-                                                placeholder="What are you look for"
-                                                class="form-control"
-                                                name="titl"
-                                            />
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="form-group">
-                                            <select
-                                                class="default-select post-type-change"
-                                            >
-                                                <option value="Choose category">
-                                                    Choose category
-                                                </option>
-                                                <option value="Projects">
-                                                    Projects
-                                                </option>
-                                                <option value="Services">
-                                                    Services
-                                                </option>
-                                                <option value="Employers">
-                                                    Employers
-                                                </option>
-                                                <option value="Freelancer">
-                                                    Freelancer
-                                                </option>
-                                            </select>
-                                            <div class="fr-hero3-submit">
-                                                <button class="btn btn-theme">
-                                                    <i
-                                                        class="fas fa-search-plus"
-                                                    ></i
-                                                    >Search
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </form>
-                        </div> --}}
-                        {{-- <div class="fr-her3-elemnt">
-                            Trending Keywords:
-                            <a href="search-page.html">React Native</a>
-                            <a href="search-page.html">Flutter</a>
-                            <a href="search-page.html">Plumber</a>
-                            <a href="search-page.html">Artist</a>
-                            <a href="search-page.html">Singer</a>
-                            <a href="search-page.html">Writer</a>
-                        </div> --}}
                         <div class="fr-hero3-video">
                             <a
                                 href="https://www.youtube.com/watch?v=C0DPdy98e4c"
@@ -279,7 +220,11 @@
                   <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
                      <div class="fr-latest-grid">
                         <div class="fr-latest-img d-flex justify-content-center">
-                           <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" class="rounded" alt="" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
+                            @if ($freelancer->user->profile_image)
+                                <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" class="rounded" alt="" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
+                            @else
+                                <img src="../../../images/user-profile.png" alt="" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
+                            @endif
                         </div>
                         <div class="fr-latest-details">
                            <div class="fr-latest-content-service">
@@ -318,29 +263,27 @@
 
  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
  <script>
-    //  // Enable pusher logging - don't include this in production
-    //  Pusher.logToConsole = true;
-    // let backendBaseUrl = "http://127.0.0.1:8000";
+     // Enable pusher logging - don't include this in production
+     Pusher.logToConsole = true;
+    let backendBaseUrl = "http://127.0.0.1:8000";
 
-    // var pusher = new Pusher('0a303fc13dbe529739fa', {
-    //     cluster: 'ap1',
-    //     encrypted: true,
-    // });
+    var pusher = new Pusher('0a303fc13dbe529739fa', {
+        cluster: 'ap1',
+    });
 
-    // var channel = pusher.subscribe('private-project-chats');
+    var channel = pusher.subscribe('project-chats');
 
-    // channel.bind('new-project-chats', function(data) {
-    //     console.log(JSON.stringify(data.data))
-    //     alert(JSON.stringify(data))
-    // });
+    channel.bind('new-project-chats', function(data) {
+        console.log(JSON.parse(data.data));
+    });
 
-    // channel.bind('pusher:subscription_succeeded', function(members) {
-    //     alert('successfully subscribed!');
-    // });
+    channel.bind('pusher:subscription_succeeded', function(members) {
+        alert('successfully subscribed!');
+    });
 
-    // channel.bind('pusher:subscription_error', function(data) {
-    //     console.log(data);
-    // });
+    channel.bind('pusher:subscription_error', function(data) {
+        console.log(data);
+    });
 
  </script>
 @endsection

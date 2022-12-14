@@ -65,10 +65,12 @@ class ProjectsController extends Controller
         // dd($request->all());
 
         $images = array();
-        foreach ($request->file('attachments') as $key => $attachment) {
-            $image_name = $attachment->getClientOriginalName();
-            $save_file = $attachment->move(public_path().'/images/projects', $image_name);
-            array_push($images, $image_name);
+        if($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $key => $attachment) {
+                $image_name = $attachment->getClientOriginalName();
+                $save_file = $attachment->move(public_path().'/images/projects', $image_name);
+                array_push($images, $image_name);
+            }
         }
 
         $json_images = json_encode($images);
@@ -196,7 +198,7 @@ class ProjectsController extends Controller
 
     public function data_table(Request $request) {
         abort_if(!$request->ajax(), 403);
-        $data = Project::select('*')->with('employer', 'category')->where('expiration_date', '>=', Carbon::now());
+        $data = Project::select('*')->with('employer', 'category');
         return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('category', function($row) {

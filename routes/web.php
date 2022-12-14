@@ -86,13 +86,6 @@ use App\Events\ProjectMessageEvent;
     Route::get('/freelance_packages', [FreelancePackagesController::class, 'freelance_packages'])->name('freelance_package');
     Route::get('/employer_packages', [EmployerPackagesController::class, 'employer_package'])->name('employer_package');
 
-    Route::get('/event', function () {
-        $array = ['name' => 'Ekpono Ambrose']; //data we want to pass
-        $event = broadcast(new ProjectMessageEvent($array));
-
-        return 'done';
-    });
-
     /*
     |--------------------------------------------------------------------------
     | PROTECTED Routes
@@ -141,8 +134,8 @@ use App\Events\ProjectMessageEvent;
         });
 
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
+        Route::delete('/remove_certificate', [FreelancerController::class, 'remove_certificate'])->name('freelancer.remove_certificate');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');
-        Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::post('/store_experiences', [FreelancerController::class, 'store_experiences'])->name('freelancer.store_experiences');
         Route::post('/store_educations', [FreelancerController::class, 'store_educations'])->name('freelancer.store_educations');
         Route::post('/store_skills', [FreelancerController::class, 'store_skills'])->name('freelancer.store_skills');

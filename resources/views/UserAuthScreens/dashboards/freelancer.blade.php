@@ -18,123 +18,138 @@
         </script>
     @endpush
 @endif
-
-    <div class="row grouped-multiple-statistics-card">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
-                            <div class="d-flex align-items-start mb-sm-1 mb-xl-0 border-right-blue-grey border-right-lighten-5">
-                                <span class="card-icon primary d-flex justify-content-center mr-3">
-                                    <i class="icon p-1 icon-settings customize-icon font-large-2 p-1"></i>
-                                </span>
-                                <div class="stats-amount mr-3">
-                                    <h3 class="heading-text text-bold-600">$95k</h3>
-                                    <p class="sub-heading">Services Offered</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
-                            <div class="d-flex align-items-start mb-sm-1 mb-xl-0 border-right-blue-grey border-right-lighten-5">
-                                <span class="card-icon success d-flex justify-content-center mr-3">
-                                    <i class="icon p-1 icon-badge customize-icon font-large-2 p-1"></i>
-                                </span>
-                                <div class="stats-amount mr-3">
-                                    <h3 class="heading-text text-bold-600">18.63%</h3>
-                                    <p class="sub-heading">Completed Services</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
-                            <div class="d-flex align-items-start border-right-blue-grey border-right-lighten-5">
-                                <span class="card-icon danger d-flex justify-content-center mr-3">
-                                    <i class="icon p-1 icon-clock customize-icon font-large-2 p-1"></i>
-                                </span>
-                                <div class="stats-amount mr-3">
-                                    <h3 class="heading-text text-bold-600">$27k</h3>
-                                    <p class="sub-heading">On Going Services</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
-                            <div class="d-flex align-items-start">
-                                <span class="card-icon warning d-flex justify-content-center mr-3">
-                                    <i class="icon p-1 icon-star customize-icon font-large-2 p-1"></i>
-                                </span>
-                                <div class="stats-amount mr-3">
-                                    <h3 class="heading-text text-bold-600">13700</h3>
-                                    <p class="sub-heading">Reviews</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row minimal-modern-charts">
-        <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-12 col-12 power-consumption-stats-chart">
+        <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-12 col-12 power-consumption-stats-chart">
             <div class="card">
                 <div class="card-body">
-                    <div class="card-title">MY PROJECTS IN EVERY MONTH</div>
-                    <div id="column-basic-chart"></div>
+                    <h3 class="card-title font-weight-bold">New Job Offers near you</h3>
+                    <div class="row projects-data">
+                        @forelse ($projects as $project)
+                            <div class="col-md-4">
+                                <div class="card border rounded">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <a href="/project/view/{{ $project->id }}" class="font-weight-bold h4 info">{{ strlen($project->title) > 15 ? substr($project->title, 0, 15) . '...' : $project->title }}</a>
+                                                <div>{{ $project->employer->user->firstname . " " . $project->employer->user->lastname }}</div>
+                                                <div class="font-weight-bold">Location: <span class="font-weight-normal">{{ substr($project->location, 0, 25) }}...</span></div>
+                                                <div class="font-weight-bold">Distance: <span class="font-weight-normal">{{ number_format($project->distance, 2) }} km</span></div>
+                                            </div>
+                                        </div>
+                                        <div class=" my-1 d-flex justify-content-end align-items-center">
+                                            <a href="/project/view/{{ $project->id }}" class="btn btn-outline-primary mr-50">View Project</a>
+                                            <a href="/project/view/{{ $project->id }}#fr-bid-form" class="btn btn-primary">Apply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+
+                        @endforelse
+                    </div>
+                    <input type="hidden" value="1" id="page-count">
                 </div>
             </div>
         </div>
-        <div class="col-xxl-4 col-xl-8 col-lg-8 col-md-12 col-12">
+        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-12 col-12">
             <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Most Viewed Services</h4>
-                    <div class="listing-widgets">
-                        <ul>
-                            <p> No, Stats available</p>
+                <div class="card-header">
+                    <h4 class="card-title">Recent Completed Projects</h4>
+                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="reload"><i class="feather icon-rotate-cw"></i></a></li>
                         </ul>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Cost</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($recent_projects as $recent_project)
+                                    <tr>
+                                        <td>
+                                            <a href="/project/view/{{ $recent_project->project->id }}" class="font-weight-bold primary">
+                                                {{ substr($recent_project->project->title, 0, 20) . "..." }}
+                                            </a>
+                                        </td>
+                                        <td>₱ {{ number_format($recent_project->cost, 2) }}</td>
+                                        <td class="text-right">
+                                            <span class="dropdown">
+                                                <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-v"></i></a>
+                                                <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
+                                                    <a href="/project/view/{{ $recent_project->project->id }}" class="dropdown-item delete"><i class="feather icon-eye"></i> View Project</a>
+                                                    <a href="/project/contract/{{ $recent_project->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Contract</a>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center">
+                                            No Projects Found
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
             <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Scheduled Projects This Week</h4>
+                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <a href="/freelancer/projects/ongoing" class="primary">All Ongoing Projects</a>
+                    </div>
+                </div>
                 <div class="card-body">
-                    <div class="card-header d-flex justify-content-between">
-                        <h4 class="card-title">Current Plan Detail</h4>
-                        @if($freelancer->package_checkout)
-                            @if(!$freelancer->package_checkout->isExpired && $freelancer->package_date_expiration > date('Y-m-d'))
-                                <a href="#">{{ $freelancer->package_checkout->package_name }}</a>
-                            @else
-                                <a href="/freelance_packages">View Plans</a>
-                            @endif
-                        @else
-                            <a href="/freelance_packages">View Plans</a>
-                        @endif
-                    </div>
-                    <div class="listing-widgets">
-                        <ul>
-                            @if($freelancer->package_checkout && $freelancer->package_date_expiration > date('Y-m-d'))
-                                <li class="my-1">
-                                    <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Projects Allowed: <span style="color: #091a3b; font-weight: 600;">{{ $freelancer->package_checkout->freelance_package->total_projects }}</span></h4>
-                                </li>
-                                <hr>
-                                <li class="my-1">
-                                    <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Services Allowed To Create: <span style="color: #091a3b; font-weight: 600;">{{ $freelancer->package_checkout->freelance_package->total_services }}</span></h4>
-                                </li>
-                                <hr>
-                                <li class="my-1">
-                                    <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Featured Services Allowed To Create: <span style="color: #091a3b; font-weight: 600;">{{ $freelancer->package_checkout->freelance_package->total_feature_services }}</span></h4>
-                                </li>
-                                <hr>
-                                <li class="my-1">
-                                    <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Featured Profile: <span style="color: #091a3b; font-weight: 600;">{{ $freelancer->package_checkout->freelance_package->isProfileFeatured ? 'Yes' : 'No' }}</span></h4>
-                                </li>
-                                <hr>
-                                <li class="my-1">
-                                    <h4 style="font-weight: 400; font-size: medium;"><i class="feather icon-check-circle mr-1"></i> Expired Date: <span style="color: #091a3b; font-weight: 600;">{{ date_format(new DateTime($freelancer->package_date_expiration), "F d, Y")}}</span></h4>
-                                </li>
-                                <hr>
-                            @else
-                                <p> No, Stats available</p>
-                            @endif
-                        </ul>
-                    </div>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Project</th>
+                                <th>Cost</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($projects_schedule_week as $project)
+                                <tr>
+                                    <td>
+                                        <a href="/project/view/{{ $project->project->id }}" class="font-weight-bold primary">
+                                            {{ substr($project->project->title, 0, 20) . "..."  }}
+                                        </a>
+                                    </td>
+                                    <td>₱ {{ number_format($project->cost, 2) }}</td>
+                                    <td class="text-right" >
+                                        <span class="dropdown">
+                                            <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-v"></i></a>
+                                            <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
+                                                <a href="" class="dropdown-item delete"><i class="feather icon-x"></i> Cancel Project</a>
+                                                <a href="/project/view/{{ $project->project->id }}" class="dropdown-item delete"><i class="feather icon-eye"></i> View Project</a>
+                                                <a href="/project/contract/{{ $project->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Contract</a>
+                                                <a href="/proposal/info/{{ $project->proposal->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Proposal</a>
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                        No Projects Found
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -143,4 +158,5 @@
 
 @push('scripts')
 <script src="../../../app-assets/js/scripts/charts/apexcharts/charts-apexcharts.js"></script>
+
 @endpush

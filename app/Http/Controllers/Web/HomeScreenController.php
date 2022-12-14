@@ -120,28 +120,45 @@ class HomeScreenController extends Controller
     }
 
     public function projects(Request $request) {
+        #get user data
+        $user_id = session()->get('id');
+        $user = session()->get('role') == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
 
-        $projects = Project::with('category', 'employer')->latest('id')->paginate(7);
+        $projects = Project::select('*')
+        ->when($user_id, function ($q) use ($user, $user_id) {
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $user->latitude . "))
+            * cos(radians(projects.latitude))
+            * cos(radians(projects.longitude) - radians(" . $user->longitude . "))
+            + sin(radians(" .$user->latitude. "))
+            * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $user->id);
+        })
+        ->where('status', '!=', 'completed')
+        ->with('category', 'employer')
+        ->latest('id')
+        ->paginate(10);
 
-        $service_categories = ServiceCategory::all();
-        return view('CustomerScreens.home_screens.project.project-search', compact('projects', 'service_categories'));
+        $service_categories = ServiceCategory::toBase()->get();
+        $skills = Skill::toBase()->get();
+        return view('CustomerScreens.home_screens.project.project-search', compact('projects', 'service_categories', 'skills'));
     }
 
     public function fetch_projects(Request $request) {
         abort_if(!$request->ajax(), 404);
 
-        $title = $request->get('title');
-        $categories = $request->get('categories') ? json_decode($request->get('categories')) : [];
-        $my_range = $request->get('my_range');
-        $address = $request->get('address');
-        $latitude = $request->get('latitude');
-        $longitude = $request->get('longitude');
-        $type = $request->get('type');
-        $radius = $request->input('radius');
-        $result = $request->input('result');
+        $title = $request->input('title');
+        $categories = $request->input('categories') ? json_decode($request->input('categories')) : [];
+        $my_range = $request->input('my_range');
+        $address = $request->input('address');
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
+        $type = $request->input('type');
+        $radius = $request->input('radius') ? $request->input('radius') : 10;
+        $result = $request->input('result') ? $request->input('result') : 5;
 
         $projects = Project::select('*')
-        ->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%')
+        ->when($title, function($q) use ($title) {
+            return $q->DB::raw('lower(title)', 'like', '%' . strtolower($title) . '%');
+        })
         ->when($categories, function ($q) use ($categories) {
             if($categories[0]) return $q->whereIn('category_id', $categories);
         })
@@ -159,9 +176,10 @@ class HomeScreenController extends Controller
             $range = explode(';', $my_range);
             return $q->whereBetween('cost', [$range[0], $range[1]]);
         })
+        ->where('status', '!=', 'completed')
         ->with('category', 'employer')
         ->latest('id')
-        ->paginate($result);
+        ->paginate(10);
 
         $view_data = view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
 
