@@ -11,9 +11,11 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "ixudra/curl": "^6.22",
         "laravel/framework": "^8.75",
-        "laravel/sanctum": "^2.11",
+        "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
         "pusher/pusher-php-server": "^7.2",
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "webpatser/laravel-uuid": "^4.0",
         "yajra/laravel-datatables-oracle": "^9.21"
     },
     "require-dev": {

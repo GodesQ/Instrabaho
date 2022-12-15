@@ -28,14 +28,15 @@
                                                     <i class="feather icon-edit-2 primary"></i>
                                                     Edit Contract</a> --}}
                                                 <a href="#" class="dropdown-item delete"><i class="feather icon-x danger"></i> Cancel Project</a>
+                                                <a href="#" class="dropdown-item delete"><i class="feather icon-clock primary"></i> Track Project</a>
                                                 <a href="/pay_job/project/{{$proposal->id}}" class="dropdown-item"><i class="feather icon-check success"></i> Set to Complete and Pay Job</a>
                                             </span>
                                         </span>
                                     </div>
                                     <p>{{ strlen($proposal->project->description) > 150 ? substr($proposal->project->description, 0, 150) . '...' : $proposal->project->description }}</p>
                                     <ul>
-                                        <li><i class="fa fa-calendar mr-1"></i> Start Date : <span class="font-weight-bold">{{ $proposal->contract->start_date ? $proposal->contract->start_date : 'No Start Date' }}</span></li>
-                                        <li><i class="fa fa-calendar mr-1"></i> End Date : <span class="font-weight-bold">{{ $proposal->contract->end_date ? $proposal->contract->end_date : 'No End Date' }}</span></li>
+                                        <li><i class="fa fa-calendar mr-1"></i> Start Date : <span class="font-weight-bold">{{ $proposal->contract->start_date ? date_format(new DateTime($proposal->contract->start_date), 'F d, Y') : 'No Start Date' }}</span></li>
+                                        <li><i class="fa fa-calendar mr-1"></i> End Date : <span class="font-weight-bold">{{ $proposal->contract->end_date ? date_format(new DateTime($proposal->contract->end_date), 'F d, Y') : 'No End Date' }}</span></li>
                                     </ul>
                                     <div class="text-right">
                                         <a href="/project/contract/{{ $proposal->contract->id }}" class="info mx-50">View Contract</a>

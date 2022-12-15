@@ -348,7 +348,7 @@
   }
   .header-content {
     width: 100% !important;
-    text-align: center !important;
+    text-align: left !important;
   }
   .header-content-buttons {
     margin-top: 5px;
@@ -395,15 +395,19 @@
     min-height: 400px;
     padding: 10px 15px 15px 20px;
   }
+  .chat-area header .details span{
+    font-size: 13px;
+    font-weight: 500;
+  }
   .chat-box .chat p{
     font-size: 15px;
   }
 
-  .chat-box .outogoing .details{
-    max-width: 300px !important;
+  .chat-box .outgoing .details{
+    max-width: 100% !important;
   }
   .chat-box .incoming .details{
-    max-width: 300px !important;
+    max-width: 100% !important;
   }
   .incoming .details img{
     height: 30px;

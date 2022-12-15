@@ -34,7 +34,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-center align-items-center flex-column">
                     <img src="../../../images/illustrations/no-data.png" alt="" class="" style="width: 200px !important;">
-                    <h2>No Porposals Found</h2>
+                    <h2>No Proposals Found</h2>
                 </div>
             </div>
         </div>

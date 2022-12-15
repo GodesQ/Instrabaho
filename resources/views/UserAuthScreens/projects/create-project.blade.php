@@ -252,6 +252,7 @@
         }
 
         $('.datetime').daterangepicker({
+            minDate: new Date(),
             locale: {
                 format: 'MM/DD/YYYY ',
                 cancelLabel: 'Clear'
@@ -282,11 +283,12 @@
         }
 
         $('#cost').on('input', function(e) {
-            $('.text-project-budget').html(Number(e.target.value).toFixed(2));
-
-            let system_deduction = Number(e.target.value) * 0.10
-            $('.text-system-deduction').html(Number(system_deduction, 2).toFixed(2));
-            $('.text-total-budget').html(Number(Number(e.target.value) - system_deduction).toFixed(2));
+            if($('#project_cost_type').val() == 'Fixed') {
+                $('.text-project-budget').html(Number(e.target.value).toFixed(2));
+                let system_deduction = Number(e.target.value) * 0.10
+                $('.text-system-deduction').html(Number(system_deduction, 2).toFixed(2));
+                $('.text-total-budget').html(Number(Number(e.target.value) - system_deduction).toFixed(2));
+            }
         })
 
     </script>

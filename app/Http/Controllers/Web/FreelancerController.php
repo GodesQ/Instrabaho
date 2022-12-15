@@ -93,7 +93,7 @@ class FreelancerController extends Controller
         ->limit(5)
         ->get();
 
-        $projects = Project::select('*')
+        $projects = Project::select('*')->where('status', 'pending')
         ->when($freelancer, function ($q) use ($freelancer) {
             return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($freelancer->tagline) . '%')
                     ->orWhere(DB::raw('lower(cost)'), 'like', '%' . strtolower($freelancer->hourly_rate) . '%')
@@ -106,8 +106,6 @@ class FreelancerController extends Controller
             + sin(radians(" .$freelancer->latitude. "))
             * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $freelancer->id);
         })
-        ->where('status', '!=', 'completed')
-        ->where('status', '!=', 'approved')
         ->with('category', 'employer')
         ->latest('id')
         ->get(10);

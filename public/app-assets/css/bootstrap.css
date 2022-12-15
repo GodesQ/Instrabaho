@@ -2398,7 +2398,7 @@ input[type="button"].btn-block {
 .dropdown,
 .dropleft {
   position: relative;
-padding: 0 40px 0 0;
+padding: 0 5px 0 0;
 }
 
 .dropdown-toggle {
@@ -3167,7 +3167,7 @@ padding: 0 40px 0 0;
 
 .nav {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   padding-left: 0;
   margin-bottom: 0;
   list-style: none; }
