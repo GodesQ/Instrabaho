@@ -86,7 +86,7 @@
                                                 <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-v"></i></a>
                                                 <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
                                                     <a href="/project/view/{{ $recent_project->project->id }}" class="dropdown-item delete"><i class="feather icon-eye"></i> View Project</a>
-                                                    <a href="/project/contract/{{ $recent_project->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Contract</a>
+                                                    <a href="/project/contract/view/{{ $recent_project->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Contract</a>
                                                 </span>
                                             </span>
                                         </td>
@@ -135,7 +135,7 @@
                                             <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
                                                 <a href="" class="dropdown-item delete"><i class="feather icon-x"></i> Cancel Project</a>
                                                 <a href="/project/view/{{ $project->project->id }}" class="dropdown-item delete"><i class="feather icon-eye"></i> View Project</a>
-                                                <a href="/project/contract/{{ $project->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Contract</a>
+                                                <a href="/project/contract/view/{{ $project->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Contract</a>
                                                 <a href="/proposal/info/{{ $project->proposal->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Proposal</a>
                                             </span>
                                         </span>

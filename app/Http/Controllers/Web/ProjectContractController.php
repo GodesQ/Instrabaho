@@ -62,8 +62,16 @@ class ProjectContractController extends Controller
         return view('UserAuthScreens.contracts.view-contract-code', compact('contract', 'redirect_link'));
     }
 
-    public function start_job(Request $request) {
-        $code = $request->code;
+    public function track(Request $request) {
+        $contract = ProjectContract::where('id', $request->id)->firstOrFail();
+
+        if(!$contract->is_verify_code) return redirect()->route('contract.validate_code')->with('fail', 'Verify First before continue.');
+        
+        return view('UserAuthScreens.contracts.track-contract');
+    }
+
+    public function validate_code(Request $request) {
+        return view('UserAuthScreens.contracts.code-verification-form');
     }
 
     public function create(Request $request) {

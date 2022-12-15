@@ -7,7 +7,9 @@
         <div class="page-content">
             <div class="page-body">
                 <div class="container">
-
+                    <div class="card">
+                        
+                    </div>
                 </div>
             </div>
         </div>
