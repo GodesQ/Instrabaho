@@ -165,6 +165,9 @@ use App\Events\ProjectMessageEvent;
 
         # contract routes
         Route::get('/project/contract/{id}', [ProjectContractController::class, 'contract'])->name('contract');
+        Route::get('/project/contract/code/{id}', [ProjectContractController::class, 'view_code'])->name('contract.code');
+        Route::get('/project/contract/start_job/{code}', [ProjectContractController::class, 'start_job'])->name('contract.start_job');
+        Route::get('/project/contract/fetch_data', [ProjectContractController::class, 'fetch_data'])->name('contract.fetch_data');
         Route::get('/project/proposal/create-contract/{id}', [ProjectContractController::class, 'create'])->name('create.contract')->middleware('employer.access');
         Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract')->middleware('employer.access');
 

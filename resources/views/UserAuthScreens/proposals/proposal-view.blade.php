@@ -59,7 +59,7 @@
 
                                         @endforelse
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div> --}}
@@ -73,18 +73,18 @@
                                     <strong>Warning!</strong> Better check yourself, you're not <a href="#" class="alert-link">looking too good</a>.
                                 </div>
                             @endif --}}
-                            <div class="card-body">
-                                <div class="row my-2">
-                                    <div class="col-md-12 col-lg-6">
+                            <div class="card-body" style="padding: 0.5rem;">
+                                <div class="row my-2 flex-wrap px-1">
+                                    <div class="m-50">
                                         <a href="/{{session()->get('role')}}/proposals" class="btn btn-secondary">Back to Proposals</a>
                                     </div>
-                                    <div class="col-md-12 col-lg-6 text-lg-right">
+                                    <div class="m-50 text-lg-right">
                                         @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
                                             @if ($proposal->status == 'pending')
                                                 <a href="/project/proposal/create-contract/{{ $proposal->id }}" class="btn btn-success">Hire Worker  <i class="fa fa-thumbs-up"></i></a>
                                             @endif
                                             @if($proposal->status == 'approved')
-                                                <a href="/pay_job/project/{{ $proposal->id }}" class="btn btn-primary">Set to Complete & Pay Job</a>
+                                                <a href="/pay_job/project/{{ $proposal->id }}" class="btn btn-primary">Pay Job</a>
                                             @endif
                                         @endif
                                     </div>
@@ -101,8 +101,8 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="tab-content px-1 pt-1">
-                                    <div class="tab-pane active" id="tab31" role="tabpanel" aria-labelledby="base-tab31">
+                                <div class="tab-content pt-1">
+                                    <div class="tab-pane active px-1 py-1" id="tab31" role="tabpanel" aria-labelledby="base-tab31">
                                         <div class="row">
                                             <div class="col-md-12 my-25">
                                                 <div class="font-weight-bold">Full Name : <span class="font-weight-normal mx-1">{{ $proposal->freelancer->user->firstname }} {{ $proposal->freelancer->user->lastname }}</span></div>
@@ -174,12 +174,9 @@
                                         <div class="wrapper">
                                             <section class="chat-area">
                                                 <header
-                                                    class="d-flex justify-content-between align-items-center header"
+                                                    class="header"
                                                 >
-                                                    <div
-                                                        style="width: 60%"
-                                                        class="d-flex align-items-center header-content"
-                                                    >
+                                                    <div style="width: 60%" class="d-flex align-items-center justify-content-start header-content">
                                                         {{-- <a href="/employer/proposals" class="back-icon"
                                                             ><i class="fa fa-arrow-left"></i
                                                         ></a> --}}

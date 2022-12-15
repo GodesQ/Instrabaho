@@ -27,6 +27,7 @@
                                                 {{-- <a data-toggle="modal" data-target="#EditContactModal" class="dropdown-item edit">
                                                     <i class="feather icon-edit-2 primary"></i>
                                                     Edit Contract</a> --}}
+                                                <a href="/project/contract/code/{{ $proposal->contract->id }}" class="dropdown-item "><i class="fa fa-qrcode primary"></i> View Contract Code</a>
                                                 <a href="#" class="dropdown-item delete"><i class="feather icon-x danger"></i> Cancel Project</a>
                                             </span>
                                         </span>

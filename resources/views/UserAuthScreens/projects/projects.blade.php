@@ -27,6 +27,7 @@
                                     <th>&nbsp;</th>
                                     <th>Date Created</th>
                                     <th>Price</th>
+                                    <th>Project Type</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -50,6 +51,13 @@
                                         <h3 class="font-weight-bold">
                                             ₱ {{ $project->cost }}
                                         </h3>
+                                    </td>
+                                    <td valign="center">
+                                        @if ($project->project_cost_type == 'Hourly')
+                                            <div class="badge badge-warning">{{ $project->project_cost_type }}</div>
+                                        @else
+                                            <div class="badge badge-primary">{{ $project->project_cost_type }}</div>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($project->status == 'completed' || $project->status == 'approved')

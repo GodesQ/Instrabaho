@@ -1,12 +1,12 @@
 <div class="navbar-container main-menu-content container center-layout" data-menu="menu-container">
     <!-- include ../../../includes/mixins-->
     <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
-        <li class="dropdown nav-item {{  Request::path() == 'employer/dashboard' ? 'active' : ''  }}">
+        <li class="dropdown px-2 nav-item {{  Request::path() == 'employer/dashboard' ? 'active' : ''  }}">
             <a class=" nav-link" href="/employer/dashboard" ><i class="feather icon-home"></i>
                 <span data-i18n="Dashboard">Dashboard</span>
             </a>
         </li>
-        <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-user"></i><span data-i18n="Profile">Profile</span></a>
+        <li class="dropdown px-2 nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-user"></i><span data-i18n="Profile">Profile</span></a>
             <ul class="dropdown-menu">
                 <li data-menu=""><a class="dropdown-item" href="/employer/view/{{ session()->get('id') }}" data-i18n="View Profile" data-toggle="dropdown">View Profile</a>
                 </li>
@@ -14,7 +14,7 @@
                 </li>
             </ul>
         </li>
-        <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Projects">Projects</span></a>
+        <li class="dropdown px-2 nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Projects">Projects</span></a>
             <ul class="dropdown-menu">
                 <li data-menu=""><a class="dropdown-item" href="/employer/create_project" data-i18n="Post Project" data-toggle="dropdown">Post Project</a>
                 </li>
@@ -27,7 +27,7 @@
                 </li>
             </ul>
         </li>
-        <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Services">Services</span></a>
+        <li class="dropdown px-2 nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Services">Services</span></a>
             <ul class="dropdown-menu">
                 <li data-menu=""><a class="dropdown-item" href="/employer/create_project" data-i18n="My Offers / Proposals" data-toggle="dropdown">My Offers / Proposals</a>
                 </li>
@@ -38,7 +38,7 @@
                 </li>
             </ul>
         </li>
-        <li class="dropdown nav-item {{  Request::path() == 'user_fund' ? 'active' : ''  }}">
+        <li class="dropdown px-2 nav-item {{  Request::path() == 'user_fund' ? 'active' : ''  }}">
             <a class=" nav-link" href="/user_fund" ><i class="fa fa-money"></i>
                 <span data-i18n="Funds">Funds</span>
             </a>
