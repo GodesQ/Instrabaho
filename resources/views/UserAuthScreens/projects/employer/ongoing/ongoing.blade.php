@@ -27,8 +27,8 @@
                                                 {{-- <a data-toggle="modal" data-target="#EditContactModal" class="dropdown-item edit">
                                                     <i class="feather icon-edit-2 primary"></i>
                                                     Edit Contract</a> --}}
-                                                <a href="#" class="dropdown-item delete"><i class="feather icon-x danger"></i> Cancel Project</a>
-                                                <a href="#" class="dropdown-item delete"><i class="feather icon-clock primary"></i> Track Project</a>
+                                                <a href="" class="dropdown-item delete"><i class="feather icon-x danger"></i> Cancel Project</a>
+                                                <a href="/project/contract/track/{{ $proposal->contract->id }}" class="dropdown-item delete"><i class="feather icon-clock primary"></i> Track Project</a>
                                                 <a href="/pay_job/project/{{$proposal->id}}" class="dropdown-item"><i class="feather icon-check success"></i> Set to Complete and Pay Job</a>
                                             </span>
                                         </span>
@@ -39,7 +39,7 @@
                                         <li><i class="fa fa-calendar mr-1"></i> End Date : <span class="font-weight-bold">{{ $proposal->contract->end_date ? date_format(new DateTime($proposal->contract->end_date), 'F d, Y') : 'No End Date' }}</span></li>
                                     </ul>
                                     <div class="text-right">
-                                        <a href="/project/contract/{{ $proposal->contract->id }}" class="info mx-50">View Contract</a>
+                                        <a href="/project/contract/view/{{ $proposal->contract->id }}" class="info mx-50">View Contract</a>
                                         <a href="/proposal/info/{{ $proposal->id }}?act=message" class="btn btn-primary mx-50">Chat</a>
                                     </div>
                                 </div>

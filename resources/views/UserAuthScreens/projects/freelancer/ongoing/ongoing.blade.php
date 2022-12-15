@@ -38,7 +38,7 @@
                                         <li><i class="fa fa-calendar mr-1"></i> End Date : <span class="font-weight-bold">{{ $proposal->contract->end_date ? date_format( new DateTime($proposal->contract->end_date), 'F d, Y') : 'No End Date' }}</span></li>
                                     </ul>
                                     <div class="text-right">
-                                        <a href="/project/contract/{{ $proposal->contract->id }}" class="info mx-50">View Contract</a>
+                                        <a href="/project/contract/view/{{ $proposal->contract->id }}" class="info mx-50">View Contract</a>
                                         <a href="/proposal/info/{{ $proposal->id }}?act=message" class="btn btn-primary mx-50">Chat</a>
                                     </div>
                                 </div>
