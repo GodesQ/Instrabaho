@@ -5,7 +5,7 @@ body {
 	-o-transition: all 0.3s ease 0s;
 	transition: all 0.3s ease 0s;
 	scroll-behavior: smooth;
-	font-family: Manrope;
+	font-family: Poppins;
 }
 
 /* heading font styles*/
@@ -3234,7 +3234,7 @@ font-size: 14px;
 .fr-project-pckage-details .fr-style-6 h3 {
 	font-size: 16px;
 	font-weight: 500;
-	font-family: 'Manrope', sans-serif;
+	font-family: 'Poppins', sans-serif;
 	color: #004E88;
 }
 .fr-project-pckage-details ul li .fr-project-package-list {
@@ -6823,7 +6823,7 @@ color: #777;
 	font-size:12px;
 }
 .protip-skin-default--scheme-black.protip-container {
-    font-family: Manrope;
+    font-family: Poppins;
 }
 .form-group .richText-editor p {
 	font-size:14px;

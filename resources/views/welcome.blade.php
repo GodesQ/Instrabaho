@@ -187,13 +187,13 @@
                  <h4 class="font-weight-bold">We Provide <br> Stable Service <br> With Skilled Workers</h4>
                  <p>Skilled Workers around the Philippines, are looking for work and provide the <br> best they have. Start now </p>
                  <div class="d-flex justify-content-start px-2 gap-2">
-                    <a href="/search_projects" class="btn-home d-flex justify-content-center flex-column">
+                    <a href="/search_projects" class="btn-home d-flex justify-content-center flex-column" style="font-weight: 500 !important;">
                         <span>Explore Projects</span>
                         <span class="second-span">
                             View Projects Catalog <i class="fa fa-arrow-right ml-xl-1"></i>
                         </span>
                     </a>
-                     <a href="/search_services" class="btn-home d-flex justify-content-center flex-column">
+                     <a href="/search_services" class="btn-home d-flex justify-content-center flex-column" style="font-weight: 500 !important;">
                         <span>Explore Services</span>
                         <span class="second-span">
                             View Services Catalog <i class="fa fa-arrow-right ml-xl-1"></i>
