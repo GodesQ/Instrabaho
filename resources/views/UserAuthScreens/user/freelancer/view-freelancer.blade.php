@@ -62,7 +62,7 @@
                                 <a href="/follow_freelancer/view/{{ $freelancer->id }}" class="follow-freelancer protip" data-fid="171" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow Freelancer">
                                     <i class="{{ $follow_freelancer ? 'fa' : 'far' }} fa-heart text-danger"></i>
                                 </a>
-								<a href="/employer/proposal/create_proposal/{{$freelancer->display_name}}" class="btn btn-primary">
+								<a href="/employer/offer/create_offer/{{$freelancer->display_name}}" class="btn btn-primary">
 									Hire Now
 								</a>
 							 @endif

@@ -27,10 +27,10 @@
                     <div class="card-body">
                         <h3 class="card-title">Send Offer to Freelancer</h3>
                         <div class="my-2 mt-4">
-                            <form action="#" method="POST">
+                            <form action="{{ route('project.offer.store') }}" method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-lg-5 col-sm-12 my-2">
+                                    <div class="col-lg-12 col-sm-12 my-2">
                                         <div class="form-group">
                                             <div class="form-label font-weight-bold" style="color: #000 !important;">What Project do you want to offer?</div>
                                             <select name="project_id" id="project_id" class="form-control select2">
@@ -43,38 +43,12 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-sm-12 my-2">
-                                        <div class="form-group">
-                                            <div class="form-label font-weight-bold" style="color: #000 !important;">What is your prefer pay type?</div>
-                                            <div class="input-group">
-                                                <select name="project_cost_type" class="form-control" id="project_cost_type">
-                                                    <option value="Fixed">Fixed</option>
-                                                    <option value="Hourly">Hourly</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-12 my-2">
-                                        <div class="form-group">
-                                            <div class="form-label font-weight-bold" style="color: #000 !important;">How much is your budget?</div>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">₱</span>
-                                                </div>
-                                                <input type="number" min="100" name="offer_price" class="form-control">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-lg-12 my-2">
                                         <div class="form-group">
                                             <div class="form-label font-weight-bold" style="color: #000 !important;">Any Private Message to Freelancer?</div>
                                             <textarea name="private_message" id="private_message" cols="30" rows="10" class="form-control" placeholder="Send Private Message to Freelancer"></textarea>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="proposal_user_token" value="{{ base64_encode('employer') }}">
                                     <div class="form-footer text-right mt-5">
                                         <input type="hidden" name="freelancer_id" value="{{ $freelancer->id }}">
                                         <input type="hidden" name="employer_id" value="{{ $employer->id }}">

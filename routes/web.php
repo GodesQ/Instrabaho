@@ -24,6 +24,7 @@ use App\Http\Controllers\Web\SaveServiceController;
 use App\Http\Controllers\Web\FollowEmployerController;
 use App\Http\Controllers\Web\FollowFreelancerController;
 use App\Http\Controllers\Web\ProjectProposalController;
+use App\Http\Controllers\Web\ProjectOffersController;
 use App\Http\Controllers\Web\ForgotPasswordController;
 use App\Http\Controllers\Web\ProjectChatController;
 use App\Http\Controllers\Web\UserFundsController;
@@ -149,10 +150,13 @@ use App\Events\ProjectMessageEvent;
             Route::get('projects/completed', [ProjectsController::class, 'employer_completed'])->name('employer.projects.completed');
             Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create');
             Route::get('edit_project/{id}', [ProjectsController::class, 'user_edit'])->name('freelancer.project.edit');
-            Route::get('/proposal/create_proposal/{freelancer}', [ProjectProposalController::class, 'employer_create_proposal'])->name('proposal.employer.create');
+            Route::get('/offer/create_offer/{freelancer}', [ProjectOffersController::class, 'employer_create_offer'])->name('offer.employer.create');
             Route::get('proposals', [ProjectProposalController::class, 'proposals_for_employers'])->name('employer.proposals');
             Route::get('proposals/fetch_data', [ProjectProposalController::class, 'fetch_proposals_for_employers'])->name('employer.fetch_proposals');
         });
+
+        # Route for storing offer to freelancer from employer
+        Route::post('/offer/store', [ProjectOffersController::class, 'store'])->name('project.offer.store');
 
         Route::get('/projects/selected_dates', [ProjectsController::class, 'selected_dates'])->name('projects.selected_dates');
 

@@ -18,56 +18,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ProjectProposalController extends Controller
 {
-    public function employer_create_proposal(Request $request) {
-        $user_id = session()->get('id');
-        $employer = Employer::where('user_id', $user_id)->with('projects')->firstOrFail();
-        $freelancer = Freelancer::where('display_name', $request->freelancer)->firstOrFail();
-
-        return view('UserAuthScreens.proposals.employer.create-proposal', compact('employer', 'freelancer'));
-    }
-
-    public function store(StoreProjectProposal $request) {
-
-        $freelancer = Freelancer::where('user_id', session()->get('id'))->firstOrFail();
-
-        $images = array();
-
-        # if the image has an attachments then store to public image directory and push the path of image to images variable
-        if($request->hasFile('attachments')) {
-            foreach ($request->file('attachments') as $key => $attachment) {
-                $image_name = $attachment->getClientOriginalName();
-                $save_file = $attachment->move(public_path().'/images/projects/proposal_attachments', $image_name);
-                array_push($images, $image_name);
-            }
-        }
-
-        $json_images = json_encode($images);
-
-        # store proposal to database
-        $save = ProjectProposal::create(array_merge($request->validated(),[
-            'employer_id' => $request->employer_id,
-            'freelancer_id' => $freelancer->id,
-            'project_cost_type' => $request->project_cost_type,
-            'status' => 'pending',
-            'attachments' => $json_images,
-            'sender_role' => $request->proposal_user_token ? base64_decode($request->proposal_user_token) : 'freelancer'
-        ]));
-
-        if(isset($request->private_message)) {
-            $send_message = ProjectMessage::create([
-                'msg_id' => $save->id,
-                'incoming_msg_id' => $request->freelancer_id,
-                'outgoing_msg_id' => $request->employer_id,
-                'message' => $request->private_message,
-                'role' => base64_decode($request->proposal_user_token)
-            ]);
-        }
-
-        if($save) return back()->with('success', 'Proposal sent successfully');
-
-        #if the proposal was not save
-        return back()->with('fail', 'Something went wrong.');
-    }
 
     public function proposals_for_employers() {
         #get the employer data
