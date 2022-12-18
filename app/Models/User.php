@@ -12,6 +12,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory;
     protected $table = 'user';
     protected $guarded = [];
+    protected $hidden = ['password', 'isVerify'];
 
     public function freelancer() {
         return $this->belongsTo(Freelancer::class);

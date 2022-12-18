@@ -1,7 +1,7 @@
 @extends('layout.user-layout')
 
 @section('title')
-    PROJECT - {{ $contract->project->title }}
+    TRACK PROJECT
 @endsection
 
 @section('content')
