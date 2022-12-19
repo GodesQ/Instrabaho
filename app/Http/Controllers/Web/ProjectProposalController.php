@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\ProjectProposal;
+use App\Models\ProjectOffer;
 use App\Models\Freelancer;
 use App\Models\Employer;
 use App\Models\Project;
 use App\Models\ProjectMessage;
+
 use Carbon\Carbon;
 
 use App\Http\Requests\ProjectProposal\StoreProjectProposal;
@@ -54,7 +56,7 @@ class ProjectProposalController extends Controller
     public function proposals_for_freelancers() {
 
         #get the freelancer data
-        $freelancer = Freelancer::where('user_id', session()->get('id'))->with('project_proposals')->firstOrFail();
+        $freelancer = Freelancer::where('user_id', session()->get('id'))->with('project_proposals', 'project_offers')->firstOrFail();
 
         #get the pending proposals
         $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->with('project')->get();
@@ -62,7 +64,10 @@ class ProjectProposalController extends Controller
         #get the approved proposals
         $approved_proposals = $freelancer->project_proposals()->where('status', 'approved')->with('project')->get();
 
-        return view('UserAuthScreens.proposals.freelancer.index-proposals', compact('freelancer', 'pending_proposals', 'approved_proposals'));
+        #get the offers
+        $offers = $freelancer->project_offers()->with('project')->get();
+
+        return view('UserAuthScreens.proposals.freelancer.index-proposals', compact('freelancer', 'pending_proposals', 'approved_proposals', 'offers'));
     }
 
 

@@ -197,6 +197,7 @@
                                                 <form action="#" class="typing-area">
                                                     @csrf
                                                     <input type="hidden" value="{{ $proposal->id }}" id="msg_id" name="msg_id" />
+                                                    <input type="hidden" value="{{ base64_encode('proposal') }}" id="type" name="type">
                                                     <input type="text" class="incoming_id" name="incoming_id" value="{{ $incoming_msg_id }}" hidden />
                                                     <input type="text" class="outgoing_id" name="outgoing_id" value="{{ $outgoing_msg_id }}" hidden />
                                                     <input type="text" name="message" class="input-field" id="message_input" placeholder="Type a message here..."/>
@@ -217,7 +218,7 @@
 @endsection
 
 @push('scripts')
-<script src="../../../js/chat.js"></script>
+<script src="../../../js/project-chat.js"></script>
 <script>
 
     window.addEventListener('load', () => {

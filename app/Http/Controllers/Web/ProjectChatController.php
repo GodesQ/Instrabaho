@@ -14,7 +14,7 @@ class ProjectChatController extends Controller
     public function project_get_chat(Request $request) {
         $messages = ProjectMessage::where('msg_id', $request->id)->get();
         $user_model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
-        $user = $user_model::where('user_id', session()->get('id'))->first(); 
+        $user = $user_model::where('user_id', session()->get('id'))->first();
         $output = "";
         if($messages->count() > 0) {
             foreach($messages as $message) {
@@ -41,6 +41,7 @@ class ProjectChatController extends Controller
             'incoming_msg_id' => $request->incoming_id,
             'outgoing_msg_id' => $request->outgoing_id,
             'msg_id' => $request->msg_id,
+            'message_type' => base64_decode($request->type),
             'message' => $request->message,
             'role' => session()->get('role')
         ]);

@@ -15,6 +15,11 @@ class AuthController extends Controller
     //
     public function login(Request $request) {
 
+        if (Auth::guard('user')->user()) return response()->json([
+            'status' => false,
+            'message' => 'Already Authenticated',
+        ]);
+
         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         if(!Auth::guard('user')->attempt([$fieldType => $request->email, 'password' => $request->password, 'isVerify' => 1])) {
@@ -34,7 +39,7 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function register(Request $request) {       
+    public function register(Request $request) {
 
         $validator = \Validator::make($request->all(), [
             'firstname' => ['required', 'min:2', 'max:15'],
@@ -50,10 +55,10 @@ class AuthController extends Controller
 
         return response()->json();
     }
-    
+
     public function logout(Request $request) {
         $user = Auth::guard()->user();
-        
+        return response()->json($user);
         # delete token
         $user->tokens()->delete();
 

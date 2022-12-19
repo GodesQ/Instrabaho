@@ -30,12 +30,12 @@
                                 </div>
                             </div>
                             <div id="heading12" class="card-header primary" data-toggle="collapse" href="#accordion12" aria-expanded="false" aria-controls="accordion12">
-                                <a class="card-title lead primary collapsed" href="#">Offers</a>
+                                <a class="card-title lead primary collapsed" href="#">Offers ({{$offers->count()}})</a>
                             </div>
                             <div id="accordion12" role="tabpanel" data-parent="#proposals" aria-labelledby="heading12" class="collapse" aria-expanded="false">
                                 <div class="card-content">
                                     <div class="card-body">
-
+                                        @include('UserAuthScreens.projects_offers.freelancer.offers')
                                     </div>
                                 </div>
                             </div>

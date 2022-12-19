@@ -1,8 +1,9 @@
-const form = document.querySelector(".typing-area"),
-incoming_id = form.querySelector(".incoming_id").value,
-outgoing_id = form.querySelector(".outgoing_id").value,
-inputField = form.querySelector(".input-field"),
-sendBtn = form.querySelector("button"),
+const chat_form = document.querySelector(".typing-area"),
+incoming_id = chat_form.querySelector(".incoming_id").value,
+outgoing_id = chat_form.querySelector(".outgoing_id").value,
+inputField = chat_form.querySelector(".input-field"),
+sendBtn = chat_form.querySelector("button"),
+type = chat_form.querySelector('#type').value,
 chatBox = document.querySelector(".chat-box");
 
 const token =  document.querySelector('input[name="_token"]').value;
@@ -12,7 +13,6 @@ const msg_id = document.querySelector('#msg_id').value;
 
 inputField.focus();
 inputField.onkeyup = ()=>{
-    console.log(msg_id);
     if(inputField.value != ""){
         sendBtn.classList.add("active");
     }else{
@@ -20,7 +20,7 @@ inputField.onkeyup = ()=>{
     }
 }
 
-form.onsubmit = (e) => {
+chat_form.onsubmit = (e) => {
     e.preventDefault();
     $.ajax({
         url: `/send_project_chat`,
@@ -29,14 +29,16 @@ form.onsubmit = (e) => {
             message: message_input.value,
             msg_id: msg_id,
             outgoing_id: outgoing_id,
-            incoming_id: incoming_id
+            incoming_id: incoming_id,
+            type: type
+
         },
         method: 'POST',
         success: function (response) {
             if(response.status == 201) {
                 message_input.value = '';
                 getChats();
-                scrollToBottom();  
+                scrollToBottom();
             }
         },
     });
@@ -66,12 +68,11 @@ function getChats() {
             }
 
             setTimeout(() =>{
-                getChats();   
-            }, 3000);
+                getChats();
+            }, 10000);
         },
     });
 }
 
 // call getChats
 getChats();
-  

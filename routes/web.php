@@ -150,33 +150,33 @@ use App\Events\ProjectMessageEvent;
             Route::get('projects/completed', [ProjectsController::class, 'employer_completed'])->name('employer.projects.completed');
             Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create');
             Route::get('edit_project/{id}', [ProjectsController::class, 'user_edit'])->name('freelancer.project.edit');
+            Route::get('projects/offers', [ProjectOffersController::class, 'employer_offers'])->name('employer.projects.offers');
             Route::get('/offer/create_offer/{freelancer}', [ProjectOffersController::class, 'employer_create_offer'])->name('offer.employer.create');
             Route::get('proposals', [ProjectProposalController::class, 'proposals_for_employers'])->name('employer.proposals');
             Route::get('proposals/fetch_data', [ProjectProposalController::class, 'fetch_proposals_for_employers'])->name('employer.fetch_proposals');
         });
 
-        # Route for storing offer to freelancer from employer
-        Route::post('/offer/store', [ProjectOffersController::class, 'store'])->name('project.offer.store');
-
         Route::get('/projects/selected_dates', [ProjectsController::class, 'selected_dates'])->name('projects.selected_dates');
+
+        # Route for offers to freelancer from employer
+        Route::post('/offer/store', [ProjectOffersController::class, 'store'])->name('project.offer.store');
+        Route::get('/offer/info/{id}', [ProjectOffersController::class, 'offer'])->name('offer.view');
 
         # proposal routes
         Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('proposal.store');
-
         Route::get('/proposal/info/{id}', [ProjectProposalController::class, 'proposal'])->name('proposal.view');
 
-        Route::get('/offer/info/{id}', [ProjectProposalController::class, 'proposal'])->name('proposal.view');
 
         # contract routes
         Route::get('/project/contract/view/{id}', [ProjectContractController::class, 'contract'])->name('contract');
         Route::get('/project/contract/code/{id}', [ProjectContractController::class, 'view_code'])->name('contract.code');
-       
+
         Route::get('/project/contract/validate-code', [ProjectContractController::class, 'validate_code'])->name('contract.validate_code');
         Route::post('/project/contract/post_validate_code', [ProjectContractController::class, 'post_validate_code'])->name('contract.post_validate_code');
         Route::get('/project/contract/track/{id}', [ProjectContractController::class, 'track'])->name('contract.track');
         Route::get('/project/proposal/create-contract/{id}', [ProjectContractController::class, 'create'])->name('create.contract')->middleware('employer.access');
         Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract')->middleware('employer.access');
- 
+
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
@@ -227,8 +227,8 @@ use App\Events\ProjectMessageEvent;
         Route::get('/user_fund', [UserFundsController::class, 'user_funds'])->name('user_funds');
         Route::post('/deposit', [UserFundsController::class, 'deposit'])->name('deposit');
 
-        Route::get('/pay_job/{type}/{id}', [TransactionsController::class, 'view_pay_job'])->name('view_pay_job');
-        Route::post('/pay_job', [TransactionsController::class, 'pay_job'])->name('pay_job');
+        Route::get('/pay_job/{type}/{id}', [TransactionsController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
+        Route::post('/pay_job', [TransactionsController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
 
         Route::get('/transaction-message', [TransactionsController::class, 'transaction_messaage'])->name('transaction_messaage');
         Route::post('/transaction-message',  [TransactionsController::class, 'postback_transaction'])->name('postback_transaction');
@@ -243,7 +243,14 @@ use App\Events\ProjectMessageEvent;
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin.access']], function() {
         Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout.get');
-        Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('admins', [AdminController::class, 'index'])->name('admins');
+        Route::get('admins/data_table', [AdminController::class, 'data_table'])->name('admins.data_table');
+        Route::get('admins/edit/{id}', [AdminController::class, 'edit'])->name('admins.edit');
+        Route::put('admins/update', [AdminController::class, 'update'])->name('admins.update');
+        Route::get('admins/create', [AdminController::class, 'create'])->name('admins.create');
+        Route::post('admins/store', [AdminController::class, 'store'])->name('admins.store');
 
         Route::get('freelancer_packages', [FreelancePackagesController::class, 'index'])->name('freelancer_packages');
         Route::get('freelancer_packages/data_table', [FreelancePackagesController::class, 'data_table'])->name('freelancer_packages.data_table');
