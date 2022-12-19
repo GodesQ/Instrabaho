@@ -18,9 +18,9 @@
             <ul class="dropdown-menu">
                 <li data-menu=""><a class="dropdown-item" href="/employer/create_project" data-i18n="Post Project" data-toggle="dropdown">Post Project</a>
                 </li>
-                <li data-menu=""><a class="dropdown-item" href="/employer/proposals" data-i18n="Proposals" data-toggle="dropdown">Proposals</a></li>
                 <li data-menu=""><a class="dropdown-item" href="/employer/projects" data-i18n="My Projects" data-toggle="dropdown">My Projects</a>
                 </li>
+                <li data-menu=""><a class="dropdown-item" href="/employer/proposals" data-i18n="Proposals" data-toggle="dropdown">Proposals</a></li>
                 <li data-menu=""><a class="dropdown-item" href="/employer/projects/ongoing" data-i18n="Ongoing Projects" data-toggle="dropdown">Ongoing Projects</a>
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="/employer/projects/completed" data-i18n="Completed Projects" data-toggle="dropdown">Completed Projects</a>

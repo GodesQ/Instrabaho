@@ -44,6 +44,10 @@ class Freelancer extends Model
         return $this->hasMany(ProjectProposal::class, 'freelancer_id');
     }
 
+    public function project_offers() {
+        return $this->hasMany(ProjectOffer::class, 'freelancer_id');
+    }
+
     public function notAvailableDates() {
         $allNotAvailableDates = array();
 

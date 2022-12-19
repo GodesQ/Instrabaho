@@ -349,6 +349,13 @@
                             </a>
                         </li>
                     @endcan
+                    @can('manage_admins')
+                        <li class="{{ Request::path() == 'admin/admins' ? 'active' : '' }} nav-item">
+                            <a href="/admin/admins"><i class="feather icon-user"></i>
+                                <span class="menu-title" data-i18n="Admins">Admins</span>
+                            </a>
+                        </li>
+                    @endcan
                     <li class=" navigation-header"><span>Misc</span><i class=" feather icon-minus" data-toggle="tooltip" data-placement="right" data-original-title="Misc"></i>
                     </li>
                     @can('manage_skills')

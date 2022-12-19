@@ -32,6 +32,8 @@
                 <ul class="menu-content">
                     <li class="{{ Request::path() == 'employer/create_project' ? 'active' : ''  }}"><a class="menu-item" href="/employer/create_project" data-i18n="Post Project">Post Project</a>
                     </li>
+                    <li class="{{ Request::path() == 'employer/create_project' ? 'active' : ''  }}"><a class="menu-item" href="/employer/create_project" data-i18n="Offer Projects">Offer Projects</a>
+                    </li>
                     <li><a class="menu-item" href="/employer/proposals" data-i18n="Proposals">Proposals</a></li>
                     <li class="{{ Request::path() == 'employer/projects' ? 'active' : ''  }}"><a class="menu-item" href="/employer/projects" data-i18n="My Projects">My Projects</a>
                     </li>

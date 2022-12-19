@@ -36,4 +36,5 @@ class Project extends Model
     public function contract() {
         return $this->hasOne(ProjectContract::class, 'project_id', 'id');
     }
+
 }

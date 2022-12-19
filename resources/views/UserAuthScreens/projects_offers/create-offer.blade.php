@@ -19,6 +19,22 @@
     @endforeach
 @endif
 
+@if (Session::get('success'))
+    @push('scripts')
+        <script>
+            toastr.success('{{ Session::get("success") }}', 'Success')
+        </script>
+    @endpush
+@endif
+
+@if (Session::get('error'))
+    @push('scripts')
+        <script>
+            toastr.error('{{ Session::get("error") }}', 'Failed')
+        </script>
+    @endpush
+@endif
+
 <section class="add-section-padding">
     <div class="container pt-4">
         <div class="row">
@@ -35,7 +51,7 @@
                                             <div class="form-label font-weight-bold" style="color: #000 !important;">What Project do you want to offer?</div>
                                             <select name="project_id" id="project_id" class="form-control select2">
                                                 <option value="">Select Project</option>
-                                                @forelse ($employer->projects as $project)
+                                                @forelse ($pending_projects as $project)
                                                     <option value="{{ $project->id }}">{{ $project->title }}</option>
                                                 @empty
                                                     <option value="">No Projects Found</option>
