@@ -146,6 +146,7 @@ use App\Events\ProjectMessageEvent;
             Route::get('profile', [EmployerController::class, 'profile'])->name('employer.profile');
             Route::post('profile', [EmployerController::class, 'update_profile'])->name('employer.profile.update');
             Route::get('projects', [ProjectsController::class, 'index'])->name('employer.projects.index');
+            Route::get('projects/info/{title}', [ProjectsController::class, 'show'])->name('employer.projects.show');
             Route::get('projects/ongoing', [ProjectsController::class, 'employer_ongoing'])->name('employer.projects.ongoing');
             Route::get('projects/completed', [ProjectsController::class, 'employer_completed'])->name('employer.projects.completed');
             Route::get('create_project', [ProjectsController::class, 'create'])->name('freelancer.project.create');
@@ -160,6 +161,7 @@ use App\Events\ProjectMessageEvent;
 
         # Route for offers to freelancer from employer
         Route::post('/offer/store', [ProjectOffersController::class, 'store'])->name('project.offer.store');
+        Route::put('/offer/accept_offer', [ProjectOffersController::class, 'accept_offer'])->name('project.offer.accept_offer');
         Route::get('/offer/info/{id}', [ProjectOffersController::class, 'offer'])->name('offer.view');
 
         # proposal routes
@@ -168,14 +170,14 @@ use App\Events\ProjectMessageEvent;
 
 
         # contract routes
+        Route::get('/project/create-contract/{type}/{id}', [ProjectContractController::class, 'create'])->name('create.contract')->middleware('employer.access');
+        Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract')->middleware('employer.access');
         Route::get('/project/contract/view/{id}', [ProjectContractController::class, 'contract'])->name('contract');
         Route::get('/project/contract/code/{id}', [ProjectContractController::class, 'view_code'])->name('contract.code');
 
         Route::get('/project/contract/validate-code', [ProjectContractController::class, 'validate_code'])->name('contract.validate_code');
         Route::post('/project/contract/post_validate_code', [ProjectContractController::class, 'post_validate_code'])->name('contract.post_validate_code');
         Route::get('/project/contract/track/{id}', [ProjectContractController::class, 'track'])->name('contract.track');
-        Route::get('/project/proposal/create-contract/{id}', [ProjectContractController::class, 'create'])->name('create.contract')->middleware('employer.access');
-        Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract')->middleware('employer.access');
 
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');

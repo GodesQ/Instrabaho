@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="card-content">
-                    <div class="card-body table-responsive">
+                    <div class="card-body">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -101,7 +101,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>x
             </div>
             <div class="card">
                 <div class="card-header">

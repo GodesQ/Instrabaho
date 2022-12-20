@@ -22,14 +22,14 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="">
-                                        <h3 class="font-weight-bold">{{ $proposal->project->title }}</h3>
+                                        <h3 class="font-weight-bold">{{ $data->project->title }}</h3>
                                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus, quos.</p>
                                         <form action="{{ route('store.contract') }}" method="POST" class="my-2">
                                             @csrf
-                                            <input type="hidden" name="project_id" value="{{ $proposal->project->id }}">
-                                            <input type="hidden" name="proposal_id" value="{{ $proposal->id }}">
-                                            <input type="hidden" name="employer_id" value="{{ $proposal->employer_id }}">
-                                            <input type="hidden" name="freelancer_id" value="{{ $proposal->freelancer_id }}">
+                                            <input type="hidden" name="project_id" value="{{ $data->project->id }}">
+                                            <input type="hidden" name="proposal_id" value="{{ $data->id }}">
+                                            <input type="hidden" name="employer_id" value="{{ $data->employer_id }}">
+                                            <input type="hidden" name="freelancer_id" value="{{ $data->freelancer_id }}">
 
                                             <div class="form-group">
                                                 <label for="cost" class="font-weight-bold">Cost</label>
@@ -38,21 +38,29 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">₱</span>
                                                     </div>
-                                                    <input type="number" min="100" name="cost" class="form-control" value="{{ $proposal->offer_price }}" data-validation-required-message="This field is required" aria-invalid="false">
+                                                    <input type="number" min="100" name="cost" class="form-control" value="{{ $data->project->cost }}" data-validation-required-message="This field is required" aria-invalid="false">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">.00</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <label for="cost_type" class="font-weight-bold">Prefer Payment Type</label>
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, unde!</p>
+                                                <select name="cost_type" id="cost_type" class="select2">
+                                                    <option value="Fixed">Fixed</option>
+                                                    <option value="Hourly">Hourly</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="start_date" class="font-weight-bold">Start Date </label>
                                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, labore consectetur.</p>
-                                                <input type="date" class="form-control" name="start_date" value="{{ $proposal->project->start_date }}">
+                                                <input type="date" class="form-control" name="start_date" value="{{ $data->project->start_date }}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="end_date" class="font-weight-bold">End Date </label>
                                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, labore consectetur.</p>
-                                                <input type="date" class="form-control" name="end_date" value="{{ $proposal->project->start_date }}">
+                                                <input type="date" class="form-control" name="end_date" value="{{ $data->project->start_date }}">
                                             </div>
                                             <div class="form-footer">
                                                 <button class="btn btn-primary">Create Contract </button>
@@ -69,13 +77,13 @@
                                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus, quos.</p>
                                     <div class="my-2">
                                         <div class="my-25 border-bottom p-1">
-                                            Name : {{ $proposal->freelancer->user->firstname . " " . $proposal->freelancer->user->lastname }}
+                                            Name : {{ $data->freelancer->user->firstname . " " . $data->freelancer->user->lastname }}
                                         </div>
                                         <div class="my-25 border-bottom p-1">
-                                            Display Name : {{ $proposal->freelancer->display_name }}
+                                            Display Name : {{ $data->freelancer->display_name }}
                                         </div>
                                         <div class="my-25 border-bottom p-1">
-                                            Hourly Rate : ₱ {{ $proposal->freelancer->hourly_rate }}.00
+                                            Hourly Rate : ₱ {{ $data->freelancer->hourly_rate }}.00
                                         </div>
                                     </div>
                                 </div>

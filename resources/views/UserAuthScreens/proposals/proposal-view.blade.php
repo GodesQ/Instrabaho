@@ -76,12 +76,12 @@
                             <div class="card-body" style="padding: 0.5rem;">
                                 <div class="row my-2 flex-wrap px-1">
                                     <div class="m-50">
-                                        <a href="/{{session()->get('role')}}/proposals" class="btn btn-secondary">Back to Proposals</a>
+                                        <a href="/{{session()->get('role')}}/projects/info/{{ $proposal->project->title }}" class="btn btn-secondary">Back to Project</a>
                                     </div>
                                     <div class="m-50 text-lg-right">
                                         @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
                                             @if ($proposal->status == 'pending')
-                                                <a href="/project/proposal/create-contract/{{ $proposal->id }}" class="btn btn-success">Hire Worker  <i class="fa fa-thumbs-up"></i></a>
+                                                <a href="/project/create-contract/proposal/{{ $proposal->id }}" class="btn btn-success">Hire Worker  <i class="fa fa-thumbs-up"></i></a>
                                             @endif
                                             @if($proposal->status == 'approved')
                                                 <a href="/pay_job/project/{{ $proposal->id }}" class="btn btn-primary">Pay Job</a>

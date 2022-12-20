@@ -31,18 +31,14 @@ class ProjectProposalController extends Controller
     }
 
     public function fetch_proposals_for_employers(Request $request) {
-        # if the request was not able to use ajax
+        # if the request was not ajax
         abort_if(!$request->ajax(), 404);
 
         #get the request data
-        $min = $request->input('min');
-        $max = $request->input('max');
         $project_id = $request->input('project_id');
 
         # get the proposal lists and create pagination
-        $proposals = ProjectProposal::where('project_id', $project_id)->when($min && $max, function ($q) use ($min, $max) {
-            return $q->whereBetween('offer_price', [$min, $max]);
-        })->with('freelancer')->paginate(10);
+        $proposals = ProjectProposal::where('project_id', $project_id)->with('freelancer')->paginate(10);
 
         # create a html to render in proposals lists
         $view_data = view('UserAuthScreens.proposals.employer.proposals', compact('proposals'))->render();

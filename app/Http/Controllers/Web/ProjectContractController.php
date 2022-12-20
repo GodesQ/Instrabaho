@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\ProjectContract;
 use App\Models\Project;
 use App\Models\ProjectProposal;
+use App\Models\ProjectOffer;
 use App\Models\Freelancer;
 use App\Models\Employer;
 
@@ -66,7 +67,7 @@ class ProjectContractController extends Controller
         $contract = ProjectContract::where('id', $request->id)->firstOrFail();
 
         if(!$contract->is_verify_code) return redirect()->route('contract.validate_code')->with('fail', 'Verify First before continue.');
-        
+
         return view('UserAuthScreens.contracts.track-contract');
     }
 
@@ -75,8 +76,15 @@ class ProjectContractController extends Controller
     }
 
     public function create(Request $request) {
-        $proposal = ProjectProposal::where('id', $request->id)->with('project')->firstOrFail();
-        return view('UserAuthScreens.contracts.create-contract', compact('proposal'));
+        if($request->type == 'proposal') {
+            $data = ProjectProposal::where('id', $request->id)->with('project')->firstOrFail();
+        }
+
+        if($request->type == 'offer') {
+            $data = ProjectOffer::where('id', $request->id)->firstOrFail();
+        }
+
+        return view('UserAuthScreens.contracts.create-contract', compact('data'));
     }
 
     public function store(StoreProjectContract $request) {

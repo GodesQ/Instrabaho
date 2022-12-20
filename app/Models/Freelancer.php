@@ -36,6 +36,15 @@ class Freelancer extends Model
         return $this->hasMany(FreelancerSkill::class, 'freelancer_id');
     }
 
+    public function freelancer_skills() {
+        return $this->hasManyThrough(
+            Skill::class,
+            FreelancerSkill::class,
+            'freelancer_id',
+            'id',
+        );
+    }
+
     public function services() {
         return $this->hasMany(Service::class, 'freelancer_id');
     }

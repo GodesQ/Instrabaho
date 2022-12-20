@@ -1755,6 +1755,9 @@ button, html [type='button'], [type='reset'], [type='submit'] {
 .badge-secondary {
   background-color : #000000;
 }
+.badge-secondary-accent {
+    background-color: #000000b9;
+}
 .badge-secondary.badge-glow {
   box-shadow : 0 0 10px #000000;
 }
@@ -1764,6 +1767,9 @@ button, html [type='button'], [type='reset'], [type='submit'] {
 
 .badge-primary {
   background-color : #04bbff;
+}
+.badge-primary-accent {
+    background-color: #aee9ff !important;
 }
 .badge-primary.badge-glow {
   box-shadow : 0 0 10px #04bbff;

@@ -29,6 +29,9 @@ class ProjectOffersController extends Controller
         $isOfferExist = ProjectOffer::where('freelancer_id', $request->freelancer_id)->where('project_id', $request->project_id)->exists();
         if($isOfferExist) return back()->withErrors('Fail. This offer already exist on our record.');
 
+        $freelancer = Freelancer::where('id', $request->freelancer_id)->firstOrFail();
+        $isNotAvailableDate = in_array($project_offer->project->start_date, $freelancer->notAvailableDates()) || in_array($proposal->project->end_date, $freelancer->notAvailableDates()) ? back()->withErrors('Fail. The freelancer is not available on your expected start date') : true;
+
         $data = array_diff($request->validated(), [$request->private_message]);
         $submit_offer = ProjectOffer::create($data);
 
@@ -61,6 +64,27 @@ class ProjectOffersController extends Controller
         }
 
         return view('UserAuthScreens.projects_offers.offer-view', compact('project_offer', 'receiver', 'incoming_msg_id', 'outgoing_msg_id'));
+    }
+
+    public function accept_offer(Request $request) {
+        $offer = ProjectOffer::where('id', $request->id)->firstOrFail();
+
+        $update_offer = $offer->update([
+            'is_freelancer_approve' => true,
+        ]);
+
+        if($update_offer) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Offer Successfully Updated'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Fail to update offer'
+            ], 500);
+        }
+
     }
 
 
