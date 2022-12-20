@@ -10,11 +10,11 @@ use App\Models\Project;
 class ProjectsController extends Controller
 {
     public function projects() {
-        $projects = Project::all();
+        $projects = Project::with('employer')->latest('id')->get();
         return response($projects, 200);
     }
 
     public function create(Request $request) {
-        
+
     }
 }

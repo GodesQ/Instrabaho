@@ -18,7 +18,6 @@ class EmployerAccess
     public function handle(Request $request, Closure $next)
     {
         abort_if(session()->get('role') != 'employer', 403);
-
         $user_id = session()->get('id');
         $employer_exist = Employer::where('user_id', $user_id)->exists();
         if(!$employer_exist) return redirect()->route('employer.role_form')->with('fail', "Oops! Looks like you do not have an employer account. Create first to continue");

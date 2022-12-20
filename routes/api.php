@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProjectsController;
+use App\Http\Controllers\Api\FreelancersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,16 @@ use App\Http\Controllers\Api\ProjectsController;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
+
 Route::get('projects', [ProjectsController::class, 'projects']);
 
+Route::get('freelancers', [FreelancersController::class, 'freelancers']);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
+    Route::group(['middleware' => ['employer.access']], function () {
+
+    });
+
     Route::post('logout', [AuthController::class, 'logout']);
 });

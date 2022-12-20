@@ -9,6 +9,7 @@ use App\Models\ServiceCategory;
 use App\Models\Skill;
 use App\Models\Project;
 use App\Models\ProjectProposal;
+use App\Models\ProjectOffer;
 use App\Models\Employer;
 use App\Models\Freelancer;
 use App\Models\EmployerPackage;
@@ -26,6 +27,22 @@ class ProjectsController extends Controller
         $employer = Employer::where('user_id', $user_id)->first();
         $projects = Project::where('employer_id', $employer->id)->cursorPaginate(10);
         return view('UserAuthScreens.projects.projects', compact('projects'));
+    }
+
+    public function show(Request $request) {
+        $project = Project::where('title', $request->title)->firstOrFail();
+        $categories = ServiceCategory::all();
+        $skills = Skill::toBase()->get();
+        $employer = Employer::where('user_id', auth('user')->user()->id)->first();
+        $project_images = json_decode($project->attachments);
+
+        # get the proposal lists and create pagination
+        $proposals = ProjectProposal::where('project_id', $project->id)->with('freelancer')->paginate(10);
+
+        # get the offer lists
+        $offers = ProjectOffer::where('project_id', $project->id)->with('freelancer')->get();
+
+        return view('UserAuthScreens.projects.project-info', compact('project', 'skills', 'employer', 'categories', 'project_images', 'proposals', 'offers'));
     }
 
     public function employer_ongoing(Request $request) {

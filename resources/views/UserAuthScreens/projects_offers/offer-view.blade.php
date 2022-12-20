@@ -10,7 +10,11 @@
             <div class="page-body">
                 <div class="container">
                     <div class="my-1">
-                        <a href="/freelancer/proposals" class="btn btn-secondary">Back to Proposals</a>
+                        @if (session()->get('role') == 'freelancer')
+                            <a href="/freelancer/proposals" class="btn btn-secondary">Back to Proposals</a>
+                        @else
+                            <a href="/employer/projects/info/{{ $project_offer->project->title }}" class="btn btn-secondary">Back to Project</a>
+                        @endif
                     </div>
                     <div class="card">
                         <div class="card-body">
@@ -25,6 +29,11 @@
                             <div class="tab-content px-1 pt-1">
                                 <div class="tab-pane active in" id="active32" aria-labelledby="active-tab32" role="tabpanel">
                                     <div class="container py-2">
+                                        <div class="text-right my-1">
+                                            @if (session()->get('role') == 'freelancer' && !$project_offer->is_freelancer_approve)
+                                                <button id="{{ $project_offer->id }}" class="btn btn-success accept-offer-btn">Accept Offer</button>
+                                            @endif
+                                        </div>
                                         <div class="d-flex justify-content-between align-items-center flex-wrap">
                                             <div>
                                                 <h2>{{ $project_offer->project->title }}</h2>
@@ -126,4 +135,42 @@
 
 @push('scripts')
 <script src="../../../js/project-chat.js"></script>
+<script>
+    $('.accept-offer-btn').on('click', function () {
+        let id = $(this).attr("id");
+        let csrf = "{{ csrf_token() }}";
+        Swal.fire({
+            title: "Accept Offer",
+            text: "Are you sure you want to accept the offer?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, accept it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/offer/accept_offer`,
+                    method: 'PUT',
+                    data: {
+                        _token: csrf,
+                        id: id,
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        Swal.fire(
+                            "Updated!",
+                            `${response.message}`,
+                            "success"
+                        ).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    },
+                });
+            }
+        });
+    })
+</script>
 @endpush

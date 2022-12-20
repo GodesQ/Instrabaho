@@ -56,6 +56,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/chat.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/proposals.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/custom-step.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/sidebar-project.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/app-todo.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/plugins/forms/switch.css') }}">
@@ -296,6 +297,8 @@
         </div>
     </div>
 
+
+
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
 
@@ -344,6 +347,7 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+    <script src="{{ asset('js/sidebar-project.js')}}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/wizard-steps.js') }}"></script>
     <script src="../../../app-assets/js/scripts/pages/account-setting.js"></script>
     <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>

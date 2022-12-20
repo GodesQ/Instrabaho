@@ -12,9 +12,9 @@
                             <a class="nav-link active" id="baseProposal-tab" data-toggle="tab" aria-controls="tabProposal" href="#tabProposal" role="tab" aria-selected="true">
                                  Proposals</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" id="baseIcon-tab12" data-toggle="tab" aria-controls="tabIcon12" href="#tabIcon12" role="tab" aria-selected="false">Submitted Offers</a>
-                        </li>
+                        </li> --}}
                     </ul>
                     <div class="tab-content px-1 pt-1">
                         <div class="tab-pane active" id="tabProposal" role="tabpanel" aria-labelledby="baseProposal-tab">
@@ -36,6 +36,13 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="" class="form-label font-weight-bold">Type</label>
+                                                    <select name="type" id="type" class="select2">
+                                                        <option value="offer">Offers</option>
+                                                        <option value="proposal">Proposals</option>
+                                                    </select>
+                                                </div>
+                                                {{-- <div class="form-group">
                                                     <label for="cost" class="form-label font-weight-bold">Proposal Price</label>
                                                     <div class="row">
                                                         <div class="col-xl-12 col-lg-12 my-50">
@@ -65,9 +72,9 @@
                                                         <div class="col-md-6"></div>
                                                     </div>
                                                     <input type="hidden" name="page" id="page_count" value="1">
-                                                </div>
+                                                </div> --}}
                                                 <div class="form-footer float-right">
-                                                    <button class="btn btn-warning">Find Proposals</button>
+                                                    <button class="btn btn-warning">Find</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -119,12 +126,8 @@
         })
 
         function fetchProposals(page) {
-            let min = $('#min').val();
-            let max = $('#max').val();
-            let project = $('#project').val();
 
             let errors = [];
-
             // validation
             if(min > max) errors.push('It shows that the minimum cost is greater than maximum cost');
             if(!project) errors.push('Project is required.');
@@ -134,7 +137,7 @@
             });
 
             $.ajax({
-                url: "/employer/proposals/fetch_data?page="+page+'&'+'min='+min+'&'+'max='+max+'&'+'project_id='+project,
+                url: "/employer/proposals/fetch_data?page="+page,
                 success: function (data) {
                     $('.proposals').html(data.view_data);
                     $('.protip-container').remove();

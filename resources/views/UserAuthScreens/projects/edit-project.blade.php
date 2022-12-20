@@ -1,10 +1,4 @@
-@extends('layout.user-layout')
 
-@section('title')
-    Edit Project - {{ $project->title }}
-@endsection
-
-@section('content')
 <style>
     #map-canvas {
         height: 300px;
@@ -37,14 +31,11 @@
     @endpush
 @endif
 
-<div class="page-wrapper pt-5">
+<div class="page-wrapper">
     <div class="page-content">
         <div class="container">
              <!-- Form wizard with icon tabs section start -->
              <section id="icon-tabs">
-                <div class="text-right">
-                    <a href="/employer/projects" class="btn btn-secondary">Back to my Projects</a>
-                </div>
                 <div class="row my-1">
                     <div class="col-md-12">
                         <h4>Attachments</h4>
@@ -63,7 +54,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Create Project</h4>
+                                <h4 class="card-title">Edit Project</h4>
                                 <a class="heading-elements-toggle"><i class="fa fa-ellipsis-h font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -262,8 +253,6 @@
         </div>
     </div>
 </div>
-
-@endsection
 
 @push('scripts')
 <script src="../../../js/user-location.js"></script>

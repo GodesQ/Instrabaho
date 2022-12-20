@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use App\Mail\VerifyAccount;
 
 use App\Models\User;
 
@@ -15,11 +18,25 @@ class AuthController extends Controller
     //
     public function login(Request $request) {
 
-        if (Auth::guard('user')->user()) return response()->json([
-            'status' => false,
-            'message' => 'Already Authenticated',
+        // return response()->json(Auth::guard('user')->check());
+
+        if(Auth::guard('user')->check()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You are already authorized'
+            ]);
+        }
+
+        #validate requests
+        $validator = \Validator::make($request->all(), [
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:3'],
         ]);
 
+        # if the requested input have an error
+        if($validator->fails()) return response()->json($validator->errors(), 401);
+
+        # check if the request is email or username type
         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         if(!Auth::guard('user')->attempt([$fieldType => $request->email, 'password' => $request->password, 'isVerify' => 1])) {
@@ -35,8 +52,10 @@ class AuthController extends Controller
             'status' => true,
             'message' => 'User Logged In Successfully',
             'user' => $user,
+            'role' => $request->role,
             'token' => $user->createToken("API TOKEN")->plainTextToken
         ], 200);
+
     }
 
     public function register(Request $request) {
@@ -53,12 +72,35 @@ class AuthController extends Controller
         # if the requested input have an error
         if($validator->fails()) return response()->json($validator->errors(), 401);
 
-        return response()->json();
+        $save = User::create([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'middlename' => $request->middlename,
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'isVerify' => false,
+        ]);
+
+        # details for sending email to worker
+        $details = [
+            'title' => 'Verification email from INSTRABAHO',
+            'email' => $request->email,
+            'username' => $request->username,
+        ];
+
+        // SEND EMAIL FOR VERIFICATION
+        Mail::to($request->email)->send(new VerifyAccount($details));
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Register Successfully. Validate Email Now'
+        ], 201);
     }
 
     public function logout(Request $request) {
         $user = Auth::guard()->user();
-        return response()->json($user);
+
         # delete token
         $user->tokens()->delete();
 
