@@ -84,12 +84,17 @@ class ProjectContractController extends Controller
             $data = ProjectOffer::where('id', $request->id)->firstOrFail();
         }
 
-        return view('UserAuthScreens.contracts.create-contract', compact('data'));
+        $proposal_type = $request->type;
+
+        return view('UserAuthScreens.contracts.create-contract', compact('data', 'proposal_type'));
     }
 
     public function store(StoreProjectContract $request) {
 
         try {
+
+            $freelancer = Freelancer::where('id', $request->freelancer_id)->firstOrFail();
+            $isNotAvailableDate = in_array($request->start_date, $freelancer->notAvailableDates()) || in_array($request->end_date, $freelancer->notAvailableDates()) ? back()->withErrors('Fail. The freelancer is not available on your expected start date') : true;
 
             #generate uuid
             $code = Str::random(10);
@@ -106,10 +111,19 @@ class ProjectContractController extends Controller
                 'status' => 'approved'
             ]);
 
-            #update project proposal status
-            ProjectProposal::where('id', $request->proposal_id)->update([
-                'status' => 'approved'
-            ]);
+            if($request->proposal_type == 'proposal') {
+                #update project proposal status
+                ProjectProposal::where('id', $request->proposal_id)->update([
+                    'status' => 'approved'
+                ]);
+            }
+
+            if($request->proposal_type == 'offer') {
+                #update project proposal status
+                ProjectOffer::where('id', $request->proposal_id)->update([
+                    'status' => 'approved'
+                ]);
+            }
 
             DB::commit();
 

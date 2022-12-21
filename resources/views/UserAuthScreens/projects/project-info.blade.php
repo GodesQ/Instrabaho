@@ -22,6 +22,7 @@
                         <li class="nav-item">
                             <a class="nav-link" id="base-tab33" data-toggle="tab" aria-controls="tab33" href="#tab33" role="tab" aria-selected="false">Offers</a>
                         </li>
+
                     </ul>
                     <div class="tab-content px-1 pt-1">
                         <div class="tab-pane active" id="tab31" role="tabpanel" aria-labelledby="base-tab31">
@@ -34,6 +35,7 @@
                         <div class="tab-pane" id="tab33" role="tabpanel" aria-labelledby="base-tab33">
                             @include('UserAuthScreens.projects_offers.employer.offers')
                         </div>
+
                     </div>
                 </div>
             </div>

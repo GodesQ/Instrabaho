@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\User;
 use App\Models\Service;
 use App\Models\Freelancer;
 use App\Models\Employer;
@@ -38,7 +39,8 @@ class HomeScreenController extends Controller
 
     public function freelancer(Request $request) {
         // Data of Freelancer
-        $freelancer = Freelancer::where('display_name', $request->display_name)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills')->firstOrFail();
+        $user = User::where('username', $request->username)->with('freelancer')->firstOrFail();
+        $freelancer = Freelancer::where('user_id', $user->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills', 'projects')->firstOrFail();
         $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
         $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
 
@@ -120,19 +122,8 @@ class HomeScreenController extends Controller
     }
 
     public function projects(Request $request) {
-        #get user data
-        $user_id = session()->get('id');
-        $user = session()->get('role') == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
-
         $projects = Project::select('*')
-        ->when($user_id, function ($q) use ($user, $user_id) {
-            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $user->latitude . "))
-            * cos(radians(projects.latitude))
-            * cos(radians(projects.longitude) - radians(" . $user->longitude . "))
-            + sin(radians(" .$user->latitude. "))
-            * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $user->id);
-        })
-        ->where('status', '!=', 'completed')
+        ->where('status', 'pending')
         ->with('category', 'employer')
         ->latest('id')
         ->paginate(10);
@@ -211,18 +202,8 @@ class HomeScreenController extends Controller
     public function freelancers(Request $request) {
         $skills = Skill::all();
 
-        #get user data
-        $user_id = session()->get('id');
-        $user = session()->get('role') == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
-
         #get all freelancers and create pagination
-        $freelancers = Freelancer::select('*')->when($user_id, function ($q) use ($user, $user_id) {
-            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $user->latitude . "))
-            * cos(radians(user_freelancer.latitude))
-            * cos(radians(user_freelancer.longitude) - radians(" . $user->longitude . "))
-            + sin(radians(" .$user->latitude. "))
-            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $user->id);
-        })->paginate(10);
+        $freelancers = Freelancer::with('user')->paginate(10);
 
         return view('CustomerScreens.home_screens.freelancer.freelancer-search', compact('freelancers', 'skills'));
     }

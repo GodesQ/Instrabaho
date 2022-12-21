@@ -30,7 +30,7 @@ class ProjectOffersController extends Controller
         if($isOfferExist) return back()->withErrors('Fail. This offer already exist on our record.');
 
         $freelancer = Freelancer::where('id', $request->freelancer_id)->firstOrFail();
-        $isNotAvailableDate = in_array($project_offer->project->start_date, $freelancer->notAvailableDates()) || in_array($proposal->project->end_date, $freelancer->notAvailableDates()) ? back()->withErrors('Fail. The freelancer is not available on your expected start date') : true;
+        $isNotAvailableDate = in_array($project_offer->project->start_date, $freelancer->notAvailableDates()) || in_array($project_offer->project->end_date, $freelancer->notAvailableDates()) ? back()->withErrors('Fail. The freelancer is not available on your expected start date') : true;
 
         $data = array_diff($request->validated(), [$request->private_message]);
         $submit_offer = ProjectOffer::create($data);
@@ -50,7 +50,7 @@ class ProjectOffersController extends Controller
         #if the login user is employer then the receiver is freelancer
         if(session()->get('role') == 'employer') {
             $receiver = Freelancer::where('id', $project_offer->freelancer_id)->with('user')->first();
-            $isAvailableDate = in_array($project_offer->project->start_date, $receiver->notAvailableDates()) || in_array($proposal->project->end_date, $receiver->notAvailableDates()) ? false : true;
+            $isAvailableDate = in_array($project_offer->project->start_date, $receiver->notAvailableDates()) || in_array($project_offer->project->end_date, $receiver->notAvailableDates()) ? false : true;
         }
 
         # set initial outgoing and incoming messages user id
@@ -67,7 +67,16 @@ class ProjectOffersController extends Controller
     }
 
     public function accept_offer(Request $request) {
-        $offer = ProjectOffer::where('id', $request->id)->firstOrFail();
+        $offer = ProjectOffer::where('id', $request->id)->with('project', 'freelancer')->firstOrFail();
+
+        $isNotAvailableDate = in_array($offer->project->start_date, $offer->freelancer->notAvailableDates()) || in_array($offer->project->end_date, $offer->freelancer->notAvailableDates()) ? true : false;
+
+        if($isNotAvailableDate) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Freelancer is not available in the specified start date'
+            ]);
+        }
 
         $update_offer = $offer->update([
             'is_freelancer_approve' => true,

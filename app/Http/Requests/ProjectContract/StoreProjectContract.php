@@ -30,7 +30,8 @@ class StoreProjectContract extends FormRequest
             'employer_id' => 'required|exists:user_employer,id',
             'cost' => 'required|numeric',
             'start_date' => 'required|date|before_or_equal:end_date',
-            'end_date' => 'required|date|after_or_equal:start_date'
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'proposal_type' => 'required|in:offer,proposal'
         ];
     }
 }

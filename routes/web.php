@@ -63,7 +63,7 @@ use App\Events\ProjectMessageEvent;
     Route::get('/project/view/{id}', [HomeScreenController::class, 'project'])->name('project.view');
     Route::get('/service/view/{id}', [HomeScreenController::class, 'service'])->name('service.view');
 
-    Route::get('/freelancer/view/{display_name}', [HomeScreenController::class, 'freelancer'])->name('freelancer.view');
+    Route::get('/freelancers/{username}', [HomeScreenController::class, 'freelancer'])->name('freelancer.view');
     Route::get('/employer/view/{id}', [HomeScreenController::class, 'employer'])->name('employer.view');
 
     /*
@@ -138,6 +138,8 @@ use App\Events\ProjectMessageEvent;
         Route::delete('/remove_certificate', [FreelancerController::class, 'remove_certificate'])->name('freelancer.remove_certificate');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');
         Route::post('/store_experiences', [FreelancerController::class, 'store_experiences'])->name('freelancer.store_experiences');
+        Route::post('/store_projects', [FreelancerController::class, 'store_projects'])->name('freelancer.store_projects');
+        Route::delete('/remove_project', [FreelancerController::class, 'remove_project'])->name('freelancer.remove_project');
         Route::post('/store_educations', [FreelancerController::class, 'store_educations'])->name('freelancer.store_educations');
         Route::post('/store_skills', [FreelancerController::class, 'store_skills'])->name('freelancer.store_skills');
 

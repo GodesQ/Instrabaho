@@ -93,6 +93,8 @@
             rel="stylesheet"
             href="{{ URL::asset('css/owl.carousel.min.css') }}"
         />
+        <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/freelancer-search.css') }}">
+
         <!-- MAIN CSS -->
         <link href="{{ URL::asset('css/theme.css') }}" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />

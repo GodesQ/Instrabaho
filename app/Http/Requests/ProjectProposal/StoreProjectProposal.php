@@ -26,10 +26,11 @@ class StoreProjectProposal extends FormRequest
         return [
             'project_id' => 'required',
             'offer_price' => 'required|numeric',
-            'estimated_days' => 'required|numeric',
             'address' => 'required',
             'latitude' => 'required',
-            'longitude' => 'required'
+            'longitude' => 'required',
+            'project_cost_type' => 'required|in:Fixed,Hourly',
+            'cover_letter' => 'nullable'
         ];
     }
 }

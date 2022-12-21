@@ -117,7 +117,7 @@ class FreelancerController extends Controller
         $id = session()->get('id');
         $role = session()->get('role');
         $skills = Skill::all();
-        $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations')->first();
+        $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations', 'projects')->first();
         return view('UserAuthScreens.user.freelancer.freelancer-profile', compact('freelancer', 'skills'));
     }
 
@@ -172,7 +172,7 @@ class FreelancerController extends Controller
         $certificate = FreelancerCertificate::where('id', $request->certificate_id)->first();
 
         if($certificate->certificate_image) {
-            $image_path = public_path('/images/projects/') . $certificate->certificate_image;
+            $image_path = public_path('/images/freelancer_certificates/') . $certificate->certificate_image;
             $remove_image = @unlink($image_path);
         }
 
@@ -181,6 +181,50 @@ class FreelancerController extends Controller
         return response()->json([
             'status' => 201,
             'message' => 'Certificate Successfully Deleted'
+        ]);
+    }
+
+    public function store_projects(Request $request) {
+        $request->validate([
+            "project_name"    => "required",
+            "project_url"  => "nullable|url",
+            "project_image"  => "file|max:8192|mimes:png,jpg,jpeg,pdf,docs",
+        ]);
+
+        $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+
+        $image_name = null;
+
+        if($request->hasFile('project_image')) {
+            $file = $request->file('project_image');
+            $image_name = $file->getClientOriginalName();
+            $save_file = $file->move(public_path().'/images/freelancer_projects', $image_name);
+        }
+
+        $save = FreelancerProject::create([
+            'freelancer_id' => $freelancer->id,
+            'project_name' => $request->project_name,
+            'project_url' => $request->project_url,
+            'project_image' => $image_name
+        ]);
+
+        return back()->with('success', 'Project Added Successfully');
+    }
+
+    public function remove_project(Request $request) {
+        $project = FreelancerProject::where('id', $request->project_id)->first();
+
+        if($project->project_image) {
+            $image_path = public_path('/images/freelancer_projects/') . $project->project_image;
+            $remove_image = @unlink($image_path);
+        }
+
+        $project->delete();
+
+        return response()->json([
+            'status' => 201,
+            'message' => 'Project Successfully Deleted'
         ]);
     }
 
