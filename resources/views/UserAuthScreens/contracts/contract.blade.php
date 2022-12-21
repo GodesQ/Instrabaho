@@ -8,7 +8,7 @@
             <div class="page-body">
                 <div class="container">
                     <div class="my-1">
-                        <a href="/{{ session()->get('role') }}/projects/ongoing" class="btn btn-secondary">Back to List</a>
+                        <a href="/{{ session()->get('role') }}/projects" class="btn btn-secondary">Back to Projects</a>
                     </div>
                     <div class="card">
                         <div class="card-body">

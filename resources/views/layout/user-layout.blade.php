@@ -43,6 +43,8 @@
 
     <!-- BEGIN: Page CSS-->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-gradient.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-callout.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/plugins/file-uploaders/dropzone.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css-rtl/plugins/forms/wizard.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/card-statistics.css') }}">
@@ -56,7 +58,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/chat.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/proposals.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/custom-step.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/sidebar-project.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/freelancer-search.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/app-todo.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/plugins/forms/switch.css') }}">

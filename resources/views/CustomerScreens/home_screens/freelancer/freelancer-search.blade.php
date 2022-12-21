@@ -13,30 +13,14 @@
    }
 </style>
 
-{{-- <section class="fr-list-product bg-img">
-    <div class="container">
-       <div class="row">
-          <div class="col-xl-12 col-lg-12 col-sm-12 col-md-12 col-xs-12">
-             <div class="fr-list-content">
-                <div class="fr-list-srch">
-                   <h1>Freelancer Search</h1>
-                </div>
-                <div class="fr-list-details">
-                   <ul>
-                      <li><a href="index.html">Home</a></li>
-                      <li><a href="javascript:void(0)">Freelancer Search</a></li>
-                   </ul>
-                </div>
-             </div>
-          </div>
-       </div>
-    </div>
- </section> --}}
- <section class="fr-lance-details section-padding">
+ <section class="fr-lance-details" style="padding-top: 20px !important;">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-xs-12 col-sm-12 col-md-12 col-xl-4">
-                <div class="project-sidebar">
+                <div class="project-filter-section">
+                    .projectfilter
+                </div>
+                 <div class="project-sidebar">
                     <div class="heading">
                     <h4>Search Filters</h4>
                     <a href="/search_freelancers">Clear Result</a>
@@ -194,29 +178,30 @@
             </div>
             <div class="col-lg-8 col-xl-8 col-sm-12 col-md-12 col-xl-8">
                 <div class="row">
-                    <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12">
-                    <div class="services-filter">
-                        <div>
-                            <button type="button" class="btn btn-primary view-map-btn" data-toggle="modal" style="display: none;" data-target="#modal-map">
-                                View Map
-                            </button>
+                        <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12">
+                        <div class="services-filter">
+                            <div>
+                                <button type="button" class="btn btn-primary view-map-btn" data-toggle="modal" style="display: none;" data-target="#modal-map">
+                                    View Map
+                                </button>
+                            </div>
+                            <div style="width: 50%">
+                                <select name="sort" id="sort" class="form-control">
+                                    <option value="asc">Sort by Nearest</option>
+                                    <option value="hourly_rate">Sort By Lowest Price</option>
+                                </select>
+                            </div>
                         </div>
-                        <div style="width: 50%">
-                            <select name="sort" id="sort" class="form-control">
-                                <option value="asc">Sort by Nearest</option>
-                                <option value="hourly_rate">Sort By Lowest Price</option>
-                            </select>
                         </div>
-                    </div>
-                    </div>
-                    <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="row freelancers-data">
-                            @include('CustomerScreens.home_screens.freelancer.freelancers')
+                        <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row freelancers-data">
+                                @include('CustomerScreens.home_screens.freelancer.freelancers')
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-       </div>
+        </div>
     </div>
  </section>
  <div class="modal fade" id="modal-map" tabindex="-1" role="dialog" aria-labelledby="modal-map" aria-hidden="true">

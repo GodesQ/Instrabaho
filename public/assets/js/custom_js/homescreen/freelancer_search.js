@@ -82,7 +82,9 @@ longEl = document.querySelector( '.longitude' )
         };
 
         map = new google.maps.Map(document.getElementById("freelancers-locations"), mapOptions);
-        var infoWindow = new google.maps.InfoWindow();
+        var infoWindow = new google.maps.InfoWindow({
+            maxWidth: 200,
+        });
 
         const user_icon_marker = {
             url: '../../../images/icons/red_pin_instrabaho.svg',
@@ -166,7 +168,8 @@ longEl = document.querySelector( '.longitude' )
 
             (function (marker, data) {
                     google.maps.event.addListener(marker, "click", function (e) {
-                    infoWindow.setContent(`<a href="/freelancer/view/${data.display_name}" class="font-weight-bold">${data.display_name}</a><br>
+                    infoWindow.setContent(`
+                        <a href="/freelancers/${data.user.username}" class="font-weight-bold">${data.user.firstname} ${data.user.lastname}</a><br>
                         ${data.address}`);
                     infoWindow.open(map, marker);
                     });

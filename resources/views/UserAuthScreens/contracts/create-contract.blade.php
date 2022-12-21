@@ -30,7 +30,7 @@
                                             <input type="hidden" name="proposal_id" value="{{ $data->id }}">
                                             <input type="hidden" name="employer_id" value="{{ $data->employer_id }}">
                                             <input type="hidden" name="freelancer_id" value="{{ $data->freelancer_id }}">
-
+                                            <input type="hidden" name="proposal_type" value="{{ $proposal_type }}">
                                             <div class="form-group">
                                                 <label for="cost" class="font-weight-bold">Cost</label>
                                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, labore consectetur.</p>

@@ -16,10 +16,41 @@ use Carbon\Carbon;
 
 use App\Http\Requests\ProjectProposal\StoreProjectProposal;
 
+use App\Actions\StoreNotificationAction;
+
 use Yajra\DataTables\Facades\DataTables;
 
 class ProjectProposalController extends Controller
 {
+
+    public function store(StoreProjectProposal $request, StoreNotificationAction $action) {
+        dd($action->createNotification());
+        $freelancer = Freelancer::where('user_id', session()->get('id'))->firstOrFail();
+        $images = array();
+        if($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $key => $attachment) {
+                $image_name = $attachment->getClientOriginalName();
+                $save_file = $attachment->move(public_path().'/images/projects/proposal_attachments', $image_name);
+                array_push($images, $image_name);
+            }
+        }
+
+        $json_images = json_encode($images);
+
+        $save = ProjectProposal::create(array_merge($request->validated(), [
+            'project_id' => $request->project_id,
+            'employer_id' => $request->employer_id,
+            'freelancer_id' => $freelancer->id,
+            'status' => 'pending',
+            'attachments' => $json_images
+        ]));
+
+        if($save) {
+            $action->createNotification($request);
+            return back()->with('success', 'Proposal sent successfully');
+        }
+        return back()->with('fail', 'Something went wrong.');
+    }
 
     public function proposals_for_employers() {
         #get the employer data

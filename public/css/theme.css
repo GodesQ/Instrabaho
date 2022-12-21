@@ -276,7 +276,7 @@ ul{
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: 50px;
-    background-color: #f4f6f9;
+    background-color: #fff;
     border: none;
     border-radius: 4px;
 }
@@ -783,7 +783,6 @@ background: #259d00;
 	justify-content: center;
 	align-content: center;
 	align-items: center;
-	margin-right:15px;
 }
 .sb-menu ul li.fr-list.loggedin a{
 	height:auto;

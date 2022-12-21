@@ -18,6 +18,19 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
+                            @if ($project_offer->is_freelancer_approve && $project_offer->status == 'pending')
+                                <div class="bs-callout-success callout-bordered my-1" >
+                                    <div class="media align-items-stretch">
+                                        <div class="d-flex align-items-center bg-success p-2">
+                                            <i class="fa fa-thumbs-o-up white font-medium-5"></i>
+                                        </div>
+                                        <div class="media-body p-1">
+                                            <strong>The Worker Approve the Offer!</strong>
+                                            <p>It means that you can now create a contract to continue.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                             <ul class="nav nav-tabs nav-underline no-hover-bg nav-justified" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="active-tab32" data-toggle="tab" href="#active32" aria-controls="active32" role="tab" aria-selected="true">Project Info</a>
@@ -99,16 +112,13 @@
                                 <div class="tab-pane" id="link32" aria-labelledby="link-tab32" role="tabpanel">
                                     <div class="wrapper">
                                         <section class="chat-area">
-                                            <header
-                                                class="header"
-                                            >
+                                            <header class="header">
                                                 <div style="width: 60%" class="d-flex align-items-center justify-content-start header-content">
                                                     @if($project_offer->freelancer->user->profile_image)
                                                         <img src="../../../images/user/profile/{{ $receiver->user->profile_image }}" alt="" />
                                                     @else
                                                         <img src="../../../images/user-profile.png" alt="" width="80" height="80" style="object-fit: cover;border-radius: 50px; border: 1px solid black;">
                                                     @endif
-
                                                     <div class="details">
                                                         <span>{{ $receiver->user->firstname }} {{ $receiver->user->lastname }}</span>
                                                         <p>{{ $receiver->tagline }}</p>
@@ -140,6 +150,16 @@
 @push('scripts')
 <script src="../../../js/project-chat.js"></script>
 <script>
+
+    window.addEventListener('load', () => {
+        let url_string = location.href;
+        let url = new URL(url_string);
+        var action = url.searchParams.get("act");
+        if(action == 'message') {
+            $('#link-tab32').click();
+        }
+    });
+
     $('.accept-offer-btn').on('click', function () {
         let id = $(this).attr("id");
         let csrf = "{{ csrf_token() }}";
@@ -161,16 +181,27 @@
                         id: id,
                     },
                     success: function (response) {
-                        console.log(response);
-                        Swal.fire(
-                            "Updated!",
-                            `${response.message}`,
-                            "success"
-                        ).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
+                        if(response.status) {
+                            Swal.fire(
+                                "Updated!",
+                                `${response.message}`,
+                                "success"
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            Swal.fire(
+                                "Failed!",
+                                `${response.message}`,
+                                "error"
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        }
                     },
                 });
             }

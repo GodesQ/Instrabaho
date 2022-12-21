@@ -150,30 +150,18 @@
 		               </div>
 		               <div class="fr-recent-model">
 		                  <ul>
-		                     <li>
-		                        <div class="fancy-model">
-		                           <a data-fancybox="portfolio" href="img/top-trending-imgs/new-dawn-2-1.jpg" data-caption="<span class='project-title'>Filim fare</span> <span>#</span>" data-wheel="false"> <img class="img-fluid" src="img/top-trending-imgs/new-dawn-2-1.jpg" alt=""></a>
-		                        </div>
-		                        <div class="figcaption">
-		                           <h6><a href="index.html" target="_blank">Filim fare</a></h6>
-		                        </div>
-		                     </li>
-		                     <li>
-		                        <div class="fancy-model">
-		                           <a data-fancybox="portfolio" href="img/top-trending-imgs/modeling-artist-1.jpg" data-caption="<span class='project-title'>Game Designing</span> <span>#</span>" data-wheel="false"> <img class="img-fluid" src="img/top-trending-imgs/modeling-artist-1.jpg" alt=""></a>
-		                        </div>
-		                        <div class="figcaption">
-		                           <h6><a href="index.html" target="_blank">Game Designing</a></h6>
-		                        </div>
-		                     </li>
-		                     <li>
-		                        <div class="fancy-model">
-		                           <a data-fancybox="portfolio" href="img/top-trending-imgs/weapons-v2.jpg" data-caption="<span class='project-title'>3D Model</span> <span>#</span>" data-wheel="false"> <img class="img-fluid" src="img/top-trending-imgs/weapons-v2.jpg" alt=""></a>
-		                        </div>
-		                        <div class="figcaption">
-		                           <h6><a href="index.html" target="_blank">3D Model</a></h6>
-		                        </div>
-		                     </li>
+                            @foreach ($freelancer->projects as $project)
+                                <li>
+                                    <div class="fancy-model">
+                                    <a data-fancybox="portfolio" href="{{ $project->project_url }}" data-caption="" data-wheel="false">
+                                        <img class="img-fluid" src="../../../images/freelancer_projects/{{ $project->project_image }}" alt="">
+                                    </a>
+                                    </div>
+                                    <div class="figcaption">
+                                    <h6><a href="{{ $project->project_url }}" target="_blank">{{ $project->project_name }}</a></h6>
+                                    </div>
+                                </li>
+                            @endforeach
 		                  </ul>
 		               </div>
 		            </div>
@@ -277,7 +265,7 @@
 											<span>{{ $skill->skill_percentage }}%</span>
 										</div>
 										<div class="progress">
-											<div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{ $skill->skill_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+											<div class="progress-bar bg-primary" style="width: {{$skill->skill_percentage}}% !important;" role="progressbar" aria-valuenow="{{ $skill->skill_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
 									</li>
 								@empty
@@ -290,22 +278,6 @@
 		                     <h3>About Me</h3>
 		                  </div>
 		                  <ul>
-		                     <li>
-		                        <i class="fas fa-venus-mars"></i>
-		                        <div class="meta">
-		                           <span>Gender</span>
-		                           <p>
-		                              {{ $freelancer->gender }}
-		                           </p>
-		                        </div>
-		                     </li>
-		                     <li>
-		                        <i class="fas fa-user-tie"></i>
-		                        <div class="meta">
-		                           <span>Freelancer Type</span>
-		                           <p>{{ $freelancer->freelancer_type }}</p>
-		                        </div>
-		                     </li>
 							 <li>
 		                        <i class="fas fa-location-arrow"></i>
 		                        <div class="meta">
