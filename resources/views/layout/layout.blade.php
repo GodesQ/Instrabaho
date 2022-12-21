@@ -17,10 +17,6 @@
 
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/icheck/icheck.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/icheck/custom.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/morris.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/extensions/unslider.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/weather-icons/climacons.min.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/charts/leaflet.css') }}">
 
 		<!-- END: Vendor CSS-->
 
@@ -33,8 +29,6 @@
 
 		<!-- BEGIN: Page CSS-->
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/menu/menu-types/horizontal-menu.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-gradient.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-climacon.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/fonts/simple-line-icons/style.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/fonts/meteocons/style.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/users.css') }}">
@@ -74,11 +68,6 @@
             href="{{ URL::asset('css/pretty-checkbox.min.css') }}"
             rel="stylesheet"
         />
-        <!-- RANGE SLIDER CSS -->
-        <link
-            rel="stylesheet"
-            href="{{ URL::asset('css/rangeslider.min.css') }}"
-        />
 
         {{-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"> --}}
 
@@ -97,7 +86,9 @@
 
         <!-- MAIN CSS -->
         <link href="{{ URL::asset('css/theme.css') }}" rel="stylesheet" />
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
+
         <link rel="icon"  href="../../../images/cropped-favicon-32x32.png" sizes="32x32" />
 
         <style>
@@ -351,7 +342,6 @@
 
         <!-- BEGIN: Page Vendor JS-->
         <script src="../../../app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js"></script>
-        <script src="../../../app-assets/vendors/js/forms/toggle/switchery.min.js"></script>
         <!-- END: Page Vendor JS-->
 
         <!-- BEGIN: Theme JS-->
@@ -362,7 +352,6 @@
         <!-- END: Theme JS-->
 
         <!-- BEGIN: Page JS-->
-        <script src="{{ asset('app-assets/js/scripts/forms/wizard-steps.js') }}"></script>
         <script src="{{ asset('app-assets/js/scripts/forms/switch.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script type="text/javascript" src="{{ asset('/js/jquery-migrate-3.3.2.js') }}"></script>
@@ -371,7 +360,6 @@
         <script type="text/javascript" src="{{ asset('/js/protip.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/youtube-popup-jquery.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/masonry.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/js/imagesloaded.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/counter.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/flexslider.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/sbmenu.js') }}"></script>

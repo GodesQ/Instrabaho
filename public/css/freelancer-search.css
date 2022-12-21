@@ -3,18 +3,37 @@
     padding: 0;
     box-sizing: border-box;
 }
-.freelancer-search-container {
-    margin: 0;
+.filter-search-sidebar {
+    /* background-color: rgb(24, 12, 47); */
+    border-radius: 5px;
 }
-.freelancer-search-header {
-    max-height: 400px;
-}
-.freelancer-search-input {
+.search-map {
     width: 100%;
     height: 100%;
-    padding: 10px;
-    font-size: 15px;
-    color: #000;
-    border: none;
+    min-height: 600px;
+}
+.search-input {
+    border: none !important;
+    box-shadow: 10px 5px 5px 0px rgba(0,0,0,0.03);
+-webkit-box-shadow: 10px 5px 5px 0px rgba(0,0,0,0.03);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.03);
+    padding: 1rem 1.3rem;
     outline: none;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 16px;
+}
+.result-card {
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 10px 5px 5px 0px rgba(0,0,0,0.03);
+    -webkit-box-shadow: 10px 5px 5px 0px rgba(0,0,0,0.03);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.03);
+    height: 300px;
+    overflow: hidden;
+}
+.result-card .img-container {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
 }
