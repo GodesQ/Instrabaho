@@ -36,7 +36,10 @@
                                     <span class="dropdown">
                                         <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-v"></i></a>
                                         <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
-                                            <a href="#" class="dropdown-item delete"><i class="feather icon-x danger"></i> Cancel Project</a>
+                                            <a href="#" class="dropdown-item delete-project" id="{{ $project->id }}"><i class="feather icon-x danger"></i> Delete Project</a>
+                                            @if ($project->contract)
+                                                <a href="/project/contract/view/{{ $project->contract->id }}" class="dropdown-item"><i class="feather icon-file primary"></i>View Contract</a>
+                                            @endif
                                         </span>
                                     </span>
                                 </div>
@@ -94,7 +97,7 @@
                 let id = $(this).attr("id");
                 let csrf = "{{ csrf_token() }}";
                 Swal.fire({
-                    title: "Delete Service",
+                    title: "Delete Project",
                     text: "Are you sure you want to delete this?",
                     icon: "warning",
                     showCancelButton: true,

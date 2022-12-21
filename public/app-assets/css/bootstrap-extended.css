@@ -481,7 +481,7 @@ html [type="button"],
   opacity: 1;
   display: block; }
 
-.dropdown-toggle::after {
+/* .dropdown-toggle::after {
   font-family: "FontAwesome";
   content: "\f107" !important;
   border: none !important;
@@ -490,7 +490,7 @@ html [type="button"],
   right: 0px;
   padding: 0 2px 0 6px;
   margin: 0 0.3em 0 0;
-  vertical-align: 0; }
+  vertical-align: 0; } */
 
 .dropdown-toggle.nav-hide-arrow::after {
   display: none; }

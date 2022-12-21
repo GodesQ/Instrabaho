@@ -142,13 +142,11 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                    <label style="font-size: 20px !important;"> Days to complete <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" name="estimated_days" data-smk-msg="Dasy to complete in numbers only" data-smk-type="number">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Days</div>
-                                        </div>
-                                    </div>
+                                    <label style="font-size: 20px !important;"> Project Cost Type <span class="text-danger">*</span></label>
+                                    <select name="project_cost_type" id="project_cost_type">
+                                        <option {{ $project->project_cost_type == 'Fixed' ? 'selected' : null }} value="Fixed">Fixed</option>
+                                        <option {{ $project->project_cost_type == 'Hourly' ? 'selected' : null }} value="Hourly">Hourly</option>
+                                    </select>
                                     <span class="text-danger danger">
                                             @error('estimated_days')
                                                 {{ $message }}

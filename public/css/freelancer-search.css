@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.freelancer-search-container {
+    margin: 0;
+}
+.freelancer-search-header {
+    max-height: 400px;
+}
+.freelancer-search-input {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 15px;
+    color: #000;
+    border: none;
+    outline: none;
+}

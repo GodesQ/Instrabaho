@@ -229,11 +229,11 @@
                         <div class="fr-latest-details">
                            <div class="fr-latest-content-service">
                               <div class="fr-latest-profile">
-                                 <a class="user-image" href="/freelancer/view/{{ $freelancer->display_name }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
+                                 <a class="user-image" href="/freelancers/{{ $freelancer->user->username }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
                                  <div class=" text-center">
                                     <span class="fr-latest-name">{{ $freelancer->tagline }}</span>
                                     <h4>
-                                       <a href="/freelancer/view/{{ $freelancer->display_name }}" class="h4">{{ $freelancer->display_name }}</a>
+                                       <a href="/freelancers/{{ $freelancer->user->username }}" class="h4">{{ $freelancer->user->username }}</a>
                                     </h4>
                                  </div>
                               </div>
@@ -245,7 +245,7 @@
                            <div class="mt-3 p-1 px-2 d-flex justify-content-around align-items-center flex-column" style="background: #f8f8f8 !important; height: 200px;">
                               <p class="text-center">{{ strlen($freelancer->description) > 100 ? substr($freelancer->description, 0, 100) . '...' : $freelancer->description }}</p>
                               <div class="group-buttons">
-                                 <a href="/freelancer/view/{{ $freelancer->display_name }}" class="btn btn-outline-primary" style="width: 100% !important">View Profile</a>
+                                 <a href="/freelancers/{{ $freelancer->user->username }}" class="btn btn-outline-primary" style="width: 100% !important">View Profile</a>
                                  <button class="btn btn-primary mt-2" style="width: 100% !important">Send Offer</button>
                               </div>
                            </div>
