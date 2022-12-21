@@ -33,6 +33,10 @@
                                             @if (session()->get('role') == 'freelancer' && !$project_offer->is_freelancer_approve)
                                                 <button id="{{ $project_offer->id }}" class="btn btn-success accept-offer-btn">Accept Offer</button>
                                             @endif
+
+                                            @if(session()->get('role') == 'employer' && $project_offer->is_freelancer_approve) 
+                                                <a href="/project/create-contract/offer/{{ $project_offer->id }}" class="btn btn-success">Hire Worker</a>
+                                            @endif
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center flex-wrap">
                                             <div>
