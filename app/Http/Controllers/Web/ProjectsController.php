@@ -30,7 +30,8 @@ class ProjectsController extends Controller
     }
 
     public function show(Request $request) {
-        $project = Project::where('title', $request->title)->firstOrFail();
+        dd($request->title);
+        $project = Project::where('title', $request->title)->first();
         $categories = ServiceCategory::all();
         $skills = Skill::toBase()->get();
         $employer = Employer::where('user_id', auth('user')->user()->id)->first();
@@ -79,9 +80,9 @@ class ProjectsController extends Controller
     }
 
     public function store(StoreProjectRequest $request) {
-        // dd($request->all());
 
         $images = array();
+
         if($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $key => $attachment) {
                 $image_name = $attachment->getClientOriginalName();
@@ -95,9 +96,10 @@ class ProjectsController extends Controller
 
         $employer = Employer::where('user_id', $user_id)->first();
 
-        #compute total cost
-        $system_deduction = intval($request->cost) * 0.10;
-        $total_cost = intval($request->cost) - $system_deduction;
+        // #compute total cost
+        // $system_deduction = intval($request->cost) * 0.10;
+        // $total_cost = intval($request->cost) - $system_deduction;
+
 
         $start_date = date_create($request->start_date);
         $end_date = date_create($request->end_date);
@@ -109,10 +111,12 @@ class ProjectsController extends Controller
             'start_date' => date_format($start_date, 'Y-m-d'),
             'end_date' => date_format($end_date, 'Y-m-d'),
             'datetime' => $request->datetime,
-            'total_cost' => $total_cost,
+            'total_cost' => $request->cost,
         ]));
 
         if($create) return redirect()->route('employer.projects.index')->with('success', 'Project Created Successfully');
+
+        return back()->withErrors('Fail. Error while trying to save project');
     }
 
     public function user_edit(Request $request) {
@@ -137,10 +141,6 @@ class ProjectsController extends Controller
 
         $json_images = json_encode($project_images);
 
-        #compute total cost
-        $system_deduction = intval($request->cost) * 0.10;
-        $total_cost = intval($request->cost) - $system_deduction;
-
         $start_date = date_create($request->start_date);
         $end_date = date_create($request->end_date);
 
@@ -151,12 +151,10 @@ class ProjectsController extends Controller
             'start_date' => date_format($start_date, 'Y-m-d'),
             'end_date' => date_format($end_date, 'Y-m-d'),
             'datetime' => $request->datetime,
-            'total_cost' => $total_cost,
+            'total_cost' => $request->cost,
         ]));
 
-        if($update) {
-            return back()->with('success', 'Update Successfully');
-        }
+        if($update) return back()->with('success', 'Update Successfully');
     }
 
     public function remove_project_image(Request $request) {

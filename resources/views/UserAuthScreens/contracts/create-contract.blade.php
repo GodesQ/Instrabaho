@@ -38,7 +38,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">₱</span>
                                                     </div>
-                                                    <input type="number" min="100" name="cost" class="form-control" value="{{ $data->project->cost }}" data-validation-required-message="This field is required" aria-invalid="false">
+                                                    <input type="number" min="100" name="cost" id="cost" class="form-control" value="{{ $data->project->cost }}" data-validation-required-message="This field is required" aria-invalid="false">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">.00</span>
                                                     </div>
@@ -95,3 +95,11 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#cost').on('input', function(e) {
+            console.log(e.target.value)
+        })
+    </script>
+@endpush

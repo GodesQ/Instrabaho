@@ -240,32 +240,14 @@ class HomeScreenController extends Controller
                     ->orWhere(DB::raw('lower(description)'), 'like', '%' . strtolower($title) . '%');
         })
         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude, $radius, $sort) {
-            $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
             * cos(radians(user_freelancer.latitude))
             * cos(radians(user_freelancer.longitude) - radians(" . $longitude . "))
             + sin(radians(" .$latitude. "))
-            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', $radius);
+            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', $radius)->orderBy("distance", 'asc');
+        })
 
-            if($sort == 'asc') $q->orderBy("distance", $sort);
-            return $q;
-        })
-        ->when($my_range, function ($q) use ($my_range) {
-            $range = explode(';', $my_range);
-            return $q->whereBetween('hourly_rate', [intval($range[0]), intval($range[1])]);
-            if($sort == 'hourly_rate') $q->orderBy("hourly_rate", 'asc');
-            return $q;
-        })
-        ->when($freelance_type, function ($q) use ($freelance_type) {
-            if($freelance_type[0])  return $q->whereIn('freelancer_type', $freelance_type);
-        })
         ->with('user', 'certificates', 'experiences', 'educations', 'skills', 'services')
-        ->when($freelancer_skills, function ($q) use ($freelancer_skills) {
-            if($freelancer_skills[0]) {
-                $q->whereHas('skills', function ($query) use($freelancer_skills){
-                    return $query->whereIn('skill_id', $freelancer_skills);
-                });
-            }
-        })
         ->paginate($result);
 
         $view_data = view('CustomerScreens.home_screens.freelancer.freelancers', compact('freelancers'))->render();
