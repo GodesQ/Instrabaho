@@ -9,7 +9,7 @@
 <div class="page-wrapper">
     <div class="page-content">
         <div class="page-body">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
                     {{-- <div class="col-xl-4">
                         <div class="card">
@@ -75,9 +75,15 @@
                             @endif --}}
                             <div class="card-body" style="padding: 0.5rem;">
                                 <div class="row my-2 flex-wrap px-1">
+                                    @if (session()->get('role') == 'employer')
                                     <div class="m-50">
-                                        <a href="/{{session()->get('role')}}/projects/info/{{ $proposal->project->title }}" class="btn btn-secondary">Back to Project</a>
+                                        <a href="/employer/projects/info/{{ $proposal->project->title }}" class="btn btn-secondary">Back to Project</a>
                                     </div>
+                                    @else
+                                    <div class="m-50">
+                                        <a href="/freelancer/proposals" class="btn btn-secondary">Back to Proposals</a>
+                                    </div>
+                                    @endif
                                     <div class="m-50 text-lg-right">
                                         @if(session()->get('role') == 'employer' && $proposal->status != 'completed')
                                             @if ($proposal->status == 'pending')
@@ -159,7 +165,6 @@
                                                     @empty
                                                         <span class="font-weight-normal">No Attachment Found</span>
                                                     @endforelse
-
                                                 </div>
                                             </div>
                                             @if ($proposal->cover_letter)
@@ -173,20 +178,13 @@
                                     <div class="tab-pane" id="tab32" role="tabpanel" aria-labelledby="base-tab32">
                                         <div class="wrapper">
                                             <section class="chat-area">
-                                                <header
-                                                    class="header"
-                                                >
+                                                <header class="header">
                                                     <div style="width: 60%" class="d-flex align-items-center justify-content-start header-content">
-                                                        {{-- <a href="/employer/proposals" class="back-icon"
-                                                            ><i class="fa fa-arrow-left"></i
-                                                        ></a> --}}
-
                                                         @if($proposal->freelancer->user->profile_image)
                                                             <img src="../../../images/user/profile/{{ $receiver->user->profile_image }}" alt="" />
                                                         @else
-                                                            <img src="../../../images/user-profile.png" alt="" width="80" height="80" style="object-fit: cover;border-radius: 50px; border: 1px solid black;">
+                                                            <img src="../../../images/user-profile.png" alt="" width="80" height="80" style="object-fit: cover; border-radius: 50px; border: 1px solid black;">
                                                         @endif
-
                                                         <div class="details">
                                                             <span>{{ $receiver->user->firstname }} {{ $receiver->user->lastname }}</span>
                                                             <p>{{ $receiver->tagline }}</p>

@@ -1,5 +1,5 @@
 @forelse($freelancers as $freelancer)
-    <div class="col-xl-12 col-lg-12 grid-item">
+    <div class="col-xl-12 col-xxl-6 col-lg-12 grid-item">
         <div class="fr3-details">
             <div class="fr3-job-detail">
                 <div class="fr3-job-img">
@@ -20,10 +20,10 @@
                     <a href="/freelancers/{{ $freelancer->user->username }}">
                         <h3>{{ $freelancer->tagline }}</h3>
                     </a>
-                    <p class="excerpt">{{ htmlentities(substr($freelancer->description, 0, 200)) }}...</p>
+                    <p class="excerpt">{{ htmlentities(substr($freelancer->description, 0, 100)) }}...</p>
                     <p class="price-tag"><span class="currency">₱ </span><span class="price">{{ number_format($freelancer->hourly_rate, 2) }}</span><span class="bottom-text"> / hr</span></p>
-                    <ul class="lists d-flex justify-content-between" style="gap: 10px;">
-                        <li style="width: 25%;">
+                    <ul class="lists d-flex justify-content-start" style="gap: 10px;">
+                        <li style="width: 30%;">
                             @if($freelancer->distance)
                                 <div class="font-weight-bold" style="color: #000;">Distance :</div>
                                 {{ number_format($freelancer->distance, 2) }} km
@@ -32,13 +32,9 @@
                                 {{ date_format(new DateTime($freelancer->created_at), "F d, Y") }}
                                 @endif
                         </li>
-                        <li style="width: 33%;">
+                        <li style="width: 70%;">
                             <div class="font-weight-bold" style="color: #000;">Location : </div>
                             {{ $freelancer->address }}
-                        </li>
-                        <li style="width: 33%;">
-                            <div class="font-weight-bold" style="color: #000;">Freelancer Type : </div>
-                            {{ $freelancer->freelancer_type }}
                         </li>
                     </ul>
                     <hr>
@@ -57,9 +53,13 @@
         </div>
     </div>
 @empty
-    <div class="d-flex justify-content-center align-items-center flex-column">
-        <img src="../../../images/illustrations/no-data.png" style="width: 300px;" alt="">
-        <h2>No Freelancer Found</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-center align-items-center flex-column">
+                <img src="../../../images/illustrations/no-data.png" style="width: 300px;" alt="">
+                <h2>No Freelancer Found</h2>
+            </div>
+        </div>
     </div>
 @endforelse
 

@@ -215,7 +215,7 @@
                                                             </optgroup>
                                                         </select>
                                                     </div>
-                                                    <div class="project-cost-summary my-3">
+                                                    {{-- <div class="project-cost-summary my-3">
                                                         <h4 class="my-1">This is the summary of the project.</h4>
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <h5 class="font-weight-bold">Project's Budget</h5>
@@ -229,7 +229,7 @@
                                                             <h5 class="font-weight-bold">Total Budget</h5>
                                                             <h6 class="primary">₱ <span class="text-total-budget">{{ number_format($project->total_cost, 2) }}</span></h6>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 <div class="col-md-6">
                                                     <img src="../../../images/illustrations/project-cost.png" alt="" class="text-right" style="width: 80% !important;" class="img-responsive">
@@ -335,13 +335,13 @@
             return arr;
         }
 
-        $('#cost').on('input', function(e) {
-            $('.text-project-budget').html(Number(e.target.value).toFixed(2));
+        // $('#cost').on('input', function(e) {
+        //     $('.text-project-budget').html(Number(e.target.value).toFixed(2));
 
-            let system_deduction = Number(e.target.value) * 0.10
-            $('.text-system-deduction').html(Number(system_deduction, 2).toFixed(2));
-            $('.text-total-budget').html(Number(Number(e.target.value) - system_deduction).toFixed(2));
-        })
+        //     let system_deduction = Number(e.target.value) * 0.10
+        //     $('.text-system-deduction').html(Number(system_deduction, 2).toFixed(2));
+        //     $('.text-total-budget').html(Number(Number(e.target.value) - system_deduction).toFixed(2));
+        // })
 
     </script>
 @endpush

@@ -24,7 +24,6 @@ class ProjectProposalController extends Controller
 {
 
     public function store(StoreProjectProposal $request, StoreNotificationAction $action) {
-        dd($action->createNotification());
         $freelancer = Freelancer::where('user_id', session()->get('id'))->firstOrFail();
         $images = array();
         if($request->hasFile('attachments')) {
@@ -37,7 +36,7 @@ class ProjectProposalController extends Controller
 
         $json_images = json_encode($images);
 
-        $save = ProjectProposal::create(array_merge($request->validated(), [
+        $proposal = ProjectProposal::create(array_merge($request->validated(), [
             'project_id' => $request->project_id,
             'employer_id' => $request->employer_id,
             'freelancer_id' => $freelancer->id,
@@ -45,10 +44,12 @@ class ProjectProposalController extends Controller
             'attachments' => $json_images
         ]));
 
-        if($save) {
-            $action->createNotification($request);
+        if($proposal) {
+            #create notification
+            $action->createNotification($proposal, 'submit_proposal');
             return back()->with('success', 'Proposal sent successfully');
         }
+
         return back()->with('fail', 'Something went wrong.');
     }
 

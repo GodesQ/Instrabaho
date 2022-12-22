@@ -1,11 +1,11 @@
 @extends('layout.layout')
 
 @section('content')
-    <section class="fr-lance-details" style="padding-top: 25px !important;">
-        <div class="container">
+    <section class="fr-lance-details" style="padding: 25px !important;">
+        <div class="container-fluid">
             <div class="row my-3 align-items-center">
                 <div class="col-md-3">
-                    <input type="text" class="search-input" id="address" name="address" placeholder="Search by Location...">
+                    <input type="search" class="search-input" id="address" name="address" placeholder="Search by Location...">
                     <input type="hidden" name="latitude" class="form-control latitude">
                     <input type="hidden" name="longitude" class="form-control longitude">
                 </div>
@@ -27,32 +27,29 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="search-input" id="address" name="address" placeholder="Search by Keyword...">
+                    <input type="search" class="search-input" id="title" name="address" placeholder="Search by Keyword...">
                 </div>
-                <div class="col-md-2">
-                    <button class="btn btn-lg btn-primary">Filter</button>
-                    <button class="btn btn-secondary btn-lg"><i class="fa fa-filter"></i></button>
+                <div class="col-md-2 d-flex">
+                    <button class="btn btn-lg btn-primary btn-block" id="filter-btn">Filter</button>
+                    <button class="btn btn-secondary btn-lg ml-1"><i class="fa fa-filter"></i></button>
                 </div>
             </div>
             <br>
             <div class="row">
-                <div class="col-xl-5">
-                    <div class="search-map"></div>
-                </div>
-                <div class="col-xl-7">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="result-card">
-                                <img src="../../../images/user/profile/1244248-500w.jpg" alt="" class="img-container">
-                                <div class="result-card-content p-3">
-                                    <div><i class="fa fa-map-marker mr-50" style="color: #000;"></i> Handy Road, Projector X: Picturehouse, Singapore</div>
-                                    <div class="font-weight-bold primary">Angelina George Herny Capitol</div>
-                                </div>
+                <div class="col-xxl-4 col-xl-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-right my-1 mb-2">
+                                <button class="btn btn-primary boundary-btn">Hide Boundary</button>
                             </div>
+                            <div class="search-map"></div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="result-card"></div>
-                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xxl-8 col-xl-7">
+                    <div class="row freelancers-data" >
+                        @include('CustomerScreens.home_screens.freelancer.freelancers');
                     </div>
                 </div>
             </div>
@@ -61,5 +58,5 @@
 @endsection
 
 @push('scripts')
-    <script src="../../../js/freelancer-search.js"></script>
+    <script src="../../../assets/js/custom_js/homescreen/freelancer_search.js"></script>
 @endpush

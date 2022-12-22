@@ -25,7 +25,7 @@
                     <h3 class="card-title font-weight-bold">New Job Offers near you</h3>
                     <div class="row projects-data">
                         @forelse ($projects as $project)
-                            <div class="col-md-4">
+                            <div class="col-xxl-4 col-xl-6">
                                 <div class="card border rounded">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">

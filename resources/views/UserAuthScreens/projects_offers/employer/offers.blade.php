@@ -18,7 +18,7 @@
                         <a href="/offer/info/{{ $offer->id }}?act=message" class="btn btn-outline-primary">Chat </a>
                         <a href="/offer/info/{{ $offer->id }}" class="btn btn-primary">View offer</a>
                         @if ($offer->is_freelancer_approve && $offer->project->status == 'pending')
-                            <a href="/project/create-contract/offer/{{ $offer->id }}" class="btn btn-success">Hire</a>
+                            <a href="/project/create-contract/offer/{{ $offer->id }}" class="btn btn-success">Hire Worker</a>
                         @endif
                     </div>
                 </div>

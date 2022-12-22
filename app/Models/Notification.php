@@ -10,4 +10,8 @@ class Notification extends Model
     use HasFactory;
     protected $table = 'notifications';
     protected $guarded = [];
+
+    public function entity() {
+        return $this->hasOne(EntityType::class, 'id', 'entity_type_id');
+    }
 }
