@@ -29,6 +29,7 @@ class StoreProjectContract extends FormRequest
             'freelancer_id' => 'required|exists:user_freelancer,id',
             'employer_id' => 'required|exists:user_employer,id',
             'cost' => 'required|numeric',
+            'total_cost' => 'required|numeric',
             'start_date' => 'required|date|before_or_equal:end_date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'proposal_type' => 'required|in:offer,proposal'

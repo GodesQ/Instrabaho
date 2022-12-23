@@ -75,6 +75,19 @@ class ProjectContractController extends Controller
         return view('UserAuthScreens.contracts.code-verification-form');
     }
 
+    public function post_validate_code(Request $request) {
+        $contract = ProjectContract::where('code', $request->code)->first();
+
+        if($contract) {
+            $contract->is_verify_code = true;
+            $save = $contract->save();
+
+            if($save) return redirect()->route('contract.track', $contract->id)->with('success', 'Verify Successfully');
+        }
+
+        return back()->with('fail', 'Fail! The code you submitted was invalid.');
+    }
+
     public function create(Request $request) {
         if($request->type == 'proposal') {
             $data = ProjectProposal::where('id', $request->id)->with('project')->firstOrFail();
@@ -90,20 +103,18 @@ class ProjectContractController extends Controller
     }
 
     public function store(StoreProjectContract $request) {
-
         try {
-
             $freelancer = Freelancer::where('id', $request->freelancer_id)->firstOrFail();
             $isNotAvailableDate = in_array($request->start_date, $freelancer->notAvailableDates()) || in_array($request->end_date, $freelancer->notAvailableDates()) ? back()->withErrors('Fail. The freelancer is not available on your expected start date') : true;
 
             #generate uuid
             $code = Str::random(10);
-
             DB::beginTransaction();
 
             #create project contract
             ProjectContract::create(array_merge($request->validated(), [
-                'code' => $code
+                'code' => $code,
+                'status' => false,
             ]));
 
             #update project status
@@ -119,7 +130,7 @@ class ProjectContractController extends Controller
             }
 
             if($request->proposal_type == 'offer') {
-                #update project proposal status
+                #update project offer status
                 ProjectOffer::where('id', $request->proposal_id)->update([
                     'status' => 'approved'
                 ]);

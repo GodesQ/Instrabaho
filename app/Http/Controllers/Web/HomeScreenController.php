@@ -215,7 +215,7 @@ class HomeScreenController extends Controller
 
         #get all freelancers and create pagination
         $freelancers = Freelancer::select('*')->paginate(10);
-        return view('CustomerScreens.home_screens.freelancer.sample-freelancer', compact('freelancers', 'skills'));
+        return view('CustomerScreens.home_screens.freelancer.freelancer-search', compact('freelancers', 'skills'));
     }
 
     public function fetch_freelancers(Request $request) {

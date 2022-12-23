@@ -9,7 +9,7 @@ class ProjectContract extends Model
 {
     use HasFactory;
     protected $table = 'project_contracts';
-    protected $fillable = ['project_id', 'proposal_id', 'freelancer_id', 'employer_id', 'start_date', 'end_date', 'cost', 'code'];
+    protected $fillable = ['project_id', 'proposal_id', 'freelancer_id', 'employer_id', 'start_date', 'end_date', 'cost', 'code', 'is_verify_cde', 'status'];
 
     public function proposal() {
         return $this->hasOne(ProjectProposal::class, 'id', 'proposal_id');

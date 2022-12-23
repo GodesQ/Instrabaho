@@ -22,12 +22,24 @@ class NotificationController extends Controller
             ['notifier_id', $user->id],
             ['notifier_role', $role],
             ['is_read', false]
-        ])->with('entity')->get();
+        ])->limit(5)->latest('created_at')->with('entity')->get();
 
         return response()->json($notifications, 200);
     }
 
-    public function mark_as_read() {
+    public function mark_as_read(Request $request) {
+        $notifications = $request->notification_ids;
+
+        $update_notifications = Notification::whereIn('id', $notifications)->update([
+            'is_read' => true,
+        ]);
+
+        if($update_notifications) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Notification successfully read.'
+            ], 200);
+        }
 
     }
 }

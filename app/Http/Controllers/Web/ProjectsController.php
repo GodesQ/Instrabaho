@@ -30,7 +30,6 @@ class ProjectsController extends Controller
     }
 
     public function show(Request $request) {
-        dd($request->title);
         $project = Project::where('title', $request->title)->first();
         $categories = ServiceCategory::all();
         $skills = Skill::toBase()->get();
@@ -48,8 +47,23 @@ class ProjectsController extends Controller
 
     public function employer_ongoing(Request $request) {
         $employer = Employer::where('user_id', session()->get('id'))->first();
-        $proposals = ProjectProposal::where('employer_id', $employer->id)->where('status', 'approved')->with('project', 'contract')->get();
-        return view('UserAuthScreens.projects.employer.ongoing.ongoing', compact('proposals'));
+
+        $proposals = ProjectProposal::where('employer_id', $employer->id)
+        ->where('status', 'approved')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'proposal');
+        })->get();
+
+        $offers = ProjectOffer::where('employer_id', $employer->id)
+        ->where('status', 'approved')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'offer');
+        })->get();
+
+        $ongoing_projects = $proposals->concat($offers);
+        return view('UserAuthScreens.projects.employer.ongoing.ongoing', compact('ongoing_projects'));
     }
 
     public function employer_completed(Request $request) {
@@ -61,8 +75,24 @@ class ProjectsController extends Controller
 
     public function freelancer_ongoing(Request $request) {
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
-        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)->where('status', 'approved')->with('project', 'contract')->get();
-        return view('UserAuthScreens.projects.freelancer.ongoing.ongoing', compact('proposals'));
+
+        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)
+        ->where('status', 'approved')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'proposal');
+        })->get();
+
+        $offers = ProjectOffer::where('freelancer_id', $freelancer->id)
+        ->where('status', 'approved')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'offer');
+        })->get();
+
+        $ongoing_projects = $proposals->concat($offers);
+
+        return view('UserAuthScreens.projects.freelancer.ongoing.ongoing', compact('ongoing_projects'));
     }
 
     public function freelancer_completed(Request $request) {

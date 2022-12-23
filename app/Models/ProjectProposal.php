@@ -24,6 +24,6 @@ class ProjectProposal extends Model
     }
 
     public function contract() {
-        return $this->belongsTo(ProjectContract::class, 'id', 'proposal_id');
+        return $this->belongsTo(ProjectContract::class, 'id', 'proposal_id')->where('proposal_type', 'proposal');
     }
 }

@@ -1,6 +1,8 @@
 @extends('layout.user-layout')
 
-@section('title', 'Create Contract')
+@section('title')
+    Create Contract - {{ $data->project->title }}
+@endsection
 
 @section('content')
 @if ($errors->any())
@@ -55,15 +57,16 @@
                                             <div class="form-group">
                                                 <label for="start_date" class="font-weight-bold">Start Date </label>
                                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, labore consectetur.</p>
-                                                <input type="date" class="form-control" name="start_date" value="{{ $data->project->start_date }}">
+                                                <input type="date" class="form-control" name="start_date" id="start_date" value="{{ $data->project->start_date }}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="end_date" class="font-weight-bold">End Date </label>
                                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, labore consectetur.</p>
-                                                <input type="date" class="form-control" name="end_date" value="{{ $data->project->start_date }}">
+                                                <input type="date" class="form-control" name="end_date" id="name_date" value="{{ $data->project->end_date }}">
                                             </div>
+                                            <input type="hidden" name="total_cost" id="total_cost" value="{{ number_format(intval($data->project->cost) - 50, 2)}}">
                                             <div class="form-footer">
-                                                <button class="btn btn-primary">Create Contract </button>
+                                                <button class="btn btn-primary">Create Contract</button>
                                             </div>
                                         </form>
                                     </div>
@@ -71,6 +74,37 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="font-weight-bold">Contract Summary</h3>
+                                    <p>Lorem ipsum dolor sit amet adipisicing elit. Beatae, adipisci.</p>
+                                    <div class="row p-1 border-bottom">
+                                        <div class="col-lg-6">
+                                            <h5 class="font-weight-normal primary">Project Cost</h5>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h6 class="text-right">₱ <span id="project-cost-text" class="font-weight-bold">{{ number_format($data->project->cost, 2) }}</span></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row p-1 border-bottom align-items-center">
+                                        <div class="col-lg-8">
+                                            <h5 class="font-weight-normal primary">Convenience Fee </h5>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus velit rem consequatur veniam sunt veritatis doloremque magni sit.</p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <h6 class="text-right">₱ <span class="font-weight-bold">50.00</span></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row p-1 border-bottom">
+                                        <div class="col-lg-6">
+                                            <h5 class="font-weight-normal primary">Total Cost</h5>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h6 class="text-right">₱ <span id="total-project-cost-text" class="font-weight-bold">{{ number_format(intval($data->project->cost) - 50, 2)}}</span></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="font-weight-bold">About Freelancer</h3>
@@ -99,7 +133,22 @@
 @push('scripts')
     <script>
         $('#cost').on('input', function(e) {
-            console.log(e.target.value)
+            computeContract(e.target.value);
         })
+
+        function computeContract(cost) {
+            let total_cost = document.querySelector('#total_cost');
+            let total_cost_text = document.querySelector('#total-project-cost-text');
+            let project_cost_text = document.querySelector('#project-cost-text');
+
+            const convenience_fee = 50;
+
+            // compute project cost
+            let total = cost - convenience_fee;
+
+            total_cost.value = total;
+            total_cost_text.innerHTML = Number(total).toFixed(2);
+            project_cost_text.innerHTML = Number(cost).toFixed(2);
+        }
     </script>
 @endpush

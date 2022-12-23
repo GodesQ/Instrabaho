@@ -77,7 +77,6 @@ address = document.querySelector('#address');
             $.ajax({
                 url: "/search_freelancers/fetch_data?page="+page+'&'+filter_parameters,
                 success: function (data) {
-                    console.log(data);
                     radius = data.radius;
                     $('.freelancers-data').html(data.view_data);
                     $('.protip-container').remove();
@@ -307,12 +306,15 @@ address = document.querySelector('#address');
                         google.maps.event.addListener(marker, "click", function (e) {
                         infoWindow.setContent(`
                             <div class="d-flex justify-content-between" style="gap: 10px; max-width: 220px; height: 70px; max-height: 70px;">
-                                <img src="${data.user.profile_image ?  `../../../images/user/profile/${data.user.profile_image}` : '../../../images/user-profile.png' }" style="width: 40%; height: 100%; object-fit: cover;" />
-                                <div style="60%">
-                                    <a href="/freelancers/${data.user.username}" class="font-weight-bold">${data.user.firstname} ${data.user.lastname}</a>
-                                    <div style="font-size: 10px;">${data.address}</div>
+                                <a style="width: 50%; height: 100%;" href="/freelancers/${data.user.username}"><img src="${data.user.profile_image ?  `../../../images/user/profile/${data.user.profile_image}` : '../../../images/user-profile.png' }" style="width: 100%; height: 100%; object-fit: cover;" />
+                                <div style="50%"></a>
+                                    <a href="/freelancers/${data.user.username}" class="font-weight-bold" style="font-size: 11px;">${data.user.firstname} ${data.user.lastname}</a>
+                                    <div style="font-size: 9px;" class="my-1"><i class="fa fa-map-marker mr-25"></i> ${data.address}</div>
+                                    <h6 class="primary mt-1" style="font-size: 13px;">₱ ${Number(data.hourly_rate).toFixed(2)}</h6>
+
                                 <div>
-                            </div>`);
+                            </div>
+                           `);
                         infoWindow.open(map, marker);
                         });
                 })(marker, data);
