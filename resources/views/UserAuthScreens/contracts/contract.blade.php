@@ -32,8 +32,8 @@
                                     <div class="primary">{{ $contract->end_date  ? $contract->end_date : 'No End Date Found.'}}</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h4 class="font-weight-bold">Project Cost</h4>
-                                    <div class="primary">₱ {{ number_format($contract->cost, 2) }}</div>
+                                    <h4 class="font-weight-bold">Project Total Cost</h4>
+                                    <div class="primary">₱ {{ number_format($contract->total_cost, 2) }}</div>
                                 </div>
                             </div>
                             <div class="description my-2">

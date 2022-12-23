@@ -97,7 +97,7 @@ use App\Events\ProjectMessageEvent;
     Route::middleware(['webauth'])->group( function () {
 
         Route::get('notifications', [NotificationController::class, 'notifications'])->name('get.notifications');
-        Route::put('notifications/mark_as_read', [NotificationController::class, 'mark_as_read'])->name('put.mark_as_readmark_as_read');
+        Route::put('notifications/mark_as_read', [NotificationController::class, 'mark_as_read'])->name('put.mark_as_read');
 
         Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
         Route::get('/change_login', [AuthController::class, 'change_login'])->name('user.change_login');

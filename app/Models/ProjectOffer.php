@@ -23,4 +23,8 @@ class ProjectOffer extends Model
         return $this->hasOne(Employer::class, 'id', 'employer_id');
     }
 
+    public function contract() {
+        return $this->belongsTo(ProjectContract::class, 'id', 'proposal_id');
+    }
+
 }

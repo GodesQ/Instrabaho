@@ -101,7 +101,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>x
+                </div>
             </div>
             <div class="card">
                 <div class="card-header">

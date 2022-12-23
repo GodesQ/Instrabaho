@@ -12,35 +12,36 @@
                     </h2>
                 </div>
                 <div class="row">
-                    @forelse ($proposals as $proposal)
+                    @forelse ($ongoing_projects as $data)
                         <div class="col-xl-4 col-lg-6">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <a href="/project/view/{{ $proposal->project->id }}" class="font-weight-bold h4 info">{{ $proposal->project->title }}</a>
-                                            <h6>{{ $proposal->project->category->name}}</h6>
+                                            <a href="/project/view/{{ $data->project->id }}" class="font-weight-bold h4 info">{{ $data->project->title }}</a>
+                                            <h6>{{ $data->project->category->name }}</h6>
                                         </div>
                                         <span class="dropdown">
-                                            <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-v"></i></a>
+                                            <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right">
+                                                <i class="fa fa-ellipsis-v"></i>
+                                            </a>
                                             <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
-                                                {{-- <a data-toggle="modal" data-target="#EditContactModal" class="dropdown-item edit">
-                                                    <i class="feather icon-edit-2 primary"></i>
-                                                    Edit Contract</a> --}}
                                                 <a href="" class="dropdown-item delete"><i class="feather icon-x danger"></i> Cancel Project</a>
-                                                <a href="/project/contract/track/{{ $proposal->contract->id }}" class="dropdown-item delete"><i class="feather icon-clock primary"></i> Track Project</a>
-                                                <a href="/pay_job/project/{{$proposal->id}}" class="dropdown-item"><i class="feather icon-check success"></i> Set to Complete and Pay Job</a>
+                                                <a href="/project/contract/track/{{ $data->contract->id }}" class="dropdown-item delete"><i class="feather icon-clock primary"></i> Track Project</a>
+                                                <a href="/pay_job/project/{{$data->id}}" class="dropdown-item"><i class="feather icon-check success"></i> Set to Complete and Pay Job</a>
                                             </span>
                                         </span>
                                     </div>
-                                    <p>{{ strlen($proposal->project->description) > 150 ? substr($proposal->project->description, 0, 150) . '...' : $proposal->project->description }}</p>
+                                    <p>
+                                        {{ strlen($data->project->description) > 150 ? substr($data->project->description, 0, 150) . '...' : $data->project->description }}
+                                    </p>
                                     <ul>
-                                        <li><i class="fa fa-calendar mr-1"></i> Start Date : <span class="font-weight-bold">{{ $proposal->contract->start_date ? date_format(new DateTime($proposal->contract->start_date), 'F d, Y') : 'No Start Date' }}</span></li>
-                                        <li><i class="fa fa-calendar mr-1"></i> End Date : <span class="font-weight-bold">{{ $proposal->contract->end_date ? date_format(new DateTime($proposal->contract->end_date), 'F d, Y') : 'No End Date' }}</span></li>
+                                        <li><i class="fa fa-calendar mr-1"></i> Start Date : <span class="font-weight-bold">{{ $data->contract->start_date ? date_format(new DateTime($data->contract->start_date), 'F d, Y') : 'No Start Date' }}</span></li>
+                                        <li><i class="fa fa-calendar mr-1"></i> End Date : <span class="font-weight-bold">{{ $data->contract->end_date ? date_format(new DateTime($data->contract->end_date), 'F d, Y') : 'No End Date' }}</span></li>
                                     </ul>
                                     <div class="text-right">
-                                        <a href="/project/contract/view/{{ $proposal->contract->id }}" class="info mx-50">View Contract</a>
-                                        <a href="/proposal/info/{{ $proposal->id }}?act=message" class="btn btn-primary mx-50">Chat</a>
+                                        <a href="/project/contract/view/{{ $data->contract->id }}" class="info mx-50">View Contract</a>
+                                        <a href="/{{ $data->contract ? $data->contract->proposal_type : null }}/info/{{ $data->id }}?act=message" class="btn btn-primary mx-50">Chat</a>
                                     </div>
                                 </div>
                             </div>
