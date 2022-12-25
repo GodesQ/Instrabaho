@@ -28,7 +28,7 @@
                                                     <i class="feather icon-edit-2 primary"></i>
                                                     Edit Contract</a> --}}
                                                 @if($data->contract)
-                                                    <a href="/project/contract/code/{{ $data->contract ? $data->contract->id : 0 }}" class="dropdown-item "><i class="fa fa-qrcode primary"></i> View Contract Code</a>
+                                                    <a href="/project/contract/track/{{ $data->contract->id }}" class="dropdown-item "><i class="feather icon-activity primary"></i> Start Working</a>
                                                 @endif
                                                 <a href="#" class="dropdown-item delete"><i class="feather icon-x danger"></i> Cancel Project</a>
                                             </span>
