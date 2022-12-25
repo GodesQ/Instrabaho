@@ -64,11 +64,14 @@ class ProjectContractController extends Controller
     }
 
     public function track(Request $request) {
-        $contract = ProjectContract::where('id', $request->id)->firstOrFail();
+        $contract = ProjectContract::where('id', $request->id)->with('project', 'proposal')->firstOrFail();
 
-        if(!$contract->is_verify_code) return redirect()->route('contract.validate_code')->with('fail', 'Verify First before continue.');
-
-        return view('UserAuthScreens.contracts.track-contract');
+        if(!$contract->is_verify_code) {
+            if(session()->get('role') == 'employer') return redirect()->route('contract.validate_code')->with('fail', 'Verify First before continue.');
+        
+            if(session()->get('role') == 'freelancer') return redirect()->route('contract.code', $contract->id)->with('fail', 'Verify First before continue.');
+        }
+        return view('UserAuthScreens.contracts.track-contract', compact('contract'));
     }
 
     public function validate_code(Request $request) {

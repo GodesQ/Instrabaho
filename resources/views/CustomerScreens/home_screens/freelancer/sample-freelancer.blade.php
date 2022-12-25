@@ -45,18 +45,16 @@
                             <div class="search-map"></div>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-xxl-8 col-xl-7">
-                    <div class="row freelancers-data" >
-                        @include('CustomerScreens.home_screens.freelancer.freelancers');
+                    <div class="row freelancers-data">
+                        @include('CustomerScreens.home_screens.freelancer.freelancers')
                     </div>
                 </div>
             </div>
         </div>
     </section>
 @endsection
-
 @push('scripts')
     <script src="../../../assets/js/custom_js/homescreen/freelancer_search.js"></script>
 @endpush
