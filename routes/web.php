@@ -179,12 +179,12 @@ use App\Events\ProjectMessageEvent;
         Route::get('/project/create-contract/{type}/{id}', [ProjectContractController::class, 'create'])->name('create.contract')->middleware('employer.access');
         Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract')->middleware('employer.access');
         Route::get('/project/contract/view/{id}', [ProjectContractController::class, 'contract'])->name('contract');
-        
         Route::get('/project/contract/code/{id}', [ProjectContractController::class, 'view_code'])->name('contract.code')->middleware('freelancer.access');
-
         Route::get('/project/contract/validate-code', [ProjectContractController::class, 'validate_code'])->name('contract.validate_code')->middleware('employer.access');
-        Route::post('/project/contract/post_validate_code', [ProjectContractController::class, 'post_validate_code'])->name('contract.post_validate_code')->middleware('employer.access');
+        Route::post('/project/contract/validate-code', [ProjectContractController::class, 'post_validate_code'])->name('contract.post_validate_code')->middleware('employer.access');
         Route::get('/project/contract/track/{id}', [ProjectContractController::class, 'track'])->name('contract.track');
+        Route::put('/project/contract/start_working', [ProjectContractController::class, 'start_working'])->name('contract.start_working');
+        Route::put('/project/contract/store_time', [ProjectContractController::class, 'store_time'])->name('contract.store_time');
 
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');

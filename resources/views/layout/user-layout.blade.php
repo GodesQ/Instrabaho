@@ -305,24 +305,22 @@
     <script src="{{ asset('js/sidebar-project.js')}}"></script>
     <script src="{{ asset('js/html5-qrcode.min.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/wizard-steps.js') }}"></script>
-    <script src="../../../app-assets/js/scripts/pages/account-setting.js"></script>
-    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
-    <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
-    <script src="../../../app-assets/js/scripts/cards/card-statistics.js"></script>
-    <script src="../../../app-assets/js/scripts/cards/card-statistics.js"></script>
-    <script src="../../../app-assets/js/scripts/pages/dashboard-fitness.js"></script>
-    <script src="../../../app-assets/js/scripts/forms/form-repeater.js"></script>
-    <script src="../../../app-assets/js/scripts/tinymce/js/tinymce.min.js"></script>
-    <script src="../../../app-assets/js/scripts/pages/app-chat.js"></script>
+    <script src="{{ asset('app-assets/js/scripts/pages/account-setting.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/select/form-select2.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/cards/card-statistics.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/cards/card-statistics.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/pages/dashboard-fitness.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/form-repeater.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/pages/app-chat.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/switch.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/extensions/dropzone.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/checkbox-radio.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/bootstrap-datetime.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="../../../app-assets/js/scripts/forms/switch.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../../app-assets/js/scripts/extensions/dropzone.js"></script>
-
-    <script src="../../../app-assets/js/scripts/forms/checkbox-radio.js"></script>
-    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/bootstrap-datetime.js') }}"></script>
 
     @stack('scripts')
 

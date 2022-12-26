@@ -19,4 +19,10 @@ class ProjectContract extends Model
         return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
+    public function tracker() {
+        return $this->hasOne(ProjectContractTracker::class, 'contract_id');
+    }
+
+
+
 }

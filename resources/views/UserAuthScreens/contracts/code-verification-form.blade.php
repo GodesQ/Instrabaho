@@ -20,7 +20,7 @@
 
             <div class="container d-flex justify-content-center align-items-center flex-column">
                 <div class="my-2">
-                    <a href="/freelancer/projects/ongoing" class="btn btn-secondary">Back to Ongoing Projects</a>
+                    <a href="/employer/projects/ongoing" class="btn btn-secondary">Back to Ongoing Projects</a>
                 </div>
                 <div class="card" style="width: 350px !important;">
                     <div class="card-body">

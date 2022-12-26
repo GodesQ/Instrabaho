@@ -88,7 +88,7 @@ address = document.querySelector('#address');
 
         var mapOptions = {
             center: new google.maps.LatLng( 14.5995124, 120.9842195 ),
-            zoom: 13,
+            zoom: 11,
             mapId: 'ad277f0b2aef047a',
             disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
             scrollWheel: true, // If set to false disables the scrolling on the map.
