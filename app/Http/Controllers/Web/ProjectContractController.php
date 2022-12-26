@@ -127,7 +127,7 @@ class ProjectContractController extends Controller
 
     public function store_time(Request $request) {
         $contract = ProjectContract::where('id', $request->id)->first();
-
+        
         if(!$contract) return response()->json([
             'status' => false,
             'message' => 'Contract is not invalid'
@@ -162,25 +162,23 @@ class ProjectContractController extends Controller
                 'total_hours_cost' => $total_hours_cost,
                 'total_hours' => $total_hours
             ]);
+        } else {
+            $total_hours_cost = $contract->total_cost * $request->hours;
+
+            $save = ProjectContractTracker::create([
+                'contract_id' => $contract->id,
+                'minutes' => $request->minutes,
+                'hours' => $request->hours,
+                'total_hours_cost' => $total_hours_cost,
+            ]);
+
+            if($save) return response()->json([
+                'status' => true,
+                'message' => 'Success',
+                'total_hours_cost' => $total_hours_cost,
+                'total_hours' => $request->hours
+            ]);
         }
-
-        $total_hours_cost = $contract->total_cost * $request->hours;
-
-        $save = ProjectContractTracker::create([
-            'contract_id' => $contract->id,
-            'minutes' => $request->minutes,
-            'hours' => $request->hours,
-            'total_hours_cost' => $total_hours_cost,
-        ]);
-
-        if($save) return response()->json([
-            'status' => true,
-            'message' => 'Success',
-            'total_hours_cost' => $total_hours_cost,
-            'total_hours' => $request->hours
-        ]);
-
-
     }
     public function create(Request $request) {
         if($request->type == 'proposal') {
