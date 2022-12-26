@@ -1,38 +1,138 @@
 @extends('layout.user-layout')
 
 @section('title')
-    TRACK PROJECT -
+    TRACK PROJECT - {{ $contract->project->title }}
 @endsection
 
 
 @section('content')
+    <style>
+        .time-tracker-container {
+            width: 100%;
+            margin-top: 1rem;
+            border-radius: 5px;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center,
+        }
+        .time-tracker-inner-container {
+            width: 100%;
+            border-radius: 5px;
+            background: #ffffff;
+            padding: 1rem;
+            box-shadow: 1px 2px 3px rgba(87, 87, 87, 0.25);
+        }
+        .timerDisplay{
+            position: relative;
+            width: 100%;
+            color: #000;
+            font-size: 20px;
+        }
+        .buttons{
+            width: 90%;
+            margin: 30px auto 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
     <div class="page-wrapper">
         <div class="page-content">
             <div class="page-body">
                 <div class="container">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="header d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h2 class="font-weight-bold">{{ $contract->project->title }}</h2>
-                                    <h6>{{ $contract->project->category->name }}</h6>
-                                </div>
-                                <div>
-                                    <button class="btn btn-outline-warning">Cancel Contract</button>
-                                    <button class="btn btn-primary">Start Work</button>
+                    <div class="my-2">
+                        <button onclick="history.back()" class="btn btn-secondary">Back</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    @csrf
+                                    <input type="hidden" name="contract_id" data-id="{{ $contract->id }}" id="contract_id">
+                                    <div class="text-right">
+                                        <button class="btn btn-outline-warning cancel-contract-btn">Cancel Contract</button>
+                                        @if (session()->get('role') == 'employer' && $contract->is_start_working)
+                                            <button class="btn btn-primary job-completed-btn">Job Complete</button>
+                                        @endif
+
+                                        @if (session()->get('role') == 'freelancer' && $contract->cost_type != 'Fixed')
+                                            <button id="start-working-btn" data-id="{{ $contract->id }}" class="btn btn-primary start-working-btn">Start Working</button>
+                                        @endif
+                                    </div>
+                                    <hr>
+                                    @if($contract->cost_type != 'Fixed')
+                                        <div class="container my-2">
+                                            <h4 class="font-weight-bold text-uppercase">Fixed Type Project</h4>
+                                            <ul class="list-group">
+                                                <li class="list-group-item">Start Working Date: <span class="font-weight-bold working-date-text">{{ $contract->start_working_date ? date_format(new DateTime($contract->start_working_date), 'F d, Y H:i:s') : 'No Date Found' }}</span></li>
+                                                <li class="list-group-item">Job Done Date: <span class="font-weight-bold job-done-date">{{ $contract->start_working_date ? date_format(new DateTime($contract->start_working_date), 'F d, Y H:i:s') : 'No Date Found' }}</span></li>
+                                            </ul>
+                                        </div>
+                                    @else
+                                        <div class="container my-2">
+                                            <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
+                                            <div class="time-tracker-container">
+                                                <div class="time-tracker-inner-container">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <span class="tracker-icon mr-50"><i class="fa fa-stop danger"></i></span> <div class="timerDisplay">{{ $contract->tracker ? $contract->tracker->hours : '00' }} hrs {{ $contract->tracker ? $contract->tracker->minutes : '00' }} m </div>
+                                                        @if(session()->get('role') == 'freelancer')
+                                                            <div class="form-group text-right">
+                                                                <input type="checkbox" id="timer-btn" class="switchery"/>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <ul style="font-size: 20px;">
-                                        <li>Total Cost : <span class="font-weight-bold" style="font-size: 20px;">₱ {{ number_format($contract->total_co                                                                                                                      st, 2) }}</span></li>
-                                        <li>Total Cost : <span class="font-weight-bold" style="font-size: 20px;">₱ {{ number_format($contract->total_cost, 2) }}</span></li>
-                                        <li>Total Cost : <span class="font-weight-bold" style="font-size: 20px;">₱ {{ number_format($contract->total_cost, 2) }}</span></li>
-                                        <li>Total Cost : <span class="font-weight-bold" style="font-size: 20px;">₱ {{ number_format($contract->total_cost, 2) }}</span></li>
-                                    </ul>
-                                </div>
-                                <div class="col-xl-6">
-                                    
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="header d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h2 class="font-weight-bold">{{ $contract->project->title }}</h2>
+                                            <h6>{{ $contract->project->category->name }}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row my-2">
+                                        <div class="col-xxl-6">
+                                            <div class="container my-1">
+                                                <h3 class="primary">Project Information</h3>
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">Title of Project: <span class="font-weight-bold">{{ $contract->project->title }}</span></li>
+                                                    <li class="list-group-item">Start Date: <span class="font-weight-bold">{{ date_format(new DateTime($contract->start_date), 'F d, Y') }}</span></li>
+                                                    <li class="list-group-item">End Date: <span class="font-weight-bold">{{ date_format(new DateTime($contract->end_date), 'F d, Y') }}</span></li>
+                                                    <li class="list-group-item">Total Cost: <span class="font-weight-bold">₱ {{ number_format($contract->total_cost, 2) }}</span></li>
+                                                    <li class="list-group-item">Project Cost Type: <span class="font-weight-bold">{{ $contract->cost_type }}</span></li>
+                                                    <li class="list-group-item">Address: <span class="font-weight-bold">{{ $contract->project->location }}</span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-xxl-6">
+                                            <div class="container my-1">
+                                                <h3 class="primary">Freelancer Information</h3>
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">Freelancer Name: <span class="font-weight-bold">{{ $contract->proposal->freelancer->user->firstname }} {{ $contract->proposal->freelancer->user->lastname }}</span></li>
+                                                    <li class="list-group-item">Freelancer Display Name: <span class="font-weight-bold">{{ $contract->proposal->freelancer->display_name }}</span></li>
+                                                    <li class="list-group-item">Email : <span class="font-weight-bold">{{ $contract->proposal->freelancer->user->email }}</span></li>
+                                                    <li class="list-group-item">Contact No. : <span class="font-weight-normal"><a class="primary" href="tel:{{ $contract->proposal->freelancer->contactno }}">{{ $contract->proposal->freelancer->contactno }}</a></span></li>
+                                                </ul>
+                                            </div>
+                                            <div class="container my-2">
+                                                <h3 class="primary">Employer Information</h3>
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">Employer Name: <span class="font-weight-bold">{{ $contract->project->employer->user->firstname }} {{ $contract->project->employer->user->lastname }}</span></li>
+                                                    <li class="list-group-item">Employer Display Name: <span class="font-weight-bold">{{ $contract->project->employer->display_name }}</span></li>
+                                                    <li class="list-group-item">Email : <span class="font-weight-bold">{{ $contract->project->employer->user->email }}</span></li>
+                                                    <li class="list-group-item">Contact No. : <span class="font-weight-normal"><a class="primary" href="tel:{{ $contract->project->employer->contactno }}">{{ $contract->project->employer->contactno }}</a></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -42,3 +142,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/track-contract.js')}}"></script>
+@endpush
