@@ -52,7 +52,7 @@ $(document).on("change", "#timer-btn", function (e) {
     }
 
     trackerIcon.innerHTML = `<i class="fa fa-play success"><i/>`;
-    int = setInterval(displayTimer,10);
+    int = setInterval(displayTimer, 10);
     } else {
         trackerIcon.innerHTML = `<i class="fa fa-stop danger"><i/>`;
         clearInterval(int);
