@@ -74,14 +74,14 @@ class TransactionsController extends Controller
         }
 
         if($request->type == 'project') {
-            $job = ProjectProposal::where('id', $request->id)->with('project', 'freelancer', 'employer', 'contract')->first();
+            $job = ProjectContract::where('id', $request->id)->with('project', 'proposal', 'employer', 'freelancer')->first();
             $job_data = [
                 'title' => $job->project->title,
-                'cost' => $job->contract->cost,
+                'cost' => $job->total_cost,
                 'job_type' => $request->type,
                 'job_id' => $job->id,
                 'from_id' => $job->employer_id,
-                'to_id' => $job->freelancer_id
+                'to_id' => $job->freelancer_id,
             ];
         }
         return view('UserAuthScreens.checkout.pay-job', compact('job_data', 'user'));
