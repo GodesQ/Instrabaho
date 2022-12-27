@@ -4,12 +4,12 @@
     <section class="fr-lance-details" style="padding: 25px !important;">
         <div class="container-fluid">
             <div class="row my-3 align-items-center">
-                <div class="col-md-3">
+                <div class="my-1 col-md-3">
                     <input type="search" class="search-input" id="address" name="address" placeholder="Search by Location...">
                     <input type="hidden" name="latitude" class="form-control latitude">
                     <input type="hidden" name="longitude" class="form-control longitude">
                 </div>
-                <div class="col-md-2">
+                <div class="my-2 col-md-2">
                     <select name="radius" id="radius" class="form-control">
                         <option value="5">5 km</option>
                         <option value="10">10 km</option>
@@ -19,17 +19,17 @@
                         <option value="100">100 km</option>
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="my-2 col-md-2">
                     <select name="result" id="result" class="form-control">
                         <option value="10">10 Result</option>
                         <option value="25">25 Result</option>
                         <option value="50">50 Result</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="my-1 col-md-3">
                     <input type="search" class="search-input" id="title" name="address" placeholder="Search by Keyword...">
                 </div>
-                <div class="col-md-2 d-flex">
+                <div class="my-1 col-md-2 d-flex">
                     <button class="btn btn-lg btn-primary btn-block" id="filter-btn">Filter</button>
                     <button class="btn btn-secondary btn-lg ml-1"><i class="fa fa-filter"></i></button>
                 </div>

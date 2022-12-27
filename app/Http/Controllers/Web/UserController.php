@@ -111,6 +111,13 @@ class UserController extends Controller
             'payment_method' => 'required'
         ]);
 
+        $save = User::where('email', $request->email)->update([
+            'prefer_payment_method' => $request->payment_method
+        ]);
+
+        if($save) {
+            return back()->with('success', 'Payment Method Successfully Updated.');
+        }
 
     }
 }

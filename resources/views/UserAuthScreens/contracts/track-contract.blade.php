@@ -51,22 +51,21 @@
                                     @csrf
                                     <input type="hidden" name="contract_id" data-id="{{ $contract->id }}" id="contract_id">
                                     <div class="text-right">
-                                        <button class="btn btn-outline-warning cancel-contract-btn">Cancel Contract</button>
                                         @if (session()->get('role') == 'employer' && $contract->is_start_working)
                                             <button class="btn btn-primary job-completed-btn">Job Complete</button>
                                         @endif
 
-                                        @if (session()->get('role') == 'freelancer' && $contract->cost_type != 'Fixed')
+                                        @if (session()->get('role') == 'freelancer' && $contract->cost_type == 'Fixed' && !$contract->is_start_working)
                                             <button id="start-working-btn" data-id="{{ $contract->id }}" class="btn btn-primary start-working-btn">Start Working</button>
                                         @endif
                                     </div>
                                     <hr>
-                                    @if($contract->cost_type != 'Fixed')
+                                    @if($contract->cost_type == 'Fixed')
                                         <div class="container my-2">
                                             <h4 class="font-weight-bold text-uppercase">Fixed Type Project</h4>
                                             <ul class="list-group">
-                                                <li class="list-group-item">Start Working Date: <span class="font-weight-bold working-date-text">{{ $contract->start_working_date ? date_format(new DateTime($contract->start_working_date), 'F d, Y H:i:s') : 'No Date Found' }}</span></li>
-                                                <li class="list-group-item">Job Done Date: <span class="font-weight-bold job-done-date">{{ $contract->start_working_date ? date_format(new DateTime($contract->start_working_date), 'F d, Y H:i:s') : 'No Date Found' }}</span></li>
+                                                <li class="list-group-item">Start Working Date: <span class="font-weight-bold working-date-text">{{ $contract->start_working_date ? date_format(new DateTime($contract->start_working_date), 'M d, Y h:i:s A') : 'No Date Found' }}</span></li>
+                                                <li class="list-group-item">Job Done Date: <span class="font-weight-bold job-done-date">{{ $contract->job_done_date ? date_format(new DateTime($contract->job_done_date), 'F d, Y H:i:s') : 'No Date Found' }}</span></li>
                                             </ul>
                                         </div>
                                     @else
@@ -75,12 +74,12 @@
                                             <div class="time-tracker-container">
                                                 <div class="time-tracker-inner-container">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <span class="tracker-icon mr-50"><i class="fa fa-stop danger"></i></span> <div class="timerDisplay">{{ $contract->tracker ? $contract->tracker->hours : '00' }} hrs {{ $contract->tracker ? $contract->tracker->minutes : '00' }} m </div>
-                                                        @if(session()->get('role') == 'freelancer')
+                                                        <span class="tracker-icon mr-50"><i class="fa fa-stop danger"></i></span> <div class="timerDisplay">{{ $contract->tracker ? $contract->tracker->hours : 00 }} hrs {{ $contract->tracker ? $contract->tracker->minutes : 00 }} m </div>
                                                             <div class="form-group text-right">
                                                                 <input type="checkbox" id="timer-btn" class="switchery"/>
                                                             </div>
-                                                        @endif
+                                                            <input type="hidden" name="hours" id="hours_input" value="{{ $contract->tracker ? $contract->tracker->hours : 00 }}">
+                                                            <input type="hidden" name="minutes" id="minutes_input" value="{{ $contract->tracker ? $contract->tracker->minutes : 00 }}">
                                                     </div>
                                                 </div>
                                             </div>

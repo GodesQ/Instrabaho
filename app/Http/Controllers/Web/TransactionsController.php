@@ -23,6 +23,7 @@ use App\Models\UserWallet;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Transaction;
+use App\Models\ProjectContract;
 
 class TransactionsController extends Controller
 {
@@ -41,11 +42,12 @@ class TransactionsController extends Controller
 
             $dragonpay = new Dragonpay($merchant_account);
             $dragonpay->handlePostback(function($data){
-                DB::table('user_freelancer')->update([
+                DB::table('user_freelancer')->where('id', 1)->update([
                     'display_name' => 'James Freelancer'
                 ]);
+                return 'result=OK';
             }, $request->all());
-            echo 'result=OK';
+
         } catch(PaymentException $e){
             echo $e->getMessage();
         } catch(\Exception $e){
