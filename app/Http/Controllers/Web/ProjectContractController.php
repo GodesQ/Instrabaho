@@ -127,7 +127,7 @@ class ProjectContractController extends Controller
 
     public function store_time(Request $request) {
         $contract = ProjectContract::where('id', $request->id)->first();
-        
+
         if(!$contract) return response()->json([
             'status' => false,
             'message' => 'Contract is not invalid'
@@ -154,15 +154,18 @@ class ProjectContractController extends Controller
             $contract_tracker->hours = $total_hours;
             $contract_tracker->minutes = $total_minutes;
             $contract_tracker->total_hours_cost = $total_hours_cost;
-            $save = $contract->save();
+            $save = $contract_tracker->save();
 
             if($save) return response()->json([
                 'status' => true,
-                'message' => 'Success',
+                'message' => 'Success Updating Tracker',
                 'total_hours_cost' => $total_hours_cost,
-                'total_hours' => $total_hours
+                'total_hours' => $total_hours,
+                'total_minutes' => $total_minutes,
             ]);
+
         } else {
+
             $total_hours_cost = $contract->total_cost * $request->hours;
 
             $save = ProjectContractTracker::create([
@@ -174,9 +177,10 @@ class ProjectContractController extends Controller
 
             if($save) return response()->json([
                 'status' => true,
-                'message' => 'Success',
+                'message' => 'Success Creating Tracker',
                 'total_hours_cost' => $total_hours_cost,
-                'total_hours' => $request->hours
+                'total_hours' => $request->hours,
+                'total_minutes' => $request->minutes,
             ]);
         }
     }

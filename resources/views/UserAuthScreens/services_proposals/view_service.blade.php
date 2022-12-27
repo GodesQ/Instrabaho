@@ -71,9 +71,6 @@
             <div class="container-fluid my-2">
                 @if(session()->get('role') == 'employer')
                     <a href="/edit_service/{{ $purchased_service->service_id }}" class="btn btn-secondary"><i class="feather icon-log-out"></i> Back to Service</a>
-                    <a href="/pay_job/service/{{ $purchased_service->id }}" class="btn btn-primary">Pay Job & Set to Complete</a>
-                @else
-                    <a href="/edit_service/{{ $purchased_service->service_id }}" class="btn btn-secondary"><i class="feather icon-log-out"></i> Back to Service</a>
                 @endif
                 @if($purchased_service->status == 'approved')
                     <button type="button" class="btn btn-danger">Cancel Service <i class="fa fa-thumbs-down"></i></button>

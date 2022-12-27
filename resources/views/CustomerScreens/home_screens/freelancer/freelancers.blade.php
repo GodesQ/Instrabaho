@@ -46,7 +46,7 @@
                             <a href="#" class="bg-info text-white">No Skills Found</a>
                             @endforelse
                             </div>
-                        <a href="/freelancers/{{ $freelancer->user->username }}" class="btn btn-theme btn-sm btn-outline-primary">View Profile <i class="fa fa-chevron-right ml-1"></i></a>
+                        <a href="/freelancers/{{ $freelancer->user->username }}" class="btn btn-md btn-primary">View Profile </a>
                     </div>
                 </div>
             </div>

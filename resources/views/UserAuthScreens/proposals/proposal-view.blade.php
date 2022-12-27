@@ -89,9 +89,6 @@
                                             @if ($proposal->status == 'pending')
                                                 <a href="/project/create-contract/proposal/{{ $proposal->id }}" class="btn btn-success">Hire Worker  <i class="fa fa-thumbs-up"></i></a>
                                             @endif
-                                            @if($proposal->status == 'approved')
-                                                <a href="/pay_job/project/{{ $proposal->id }}" class="btn btn-primary">Pay Job</a>
-                                            @endif
                                         @endif
                                     </div>
                                 </div>

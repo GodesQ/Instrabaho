@@ -28,7 +28,6 @@
                                             <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
                                                 <a href="" class="dropdown-item delete"><i class="feather icon-x danger"></i> Cancel Project</a>
                                                 <a href="/project/contract/track/{{ $data->contract->id }}" class="dropdown-item delete"><i class="feather icon-clock primary"></i> Track Project</a>
-                                                <a href="/pay_job/project/{{$data->id}}" class="dropdown-item"><i class="feather icon-check success"></i> Set to Complete and Pay Job</a>
                                             </span>
                                         </span>
                                     </div>

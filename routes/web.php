@@ -240,7 +240,7 @@ use App\Events\ProjectMessageEvent;
         Route::post('/pay_job', [TransactionsController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
 
         Route::get('/transaction-message', [TransactionsController::class, 'transaction_messaage'])->name('transaction_messaage');
-        Route::post('/transaction-message',  [TransactionsController::class, 'postback_transaction'])->name('postback_transaction');
+        Route::post('/post-transaction-message',  [TransactionsController::class, 'postback_transaction'])->name('postback_transaction');
         Route::get('/check_status',  [TransactionsController::class, 'check_status'])->name('check_status');
 
         Route::get('/transaction_details/paid_by_wallet', [TransactionsController::class, 'paid_by_wallet_message'])->name('transaction_paid_by_wallet');

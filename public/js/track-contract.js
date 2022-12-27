@@ -11,7 +11,7 @@ $(document).ready(function () {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
+            confirmButtonText: "Yes, start it!",
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -45,6 +45,9 @@ let timerRef = document.querySelector('.timerDisplay');
 let trackerIcon = document.querySelector('.tracker-icon');
 let int = null;
 
+hours = $('#hours').val();
+minutes = $('#minutes').val();
+
 $(document).on("change", "#timer-btn", function (e) {
     if(e.target.checked) {
         if(int!==null){
@@ -59,17 +62,6 @@ $(document).on("change", "#timer-btn", function (e) {
     }
 });
 
-// document.getElementById('startTimer').addEventListener('click', ()=>{
-//     if(int!==null){
-//         clearInterval(int);
-//     }
-//     int = setInterval(displayTimer,10);
-// });
-
-// document.getElementById('pauseTimer').addEventListener('click', () => {
-//     clearInterval(int);
-// });
-
 function displayTimer() {
     milliseconds+=10;
     if(milliseconds == 1000) {
@@ -78,24 +70,31 @@ function displayTimer() {
         if(seconds == 60){
             seconds = 0;
             minutes++;
-            if(minutes == 60){
+            if(minutes == 60) {
                 minutes = 0;
                 hours++;
             }
         }
     }
 
-h = hours < 10 ? "0" + hours : hours;
-m = minutes < 10 ? "0" + minutes : minutes;
-s = seconds < 10 ? "0" + seconds : seconds;
-ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+let h = hours < 10 ? "0" + hours : hours;
+let m = minutes < 10 ? "0" + minutes : minutes;
+let s = seconds < 10 ? "0" + seconds : seconds;
+let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
 
-timerRef.innerHTML = ` ${h} hrs ${m} m`;
+$('#hours_input').val(h);
+$('#minutes_input').val(m);
+
+timerRef.innerHTML = ` ${h} hrs ${m} m ${s} s`;
 }
 
 function sendTrackerAjax() {
     if(document.querySelector('#timer-btn').checked) {
+
+        let hours = $('#hours_input').val();
+        let minutes = $('#minutes_input').val();
         let id = $('#contract_id').attr("data-id");
+
         $.ajax({
             url: `/project/contract/store_time`,
             method: 'PUT',
@@ -109,6 +108,7 @@ function sendTrackerAjax() {
                 console.log(response);
             },
         });
+
     }
 }
 

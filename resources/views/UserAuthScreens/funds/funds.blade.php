@@ -100,7 +100,7 @@
                                                             <td>{{ date_format(new DateTime($transaction->created_at), "F d, Y") }}</td>
                                                         </tr>
                                                     @empty
-                                                        
+
                                                     @endforelse
                                                 </tbody>
                                             </table>
@@ -131,7 +131,7 @@
                                                             <label>Amount: </label>
                                                             <div class="form-group">
                                                                 <input type="number" placeholder="Amount" name="amount" class="form-control">
-                                                            </div> 
+                                                            </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <input type="hidden" name="payment_method" value="{{ $user->prefer_payment_method }}">
@@ -148,7 +148,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <div class="form-label font-weight-bold my-50">Email:</div>
-                                                        <input type="text" class="form-control" value="{{ $user->email }}" readonly>
+                                                        <input type="text" class="form-control" name="email" value="{{ $user->email }}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
