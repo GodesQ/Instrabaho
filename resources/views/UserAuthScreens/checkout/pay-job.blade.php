@@ -28,11 +28,12 @@
                                         <h4>Date</h4>
                                         <h5 class="font-weight-bold">{{ date('F d, Y') }}</h5>
                                     </div>
+                                    <div class="border-bottom d-flex justify-content-between align-items-center px-2 my-2">
+                                        <h4>Total Cost</h4>
+                                        <h5 class="font-weight-bold">{{ number_format($job_data['cost'], 2) }}</h5>
+                                        <input type="hidden" name="job_cost" id="job_cost" value="{{ $job_data['cost'] }}">
+                                    </div>
                                     <div class="container-fluid">
-                                        <div class="form-group">
-                                            <div class="form-label font-weight-bold">Job Cost</div>
-                                            <input type="number" placeholder="0.00" value="{{ $job_data['cost'] }}" class="form-control" id="job_cost" name="job_cost">
-                                        </div>
                                         <div class="row my-2">
                                             <div class="col-md-12">
                                                 <h5 class="font-weight-bold">Payment Option</h5>
@@ -164,11 +165,6 @@
             }
         });
 
-        $('#job_cost').on('input', function () {
-            $('.job_cost_display').text(Number(this.value).toFixed(2));
-            setSystemDeduction();
-        })
-
         function setSystemDeduction() {
             let job_cost = $('#job_cost').val();
             let system_deduction = Number(job_cost) * 0.15;
@@ -178,6 +174,7 @@
             $('.total_display').text(total_cost.toFixed(2));
             $('#total').val(total_cost.toFixed(2));
         }
+
         setSystemDeduction();
     </script>
 @endpush

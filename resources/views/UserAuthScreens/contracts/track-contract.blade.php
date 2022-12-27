@@ -52,7 +52,7 @@
                                     <input type="hidden" name="contract_id" data-id="{{ $contract->id }}" id="contract_id">
                                     <div class="text-right">
                                         @if (session()->get('role') == 'employer' && $contract->is_start_working)
-                                            <button class="btn btn-primary job-completed-btn">Job Complete</button>
+                                            <a href="/pay_job/project/{{ $contract->id }}" class="btn btn-primary job-completed-btn">Job Complete</a>
                                         @endif
 
                                         @if (session()->get('role') == 'freelancer' && $contract->cost_type == 'Fixed' && !$contract->is_start_working)

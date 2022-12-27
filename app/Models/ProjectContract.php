@@ -23,6 +23,11 @@ class ProjectContract extends Model
         return $this->hasOne(ProjectContractTracker::class, 'contract_id');
     }
 
+    public function freelancer() {
+        return $this->hasOne(Freelancer::class, 'id', 'freelancer_id');
+    }
 
-
+    public function employer() {
+        return $this->hasOne(Employer::class, 'id', 'employer_id');
+    }
 }
