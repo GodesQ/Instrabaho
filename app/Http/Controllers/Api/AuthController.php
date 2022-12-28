@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\VerifyAccount;
 
 use App\Models\User;
+use App\Models\Freelancer;
+use App\Models\Employer;
 
 use App\Http\Requests\UserAuth\RegisterRequest;
 
@@ -34,7 +36,9 @@ class AuthController extends Controller
         ]);
 
         # if the requested input have an error
-        if($validator->fails()) return response()->json($validator->errors(), 401);
+        if($validator->fails()) return response()->json([
+            'message' => $validator->errors()
+        ], 401);
 
         # check if the request is email or username type
         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
@@ -48,8 +52,19 @@ class AuthController extends Controller
 
         $user = Auth::guard('user')->user();
 
+        $user_freelancer = Freelancer::where('user_id', $user->id)->first();
+        $user_employer = Employer::where('user_id', $user->id)->first();
+
+        $redirect_status = 1; // redirect to freelancer role dashboard
+
+        //check if the user has a freelancer data
+        if($request->role == 'freelancer' && !$user_freelancer) $redirect_status = 0;
+
+        //check if the user has a employer data
+        if($request->role == 'employer' && !$user_employer) $redirect_status = 0;
+
         return response()->json([
-            'status' => true,
+            'status' => $redirect_status,
             'message' => 'User Logged In Successfully',
             'user' => $user,
             'role' => $request->role,
@@ -70,7 +85,9 @@ class AuthController extends Controller
         ]);
 
         # if the requested input have an error
-        if($validator->fails()) return response()->json($validator->errors(), 401);
+        if($validator->fails()) return response()->json([
+            'message' => $validator->errors()
+        ], 401);
 
         $save = User::create([
             'firstname' => $request->firstname,
@@ -94,7 +111,8 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Register Successfully. Validate Email Now'
+            'message' => 'Register Successfully. Validate Email Now',
+            'email' => $request->email
         ], 201);
     }
 
@@ -106,7 +124,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Logout Successfully'
+            'message' => 'Logout Successfully',
         ], 200);
     }
 }

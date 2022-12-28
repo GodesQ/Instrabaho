@@ -8,7 +8,13 @@
             <div class="page-body">
                 <div class="container">
                     <div class="my-1">
-                        <a href="/{{ session()->get('role') }}/projects" class="btn btn-secondary">Back to Projects</a>
+                        @if (session()->get('role') == 'employer')
+                            <a href="/employer/projects" class="btn btn-secondary">Back to Projects</a>
+                        @endif
+
+                        @if(session()->get('role') == 'freelancer')
+                            <a href="/freelancer/projects/ongoing" class="btn btn-secondary">Back to Ongoing Projects</a>
+                        @endif
                     </div>
                     <div class="card">
                         <div class="card-body">
@@ -25,11 +31,11 @@
                             <div class="row text-center">
                                 <div class="col-lg-4">
                                     <h4 class="font-weight-bold">Start Date</h4>
-                                    <div class="primary">{{ $contract->start_date  ? $contract->start_date : 'No Start Date Found.'}}</div>
+                                    <div class="primary">{{ $contract->start_date  ? date_format(new DateTime($contract->start_date), 'F d Y') : 'No Start Date Found.'}}</div>
                                 </div>
                                 <div class="col-lg-4">
                                     <h4 class="font-weight-bold">End Date</h4>
-                                    <div class="primary">{{ $contract->end_date  ? $contract->end_date : 'No End Date Found.'}}</div>
+                                    <div class="primary">{{ $contract->end_date  ? date_format(new DateTime($contract->end_date), 'F d Y') : 'No End Date Found.'}}</div>
                                 </div>
                                 <div class="col-md-4">
                                     <h4 class="font-weight-bold">Project Total Cost</h4>

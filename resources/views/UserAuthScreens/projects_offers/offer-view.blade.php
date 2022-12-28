@@ -47,7 +47,7 @@
                                                 <button id="{{ $project_offer->id }}" class="btn btn-success accept-offer-btn">Accept Offer</button>
                                             @endif
 
-                                            @if(session()->get('role') == 'employer' && $project_offer->is_freelancer_approve) 
+                                            @if(session()->get('role') == 'employer' && $project_offer->is_freelancer_approve && !$project_offer->status == 'pending')
                                                 <a href="/project/create-contract/offer/{{ $project_offer->id }}" class="btn btn-success">Hire Worker</a>
                                             @endif
                                         </div>

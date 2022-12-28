@@ -180,12 +180,13 @@ use App\Events\ProjectMessageEvent;
         Route::post("/project/proposal/store-contract", [ProjectContractController::class, 'store'])->name('store.contract')->middleware('employer.access');
         Route::get('/project/contract/view/{id}', [ProjectContractController::class, 'contract'])->name('contract');
         Route::get('/project/contract/code/{id}', [ProjectContractController::class, 'view_code'])->name('contract.code')->middleware('freelancer.access');
-        Route::get('/project/contract/validate-code', [ProjectContractController::class, 'validate_code'])->name('contract.validate_code')->middleware('employer.access');
+        Route::get('/project/contract/validate-code/{id}', [ProjectContractController::class, 'validate_code'])->name('contract.validate_code')->middleware('employer.access');
         Route::post('/project/contract/validate-code', [ProjectContractController::class, 'post_validate_code'])->name('contract.post_validate_code')->middleware('employer.access');
         Route::get('/project/contract/track/{id}', [ProjectContractController::class, 'track'])->name('contract.track');
         Route::put('/project/contract/start_working', [ProjectContractController::class, 'start_working'])->name('contract.start_working');
         Route::put('/project/contract/store_time', [ProjectContractController::class, 'store_time'])->name('contract.store_time');
 
+        # this is for freelancers
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
@@ -193,18 +194,22 @@ use App\Events\ProjectMessageEvent;
         Route::post('/store_educations', [FreelancerController::class, 'store_educations'])->name('freelancer.store_educations');
         Route::post('/store_skills', [FreelancerController::class, 'store_skills'])->name('freelancer.store_skills');
 
+
         Route::get('/package_checkout', [PackageCheckoutController::class, 'package_checkout'])->name('package_checkout');
         Route::post('/store_package_checkout', [PackageCheckoutController::class, 'store_package_checkout'])->name('store_package_checkout');
 
+        # addons
         Route::post('/store_addon', [AddonsController::class, 'store'])->name('addon.store');
         Route::post('/update_addon', [AddonsController::class, 'update'])->name('addon.update');
         Route::delete('/destroy_addon', [AddonsController::class, 'destroy'])->name('addon.destroy');
 
+        # services
         Route::post('/store_service', [ServicesController::class, 'store'])->name('service.store');
         Route::post('/update_service', [ServicesController::class, 'update'])->name('service.update')->middleware('plan.expiration', 'admin.access');
         Route::get('/service/remove_image/{id}/{key_id}', [ServicesController::class, 'remove_image'])->name('service.remove_image');
         Route::delete('/destroy_service', [ServicesController::class, 'destroy'])->name('service.destroy');
 
+        #services_offer
         Route::get('/services_offer/employer', [ServicesProposalController::class, 'employer_proposals'])->name('employer_proposals')->middleware('employer.access');
         Route::get('/services_offer/employer/fetch_data', [ServicesProposalController::class, 'fetch_employer_proposals'])->name('fetch_employer_proposals')->middleware('employer.access');
         Route::get('/services_offer/pending', [ServicesProposalController::class, 'pending'])->name('pending');
@@ -213,7 +218,7 @@ use App\Events\ProjectMessageEvent;
         Route::get('/service_proposal_information/{id}', [ServicesProposalController::class, 'service_proposal_information'])->name('service_proposal_information');
         Route::delete('saved_projects/delete/{id}', [SaveProjectController::class, 'destroy'])->name('saved_project.destroy');
 
-
+        # projects
         Route::post('/store_project', [ProjectsController::class, 'store'])->name('project.store');
         Route::post('/update_project', [ProjectsController::class, 'update'])->name('project.update');
         Route::get('/remove_project_image/{id}/{key_id}', [ProjectsController::class, 'remove_project_image'])->name('project.remove_image');

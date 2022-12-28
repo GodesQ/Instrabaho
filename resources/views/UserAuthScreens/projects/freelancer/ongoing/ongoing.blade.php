@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="card">
+                        <div class="card" style="width: 100vw important;">
                             <div class="card-body">
                                 No Projects Found
                             </div>
