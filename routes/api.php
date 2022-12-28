@@ -22,11 +22,11 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 
-Route::get('projects', [ProjectsController::class, 'projects']);
-
-Route::get('freelancers', [FreelancersController::class, 'freelancers']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
+    Route::get('projects', [ProjectsController::class, 'projects']);
+    Route::get('freelancers', [FreelancersController::class, 'freelancers']);
 
     Route::group(['middleware' => ['employer.access']], function () {
 

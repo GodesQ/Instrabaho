@@ -48,10 +48,24 @@
                         <div class="col-lg-4">
                             <div class="card">
                                 <div class="card-body">
+
+                                    @if ($contract->status && $contract->job_done)
+                                        <div class="bs-callout-success callout-bordered my-1" >
+                                            <div class="media align-items-stretch">
+                                                <div class="d-flex align-items-center bg-success p-2">
+                                                    <i class="fa fa-thumbs-o-up white font-medium-5"></i>
+                                                </div>
+                                                <div class="media-body d-flex align-items-center justify-content-center">
+                                                    <strong>This Contract is completed!</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
                                     @csrf
                                     <input type="hidden" name="contract_id" data-id="{{ $contract->id }}" id="contract_id">
                                     <div class="text-right">
-                                        @if (session()->get('role') == 'employer' && $contract->is_start_working)
+                                        @if (session()->get('role') == 'employer' && $contract->is_start_working && !$contract->status)
                                             <a href="/pay_job/project/{{ $contract->id }}" class="btn btn-primary job-completed-btn">Job Complete</a>
                                         @endif
 
@@ -65,7 +79,7 @@
                                             <h4 class="font-weight-bold text-uppercase">Fixed Type Project</h4>
                                             <ul class="list-group">
                                                 <li class="list-group-item">Start Working Date: <span class="font-weight-bold working-date-text">{{ $contract->start_working_date ? date_format(new DateTime($contract->start_working_date), 'M d, Y h:i:s A') : 'No Date Found' }}</span></li>
-                                                <li class="list-group-item">Job Done Date: <span class="font-weight-bold job-done-date">{{ $contract->job_done_date ? date_format(new DateTime($contract->job_done_date), 'F d, Y H:i:s') : 'No Date Found' }}</span></li>
+                                                <li class="list-group-item">Job Done Date: <span class="font-weight-bold job-done-date">{{ $contract->job_done_date ? date_format(new DateTime($contract->job_done_date), 'F d, Y h:i:s A') : 'No Date Found' }}</span></li>
                                             </ul>
                                         </div>
                                     @else

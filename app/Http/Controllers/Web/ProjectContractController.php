@@ -50,13 +50,14 @@ class ProjectContractController extends Controller
 
         $contract = ProjectContract::where('id', $request->id)->first();
 
+        if($contract->is_verify_code) return redirect()->route('contract.track', $contract->id)->with('success', 'Verify Successfully');
+
         $employer = Employer::where('user_id', session()->get('id'))->first();
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
 
-
         # if the user is freelancer
         if(session()->get('role') == 'freelancer') {
-            if($contract->freelancer_id != $freelancer->id) abort(403);
+            abort_if($contract->freelancer_id != $freelancer->id, 403);
         }
 
         $redirect_link = url('') . '/project/contract/' . $contract->code;
@@ -72,7 +73,7 @@ class ProjectContractController extends Controller
             if(session()->get('role') == 'employer') {
                 $employer = Employer::where('id', $contract->employer_id)->first();
                 abort_if($employer->user_id != session()->get('id'), 403);
-                return redirect()->route('contract.validate_code')->with('fail', 'Verify First before continue.');
+                return redirect()->route('contract.validate_code', $contract->id)->with('fail', 'Verify First before continue.');
             }
 
             if(session()->get('role') == 'freelancer') {
@@ -86,6 +87,7 @@ class ProjectContractController extends Controller
     }
 
     public function validate_code(Request $request) {
+
         return view('UserAuthScreens.contracts.code-verification-form');
     }
 

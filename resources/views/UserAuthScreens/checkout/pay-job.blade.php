@@ -1,8 +1,11 @@
 @extends('layout.user-layout')
 
-@section('title', 'Pay Job - INSTRABAHO')
+@section('title')
+    PAY JOB - {{ $job_data['title'] }}
+@endsection
 
 @section('content')
+
 @if(Session::get('fail'))
     @push('scripts')
         <script>
@@ -20,15 +23,15 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="card-title">Payment Information</div>
-                                    <div class="border-bottom d-flex justify-content-between align-items-center px-2">
+                                    <div class="border-bottom d-lg-flex justify-content-between px-2">
                                         <h4>Job Type</h4>
                                         <h5 class="font-weight-bold text-uppercase">{{ $job_data['job_type'] }}</h5>
                                     </div>
-                                    <div class="border-bottom d-flex justify-content-between align-items-center px-2 my-2">
+                                    <div class="border-bottom d-lg-flex justify-content-between px-2 my-2">
                                         <h4>Date</h4>
                                         <h5 class="font-weight-bold">{{ date('F d, Y') }}</h5>
                                     </div>
-                                    <div class="border-bottom d-flex justify-content-between align-items-center px-2 my-2">
+                                    <div class="border-bottom d-lg-flex justify-content-between px-2 my-2">
                                         <h4>Total Cost</h4>
                                         <h5 class="font-weight-bold">{{ number_format($job_data['cost'], 2) }}</h5>
                                         <input type="hidden" name="job_cost" id="job_cost" value="{{ $job_data['cost'] }}">
@@ -39,7 +42,7 @@
                                                 <h5 class="font-weight-bold">Payment Option</h5>
                                             </div>
                                             <div class="col-md-12 col-sm-12">
-                                                <ul class="list-group">
+                                                <ul class="list-group my-1">
                                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                                         <fieldset>
                                                             <input type="radio" name="payment_method" class="payment_method mr-2" value="pay_using_wallet" id="input-radio-20">
@@ -48,7 +51,7 @@
                                                         <!-- <img src="../../../images/logo/gcash-logo.png" style="width: 50px;"> -->
                                                     </li>
                                                     <hr>
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                                                         <fieldset>
                                                             <input type="radio" name="payment_method" class="payment_method mr-2" value="gcash" id="input-radio-14">
                                                             <label for="input-radio-14">G CASH</label>
@@ -83,7 +86,7 @@
                                                         </fieldset>
                                                         <img src="../../../images/logo/credit-card.png" style="width: 50px;">
 
-                                                    </li>
+                                                    </li> --}}
                                                 </ul>
                                                 <span class="text-danger danger">@error('payment_method'){{ $message }}@enderror</span>
                                             </div>
@@ -97,24 +100,24 @@
                                 <div class="card-body">
                                     <div class="card-title">Summary</div>
                                     <div class="container-fluid">
-                                        <div class="d-flex justify-content-between align-items-center font-weight-normal my-50">
+                                        <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
                                             <h5 style="width: 20%;" class="font-weight-bold">Title :</h5>
-                                            <h4 style="width: 80%;" class="text-right">{{ $job_data['title'] }}</h4>
+                                            <h4 style="width: 80%;" class="text-lg-right">{{ $job_data['title'] }}</h4>
                                         </div>
-                                        <div class="d-flex justify-content-between align-items-center font-weight-normal my-50">
+                                        <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
                                             <h5 class="font-weight-bold">Sub Total :</h5>
                                             <h4>₱ <span class="job_cost_display">{{ number_format($job_data['cost'], 2) }}</span></h4>
                                         </div>
-                                        <div class="d-flex justify-content-between align-items-center font-weight-normal my-50">
+                                        <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
                                             <h5 class="font-weight-bold">Payment Method :</h5>
                                             <h4 class="payment_method_display"></h4>
                                         </div>
-                                        <div class="d-flex justify-content-between align-items-center font-weight-normal my-50">
+                                        <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
                                             <h5 class="font-weight-bold">System Deduction :</h5>
                                             <h4 class="system_deduction_display"></h4>
                                         </div>
                                         <hr>
-                                        <div class="d-flex justify-content-between align-items-center font-weight-normal my-50">
+                                        <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
                                             <h5 class="font-weight-bold">Total :</h5>
                                             <h4>₱ <span class="total_display">{{ number_format($job_data['cost'], 2) }}</span></h4>
                                         </div>
