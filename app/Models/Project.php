@@ -11,6 +11,13 @@ class Project extends Model
     protected $table = 'projects';
     protected $guarded = [];
 
+    protected $casts = [
+        'employer_id' => 'integer',
+        'cost' => 'integer',
+        'category_id' => 'integer',
+        'total_cost' => 'integer'
+    ];
+
 
     public function getSkills() {
         return $this->skills_name;
