@@ -45,7 +45,7 @@
                         <button onclick="history.back()" class="btn btn-secondary">Back</button>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-5 col-xl-4">
                             <div class="card">
                                 <div class="card-body">
 
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-xl-8 col-lg-7">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="header d-flex justify-content-between align-items-center">

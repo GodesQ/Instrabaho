@@ -18,7 +18,6 @@ class Project extends Model
         'total_cost' => 'integer'
     ];
 
-
     public function getSkills() {
         return $this->skills_name;
     }
@@ -27,10 +26,6 @@ class Project extends Model
         $skills = Skill::whereIn('id', $value)->get('skill_name');
         return $this->skills_name = $skills;
     }
-
-    // public function freelancer() {
-    //     return $this->belongsTo(Freelancer::class);
-    // }
 
     public function employer() {
         return $this->belongsTo(Employer::class);

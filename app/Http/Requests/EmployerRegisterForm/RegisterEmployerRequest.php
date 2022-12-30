@@ -28,7 +28,7 @@ class RegisterEmployerRequest extends FormRequest
             'tagline' => 'required',
             'number_employees' => 'required|in:0,1-10,11-20,21-30,31-50',
             'contactno' => 'required|numeric',
-            'description' => 'required|min:10|max:500',
+            'description' => 'required|max:500',
             'address' => 'required',
             'latitude' => 'required',
             'longitude' => 'required'

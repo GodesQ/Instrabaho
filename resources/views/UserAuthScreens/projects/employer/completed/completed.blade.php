@@ -19,7 +19,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <a href="/project/view/{{ $completed_project->project->id }}" class="font-weight-bold h4 info">{{ $completed_project->project->title }}</a>
-                                            <h6>{{ $completed_project->project->category->name }}</h6>
+                                            <h6 class="warning">{{ $completed_project->project->category->name }}</h6>
                                         </div>
                                         <span class="dropdown">
                                             <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right">
@@ -37,7 +37,7 @@
                                     </ul> --}}
                                     <div class="text-right">
                                         <a href="/project/contract/view/{{ $completed_project->contract ? $completed_project->contract->id : null }}" class="info mx-50">View Contract</a>
-                                        <a href="/" class="btn btn-primary mx-50">Add Review</a>
+                                        <a href="/review_freelancer/project/{{ $completed_project->contract->id }}" class="btn btn-primary mx-50">Add Review</a>
                                     </div>
                                 </div>
                             </div>

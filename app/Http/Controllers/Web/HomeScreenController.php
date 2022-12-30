@@ -20,6 +20,7 @@ use App\Models\EmployerFollower;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
+use Luigel\Paymongo\Facades\Paymongo;
 
 class HomeScreenController extends Controller
 {
@@ -35,6 +36,35 @@ class HomeScreenController extends Controller
         $freelancers = Freelancer::limit(10)->get();
         $projects = Project::where('status', 'pending')->limit(8)->with('category', 'employer')->latest('id')->get();
         return view('welcome', compact('freelancers', 'projects'));
+    }
+
+    public function test(Request $request) {
+        $gcashSource = Paymongo::source()->create([
+            'type' => 'gcash',
+            'amount' => 500,
+            'description' => 'Testing payment',
+            'statement_descriptor' => 'Test Paymongo',
+            'currency' => 'PHP',
+            'redirect' => [
+                'success' => 'https://instrabaho.com',
+                'failed' => 'https://instrabaho.com/login'
+            ]
+        ]);
+
+        // session()->put('paymongo_id', $gcashSource->id);
+
+        // $payment = Paymongo::payment()
+        // ->create([
+        //     'amount' => 100,
+        //     'currency' => 'PHP',
+        //     'description' => 'Testing payment',
+        //     'statement_descriptor' => 'Test Paymongo',
+        //     'source' => [
+        //         'id' => $gcashSource->id,
+        //         'type' => 'source'
+        //     ]
+        // ]);
+        return redirect($gcashSource->redirect['checkout_url']);
     }
 
     public function freelancer(Request $request) {

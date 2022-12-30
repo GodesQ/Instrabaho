@@ -19,7 +19,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <a href="/project/view/{{ $data->project->id }}" class="font-weight-bold h4 info">{{ $data->project->title }}</a>
-                                            <h6>{{ $data->project->category->name}}</h6>
+                                            <h6 class="warning">{{ $data->project->category->name}}</h6>
                                         </div>
                                         <span class="dropdown">
                                             <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-v"></i></a>
