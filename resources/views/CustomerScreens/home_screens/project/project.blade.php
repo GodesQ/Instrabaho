@@ -223,7 +223,9 @@
                 </div>
                 <div class="fr-project-f-profile">
                    <div class="fr-project-f-product">
-                     <div class="fr-project-f-fetured"> <a href=""><img src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" style="height: 100px !important; object-fit: cover !important;" alt="" class="img-fluid"></a> </div>
+                     <div class="fr-project-f-fetured"> <a href="">
+                        <img src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" style="width: 100px; height: 100px !important; object-fit: cover !important;" alt="" class="img-fluid"></a>
+                    </div>
                    </div>
                    <div class="fr-project-f-user-details">
                       <a href="">
@@ -297,14 +299,3 @@
 <script src="../../../js/user-location.js"></script>
 @endsection
 
-
-@push('scripts')
-<script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
-<script>
-  $('#region').on('change', function(){
-     $('#province').ph_locations({'location_type': 'provinces'});
-  });
-
-  $('#region').ph_locations('fetch_list');
-</script>
-@endpush

@@ -33,7 +33,7 @@ use App\Http\Controllers\Web\SkillsController;
 use App\Http\Controllers\Web\ServiceCategoriesController;
 use App\Http\Controllers\Web\ProjectContractController;
 use App\Http\Controllers\Web\NotificationController;
-
+use App\Http\Controllers\Web\FreelancerReviewsController;
 
 use App\Http\Controllers\Web\Admin\AdminAuthController;
 use App\Http\Controllers\Web\Admin\AdminController;
@@ -87,6 +87,22 @@ use App\Events\ProjectMessageEvent;
 
     Route::get('/freelance_packages', [FreelancePackagesController::class, 'freelance_packages'])->name('freelance_package');
     Route::get('/employer_packages', [EmployerPackagesController::class, 'employer_package'])->name('employer_package');
+
+    Route::get('/test_paymongo', [HomeScreenController::class, 'test'])->name('paymongo.test');
+
+    Route::get('/webhooks', function(Request $request) {
+        session()->get('data', $request->all());
+    });
+
+    Route::get('/allwebhooks', function(Request $request) {
+        $webhook = Paymongo::webhook()->all();
+        dd($webhook);
+        // Enable webhook
+        $webhook = Paymongo::webhook()->find('hook_3G54foSjYh7Qz3nbyUn7u8XY')->enable();
+
+        // Disable webhook
+        $webhook = Paymongo::webhook()->find('hook_7hhXYqUKBXGVt5E6GXAT7Ro9')->disable();
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -186,6 +202,9 @@ use App\Events\ProjectMessageEvent;
         Route::put('/project/contract/start_working', [ProjectContractController::class, 'start_working'])->name('contract.start_working');
         Route::put('/project/contract/store_time', [ProjectContractController::class, 'store_time'])->name('contract.store_time');
 
+        Route::get('/review_freelancer/{job_type}/{contract_id}', [FreelancerReviewsController::class, 'create'])->name('review.freelancer');
+        Route::post('/review_freelancer', [FreelancerReviewsController::class, 'store'])->name('post-review.freelancer');
+
         # this is for freelancers
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');
@@ -244,11 +263,13 @@ use App\Events\ProjectMessageEvent;
         Route::get('/pay_job/{type}/{id}', [TransactionsController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
         Route::post('/pay_job', [TransactionsController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
 
+        Route::get('transaction-message/success', [TransactionsController::class, 'success'])->name('transaction.success');
+        Route::get('transaction-message/failed', [TransactionsController::class, 'failed'])->name('transaction.failed');
+
         Route::get('/transaction-message', [TransactionsController::class, 'transaction_messaage'])->name('transaction_messaage');
         Route::post('/post-transaction-message',  [TransactionsController::class, 'postback_transaction'])->name('postback_transaction');
         Route::get('/check_status',  [TransactionsController::class, 'check_status'])->name('check_status');
 
-        Route::get('/transaction_details/paid_by_wallet', [TransactionsController::class, 'paid_by_wallet_message'])->name('transaction_paid_by_wallet');
     });
 
     /* ----------------------------------------- ADMIN ROUTES -------------------------------------------- */

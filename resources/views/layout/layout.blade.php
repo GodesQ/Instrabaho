@@ -86,7 +86,7 @@
 
         <!-- MAIN CSS -->
         <link href="{{ URL::asset('css/theme.css') }}" rel="stylesheet" />
-        
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
 
         <link rel="icon"  href="../../../images/cropped-favicon-32x32.png" sizes="32x32" />
@@ -337,11 +337,9 @@
         <script type="text/javascript" src="js/jquery-3.6.0.js"></script>
         <!-- BEGIN: Vendor JS-->
         <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
-        <script src="../../../app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
         <!-- BEGIN Vendor JS-->
 
         <!-- BEGIN: Page Vendor JS-->
-        <script src="../../../app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js"></script>
         <!-- END: Page Vendor JS-->
 
         <!-- BEGIN: Theme JS-->
@@ -357,7 +355,6 @@
         <script type="text/javascript" src="{{ asset('/js/jquery-migrate-3.3.2.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/bootstrap.bundle.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/select2.full.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/js/protip.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/youtube-popup-jquery.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/masonry.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/counter.js') }}"></script>

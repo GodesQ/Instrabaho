@@ -1,10 +1,14 @@
 @extends('layout.user-layout')
 
+@section('title')
+    {{ $employer->user->firstname . ' ' . $employer->user->lastname}}
+@endsection
+
 @section('content')
 <style>
     .icon-con-circle {
-        border-radius: 50px; 
-        width: 40px; 
+        border-radius: 50px;
+        width: 40px;
         height: 40px;
     }
     .cover-image {
@@ -22,7 +26,7 @@
         height: 50px;
         display: flex;
         justify-content: center;
-        
+
     }
     .profile-image img {
         width: 80px;
