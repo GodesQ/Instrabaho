@@ -90,18 +90,33 @@ use App\Events\ProjectMessageEvent;
 
     Route::get('/test_paymongo', [HomeScreenController::class, 'test'])->name('paymongo.test');
 
-    Route::get('/webhooks', function(Request $request) {
-        session()->get('data', $request->all());
+    Route::post('/webhooks', function() {
+        $payLoad = json_decode(request()->getContent(), true);
+        $evt = $payLoad['data']['id'];
+        session()->put('evt_id', $evt);
     });
 
     Route::get('/allwebhooks', function(Request $request) {
+        // $webhook = Paymongo::webhook()->create([
+        //     'url' => 'http://127.0.0.1:8000/webhooks',
+        //     'events' => [
+        //         'source.chargeable',
+        //         'payment.paid',
+        //         'payment.failed'
+        //     ]
+        // ]);
+
+        // $webhook = Paymongo::webhook()->find('hook_3G54foSjYh7Qz3nbyUn7u8XY')->update([
+        //     'url' => 'http://127.0.0.1:8000/webhooks'
+        // ]);
+
         $webhook = Paymongo::webhook()->all();
         dd($webhook);
         // Enable webhook
-        $webhook = Paymongo::webhook()->find('hook_3G54foSjYh7Qz3nbyUn7u8XY')->enable();
+        // $webhook = Paymongo::webhook()->find('hook_3G54foSjYh7Qz3nbyUn7u8XY')->enable();
 
         // Disable webhook
-        $webhook = Paymongo::webhook()->find('hook_7hhXYqUKBXGVt5E6GXAT7Ro9')->disable();
+        // $webhook = Paymongo::webhook()->find('hook_3G54foSjYh7Qz3nbyUn7u8XY')->disable();
     });
 
     /*
@@ -263,8 +278,8 @@ use App\Events\ProjectMessageEvent;
         Route::get('/pay_job/{type}/{id}', [TransactionsController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
         Route::post('/pay_job', [TransactionsController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
 
-        Route::get('transaction-message/success', [TransactionsController::class, 'success'])->name('transaction.success');
-        Route::get('transaction-message/failed', [TransactionsController::class, 'failed'])->name('transaction.failed');
+        Route::get('transaction-message/{txn_code}/success', [TransactionsController::class, 'success'])->name('transaction.success');
+        Route::get('transaction-message/{txn_code}/failed', [TransactionsController::class, 'failed'])->name('transaction.failed');
 
         Route::get('/transaction-message', [TransactionsController::class, 'transaction_messaage'])->name('transaction_messaage');
         Route::post('/post-transaction-message',  [TransactionsController::class, 'postback_transaction'])->name('postback_transaction');

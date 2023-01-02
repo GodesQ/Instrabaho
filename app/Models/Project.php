@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Project extends Model
 {
@@ -15,7 +16,7 @@ class Project extends Model
         'employer_id' => 'integer',
         'cost' => 'integer',
         'category_id' => 'integer',
-        'total_cost' => 'integer'
+        'total_cost' => 'integer',
     ];
 
     public function getSkills() {
@@ -37,6 +38,10 @@ class Project extends Model
 
     public function contract() {
         return $this->hasOne(ProjectContract::class, 'project_id', 'id');
+    }
+
+    public function skills() {
+        return $this->belongsToMany(Skill::class, 'skills');
     }
 
 }

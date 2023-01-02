@@ -46,8 +46,8 @@ class HomeScreenController extends Controller
             'statement_descriptor' => 'Test Paymongo',
             'currency' => 'PHP',
             'redirect' => [
-                'success' => 'https://instrabaho.com',
-                'failed' => 'https://instrabaho.com/login'
+                'success' => url(''),
+                'failed' => url('') . '/login'
             ]
         ]);
 
