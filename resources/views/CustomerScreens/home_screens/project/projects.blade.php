@@ -24,13 +24,13 @@
                     </div>
                     <div class="fr-right-product">
                         <ul class="skills">
-                            <!-- convert the json array ids into model and get to fetch in blade -->
+                            {{-- <!-- convert the json array ids into model and get to fetch in blade -->
                             @php $project->setSkills(json_decode($project->skills)) @endphp
                             @php $project->getSkills() @endphp
 
                             @foreach($project->skills_name as $skill)
                                 <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
-                            @endforeach
+                            @endforeach --}}
 
                         </ul>
                     </div>

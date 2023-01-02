@@ -113,7 +113,7 @@ class TransactionsController extends Controller
                 $add_amount_to_freelancer = $this->AddAmountToFreelancer($freelancer, $total, $freelancer_wallet);
 
                 // Generate Transaction Code
-                $transaction_code = strtoupper(Str::random(8));
+                $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
 
                 // Create Transaction Data
                 $create_transaction = Transaction::create([
@@ -157,31 +157,38 @@ class TransactionsController extends Controller
 
             case 'gcash':
 
-                $gcashSource = Paymongo::source()->create([
-                    'type' => 'gcash',
-                    'amount' => $total,
-                    'currency' => 'PHP',
-                    'redirect' => [
-                        'success' => 'http://192.168.100.71:8000/transaction-message/success',
-                        'failed' => 'http://192.168.100.71:8000/transaction-message/failed'
-                    ]
-                ]);
-
                 // Generate Transaction Code
-                $transaction_code = strtoupper(Str::random(8));
+                $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
 
                 // Create Transaction Data
-                $create_transaction = Transaction::create([
+                $transaction = Transaction::create([
                     'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
                     'transaction_code' => $transaction_code,
                     'amount' => $total,
                     'from_id' => $employer->user_id,
                     'to_id' => $freelancer->user_id,
                     'payment_method' => $request->payment_method,
-                    'status' => $gcashSource->status
+                    'status' => 'initial'
                 ]);
 
-                return redirect($gcashSource->redirect['checkout_url']);
+                $payload = [
+                    'type' => $request->payment_method,
+                    'amount' => $total,
+                    'currency' => 'PHP',
+                    'redirect' => [
+                        'success' => route('transaction.success', $transaction->transaction_code),
+                        'failed' =>  route('transaction.failed', $transaction->transaction_code),
+                    ]
+                ];
+
+                $source = Paymongo::source()->create($payload);
+
+                $transaction->update([
+                    'src_id' => $source->id,
+                    'status' => $source->status,
+                ]);
+
+                return redirect($source->redirect['checkout_url']);
 
             case 'paymaya':
                 # code...
@@ -232,10 +239,72 @@ class TransactionsController extends Controller
     }
 
     public function success(Request $request) {
+        $transaction = Transaction::where('transaction_code', $request->txn_code)->with('user_from', 'user_to')->first();
+
+        $source = Paymongo::source()->find($transaction->src_id);
+
+        if ($transaction->status == 'pending') {
+            $transaction->update([
+                'source_callback_response' => $source->getAttributes(),
+                'status' => $source->status,
+            ]);
+        }
+
+        switch ($source->status) {
+            case 'chargeable':
+                $payment = Paymongo::payment()->create([
+                    'amount' => $transaction->amount,
+                    'description' => $transaction->readable_type . ' Payment for Transaction Code: ' . $transaction->transaction_code,
+                    'currency' => 'PHP',
+                    'statement_descriptor' => $transaction->user_from->firstname . ' ' . $transaction->user_to->lastname,
+                    'source' => [
+                        'id' => $source->id,
+                        'type' => 'source',
+                    ]
+                ]);
+
+                $transaction->update([
+                    'payment_response' => $payment->getAttributes(),
+                    'pay_id' => $payment->id,
+                    'status' => $payment->status
+                ]);
+                break;
+
+            case 'paid':
+                if (!$transaction->pay_id) {
+                    foreach (Paymongo::payment()->all() as $payment) {
+                        if ($payment->source['id'] == $transaction->src_id) {
+                            $transaction->update([
+                                'pay_id' => $payment->id,
+                                'status' => $payment->status
+                            ]);
+                            break;
+                        }
+                    }
+                } else {
+                    $payment = Paymongo::payment()->find($transaction->pay_id);
+                    $transaction->update([
+                        'pay_id' => $payment->id,
+                        'status' => $payment->status
+                    ]);
+                }
+                break;
+        }
+        
         return view('AllScreens.misc.transaction-messages.success');
     }
 
     public function failed(Request $request) {
+        $transaction = Transaction::where('transaction_code', $request->txn_code)->with('user_from', 'user_to')->first();
+        $source = Paymongo::source()->find($transaction->src_id);
+
+        if ($transaction->status == 'pending') {
+            $transaction->update([
+                'source_callback_response' => $source->getAttributes(),
+                'status' => 'fail',
+            ]);
+        }
+        
         return view('AllScreens.misc.transaction-messages.failed');
     }
 }
