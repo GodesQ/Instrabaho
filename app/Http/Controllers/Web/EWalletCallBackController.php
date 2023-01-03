@@ -5,6 +5,25 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Luigel\Paymongo\Facades\Paymongo;
+
+use App\Models\ServicesProposal;
+use App\Models\User;
+use App\Models\Freelancer;
+use App\Models\Employer;
+use App\Models\ProjectProposal;
+use App\Models\ProjectOffer;
+use App\Models\UserWallet;
+use App\Models\Invoice;
+use App\Models\InvoiceItem;
+use App\Models\Transaction;
+use App\Models\ProjectContract;
+use App\Models\EWalletPayment;
+use App\Models\CardPayment;
+use App\Models\ProjectPayment;
+
+
+
 class EWalletCallBackController extends Controller
 {
     public function success(Request $request) {

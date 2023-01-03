@@ -24,9 +24,11 @@ class StoreReviewFreelancerRequest extends FormRequest
     public function rules()
     {
         return [
+            'reviewer_id' => 'required|exists:user_employer,id',
+            'freelancer_id' => 'required|exists:user_freelancer,id',
             'freelancer_rate' => 'required|int|in:1,2,3,4,5',
-            'message' => 'nullable|max:400',
-            'image' => 'nullable|max:400',
+            'review' => 'nullable|max:400',
+            'review_image' => 'nullable|max:400',
             'job_id' => 'required',
             'job_type' => 'required|in:project,service'
         ];

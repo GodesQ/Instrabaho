@@ -196,7 +196,6 @@ class TransactionsController extends Controller
                         'transaction_code' => $transaction->transaction_code,
                         'sub_total' => $project_contract->total_cost,
                         'total' => $total,
-                        'status' => 'initial',
                     ]);
                 }
 
@@ -227,10 +226,6 @@ class TransactionsController extends Controller
                     'status' => $source->status,
                 ]);
 
-                $project_payment->update([
-                    'status' => $source->status
-                ]);
-
                 return redirect($source->redirect['checkout_url']);
 
             case 'paymaya':
@@ -255,8 +250,21 @@ class TransactionsController extends Controller
                     'status' => 'initial'
                 ]);
 
+                if($request->job_type == 'project') {
+                    // Create Project Payment Data
+                    $project_payment = ProjectPayment::create([
+                        'user_id' => $employer->user_id,
+                        'contract_id' => $project_contract->id,
+                        'transaction_code' => $transaction->transaction_code,
+                        'sub_total' => $project_contract->total_cost,
+                        'total' => $total,
+                    ]);
+                }
+
                 $cardPayment = CardPayment::create([
                     'user_id' => $employer->user_id,
+                    'amount' => $total,
+                    'sub_amount' => $project_contract->total_cost,
                     'transaction_code' => $transaction->transaction_code
                 ]);
 
@@ -288,7 +296,6 @@ class TransactionsController extends Controller
                 ]);
 
                 $transaction->update([
-                    'pi_id' => $paymentIntent->id,
                     'status' => $paymentIntent->status,
                 ]);
 
@@ -309,10 +316,6 @@ class TransactionsController extends Controller
                 $cardPayment->update([
                     'pm_id' => $paymentMethod->id,
                     'payment_method_response' => $paymentMethod->getAttributes(),
-                ]);
-
-                $transaction->update([
-                    'pm_id' => $paymentMethod->id,
                 ]);
 
                 return $this->attachPaymentToIntent($paymentIntent, $paymentMethod, $transaction, $cardPayment);
@@ -377,7 +380,7 @@ class TransactionsController extends Controller
         ]);
 
         $project_payment = ProjectPayment::where('transaction_code', $transaction->transaction_code)->first();
-
+        
         if($project_payment) {
             $project_contract = ProjectContract::where('id', $project_payment->contract_id)->first();
 
@@ -426,7 +429,6 @@ class TransactionsController extends Controller
         ]);
 
         $transaction->update([
-            'payment_attach_response' => $paymentIntent->getAttributes(),
             'status' => $paymentIntent->status,
         ]);
 
