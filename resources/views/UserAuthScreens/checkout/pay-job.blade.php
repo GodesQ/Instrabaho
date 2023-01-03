@@ -13,6 +13,27 @@
         </script>
     @endpush
 @endif
+
+@if(Session::get('error'))
+    @push('scripts')
+        <script>
+            toastr.error('{{ Session::get("error") }}', 'Fail');
+        </script>
+    @endpush
+@endif
+
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        @push('scripts')
+            <script>
+                toastr.error('{{ $error }}', 'Error')
+            </script>
+        @endpush
+    @endforeach
+@endif
+
+
     <div class="page-wrapper">
         <div class="page-content">
             <div class="container">
@@ -48,7 +69,7 @@
                                                             <input type="radio" name="payment_method" class="payment_method mr-2" value="pay_using_wallet" id="input-radio-20">
                                                             <label for="input-radio-20">Pay using your Wallet</label>
                                                         </fieldset>
-                                                        <!-- <img src="../../../images/logo/gcash-logo.png" style="width: 50px;"> -->
+                                                        {{-- <!-- <img src="../../../images/logo/gcash-logo.png" style="width: 50px;"> --> --}}
                                                     </li>
                                                     <hr>
                                                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -57,6 +78,13 @@
                                                             <label for="input-radio-14">G CASH</label>
                                                         </fieldset>
                                                         <img src="../../../images/logo/gcash-logo.png" style="width: 50px;">
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <fieldset>
+                                                            <input type="radio" name="payment_method" class="payment_method mr-2" value="grab_pay" id="input-radio-17">
+                                                            <label for="input-radio-17">GRAB PAY</label>
+                                                        </fieldset>
+                                                        <img src="../../../images/logo/grabpay.png" style="width: 50px;">
                                                     </li>
                                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                                         <fieldset>
@@ -77,6 +105,54 @@
                                                 </ul>
                                                 <span class="text-danger danger">@error('payment_method'){{ $message }}@enderror</span>
                                             </div>
+                                            <div class="col-md-12">
+                                                <div class="card" id="cc_form" style="box-shadow: 1px 0px 20px rgb(0 0 0 / 7%) !important; background: #fff; display: none;">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-xl-6">
+                                                                <div class="form-group">
+                                                                    <label class="label">Card Holder:</label>
+                                                                    <input type="text" class="form-control"  placeholder="Card Holder" name="card_holder">
+                                                                    <span class="text-danger danger">@error('card_holder'){{ $message }}@enderror</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6">
+                                                                <div class="form-group">
+                                                                    <label class="label">Card number:</label>
+                                                                    <input type="text" class="form-control" data-mask="0000000000000000" name="card_number">
+                                                                    <span class="text-danger danger">@error('card_number'){{ $message }}@enderror</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6">
+                                                                <div class="row">
+                                                                    <div class="col-xl-6 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="label">Expiry Month:</label>
+                                                                            <input type="text" class="form-control" data-mask="00" placeholder="00" name="expiry_month">
+                                                                            <span class="text-danger danger">@error('expiry_month'){{ $message }}@enderror</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-6 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <label class="label">Expiry Year:</label>
+                                                                            <input type="text" class="form-control" data-mask="00" placeholder="00" name="expiry_year">
+                                                                            <span class="text-danger danger">@error('expiry_year'){{ $message }}@enderror</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6">
+                                                                <div class="form-group">
+                                                                    <label class="label">CVC:</label>
+                                                                    <input type="text" class="form-control" data-mask="000" placeholder="000" name="cvc">
+                                                                    <span class="text-danger danger">@error('cvc'){{ $message }}@enderror</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -92,11 +168,7 @@
                                             <h4 style="width: 80%;" class="text-lg-right">{{ $job_data['title'] }}</h4>
                                         </div>
                                         <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
-                                            <h5 class="font-weight-bold">Sub Total :</h5>
-                                            <h4>₱ <span class="job_cost_display">{{ number_format($job_data['cost'], 2) }}</span></h4>
-                                        </div>
-                                        <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
-                                            <h5 class="font-weight-bold">Payment Method :</h5>
+                                            <h5 class="font-weight-bold">Payment Type :</h5>
                                             <h4 class="payment_method_display"></h4>
                                         </div>
                                         <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
@@ -104,6 +176,10 @@
                                             <h4 class="system_deduction_display"></h4>
                                         </div>
                                         <hr>
+                                        <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
+                                            <h5 class="font-weight-bold">Sub Total :</h5>
+                                            <h4>₱ <span class="job_cost_display">{{ number_format($job_data['cost'], 2) }}</span></h4>
+                                        </div>
                                         <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
                                             <h5 class="font-weight-bold">Total :</h5>
                                             <h4>₱ <span class="total_display">{{ number_format($job_data['cost'], 2) }}</span></h4>
@@ -135,22 +211,32 @@
             switch (this.value) {
                 case 'pay_using_wallet':
                     $('.payment_method_display').text('Pay using wallet');
+                    $('#cc_form').css('display', 'none');
                     break;
 
                 case 'gcash':
                     $('.payment_method_display').text('GCASH');
+                    $('#cc_form').css('display', 'none');
+                    break;
+
+                case 'grab_pay':
+                    $('.payment_method_display').text('GRABPAY');
+                    $('#cc_form').css('display', 'none');
                     break;
 
                 case 'paymaya':
                     $('.payment_method_display').text('PAYMAYA');
+                    $('#cc_form').css('display', 'none');
                     break;
 
                 case 'online_bank':
                     $('.payment_method_display').text('ONLINE BANK');
+                    $('#cc_form').css('display', 'none');
                     break;
 
-                case 'credit_card':
-                    $('.payment_method_display').text('CREDIT CARD');
+                case 'card':
+                    $('.payment_method_display').text('CARD');
+                    $('#cc_form').css('display', 'block');
                     break;
             }
         });

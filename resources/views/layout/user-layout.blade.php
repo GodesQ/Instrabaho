@@ -11,7 +11,7 @@
     <meta name="keywords" content="instrabaho, blue collars, skilled workers, Online Platform for skilled workers, Online Job Portal">
     <meta name="author" content="GODESQ DIGITAL MARKETING SERVICES">
     <title>@yield('title')</title>
-    <link rel="shortcut icon" type="image/x-icon" href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png">
+    <link rel="shortcut icon" href="{{ asset('images/cropped-favicon-32x32.png') }}" sizes="32x32" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
 
 
@@ -72,7 +72,7 @@
     <!-- END: Custom CSS-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
-    <link rel="icon" href="../../../images/cropped-favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" href="{{ asset('images/cropped-favicon-32x32.png') }}" sizes="32x32" />
 
     <style>
         .hide-profile-menu {
@@ -93,7 +93,7 @@
                     <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="feather icon-menu font-large-1"></i></a></li>
                     <li class="nav-item d-lg-flex justify-content-center align-items-center w-100">
                         <a class="navbar-brand" href="/">
-                            <img class="brand-text" alt="stack admin logo" src="../../../images/logo/main-logo.png" style="width: 140px;">
+                            <img class="brand-text" alt="stack admin logo" src="{{ asset('images/logo/main-logo.png') }}" style="width: 140px;">
                         </a>
                     </li>
                     <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="fa fa-ellipsis-v"></i></a></li>
@@ -128,9 +128,9 @@
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                 <div class="avatar avatar-online">
                                     @if(Session::get('profile_image'))
-                                        <img class="brand-text" style="width: 30px; height: 30px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
+                                        <img class="brand-text" style="width: 30px; height: 30px; object-fit: cover;" src="{{ asset('images/user/profile') . '/' . Session::get('profile_image')  }}" alt="Avatar Image">
                                     @else
-                                        <img class="brand-text" src="../../../images/user-profile.png" style="width: 30px; height: 30px; object-fit: cover;" alt="Avatar Image">
+                                        <img class="brand-text" src="{{ asset('images/user-profile.png') }}" style="width: 30px; height: 30px; object-fit: cover;" alt="Avatar Image">
                                     @endif<i></i>
                                 </div>
                             </a>
@@ -265,39 +265,39 @@
 
 
     <!-- BEGIN: Vendor JS-->
-    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
     <!-- BEGIN Vendor JS-->
 
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="../../../app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
-    <script src="../../../app-assets/vendors/js/extensions/dropzone.min.js"></script>
-    <script src="../../../app-assets/vendors/js/ui/jquery.sticky.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/chart.min.js"></script>
-    <script src="../../../app-assets/vendors/js/forms/repeater/jquery.repeater.min.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/apexcharts/apexcharts.min.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/leaflet/leaflet.js"></script>
-    <script src="../../../app-assets/vendors/js/forms/icheck/icheck.min.js"></script>
-    <script src="../../../app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/raphael-min.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/jquery.sparkline.min.js"></script>
-    <script src="../../../app-assets/vendors/js/extensions/unslider-min.js"></script>
-    <script src="../../../app-assets/js/scripts/forms/custom-file-input.js"></script>
-    <script src="../../../app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js"></script>
-    <script src="../../../app-assets/vendors/js/forms/toggle/switchery.min.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
-    <script src="../../../app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/jquery.steps.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/dropzone.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/charts/chart.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/repeater/jquery.repeater.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/charts/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/charts/leaflet/leaflet.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/icheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/jquery.knob.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/charts/raphael-min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/charts/morris.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/charts/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/unslider-min.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/custom-file-input.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/toggle/switchery.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/pickadate/picker.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/pickadate/picker.date.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/pickadate/picker.time.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/pickadate/legacy.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js') }}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
-    <script src="../../../app-assets/js/core/app-menu.js"></script>
-    <script src="../../../app-assets/js/core/app.js"></script>
+    <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script>
+    <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
 
     <!-- END: Theme JS-->
 
@@ -321,6 +321,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     @stack('scripts')
 

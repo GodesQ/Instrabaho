@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Freelancer;
-use App\Models\Users;
+use App\Models\User;
 
 class FreelancersController extends Controller
 {
@@ -20,21 +20,60 @@ class FreelancersController extends Controller
         ], 200);
     }
 
+    public function fetch_freelancers(Request $request) {
+
+        // data filters
+        $title = $request->input('title');
+        $address = $request->input('address');
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
+        $my_range = $request->input('hourly_rate');
+        $radius = $request->input('radius');
+        $result = $request->input('result');
+        $sort = $request->input('sort');
+
+        $freelancer_skills = $request->input('skills') ? json_decode($request->input('skill')) : [];
+        $freelance_type = $request->input('freelance_type') ? json_decode($request->input('freelance_type')) : [];
+
+        $freelancers = Freelancer::select('*')->when($title, function ($q) use ($title) {
+            return $q->where(DB::raw('lower(display_name)'), 'like', '%' . strtolower($title) . '%')
+                    ->orWhere(DB::raw('lower(tagline)'), 'like', '%' . strtolower($title) . '%')
+                    ->orWhere(DB::raw('lower(description)'), 'like', '%' . strtolower($title) . '%');
+        })
+        ->when($latitude and $longitude, function ($q) use ($latitude, $longitude, $radius, $sort) {
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
+            * cos(radians(user_freelancer.latitude))
+            * cos(radians(user_freelancer.longitude) - radians(" . $longitude . "))
+            + sin(radians(" .$latitude. "))
+            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', $radius)->orderBy("distance", 'asc');
+        })
+
+        ->with('user', 'certificates', 'experiences', 'educations', 'skills', 'services')
+        ->get();
+
+        return response()->json([
+            'status' => true,
+            'freelancers' => $freelancers
+        ], 200);
+
+    }
+
     public function save_role_form(Request $request) {
         $request->validate([
+            'id' => 'required|exists:user,id',
             'display_name' => 'required',
             'freelancer_type' => 'required',
-            'hourly_rate' => 'required',
+            'hourly_rate' => 'required|integer',
             'contactno' => 'required',
-            'gender' => 'required',
+            'gender' => 'required|in:Male,Female',
             'tagline' => 'required',
-            'description' => 'required',
+            'description' => 'required|min:10',
             'address' => 'required',
             'latitude' => 'required',
             'longitude' => 'required'
         ]);
 
-        $id = session()->get('id');
+        $id = $request->id;
 
         $save = Freelancer::create([
             'user_id' => $id,
@@ -49,6 +88,14 @@ class FreelancersController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude
         ]);
+
+        if($save) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Freelancer Account Successfully Added.',
+                'role' => 'freelancer'
+            ], 201);
+        }
 
     }
 }

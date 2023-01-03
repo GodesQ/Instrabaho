@@ -33,6 +33,7 @@ class AuthController extends Controller
         $validator = \Validator::make($request->all(), [
             'email' => ['required', 'email'],
             'password' => ['required', 'min:3'],
+            'role' => ['required', 'in:freelancer,employer']
         ]);
 
         # if the requested input have an error

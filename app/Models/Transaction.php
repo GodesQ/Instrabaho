@@ -14,7 +14,8 @@ class Transaction extends Model
 
     protected $casts = [
         'source_callback_response' => 'array',
-        'payment_response' => 'array'
+        'payment_response' => 'array',
+        'payment_attach_response' => 'array'
     ];
 
     public function user_from() {
