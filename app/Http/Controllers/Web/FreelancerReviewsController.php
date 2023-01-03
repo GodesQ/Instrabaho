@@ -23,6 +23,23 @@ class FreelancerReviewsController extends Controller
     }
 
     public function store(StoreReviewFreelancerRequest $request) {
-        dd($request->validated());
+        $data = $request->validated();
+        $attachment = $request->file('review_image');
+        $image_name =  null;
+        if($attachment) {
+            $image_name = $attachment->getClientOriginalName();
+            $save_file = $attachment->move(public_path().'/images/freelancer_reviews', $image_name);
+        }
+
+        $review = FreelancerReview::create(array_merge($data, ['review_image' => $image_name]));
+
+        if($request->job_type == 'project') {
+            ProjectContract::where('id', $request->job_id)->update([
+                'status' => 3
+            ]);
+        } 
+
+        if($review) return redirect()->route('employer.projects.completed')->withSuccess('Review Successfully Submitted.');
+        
     }
 }

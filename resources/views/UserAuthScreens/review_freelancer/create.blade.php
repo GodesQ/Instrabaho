@@ -83,10 +83,12 @@
                                     @endif
                                 </div>
                             </div>
-                            <form action="{{ route('post-review.freelancer' )}}" method="POST">
+                            <form action="{{ route('post-review.freelancer' )}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="job_type" value="{{ $job_type }}">
                                 <input type="hidden" name="job_id" value="{{ $contract->id }}">
+                                <input type="hidden" name="reviewer_id" value="{{ $contract->employer_id }}">
+                                <input type="hidden" name="freelancer_id" value="{{ $contract->freelancer_id }}">
                                 <div class="review-content">
                                     {{-- <div class="rate-container my-25">
                                         <div class="d-md-flex justify-content-start align-items-center">
@@ -117,12 +119,12 @@
                                     </div>
                                     <div class="form-group">
                                         <h3 class="font-weight-bold">Review</h3>
-                                        <textarea name="message" id="" cols="30" rows="10" class="form-control" placeholder="Write your review here...">{{ old('message') }}</textarea>
-                                        <span class="danger text-danger p-1">@error('message'){{$message}}@enderror</span>
+                                        <textarea name="review" id="" cols="30" rows="10" class="form-control" placeholder="Write your review here...">{{ old('review') }}</textarea>
+                                        <span class="danger text-danger p-1">@error('review'){{$message}}@enderror</span>
                                     </div>
                                     <div class="form-group">
                                         <h3 class="font-weight-bold">Upload Attachment</h3>
-                                        <input type="file" name="image" class="form-control">
+                                        <input type="file" name="review_image" class="form-control">
                                     </div>
                                 </div>
                                 <div class="btn-footer">
