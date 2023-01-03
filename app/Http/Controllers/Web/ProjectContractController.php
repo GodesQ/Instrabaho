@@ -67,9 +67,7 @@ class ProjectContractController extends Controller
 
     public function track(Request $request) {
         $contract = ProjectContract::where('id', $request->id)->with('project', 'proposal', 'tracker')->firstOrFail();
-
         if(!$contract->is_verify_code) {
-
             if(session()->get('role') == 'employer') {
                 $employer = Employer::where('id', $contract->employer_id)->first();
                 abort_if($employer->user_id != session()->get('id'), 403);

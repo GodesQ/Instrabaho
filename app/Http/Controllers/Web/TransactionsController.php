@@ -22,6 +22,9 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Transaction;
 use App\Models\ProjectContract;
+use App\Models\EWalletPayment;
+use App\Models\CardPayment;
+use App\Models\ProjectPayment;
 
 use App\Http\Requests\PayJob\PayJobRequest;
 
@@ -62,16 +65,6 @@ class TransactionsController extends Controller
         }
 
         return view('UserAuthScreens.checkout.pay-job', compact('job_data', 'user'));
-    }
-
-    public function check_status(Request $request) {
-        $freelancers = ProjectProposal::select('freelancer_id', DB::raw('COUNT(freelancer_id) AS occurrences'))
-        ->groupBy('freelancer_id')
-        ->where('status', 'completed')
-        ->orderBy('occurrences', 'DESC')
-        ->limit(10)
-        ->with('freelancer')
-        ->get();
     }
 
     public function pay_job(PayJobRequest $request) {
@@ -120,6 +113,7 @@ class TransactionsController extends Controller
                     'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
                     'transaction_code' => $transaction_code,
                     'amount' => $total,
+                    'sub_amount' => $project_contract->total_cost,
                     'from_id' => $employer->user_id,
                     'to_id' => $freelancer->user_id,
                     'payment_method' => $request->payment_method,
@@ -151,41 +145,90 @@ class TransactionsController extends Controller
                     $project_contract_save = $project_contract->project()->update([
                         'status' => 'completed'
                     ]);
-                }
 
-                return redirect('/transaction-message')->with('success', 'Success Sending Payment');
+                    // Create Project Payment Data
+                    $project_payment = ProjectPayment::create([
+                        'user_id' => $employer->user_id,
+                        'contract_id' => $project_contract->id,
+                        'transaction_code' => $create_transaction->transaction_code,
+                        'sub_total' => $project_contract->total_cost,
+                        'total' => $total,
+                        'status' => 'paid',
+                    ]);
+
+                }
+                return redirect()->route('transaction.success', ['txn_code' => $transaction->transaction_code])->with('success', 'Success Sending Payment');
 
             case 'gcash':
+            case 'grab_pay':
 
                 // Generate Transaction Code
                 $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
 
-                // Create Transaction Data
-                $transaction = Transaction::create([
-                    'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
-                    'transaction_code' => $transaction_code,
-                    'amount' => $total,
-                    'from_id' => $employer->user_id,
-                    'to_id' => $freelancer->user_id,
-                    'payment_method' => $request->payment_method,
-                    'status' => 'initial'
-                ]);
+                if($project_contract) {
+
+                    // Create Transaction Data
+                    $transaction = Transaction::create([
+                        'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
+                        'transaction_code' => $transaction_code,
+                        'amount' => $total,
+                        'sub_amount' => $project_contract->total_cost,
+                        'from_id' => $employer->user_id,
+                        'to_id' => $freelancer->user_id,
+                        'payment_method' => $request->payment_method,
+                        'status' => 'initial'
+                    ]);
+
+                    // Create E-Wallet Payment Data
+                    $eWalletPayment = EWalletPayment::create([
+                        'user_id' => $employer->user_id,
+                        'transaction_id' => $transaction->transaction_code,
+                        'amount' => $total,
+                        'sub_amount' => $project_contract->total_cost,
+                        'type' => $request->payment_method,
+                        'status' => 'initial',
+                    ]);
+
+                    // Create Project Payment Data
+                    $project_payment = ProjectPayment::create([
+                        'user_id' => $employer->user_id,
+                        'contract_id' => $project_contract->id,
+                        'transaction_code' => $transaction->transaction_code,
+                        'sub_total' => $project_contract->total_cost,
+                        'total' => $total,
+                        'status' => 'initial',
+                    ]);
+                }
 
                 $payload = [
                     'type' => $request->payment_method,
-                    'amount' => $total,
+                    'amount' => $project_contract->total_cost,
                     'currency' => 'PHP',
                     'redirect' => [
-                        'success' => route('transaction.success', $transaction->transaction_code),
-                        'failed' =>  route('transaction.failed', $transaction->transaction_code),
+                        'success' => route('transaction.success', ['txn_code' => $transaction->transaction_code, 'type' => $request->job_type]),
+                        'failed' =>  route('transaction.failed', ['txn_code' => $transaction->transaction_code, 'type' => $request->job_type]),
                     ]
                 ];
 
+                $eWalletPayment->update([
+                    'payload' => $payload
+                ]);
+
                 $source = Paymongo::source()->create($payload);
+
+                $eWalletPayment->update([
+                    'src_id' => $source->id,
+                    'source_response' => $source->getAttributes(),
+                    'status' => $source->status,
+                ]);
 
                 $transaction->update([
                     'src_id' => $source->id,
                     'status' => $source->status,
+                ]);
+
+                $project_payment->update([
+                    'status' => $source->status
                 ]);
 
                 return redirect($source->redirect['checkout_url']);
@@ -195,8 +238,84 @@ class TransactionsController extends Controller
                 break;
 
             case 'card':
-                # code...
-                break;
+
+                #
+                // Generate Transaction Code
+                $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
+
+                // Create Transaction Data
+                $transaction = Transaction::create([
+                    'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
+                    'transaction_code' => $transaction_code,
+                    'amount' => $total,
+                    'sub_amount' => $project_contract->total_cost,
+                    'from_id' => $employer->user_id,
+                    'to_id' => $freelancer->user_id,
+                    'payment_method' => $request->payment_method,
+                    'status' => 'initial'
+                ]);
+
+                $cardPayment = CardPayment::create([
+                    'user_id' => $employer->user_id,
+                    'transaction_code' => $transaction->transaction_code
+                ]);
+
+                $payload = [
+                    'amount' => $project_contract->total_cost,
+                    'payment_method_allowed' => [
+                        'card'
+                    ],
+                    'payment_method_options' => [
+                        'card' => [
+                            'request_three_d_secure' => 'automatic'
+                        ]
+                    ],
+                    'description' => 'Card Payment for Transaction Code: ' . $transaction->transaction_code,
+                    'statement_descriptor' => 'INSTRABAHO',
+                    'currency' => 'PHP',
+                ];
+
+                $cardPayment->update([
+                    'payload' => $payload
+                ]);
+
+                $paymentIntent = Paymongo::paymentIntent()->create($payload);
+
+                $cardPayment->update([
+                    'pi_id' => $paymentIntent->id,
+                    'payment_intent_response' => $paymentIntent->getAttributes(),
+                    'status' => $paymentIntent->status,
+                ]);
+
+                $transaction->update([
+                    'pi_id' => $paymentIntent->id,
+                    'status' => $paymentIntent->status,
+                ]);
+
+                $paymentMethod = Paymongo::paymentMethod()->create([
+                    'type' => 'card',
+                    'details' => [
+                        'card_number' => $request->card_number,
+                        'exp_month' => (int) $request->expiry_month,
+                        'exp_year' => (int) $request->expiry_year,
+                        'cvc' => $request->cvc,
+                    ],
+                    'billing' => [
+                        'name' => $employer->user->firstname . ' ' . $employer->user->lastname,
+                        'email' => $employer->user->email,
+                    ]
+                ]);
+
+                $cardPayment->update([
+                    'pm_id' => $paymentMethod->id,
+                    'payment_method_response' => $paymentMethod->getAttributes(),
+                ]);
+
+                $transaction->update([
+                    'pm_id' => $paymentMethod->id,
+                ]);
+
+                return $this->attachPaymentToIntent($paymentIntent, $paymentMethod, $transaction, $cardPayment);
         }
     }
 
@@ -238,73 +357,118 @@ class TransactionsController extends Controller
         }
     }
 
-    public function success(Request $request) {
-        $transaction = Transaction::where('transaction_code', $request->txn_code)->with('user_from', 'user_to')->first();
+    public function card_update(Request $request) {
+        $transaction = Transaction::where('id', $request->id)->first();
+        $cardPayment = CardPayment::where('transaction_code', $transaction->transaction_code)->first();
 
-        $source = Paymongo::source()->find($transaction->src_id);
+        $paymentIntent =  Paymongo::paymentIntent()->find($cardPayment->pi_id);
 
-        if ($transaction->status == 'pending') {
-            $transaction->update([
-                'source_callback_response' => $source->getAttributes(),
-                'status' => $source->status,
-            ]);
+        if ($paymentIntent->status == 'awaiting_next_action') {
+            return redirect()->route('card-payment.security_check', $transaction->id);
         }
 
-        switch ($source->status) {
-            case 'chargeable':
-                $payment = Paymongo::payment()->create([
-                    'amount' => $transaction->amount,
-                    'description' => $transaction->readable_type . ' Payment for Transaction Code: ' . $transaction->transaction_code,
-                    'currency' => 'PHP',
-                    'statement_descriptor' => $transaction->user_from->firstname . ' ' . $transaction->user_to->lastname,
-                    'source' => [
-                        'id' => $source->id,
-                        'type' => 'source',
-                    ]
-                ]);
+        $transaction->update([
+            'status' => $paymentIntent->status,
+        ]);
 
-                $transaction->update([
-                    'payment_response' => $payment->getAttributes(),
-                    'pay_id' => $payment->id,
-                    'status' => $payment->status
-                ]);
-                break;
+        $cardPayment->update([
+            'status' => $paymentIntent->status,
+            're_query_response' => $paymentIntent->getAttributes(),
+        ]);
 
-            case 'paid':
-                if (!$transaction->pay_id) {
-                    foreach (Paymongo::payment()->all() as $payment) {
-                        if ($payment->source['id'] == $transaction->src_id) {
-                            $transaction->update([
-                                'pay_id' => $payment->id,
-                                'status' => $payment->status
-                            ]);
-                            break;
-                        }
-                    }
-                } else {
-                    $payment = Paymongo::payment()->find($transaction->pay_id);
-                    $transaction->update([
-                        'pay_id' => $payment->id,
-                        'status' => $payment->status
+        $project_payment = ProjectPayment::where('transaction_code', $transaction->transaction_code)->first();
+
+        if($project_payment) {
+            $project_contract = ProjectContract::where('id', $project_payment->contract_id)->first();
+
+            if($project_contract) {
+                if($project_contract->proposal_type == 'offer') {
+                    ProjectOffer::where('id', $project_contract->proposal_id)->update([
+                        'status' => 'completed'
                     ]);
                 }
-                break;
+
+                if($project_contract->proposal_type == 'proposal') {
+                    ProjectProposal::where('id', $project_contract->proposal_id)->update([
+                        'status' => 'completed'
+                    ]);
+                }
+
+                # change the status of contract
+                $project_contract->job_done = true;
+                $project_contract->job_done_date = date('Y-m-d H:i:s');
+                $project_contract->status = true;
+                $project_contract->save();
+
+                #change the status of specific project
+                $project_contract_save = $project_contract->project()->update([
+                    'status' => 'completed'
+                ]);
+            }
         }
-        
-        return view('AllScreens.misc.transaction-messages.success');
+
+        return redirect()->route('employer.projects.completed');
+        // return redirect()->route('transaction.success', ['txn_code' => $transaction->transaction_code, 'type' => 'project']);
     }
 
-    public function failed(Request $request) {
-        $transaction = Transaction::where('transaction_code', $request->txn_code)->with('user_from', 'user_to')->first();
-        $source = Paymongo::source()->find($transaction->src_id);
-
-        if ($transaction->status == 'pending') {
-            $transaction->update([
-                'source_callback_response' => $source->getAttributes(),
-                'status' => 'fail',
-            ]);
+    private function attachPaymentToIntent($paymentIntent, $paymentMethod, $transaction, $cardPayment)
+    {
+        try {
+            $paymentIntent = $paymentIntent->attach($paymentMethod->id);
+        } catch (\Luigel\Paymongo\Exceptions\BadRequestException $e) {
+            $exception = json_decode($e->getMessage(),  true);
+            return redirect()->back()->with('error', $exception['errors'][0]['detail']);
         }
-        
-        return view('AllScreens.misc.transaction-messages.failed');
+
+        $cardPayment->update([
+            'payment_attach_response' => $paymentIntent->getAttributes(),
+            'status' => $paymentIntent->status,
+        ]);
+
+        $transaction->update([
+            'payment_attach_response' => $paymentIntent->getAttributes(),
+            'status' => $paymentIntent->status,
+        ]);
+
+        switch ($paymentIntent->status) {
+            case 'awaiting_next_action':
+                return redirect()->route('card-payment.security_check', $transaction->id);
+
+            case 'succeeded':
+
+                // return redirect()->route('transaction.success', ['txn_code' => $transaction->transaction_code, 'type' => 'project']);
+
+            case 'awaiting_payment_method':
+                return dd([
+                    'CHECK LAST PAYMENT ERROR',
+                    $paymentIntent,
+                ]);
+            case 'processing':
+                sleep(2);
+
+                $paymentIntent =  Paymongo::paymentIntent()->find($transaction->pi_id);
+
+                if ($paymentIntent->status == 'awaiting_next_action') {
+                    return redirect()->route('card-payment.security_check', $transaction);
+                }
+
+                $transaction->update([
+                    'status' => $paymentIntent->status,
+                ]);
+
+                $cardPayment->update([
+                    'status' => $paymentIntent->status,
+                    're_query_response' => $paymentIntent->getAttributes(),
+                ]);
+        }
+    }
+
+    public function security_check(Request $request) {
+        $transaction = Transaction::where('id', $request->id)->first();
+        $cardPayment = CardPayment::where('transaction_code', $transaction->transaction_code)->first();
+        if ($transaction->status != 'awaiting_next_action') {
+            dd($transaction);
+        }
+        return view('UserAuthScreens.checkout.security-check', compact('transaction', 'cardPayment'));
     }
 }

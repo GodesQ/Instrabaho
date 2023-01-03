@@ -30,7 +30,12 @@ class PayJobRequest extends FormRequest
             'employer_id' => 'required|numeric',
             'freelancer_id' => 'required|numeric',
             'payment_method' => 'required',
-            'job_type' => 'required|in:project,service'
+            'job_type' => 'required|in:project,service',
+            'card_holder' => 'required_if:payment_method,card',
+            'card_number' => 'required_if:payment_method,card',
+            'expiry_month' => 'required_if:payment_method,card',
+            'expiry_year' => 'required_if:payment_method,card',
+            'cvc' => 'required_if:payment_method,card',
         ];
     }
 }

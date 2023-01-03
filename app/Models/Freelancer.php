@@ -12,6 +12,11 @@ class Freelancer extends Model
     protected $table = 'user_freelancer';
     protected $guarded = [];
 
+    protected $casts = [
+        'user_id' => 'integer',
+        'hourly_rate' => 'integer'
+    ];
+
     public function user() {
         return $this->hasOne(User::class, 'id', 'user_id');
     }

@@ -34,6 +34,7 @@ use App\Http\Controllers\Web\ServiceCategoriesController;
 use App\Http\Controllers\Web\ProjectContractController;
 use App\Http\Controllers\Web\NotificationController;
 use App\Http\Controllers\Web\FreelancerReviewsController;
+use App\Http\Controllers\Web\EWalletCallBackController;
 
 use App\Http\Controllers\Web\Admin\AdminAuthController;
 use App\Http\Controllers\Web\Admin\AdminController;
@@ -278,13 +279,11 @@ use App\Events\ProjectMessageEvent;
         Route::get('/pay_job/{type}/{id}', [TransactionsController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
         Route::post('/pay_job', [TransactionsController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
 
-        Route::get('transaction-message/{txn_code}/success', [TransactionsController::class, 'success'])->name('transaction.success');
-        Route::get('transaction-message/{txn_code}/failed', [TransactionsController::class, 'failed'])->name('transaction.failed');
+        Route::get('/card_payment/security-check/{id}', [TransactionsController::class, 'security_check'])->name('card-payment.security_check');
+        Route::put('/card_payment/update/{id}/{type?}', [TransactionsController::class, 'card_update'])->name('card-payment.update');
 
-        Route::get('/transaction-message', [TransactionsController::class, 'transaction_messaage'])->name('transaction_messaage');
-        Route::post('/post-transaction-message',  [TransactionsController::class, 'postback_transaction'])->name('postback_transaction');
-        Route::get('/check_status',  [TransactionsController::class, 'check_status'])->name('check_status');
-
+        Route::get('/transaction_message/{txn_code}/{type?}/success', [EWalletCallbackController::class, 'success'])->name('transaction.success');
+        Route::get('/transaction_message/{txn_code}/{type?}/failed', [EWalletCallbackController::class, 'failed'])->name('transaction.failed');
     });
 
     /* ----------------------------------------- ADMIN ROUTES -------------------------------------------- */
