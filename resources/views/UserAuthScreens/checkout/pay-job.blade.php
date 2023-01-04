@@ -37,7 +37,7 @@
     <div class="page-wrapper">
         <div class="page-content">
             <div class="container">
-                <form method="POST" action="/pay_job">
+                <form method="POST" action="/project_pay_job">
                     @csrf
                     <div class="row">
                         <div class="col-md-7">

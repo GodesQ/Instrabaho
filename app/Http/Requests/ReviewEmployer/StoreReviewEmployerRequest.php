@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ProjectOffer    ;
+namespace App\Http\Requests\ReviewEmployer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProjectOfferRequest extends FormRequest
+class StoreReviewEmployerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,13 @@ class StoreProjectOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            'project_id' => 'required|exists:projects,id',
-            'freelancer_id' => 'required|exists:user_freelancer,id',
+            'reviewer_id' => 'required|exists:user_employer,id',
             'employer_id' => 'required|exists:user_employer,id',
+            'employer_rate' => 'required|int|in:1,2,3,4,5',
+            'review' => 'nullable|max:400',
+            'review_image' => 'nullable|max:400',
+            'job_id' => 'required',
+            'job_type' => 'required|in:project,service'
         ];
     }
 }

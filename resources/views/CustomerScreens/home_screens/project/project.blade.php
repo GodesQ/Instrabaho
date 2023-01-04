@@ -39,9 +39,6 @@
                          <li> <i class="fas fa-map-marker-alt"></i>
                             {{ $project->location }}
                          </li>
-                         <li> <i class="far fa-clock"></i>
-                            {{ date_format(new DateTime($project->created_at), "F d, Y")}}
-                         </li>
                       </ul>
                       <h2>{{ $project->title }}</h2>
                       <div class="fr-project-style">
@@ -55,7 +52,6 @@
                    <div class="fr-project-product-features">
                       <div class="fr-project-product">
                          <ul class="">
-
                             <li>
                                <div class="short-detail-icon"> <i class="far fa-calendar-check"></i> </div>
                                <div>
@@ -63,6 +59,13 @@
                                     <strong>{{ date_format(new DateTime($project->start_date), "F d, Y") }} - {{ date_format(new DateTime($project->end_date), "F d, Y") }} </strong>
                                </div>
                             </li>
+                            <li>
+                                <div class="short-detail-icon"> <i class="fas fa-wallet"></i> </div>
+                                <div>
+                                     <small>Budget Price</small> <br>
+                                     <strong>₱ {{ number_format($project->total_cost, 2) }} ({{ $project->project_cost_type }})</strong>
+                                </div>
+                             </li>
                          </ul>
                       </div>
                    </div>
@@ -124,9 +127,9 @@
                         <input type="hidden" name="project_id" value="{{ $project->id }}">
                         <input type="hidden" name="employer_id" value="{{ $project->employer_id }}">
                             <div class="row g-3">
-                                <div class="col">
+                                <div class="col-xl-6 col-sm-12">
                                     <div class="form-group">
-                                    <label style="font-size: 20px !important;">Your Price <span class="text-danger">*</span></label>
+                                    <label style="font-size: 18px !important;">Your Price <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="bidding-price" name="offer_price" data-smk-msg="Provide your price in numbers only" data-smk-type="number">
                                         <div class="input-group-prepend">
@@ -140,10 +143,10 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-xl-6 col-sm-12">
                                     <div class="form-group">
-                                    <label style="font-size: 20px !important;"> Project Cost Type <span class="text-danger">*</span></label>
-                                    <select name="project_cost_type" id="project_cost_type">
+                                    <label style="font-size: 18px !important;"> Project Cost Type <span class="text-danger">*</span></label>
+                                    <select name="project_cost_type" class="form-control" id="project_cost_type">
                                         <option {{ $project->project_cost_type == 'Fixed' ? 'selected' : null }} value="Fixed">Fixed</option>
                                         <option {{ $project->project_cost_type == 'Hourly' ? 'selected' : null }} value="Hourly">Hourly</option>
                                     </select>
@@ -158,7 +161,7 @@
                             <div class="form-row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                    <label style="font-size: 20px !important;">Address <span class="text-danger">*</span></label>
+                                    <label style="font-size: 18px !important;">Address <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" multiple class="form-control" id="map-search" name="address">
                                         <div class="input-group-prepend">
@@ -179,12 +182,12 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-12">
-                                    <label style="font-size: 20px !important;"> Proposal Description <span class="text-info text-italic" style="font-size: 15px !important;">(Optional)</span></label>
+                                    <label style="font-size: 18px !important;"> Proposal Description <span class="text-info text-italic" style="font-size: 15px !important;">(Optional)</span></label>
                                     <textarea class="form-control" id="bid-textarea" name="cover_letter" rows="5"></textarea>
                                 </div>
                                 <div class="col-12 my-3">
                                     <div class="form-group">
-                                    <label style="font-size: 20px !important;">Attachments <span class="text-info text-italic" style="font-size: 15px !important;">(Optional)</span></label>
+                                    <label style="font-size: 18px !important;">Attachments <span class="text-info text-italic" style="font-size: 15px !important;">(Optional)</span></label>
                                     <div class="input-group">
                                         <input type="file" class="form-control" name="attachments[]" id="inputGroupFile01">
                                         <div class="input-group-prepend">
@@ -205,22 +208,6 @@
           </div>
           <div class="col-lg-4 col-xl-4 col-xs-12 col-sm-12 col-md-12">
              <div class="project-sidebar position-sticky">
-                <div class="project-price">
-                   <div class="card-body">
-                      <div class="row">
-                         <div class="col">
-                            <span class="price-label"> Budget</span>
-                            <div class="price">
-                              ₱ {{ number_format($project->total_cost, 2) }}
-                            </div>
-                         </div>
-                         <div class="feature"> <i class="fas fa-wallet"></i> </div>
-                      </div>
-                      <div class="price-bottom">
-                         <small class="price_type ">{{ $project->project_cost_type }}</small>
-                      </div>
-                   </div>
-                </div>
                 <div class="fr-project-f-profile">
                    <div class="fr-project-f-product">
                      <div class="fr-project-f-fetured"> <a href="">

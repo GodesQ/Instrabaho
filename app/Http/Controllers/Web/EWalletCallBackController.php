@@ -94,11 +94,6 @@ class EWalletCallBackController extends Controller
                     'status' => $payment->status
                 ]);
 
-                if($request->type == 'project') {
-                    ProjectPayment::where('transaction_code', $request->txn_code)->update([
-                        'status' => $payment->status
-                    ]);
-                }
                 break;
 
             case 'paid':
@@ -114,11 +109,6 @@ class EWalletCallBackController extends Controller
                         'status' => $payment->status
                     ]);
 
-                    if($request->type == 'project') {
-                        ProjectPayment::where('transaction_code', $request->txn_code)->update([
-                            'status' => $payment->status
-                        ]);
-                    }
                 } else {
                     foreach (Paymongo::payment()->all() as $payment) {
                         if ($payment->source['id'] == $transaction->src_id) {
@@ -132,12 +122,6 @@ class EWalletCallBackController extends Controller
                                 'pay_id' => $payment->id,
                                 'status' => $payment->status
                             ]);
-
-                            if($request->type == 'project') {
-                                ProjectPayment::where('transaction_code', $request->txn_code)->update([
-                                    'status' => $payment->status
-                                ]);
-                            }
                             break;
                         }
                     }

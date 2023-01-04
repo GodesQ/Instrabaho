@@ -35,11 +35,11 @@ class FreelancerReviewsController extends Controller
 
         if($request->job_type == 'project') {
             ProjectContract::where('id', $request->job_id)->update([
-                'status' => 3
+                'is_employer_review' => true
             ]);
-        } 
+        }
 
         if($review) return redirect()->route('employer.projects.completed')->withSuccess('Review Successfully Submitted.');
-        
+
     }
 }

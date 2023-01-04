@@ -31,7 +31,6 @@ chat_form.onsubmit = (e) => {
             outgoing_id: outgoing_id,
             incoming_id: incoming_id,
             type: type
-
         },
         method: 'POST',
         success: function (response) {
@@ -59,7 +58,7 @@ function scrollToBottom(){
 
 function getChats() {
     $.ajax({
-        url: `/project_get_chat/${msg_id}`,
+        url: `/project_get_chat/${msg_id}/${type}`,
         success: function (response) {
             let data = response;
             chatBox.innerHTML = data;

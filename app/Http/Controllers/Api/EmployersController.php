@@ -16,7 +16,7 @@ class EmployersController extends Controller
             'display_name' => 'required|min:6',
             'tagline' => 'required',
             'number_employees' => 'required|in:0,1-10,11-20,21-30,31-50',
-            'contactno' => 'required|numeric',
+            'contactno' => 'required',
             'description' => 'required|max:500',
             'address' => 'required',
             'latitude' => 'required',
@@ -44,6 +44,7 @@ class EmployersController extends Controller
                 'role' => 'freelancer'
             ], 201);
         }
-
     }
+
+
 }

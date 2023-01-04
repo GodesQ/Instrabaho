@@ -23,6 +23,56 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-body">
+                                    <h3 class="font-weight-bold">Contract Summary</h3>
+                                    <p>Lorem ipsum dolor sit amet adipisicing elit. Beatae, adipisci.</p>
+                                    <div class="row p-1 border-bottom">
+                                        <div class="col-lg-6">
+                                            <h5 class="font-weight-normal primary">Project Cost</h5>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h6 class="text-lg-right">₱ <span id="project-cost-text" class="font-weight-bold">{{ number_format($data->project->cost, 2) }}</span></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row p-1 border-bottom align-items-center">
+                                        <div class="col-lg-8">
+                                            <h5 class="font-weight-normal primary">Convenience Fee </h5>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus velit rem consequatur veniam sunt veritatis doloremque magni sit.</p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <h6 class="text-lg-right">₱ <span class="font-weight-bold">50.00</span></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row p-1 border-bottom">
+                                        <div class="col-lg-6">
+                                            <h5 class="font-weight-normal primary">Total Cost</h5>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h6 class="text-lg-right">₱ <span id="total-project-cost-text" class="font-weight-bold">{{ number_format(intval($data->project->cost) - 50, 2)}}</span></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="card">
+                                <div class="card-body">
+                                    <h3 class="font-weight-bold">About Freelancer</h3>
+                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus, quos.</p>
+                                    <div class="my-2">
+                                        <div class="my-25 border-bottom p-1">
+                                            Name : {{ $data->freelancer->user->firstname . " " . $data->freelancer->user->lastname }}
+                                        </div>
+                                        <div class="my-25 border-bottom p-1">
+                                            Display Name : {{ $data->freelancer->display_name }}
+                                        </div>
+                                        <div class="my-25 border-bottom p-1">
+                                            Hourly Rate : ₱ {{ $data->freelancer->hourly_rate }}.00
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
                                     <div class="">
                                         <h3 class="font-weight-bold">{{ $data->project->title }}</h3>
                                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus, quos.</p>
@@ -69,56 +119,6 @@
                                                 <button class="btn btn-primary">Create Contract</button>
                                             </div>
                                         </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h3 class="font-weight-bold">Contract Summary</h3>
-                                    <p>Lorem ipsum dolor sit amet adipisicing elit. Beatae, adipisci.</p>
-                                    <div class="row p-1 border-bottom">
-                                        <div class="col-lg-6">
-                                            <h5 class="font-weight-normal primary">Project Cost</h5>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <h6 class="text-right">₱ <span id="project-cost-text" class="font-weight-bold">{{ number_format($data->project->cost, 2) }}</span></h6>
-                                        </div>
-                                    </div>
-                                    <div class="row p-1 border-bottom align-items-center">
-                                        <div class="col-lg-8">
-                                            <h5 class="font-weight-normal primary">Convenience Fee </h5>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus velit rem consequatur veniam sunt veritatis doloremque magni sit.</p>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <h6 class="text-right">₱ <span class="font-weight-bold">50.00</span></h6>
-                                        </div>
-                                    </div>
-                                    <div class="row p-1 border-bottom">
-                                        <div class="col-lg-6">
-                                            <h5 class="font-weight-normal primary">Total Cost</h5>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <h6 class="text-right">₱ <span id="total-project-cost-text" class="font-weight-bold">{{ number_format(intval($data->project->cost) - 50, 2)}}</span></h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <h3 class="font-weight-bold">About Freelancer</h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus, quos.</p>
-                                    <div class="my-2">
-                                        <div class="my-25 border-bottom p-1">
-                                            Name : {{ $data->freelancer->user->firstname . " " . $data->freelancer->user->lastname }}
-                                        </div>
-                                        <div class="my-25 border-bottom p-1">
-                                            Display Name : {{ $data->freelancer->display_name }}
-                                        </div>
-                                        <div class="my-25 border-bottom p-1">
-                                            Hourly Rate : ₱ {{ $data->freelancer->hourly_rate }}.00
-                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -17,6 +17,8 @@ class Project extends Model
         'cost' => 'integer',
         'category_id' => 'integer',
         'total_cost' => 'integer',
+        'total_dates' => 'integer',
+        'skills' => 'array'
     ];
 
     public function getSkills() {

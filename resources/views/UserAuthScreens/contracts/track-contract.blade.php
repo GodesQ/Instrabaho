@@ -66,7 +66,7 @@
                                     <input type="hidden" name="contract_id" data-id="{{ $contract->id }}" id="contract_id">
                                     <div class="text-right">
                                         @if (session()->get('role') == 'employer' && $contract->is_start_working && !$contract->status)
-                                            <a href="/pay_job/project/{{ $contract->id }}" class="btn btn-primary job-completed-btn">Job Complete</a>
+                                            <a href="/project_pay_job/project/{{ $contract->id }}" class="btn btn-primary job-completed-btn">Job Complete</a>
                                         @endif
 
                                         @if (session()->get('role') == 'freelancer' && $contract->cost_type == 'Fixed' && !$contract->is_start_working)
@@ -79,7 +79,7 @@
                                             <h4 class="font-weight-bold text-uppercase">Fixed Type Project</h4>
                                             <ul class="list-group">
                                                 <li class="list-group-item">Start Working Date: <span class="font-weight-bold working-date-text">{{ $contract->start_working_date ? date_format(new DateTime($contract->start_working_date), 'M d, Y h:i:s A') : 'No Date Found' }}</span></li>
-                                                <li class="list-group-item">Job Done Date: <span class="font-weight-bold job-done-date">{{ $contract->job_done_date ? date_format(new DateTime($contract->job_done_date), 'F d, Y h:i:s A') : 'No Date Found' }}</span></li>
+                                                <li class="list-group-item">Job Done Date: <span class="font-weight-bold job-done-date">{{ $contract->job_done_date ? date_format(new DateTime($contract->job_done_date), 'M d, Y h:i:s A') : 'No Date Found' }}</span></li>
                                             </ul>
                                         </div>
                                     @else
@@ -129,10 +129,10 @@
                                             <div class="container my-1">
                                                 <h3 class="primary">Freelancer Information</h3>
                                                 <ul class="list-group">
-                                                    <li class="list-group-item">Freelancer Name: <span class="font-weight-bold">{{ $contract->proposal->freelancer->user->firstname }} {{ $contract->proposal->freelancer->user->lastname }}</span></li>
-                                                    <li class="list-group-item">Freelancer Display Name: <span class="font-weight-bold">{{ $contract->proposal->freelancer->display_name }}</span></li>
-                                                    <li class="list-group-item">Email : <span class="font-weight-bold">{{ $contract->proposal->freelancer->user->email }}</span></li>
-                                                    <li class="list-group-item">Contact No. : <span class="font-weight-normal"><a class="primary" href="tel:{{ $contract->proposal->freelancer->contactno }}">{{ $contract->proposal->freelancer->contactno }}</a></span></li>
+                                                    <li class="list-group-item">Freelancer Name: <span class="font-weight-bold">{{ $contract->freelancer->user->firstname }} {{ $contract->freelancer->user->lastname }}</span></li>
+                                                    <li class="list-group-item">Freelancer Display Name: <span class="font-weight-bold">{{ $contract->freelancer->display_name }}</span></li>
+                                                    <li class="list-group-item">Email : <span class="font-weight-bold">{{ $contract->freelancer->user->email }}</span></li>
+                                                    <li class="list-group-item">Contact No. : <span class="font-weight-normal"><a class="primary" href="tel:{{ $contract->freelancer->contactno }}">{{ $contract->freelancer->contactno }}</a></span></li>
                                                 </ul>
                                             </div>
                                             <div class="container my-2">

@@ -136,7 +136,6 @@
                                                 <a href="" class="dropdown-item delete"><i class="feather icon-x"></i> Cancel Project</a>
                                                 <a href="/project/view/{{ $project->project->id }}" class="dropdown-item delete"><i class="feather icon-eye"></i> View Project</a>
                                                 <a href="/project/contract/view/{{ $project->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Contract</a>
-                                                <a href="/proposal/info/{{ $project->proposal->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Proposal</a>
                                             </span>
                                         </span>
                                     </td>
