@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('fetch_projects', [ProjectsController::class, 'fetch_projects']);
 
     Route::get('freelancers', [FreelancersController::class, 'freelancers']);
-    Route::get('fetch_freelancers', [ProjectsController::class, 'fetch_freelancers']);
+    Route::get('fetch_freelancers', [FreelancersController::class, 'fetch_freelancers']);
 
     Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('proposal.store');
 

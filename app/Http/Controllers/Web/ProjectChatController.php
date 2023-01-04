@@ -12,7 +12,8 @@ use App\Models\Employer;
 class ProjectChatController extends Controller
 {
     public function project_get_chat(Request $request) {
-        $messages = ProjectMessage::where('msg_id', $request->id)->get();
+        $type = base64_decode($request->type);
+        $messages = ProjectMessage::where('msg_id', $request->id)->where('message_type', $type)->get();
         $user_model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
         $user = $user_model::where('user_id', session()->get('id'))->first();
         $output = "";

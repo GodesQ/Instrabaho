@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\ProjectOffer;
 use App\Models\Employer;
 use App\Models\Freelancer;
+use App\Models\ProjectMessage;
+
 use App\Http\Requests\ProjectOffer\StoreProjectOfferRequest;
 
 class ProjectOffersController extends Controller
@@ -26,16 +28,24 @@ class ProjectOffersController extends Controller
     public function store(StoreProjectOfferRequest $request) {
 
         # check if the offer was already submitted in freelancer
-        $isOfferExist = ProjectOffer::where('freelancer_id', $request->freelancer_id)->where('project_id', $request->project_id)->exists();
+        $isOfferExist = ProjectOffer::where('freelancer_id', $request->freelancer_id)->where('project_id', $request->project_id)->first();
         if($isOfferExist) return back()->withErrors('Fail. This offer already exist on our record.');
 
-        $freelancer = Freelancer::where('id', $request->freelancer_id)->firstOrFail();
-        $isNotAvailableDate = in_array($project_offer->project->start_date, $freelancer->notAvailableDates()) || in_array($project_offer->project->end_date, $freelancer->notAvailableDates()) ? back()->withErrors('Fail. The freelancer is not available on your expected start date') : true;
+        $data = $request->validated();
+        $offer = ProjectOffer::create($data);
 
-        $data = array_diff($request->validated(), [$request->private_message]);
-        $submit_offer = ProjectOffer::create($data);
+        if($request->private_message) {
+            ProjectMessage::create([
+                'msg_id' => $offer->id,
+                'incoming_msg_id' => $request->freelancer_id,
+                'outgoing_msg_id' => $request->employer_id,
+                'message' => $request->private_message,
+                'role' => 'employer',
+                'message_type' => 'offer'
+            ]);
+        }
 
-        if($submit_offer) return back()->withSuccess('Offer Submitted Successfully');
+        if($offer) return back()->withSuccess('Offer Submitted Successfully');
     }
 
     public function offer(Request $request) {

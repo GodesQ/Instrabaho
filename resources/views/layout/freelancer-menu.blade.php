@@ -37,7 +37,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Services">Manage Services</span></a>
+            {{-- <li class="nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Services">Manage Services</span></a>
                 <ul class="menu-content">
                     <li class="{{ Request::path() == 'freelancer/create_service' ? 'active' : '' }}"><a class="menu-item" href="/freelancer/create_service" data-i18n="Create Services">Create Services</a>
                     </li>
@@ -46,7 +46,7 @@
                     <li><a class="menu-item" href="" data-i18n="Canceled Services">Canceled Services</a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Manage Projects">Manage Projects</span></a>
                 <ul class="menu-content">
                     <li class="{{ Request::path() == 'freelancer/proposals' ? 'active' : '' }}">

@@ -128,7 +128,7 @@
                                             <div class="col-md-12 my-25">
                                                 <div class="font-weight-bold">Duration : <span class="font-weight-normal mx-1">{{ date_format(new DateTime($proposal->project->start_date), 'F d, Y') }} - {{ date_format(new DateTime($proposal->project->end_date), 'F d, Y') }}</span></div>
                                             </div>
-                                            <div class="col-md-12 my-25">
+                                            {{-- <div class="col-md-12 my-25">
                                                 @php $proposal->project->setSkills(json_decode($proposal->project->skills)) @endphp
                                                 @php $proposal->project->getSkills() @endphp
                                                 <div class="font-weight-bold">Skills Needed :
@@ -136,7 +136,7 @@
                                                         <div class="badge badge-warning p-50 mx-1">{{ $skill->skill_name }}</div>
                                                     @endforeach
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <h3 class="font-weight-bold my-1">Proposal Info</h3>
                                         <div class="row">
@@ -144,10 +144,7 @@
                                                 <div class="font-weight-bold">Offer Price : <span class="font-weight-normal mx-1" style="font-size: 30px;">₱ {{ number_format($proposal->offer_price, 2) }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25">
-                                                <div class="font-weight-bold">Estimated Days : <span class="font-weight-normal mx-1">{{ $proposal->estimated_days }} {{ $proposal->estimated_days  > 1 ? 'Days' : 'Day' }}</span></div>
-                                            </div>
-                                            <div class="col-md-12 my-25">
-                                                <div class="font-weight-bold">Freelancer Address : <span class="font-weight-normal mx-1">{{ $proposal->address }}</span></div>
+                                                <div class="font-weight-bold">Address : <span class="font-weight-normal mx-1">{{ $proposal->address }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25">
                                                 <div class="font-weight-bold">Project Cost Type : <span class="font-weight-normal mx-1">{{ $proposal->project_cost_type }}</span></div>

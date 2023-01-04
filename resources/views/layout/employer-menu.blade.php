@@ -43,7 +43,7 @@
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Services">Services</span></a>
+            {{-- <li class=" nav-item"><a href="#"><i class="feather icon-briefcase"></i><span class="menu-title" data-i18n="Services">Services</span></a>
                 <ul class="menu-content">
                     <li class="{{ Request::path() == 'services_offer/pending' ? 'active' : '' }}">
                         <a class="menu-item" href="/services_offer/pending" data-i18n="Ongoing Services">My Offers / Proposals</a>
@@ -53,7 +53,7 @@
                     <li><a class="menu-item" href="" data-i18n="Canceled Services">Canceled Services</a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <li  class="{{ Request::path() == 'user_fund' ? 'active' : '' }} nav-item">
                 <a href="/user_fund"><i class="feather icon-file"></i>
                     <span class="menu-title" data-i18n="Fund Deposit & Transactions">Funds, Deposit & Transactions</span>

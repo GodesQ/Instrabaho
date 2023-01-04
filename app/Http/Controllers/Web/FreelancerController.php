@@ -20,6 +20,7 @@ use App\Models\Skill;
 use App\Models\ProjectContract;
 use App\Models\ProjectProposal;
 use App\Models\Project;
+use App\Models\User;
 
 use App\Http\Requests\Freelancer\UpdateFreelancerRequest;
 use App\Events\ProjectMessageEvent;
@@ -32,7 +33,7 @@ class FreelancerController extends Controller
         $id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $id)->first();
         if($freelancer) {
-            return redirect()->route('freelancer.dasboard', compact('recent_projects'));
+            return redirect()->route('freelancer.dasboard');
         }
         return view('AllScreens.misc.freelancer-form', compact('id'));
     }
@@ -53,6 +54,8 @@ class FreelancerController extends Controller
         ]);
 
         $id = session()->get('id');
+        $freelancer = Freelancer::where('user_id', $id)->first();
+        if($freelancer) return  redirect()->route('freelancer.dasboard');
 
         $save = Freelancer::create([
             'user_id' => $id,

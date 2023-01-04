@@ -52,9 +52,9 @@
                                     </h3>
                                     <hr>
                                     <ul class="text-center">
-                                        <li><span class="font-weight-bold">Name: </span>{{$contract->proposal->freelancer->user->firstname . ' ' .$contract->proposal->freelancer->user->lastname}}</li>
-                                        <li><span class="font-weight-bold">Display Name: </span>{{$contract->proposal->freelancer->display_name}}</li>
-                                        <li><span class="font-weight-bold">Address: </span>{{ $contract->proposal->freelancer->address }}</li>
+                                        <li><span class="font-weight-bold">Name: </span>{{$contract->freelancer->user->firstname . ' ' .$contract->freelancer->user->lastname}}</li>
+                                        <li><span class="font-weight-bold">Display Name: </span>{{$contract->freelancer->display_name}}</li>
+                                        <li><span class="font-weight-bold">Address: </span>{{ $contract->freelancer->address }}</li>
                                     </ul>
                                 </div>
                                 <div class="col-lg-6">

@@ -35,14 +35,14 @@
                 </li>
             </ul>
         </li> --}}
-        <li class="dropdown px-2 nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Services">Services</span></a>
+        {{-- <li class="dropdown px-2 nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Services">Services</span></a>
             <ul class="dropdown-menu">
                 <li data-menu=""><a class="dropdown-item" href="/freelancer/create_service" data-i18n="Create Service" data-toggle="dropdown">Create Service</a>
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="/freelancer/services" data-i18n="My Services" data-toggle="dropdown">My Services</a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
         <li class="dropdown px-2 nav-item {{  Request::path() == 'user_fund' ? 'active' : ''  }}">
             <a class=" nav-link" href="/user_fund" ><i class="fa fa-money"></i>
                 <span data-i18n="Funds">Funds</span>

@@ -61,14 +61,14 @@
                                                 <div>{{ date_format( new DateTime($project_offer->project->created_at), 'F d, Y') }}</div>
                                             </div>
                                         </div>
-                                        <div class="my-2">
+                                        {{-- <div class="my-2">
                                             <h6 class="font-weight-bold">Skills Needed</h6>
                                             @php $project_offer->project->setSkills(json_decode($project_offer->project->skills)) @endphp
                                             @php $project_offer->project->getSkills() @endphp
                                             @foreach($project_offer->project->skills_name as $skill)
                                                 <div class="badge badge-warning p-50 mr-1">{{ $skill->skill_name }}</div>
                                             @endforeach
-                                        </div>
+                                        </div> --}}
                                         <div class="my-2">
                                             <h6 class="font-weight-bold">Description</h6>
                                             <p>{{ $project_offer->project->description }}</p>

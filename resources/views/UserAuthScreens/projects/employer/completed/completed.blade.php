@@ -37,7 +37,7 @@
                                     </ul> --}}
                                     <div class="text-right">
                                         <a href="/project/contract/view/{{ $completed_project->contract ? $completed_project->contract->id : null }}" class="info mx-50">View Contract</a>
-                                        @if($completed_project->contract->status != 3)
+                                        @if(!$completed_project->contract->is_employer_review)
                                             <a href="/review_freelancer/project/{{ $completed_project->contract->id }}" class="btn btn-primary mx-50">Add Review</a>
                                         @endif
                                     </div>

@@ -118,7 +118,7 @@
                                                         <div class="form-label my-1 font-weight-bold">Skills</div>
                                                         <select name="skills[]" id="" multiple class="select2 form-control" required>
                                                             @foreach($skills as $skill)
-                                                                <option {{ in_array($skill->id, json_decode($project->skills)) ? 'selected' : null }} value="{{ $skill->id }}">{{ $skill->skill_name }}</option>
+                                                                <option {{ in_array($skill->id, $project->skills) ? 'selected' : null }} value="{{ $skill->id }}">{{ $skill->skill_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

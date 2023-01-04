@@ -224,9 +224,9 @@ class HomeScreenController extends Controller
 
     public function project(Request $request) {
         $project =  Project::where('id', $request->id)->with('employer', 'category')->firstOrFail();
-        $project->setSkills(json_decode($project->skills));
+        $project->setSkills($project->skills);
         $project->getSkills();
-        $skills_array = Skill::whereIn('id', json_decode($project->skills))->get();
+        $skills_array = Skill::whereIn('id', $project->skills)->get();
 
         # if the user is login as freelancer
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();

@@ -25,7 +25,7 @@ class StoreProjectContract extends FormRequest
     {
         return [
             'project_id' => 'required|exists:projectS,id',
-            'proposal_id' => 'required|exists:project_proposals,id',
+            'proposal_id' => 'required',
             'freelancer_id' => 'required|exists:user_freelancer,id',
             'employer_id' => 'required|exists:user_employer,id',
             'cost' => 'required|numeric',

@@ -89,7 +89,21 @@ class Freelancer extends Model
         }
 
         return $allNotAvailableDates;
+    }
 
+    public function rate() {
+
+        $one_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 1)->get()->count();
+        $two_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 2)->get()->count();
+        $three_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 3)->get()->count();
+        $four_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 4)->get()->count();
+        $five_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 5)->get()->count();
+
+        $sub_average = $five_rates + $four_rates + $three_rates + $two_rates + $one_rates;
+        $average = $sub_average == 0 ? 0 : (5 * $five_rates + 4 * $four_rates + 3 * $three_rates + 2 * $two_rates + 1 * $one_rates) / $sub_average;
+        $total_average = number_format($average, 1);
+
+        return $total_average;
     }
 
 }

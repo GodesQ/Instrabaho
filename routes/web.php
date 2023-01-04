@@ -34,7 +34,11 @@ use App\Http\Controllers\Web\ServiceCategoriesController;
 use App\Http\Controllers\Web\ProjectContractController;
 use App\Http\Controllers\Web\NotificationController;
 use App\Http\Controllers\Web\FreelancerReviewsController;
+use App\Http\Controllers\Web\EmployerReviewsController;
 use App\Http\Controllers\Web\EWalletCallBackController;
+use App\Http\Controllers\Web\ProjectPayJobController;
+
+use App\Http\Controllers\Web\Accounting\AccountingAuthController;
 
 use App\Http\Controllers\Web\Admin\AdminAuthController;
 use App\Http\Controllers\Web\Admin\AdminController;
@@ -221,6 +225,9 @@ use App\Events\ProjectMessageEvent;
         Route::get('/review_freelancer/{job_type}/{contract_id}', [FreelancerReviewsController::class, 'create'])->name('review.freelancer');
         Route::post('/review_freelancer', [FreelancerReviewsController::class, 'store'])->name('post-review.freelancer');
 
+        Route::get('/review_employer/{job_type}/{contract_id}', [EmployerReviewsController::class, 'create'])->name('review.employer');
+        Route::post('/review_employer', [EmployerReviewsController::class, 'store'])->name('post-review.employer');
+
         # this is for freelancers
         Route::post('/store_certificates', [FreelancerController::class, 'store_certificates'])->name('freelancer.store_certificates');
         Route::get('/remove_certificate_image/{id}/{key_id}', [FreelancerController::class, 'remove_certificate_image'])->name('remove_certificate_image');
@@ -270,23 +277,34 @@ use App\Events\ProjectMessageEvent;
 
         Route::get('/follow_freelancer/{freelancer_id}', [FollowFreelancerController::class, 'follow_freelancer']);
 
-        Route::get('/project_get_chat/{id}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');
+        Route::get('/project_get_chat/{id}/{type}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');
         Route::post('/send_project_chat', [ProjectChatController::class, 'send_project_chat'])->name('send_project_chat');
 
         Route::get('/user_fund', [UserFundsController::class, 'user_funds'])->name('user_funds');
         Route::post('/deposit', [UserFundsController::class, 'deposit'])->name('deposit');
 
-        Route::get('/pay_job/{type}/{id}', [TransactionsController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
-        Route::post('/pay_job', [TransactionsController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
+        Route::get('/project_pay_job/{type}/{id}', [ProjectPayJobController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
+        Route::post('/project_pay_job', [ProjectPayJobController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
 
-        Route::get('/card_payment/security-check/{id}', [TransactionsController::class, 'security_check'])->name('card-payment.security_check');
-        Route::put('/card_payment/update/{id}/{type?}', [TransactionsController::class, 'card_update'])->name('card-payment.update');
+        Route::get('/card_payment/security-check/{id}', [ProjectPayJobController::class, 'security_check'])->name('card-payment.security_check');
+
+        Route::put('/card_payment/update/{id}/{type?}', [ProjectPayJobController::class, 'card_update'])->name('card-payment.update');
+
+        Route::get('/transaction_message/card_payment/{txn_code}', [TransactionsController::class, 'card_payment_success'])->name('card_payment.success');
 
         Route::get('/transaction_message/{txn_code}/{type?}/success', [EWalletCallbackController::class, 'success'])->name('transaction.success');
         Route::get('/transaction_message/{txn_code}/{type?}/failed', [EWalletCallbackController::class, 'failed'])->name('transaction.failed');
     });
 
+    Route::get('/accounting/login', [AccountingAuthController::class, 'login'])->name('accounting.login.get');
+    Route::post('/accounting/login', [AccountingAuthController::class, 'save_login'])->name('login.post');
+
+    Route::group(['prefix' => 'accounting', 'as' => 'accounting.', 'middleware' => ['accounting.access']], function() {
+
+    });
+
     /* ----------------------------------------- ADMIN ROUTES -------------------------------------------- */
+
     Route::get('/admin/login', [AdminAuthController::class, 'login'])->name('login.get');
     Route::post('/admin/login', [AdminAuthController::class, 'save_login'])->name('login.post');
 

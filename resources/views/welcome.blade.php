@@ -137,38 +137,43 @@
             <div class="row">
                 @forelse ($projects as $project)
                     <div class="col-xl-6 col-lg-6">
-                        <div class="fr-project-details bg-white">
-                            <div class="d-flex justify-content-between align-items-start border-bottom p-3" style="height: 185px;">
-                                <div style="width: 14%">
-                                    <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 80px; height: 80px; border-radius: 50%;">
-                                </div>
-                                <div style="width: 70%" class="fr-project-content">
-                                    <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important;">
-                                        <h6>
-                                            <a href="/project/view/{{ $project->id }}" style="color: black; font-weight: 500;">{{ $project->title }}</a>
-                                        </h6>
-                                        <div style="color: #000;">{{ $project->employer->display_name }}</div>
-                                        <div>{{ $project->location }}</div>
-                                        <div class="my-2">
-                                            <div class="font-weight-medium"><i class="feather icon-target success"></i> Actively Looking for</div>
-                                            <ul class="fr-project-skills" style="margin-top: 10px;">
+                        <a href="/project/view/{{ $project->id }}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start px-3 py-4">
+                                        <div style="width: 14%">
+                                            <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 80px; height: 80px; border-radius: 50%;">
+                                        </div>
+                                        <div style="width: 80%" class="fr-project-content">
+                                            <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important;">
+                                                <h6>
+                                                    <a href="/project/view/{{ $project->id }}" style="color: black; font-weight: 500;">{{ $project->title }}</a>
+                                                </h6>
+                                                <div style="color: #000;">{{ $project->employer->display_name }}</div>
+                                                <div>{{ $project->location }}</div>
+                                                {{-- <div class="my-2">
+                                                    {{-- <div class="font-weight-medium"><i class="feather icon-target success"></i> Actively Looking for</div> --}}
+                                                    {{-- <ul class="fr-project-skills" style="margin-top: 10px;">
 
-                                                <!-- convert the json array ids into model and get to fetch in blade -->
-                                                @php $project->setSkills(json_decode($project->skills)) @endphp
-                                                @php $project->getSkills() @endphp
+                                                        <!-- convert the json array ids into model and get to fetch in blade -->
+                                                        @php $project->setSkills(json_decode($project->skills)) @endphp
+                                                        @php $project->getSkills() @endphp
 
-                                                @foreach($project->skills_name as $skill)
-                                                    <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
-                                                @endforeach
-                                            </ul>
+                                                        @foreach($project->skills_name as $skill)
+                                                            <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div> --}}
+                                                <div class="my-1 mt-3">
+                                                    <a href="/project/view/{{ $project->id }}" class="primary mx-2">View Project</a>
+                                                    <a href="" class="btn btn-primary">Send Proposal</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    {{-- <button class="btn btn-primary " style="border-radius: 25px;">Save</button> --}}
-                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 @empty
 

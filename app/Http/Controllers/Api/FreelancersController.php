@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use DB;
 use App\Models\Freelancer;
 use App\Models\User;
 
@@ -38,7 +38,11 @@ class FreelancersController extends Controller
         $freelancers = Freelancer::select('*')->when($title, function ($q) use ($title) {
             return $q->where(DB::raw('lower(display_name)'), 'like', '%' . strtolower($title) . '%')
                     ->orWhere(DB::raw('lower(tagline)'), 'like', '%' . strtolower($title) . '%')
-                    ->orWhere(DB::raw('lower(description)'), 'like', '%' . strtolower($title) . '%');
+                    ->orWhere(DB::raw('lower(description)'), 'like', '%' . strtolower($title) . '%')
+                    ->orWhereHas('user', function ($query) use ($title) {
+                        $query->where(DB::raw('lower(username)'), 'like', '%' . strtolower($title) . '%')
+                            ->orWhere(DB::raw('lower(firstname)'), 'like', '%' . strtolower($title) . '%');
+                    });
         })
         ->when($latitude and $longitude, function ($q) use ($latitude, $longitude, $radius, $sort) {
             return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $latitude . "))
@@ -47,12 +51,12 @@ class FreelancersController extends Controller
             + sin(radians(" .$latitude. "))
             * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', $radius)->orderBy("distance", 'asc');
         })
-
-        ->with('user', 'certificates', 'experiences', 'educations', 'skills', 'services')
+        ->with('user', 'freelancer_skills')
         ->get();
 
         return response()->json([
-            'status' => true,
+            'status' => $freelancers->count() > 0 ? true : false,
+            'freelancer_count' => $freelancers->count(),
             'freelancers' => $freelancers
         ], 200);
 
@@ -74,6 +78,14 @@ class FreelancersController extends Controller
         ]);
 
         $id = $request->id;
+        $freelancer = Freelancer::where('user_id', $id)->first();
+
+        if($freelancer) {
+            return response()->json([
+                'status' => false,
+                'message' => 'The Freelancer Account Already Exists.'
+            ], 406);
+        }
 
         $save = Freelancer::create([
             'user_id' => $id,

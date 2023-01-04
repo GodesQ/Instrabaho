@@ -21,47 +21,47 @@
                                           <div class="col-md-12">
                                               <div class="form-group">
                                                 <label class="font-weight-bold" for="firstname">First name <span class="text-danger">*</span></label>
-                                                <input type="text" name="firstname" placeholder="Firstname" class="form-control" required="" data-smk-msg="Please provide firstname">
+                                                <input type="text" name="firstname" value="{{ old('firstname') }}" placeholder="Firstname" class="form-control" maxlength="15">
                                                 <span class="danger text-danger p-1">@error('firstname'){{$message}}@enderror</span>
                                               </div>
                                           </div>
                                           <div class="col-md-6">
                                               <div class="form-group">
                                                 <label class="font-weight-bold" for="middlename">Middle name </label>
-                                                  <input type="text" name="middlename" placeholder="Middlename" class="form-control" required="" data-smk-msg="Please provide middlename">
+                                                  <input type="text" name="middlename" placeholder="Middlename" class="form-control" value="{{ old('middlename') }}" maxlength="15">
                                                   <span class="danger text-danger p-1">@error('middlename'){{$message}}@enderror</span>
                                               </div>
                                           </div>
                                           <div class="col-md-6">
                                               <div class="form-group">
                                                 <label class="font-weight-bold" for="lastname">Last name <span class="text-danger">*</span></label>
-                                                <input type="text" name="lastname" placeholder="Lastname" class="form-control" required="" data-smk-msg="Please provide lastname">
+                                                <input type="text" name="lastname" placeholder="Lastname" class="form-control" value="{{ old('lastname') }}" maxlength="15">
                                                 <span class="danger text-danger p-1">@error('lastname'){{$message}}@enderror</span>
                                               </div>
                                           </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="font-weight-bold" for="username">Username <span class="text-danger">*</span></label>
-                                            <input type="text" name="username" placeholder="Username" class="form-control" required="" data-smk-msg="Please provide username">
+                                            <input type="text" name="username" placeholder="Username" class="form-control" value="{{ old('username') }}" maxlength="15">
                                             <span class="danger text-danger p-1">@error('username'){{$message}}@enderror</span>
                                         </div>
                                         <div class="form-group">
                                             <label class="font-weight-bold" for="email">Email <span class="text-danger">*</span></label>
-                                            <input type="email" name="email" placeholder="Email address" class="form-control" required="" data-smk-msg="Email address is required">
+                                            <input type="email" name="email" placeholder="Email address" class="form-control" value="{{ old('email') }}">
                                             <span class="danger text-danger p-1">@error('email'){{$message}}@enderror</span>
                                         </div>
                                         <div class="row">
                                             <div class="col-xl-6 col-md-12">
                                                 <div class="form-group">
                                                     <label class="font-weight-bold" for="email">Password <span class="text-danger">*</span></label>
-                                                    <input type="password" name="password" placeholder="Password" class="form-control" id="password-field" required="" data-smk-msg="Please provide password">
+                                                    <input type="password" name="password" placeholder="Password" class="form-control" id="password-field" value="{{ old('password') }}">
                                                     <span class="danger text-danger p-1">@error('password'){{$message}}@enderror</span>
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-md-12">
                                                 <div class="form-group">
                                                     <label class="font-weight-bold" for="email">Confirm Password <span class="text-danger">*</span></label>
-                                                    <input type="password" name="password_confirmation" placeholder="Confirm Password" class="form-control" id="password-field" required="" data-smk-msg="Please provide password">
+                                                    <input type="password" name="password_confirmation" placeholder="Confirm Password" class="form-control" id="password-field" value="{{ old('password_confirmation') }}">
                                                     <span class="danger text-danger p-1">@error('password_confirmation'){{$message}}@enderror</span>
                                                 </div>
                                             </div>
