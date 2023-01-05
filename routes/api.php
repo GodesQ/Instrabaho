@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ProjectsController;
 use App\Http\Controllers\Api\FreelancersController;
 use App\Http\Controllers\Api\EmployersController;
 use App\Http\Controllers\Api\ProjectProposalController;
+use App\Http\Controllers\Api\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,6 +27,9 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
+    Route::post('/user_change_password', [UserController::class, 'user_change_password'])->name('user_change_password');
+    Route::post('/change_user_picture', [UserController::class, 'change_user_picture'])->name('change_user_picture');
+
     Route::post('freelancer/save_role', [FreelancersController::class, 'save_role_form'])->name('freelancer.save_role_form');
     Route::post('employer/save_role', [EmployersController::class, 'save_role_form'])->name('employer.save_role_form');
 
@@ -38,13 +42,20 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('proposal.store');
 
-    Route::group(['middleware' => ['employer.access']], function () {
-
+    Route::group(['prefix'=> 'employer', 'middleware'=> ['employer.access']], function(){
+        # Routes for projects
+        Route::get('/create_project', [ProjectsController::class, 'create']);
+        Route::post('/store_project', [ProjectsController::class, 'store']);
+        Route::get('/edit_project/{project_id}', [ProjectsController::class, 'edit']);
+        Route::post('/update_project', [ProjectsController::class, 'update']);
+        Route::delete('/delete_project', [ProjectsController::class, 'destroy']);
     });
 
     Route::group(['prefix'=> 'freelancer', 'middleware'=> ['freelancer.access']], function(){
 
     });
+
+    Route::post('/submit_proposal', [ProjectProposalController::class, 'submit_proposal']);
 
 
 

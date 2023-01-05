@@ -56,9 +56,9 @@
                                             <fieldset class="my-3">
                                                 <div class="form-group">
                                                     <div class="form-label font-weight-bold h3">Select Category</div>
-                                                    <div class="row gap-2">
+                                                    <div class="row">
                                                         @foreach ($categories as $category)
-                                                            <div onclick="selectCategory(this)" class="{{ $loop->first ? 'active-category' : null }} categories border p-2 col-lg-2 m-1 d-flex justify-content-center align-items-center cursor-pointer flex-column" data-value="{{ $category->id }}">
+                                                            <div onclick="selectCategory(this)" class="{{ $loop->first ? 'active-category' : null }} categories border p-2 col-lg-2 col-xs-6 m-1 d-flex justify-content-center align-items-center cursor-pointer flex-column" data-value="{{ $category->id }}">
                                                                 <h5 class="text-center">{{ $category->name }}</h5>
                                                             </div>
                                                         @endforeach

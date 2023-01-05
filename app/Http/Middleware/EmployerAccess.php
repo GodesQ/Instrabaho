@@ -17,10 +17,20 @@ class EmployerAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        abort_if(session()->get('role') != 'employer', 403);
-        $user_id = session()->get('id');
-        $employer_exist = Employer::where('user_id', $user_id)->exists();
-        if(!$employer_exist) return redirect()->route('employer.role_form')->with('fail', "Oops! Looks like you do not have an employer account. Create first to continue");
-        return $next($request);
+        if($request->wantsJson()){
+            # check if the request consist of session data header
+            if(!$request->hasHeader('role')) return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
+
+            $role = $request->header('role');
+            if($role != 'employer') return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
+
+            return $next($request);
+        } else {
+            abort_if(session()->get('role') != 'employer', 403);
+            $user_id = session()->get('id');
+            $employer_exist = Employer::where('user_id', $user_id)->exists();
+            if(!$employer_exist) return redirect()->route('employer.role_form')->with('fail', "Oops! Looks like you do not have an employer account. Create first to continue");
+            return $next($request);
+        }
     }
 }

@@ -77,7 +77,7 @@ class FreelancersController extends Controller
             'longitude' => 'required'
         ]);
 
-        $id = $request->id;
+        $id = $request->header('user_id');
         $freelancer = Freelancer::where('user_id', $id)->first();
 
         if($freelancer) {

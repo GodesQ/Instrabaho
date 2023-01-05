@@ -35,28 +35,28 @@ class UserController extends Controller
         return false;
     }
 
-    public function profile(Request $request) {
-        $id = session()->get('id');
-        $role = session()->get('role');
-        if($role == 'freelancer') {
-            $skills = Skill::all();
-            $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations')->first();
-            return view('UserAuthScreens.user.freelancer.freelancer-profile', compact('freelancer', 'skills'));
-        } else {
-            $employer = Employer::where('user_id', $id)->with('user')->first();
-            return view('UserAuthScreens.user.employer.employer-profile', compact('employer'));
-        }
-    }
+    // public function profile(Request $request) {
+    //     $id = session()->get('id');
+    //     $role = session()->get('role');
+    //     if($role == 'freelancer') {
+    //         $skills = Skill::all();
+    //         $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations')->first();
+    //         return view('UserAuthScreens.user.freelancer.freelancer-profile', compact('freelancer', 'skills'));
+    //     } else {
+    //         $employer = Employer::where('user_id', $id)->with('user')->first();
+    //         return view('UserAuthScreens.user.employer.employer-profile', compact('employer'));
+    //     }
+    // }
 
-    public function update_profile(Request $request) {
-        $request->validate([
-            'gender' => 'required|in:Male,Female',
-        ]);
-        $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
-        $user_model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
-        $save = $user_model::where('user_id', $request->id)->update($data);
-        return back()->with('success', 'Profile update successfully');
-    }
+    // public function update_profile(Request $request) {
+    //     $request->validate([
+    //         'gender' => 'required|in:Male,Female',
+    //     ]);
+    //     $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
+    //     $user_model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
+    //     $save = $user_model::where('user_id', $request->id)->update($data);
+    //     return back()->with('success', 'Profile update successfully');
+    // }
 
 
     public function change_user_picture(Request $request) {

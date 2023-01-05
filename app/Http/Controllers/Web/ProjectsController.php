@@ -139,7 +139,6 @@ class ProjectsController extends Controller
     }
 
     public function store(StoreProjectRequest $request) {
-
         $images = array();
 
         if($request->hasFile('attachments')) {

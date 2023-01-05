@@ -37,7 +37,6 @@ class ProjectProposalController extends Controller
         $json_images = json_encode($images);
 
         $proposal = ProjectProposal::create(array_merge($request->validated(), [
-            'project_id' => $request->project_id,
             'employer_id' => $request->employer_id,
             'freelancer_id' => $freelancer->id,
             'status' => 'pending',

@@ -37,7 +37,7 @@ class StoreProjectRequest extends FormRequest
             'end_date' => 'required',
             'total_dates' => 'required|numeric',
             'payment_method' => 'required',
-            'skills' => 'array|between:1,5'
+            'skills' => 'required|array|max:5'
         ];
     }
 }
