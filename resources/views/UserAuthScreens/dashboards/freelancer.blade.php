@@ -26,12 +26,12 @@
                     <div class="row projects-data">
                         @forelse ($projects as $project)
                             <div class="col-xxl-4 col-xl-6">
-                                <div class="card border rounded">
+                                <div class="card border-primary rounded">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
                                                 <a href="/project/view/{{ $project->id }}" class="font-weight-bold h4 info">{{ strlen($project->title) > 15 ? substr($project->title, 0, 15) . '...' : $project->title }}</a>
-                                                <div>{{ $project->employer->user->firstname . " " . $project->employer->user->lastname }}</div>
+                                                <div class="warning">{{ $project->employer->user->firstname . " " . $project->employer->user->lastname }}</div>
                                                 <div class="font-weight-bold">Location: <span class="font-weight-normal">{{ substr($project->location, 0, 25) }}...</span></div>
                                                 <div class="font-weight-bold">Distance: <span class="font-weight-normal">{{ number_format($project->distance, 2) }} km</span></div>
                                             </div>
@@ -57,9 +57,7 @@
                     <h4 class="card-title">Recent Completed Projects</h4>
                     <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
-                        <ul class="list-inline mb-0">
-                            <li><a data-action="reload"><i class="feather icon-rotate-cw"></i></a></li>
-                        </ul>
+                        <a href="/freelancer/projects/completed" class="primary">All Completed Projects</a>
                     </div>
                 </div>
                 <div class="card-content">

@@ -14,8 +14,10 @@ class Freelancer extends Model
 
     protected $casts = [
         'user_id' => 'integer',
-        'hourly_rate' => 'integer'
+        'hourly_rate' => 'integer',
     ];
+
+    protected $appends = ['rate', 'total_reviews'];
 
     public function user() {
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -66,15 +68,18 @@ class Freelancer extends Model
         return $this->hasMany(ProjectOffer::class, 'freelancer_id');
     }
 
+    public function projects_completed() {
+        return $this->hasMany(ProjectContract::class, 'freelancer_id')->where('status', 1);
+    }
+
     public function notAvailableDates() {
         $allNotAvailableDates = array();
 
         $contracts = ProjectContract::where('freelancer_id', $this->id)->with('project', 'proposal')->whereHas('project', function($q) {
             return $q->where('status', '!=', 'cancel')->orWhere('status', '!=', 'pending');
-        })->get();
+        });
 
         foreach ($contracts as $key => $contract) {
-
             # first we will transfer to array of dates
             $periods = new \DatePeriod(
                 new \DateTime($contract->start_date),
@@ -85,25 +90,35 @@ class Freelancer extends Model
            foreach ($periods as $key => $date) {
                 $allNotAvailableDates[] = $date->format('Y-m-d');
            }
-
         }
-
         return $allNotAvailableDates;
     }
 
-    public function rate() {
+    public function getRateAttribute()
+    {
+        return $this->rate();
+    }
 
-        $one_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 1)->get()->count();
-        $two_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 2)->get()->count();
-        $three_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 3)->get()->count();
-        $four_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 4)->get()->count();
-        $five_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 5)->get()->count();
+    public function getTotalReviewsAttribute() {
+        return $this->total_reviews();
+    }
+
+    public function rate() {
+        $one_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 1)->count();
+        $two_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 2)->count();
+        $three_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 3)->count();
+        $four_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 4)->count();
+        $five_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 5)->count();
 
         $sub_average = $five_rates + $four_rates + $three_rates + $two_rates + $one_rates;
         $average = $sub_average == 0 ? 0 : (5 * $five_rates + 4 * $four_rates + 3 * $three_rates + 2 * $two_rates + 1 * $one_rates) / $sub_average;
         $total_average = number_format($average, 1);
 
-        return $total_average;
+        return (float) number_format($total_average, 1);
+    }
+
+    public function total_reviews() {
+        return FreelancerReview::where('freelancer_id', $this->id)->count();
     }
 
 }

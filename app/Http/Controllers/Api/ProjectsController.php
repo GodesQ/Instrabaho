@@ -4,9 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
 use App\Models\Project;
-use DB;
+use App\Models\ServiceCategory;
+use App\Models\Skill;
+use App\Models\ProjectProposal;
+use App\Models\ProjectOffer;
+use App\Models\Employer;
+use App\Models\Freelancer;
+use App\Models\EmployerPackage;
+use App\Http\Requests\Project\StoreProjectRequest;
+use App\Http\Requests\Project\UpdateProjectRequest;
 
 class ProjectsController extends Controller
 {
@@ -49,9 +58,9 @@ class ProjectsController extends Controller
         })
         ->with('category', 'employer')
         ->latest('id')
-        ->toSql();
+        ->get();
 
-        return response()->json($projects);
+        // return response()->json($projects);
 
         return response()->json([
             'status' => $projects->count() > 0 ? true : false,
@@ -60,7 +69,19 @@ class ProjectsController extends Controller
         ], 200);
     }
 
-    public function store(Request $request) {
+    public function create(Request $request) {
+        $categories = ServiceCategory::all();
+        $skills = Skill::toBase()->get();
+        $employer = Employer::where('user_id', $request->header('user_id'))->first();
+
+        return response()->json([
+            'employer' => $employer,
+            'categories' => $categories,
+            'skills' => $skills,
+        ]);
+    }
+
+    public function store(StoreProjectRequest $request) {
         $images = array();
 
         if($request->hasFile('attachments')) {
@@ -72,7 +93,7 @@ class ProjectsController extends Controller
         }
 
         $json_images = json_encode($images);
-        $user_id = $request->id;
+        $user_id = $request->header('user_id');
 
         $employer = Employer::where('user_id', $user_id)->first();
 
@@ -83,8 +104,57 @@ class ProjectsController extends Controller
         $start_date = date_create($request->start_date);
         $end_date = date_create($request->end_date);
 
-        $create = Project::create(array_merge($request->validated(), [
+        $project = Project::create(array_merge($request->validated(), [
             'employer_id' => $employer->id,
+            'attachments' => $json_images,
+            'skills' => $request->skills,
+            'start_date' => date_format($start_date, 'Y-m-d'),
+            'end_date' => date_format($end_date, 'Y-m-d'),
+            'datetime' => $request->datetime,
+            'total_cost' => $request->cost,
+        ]));
+
+        if($project) return response()->json([
+            'status' => true,
+            'project' => $project,
+            'message' => 'Project Created Successfully'
+        ], 201);
+    }
+
+    public function edit(Request $request) {
+        $project = Project::where('id', $request->project_id)->firstOrFail();
+        $categories = ServiceCategory::all();
+        $skills = Skill::all();
+        $project_images = json_decode($project->attachments);
+
+        return response()->json([
+            'status' => true,
+            'categories' => $categories,
+            'skills' => $skills,
+            'project_images' => $project_images,
+            'project' => $project,
+        ]);
+    }
+
+    public function update(UpdateProjectRequest $request) {
+        $project = Project::where('id', $request->id)->first();
+        $project_images = json_decode($project->attachments);
+
+        if($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $key => $attachment) {
+                $image_name = $attachment->getClientOriginalName();
+                $save_file = $attachment->move(public_path().'/images/projects', $image_name);
+                array_push($project_images, $image_name);
+            }
+        }
+
+        $json_images = json_encode($project_images);
+
+        $start_date = date_create($request->start_date);
+        $end_date = date_create($request->end_date);
+
+        $project = Project::where('id', $request->id)->update(array_merge($request->validated(), [
+            'employer_id' => $request->employer,
             'attachments' => $json_images,
             'skills' => json_encode($request->skills),
             'start_date' => date_format($start_date, 'Y-m-d'),
@@ -93,9 +163,11 @@ class ProjectsController extends Controller
             'total_cost' => $request->cost,
         ]));
 
-        if($create) return response()->json([
-            'status' => true,
-            'message' => 'Project Created Successfully'
-        ], 201);
+        if($project) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Update Project Successfully',
+            ], 200);
+        }
     }
 }

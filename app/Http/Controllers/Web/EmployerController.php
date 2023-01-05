@@ -54,6 +54,7 @@ class EmployerController extends Controller
             'lastname' => $request->lastname,
             'username' => $request->username
         ]);
+
         return back()->with('success', 'Profile update successfully');
     }
 

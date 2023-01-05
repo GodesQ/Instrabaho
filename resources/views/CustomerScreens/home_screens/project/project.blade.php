@@ -56,7 +56,7 @@
                                <div class="short-detail-icon"> <i class="far fa-calendar-check"></i> </div>
                                <div>
                                     <small>Project Duration</small> <br>
-                                    <strong>{{ date_format(new DateTime($project->start_date), "F d, Y") }} - {{ date_format(new DateTime($project->end_date), "F d, Y") }} </strong>
+                                    <strong>{{ date_format(new DateTime($project->start_date), "M d, Y") }} - {{ date_format(new DateTime($project->end_date), "M d, Y") }} </strong>
                                </div>
                             </li>
                             <li>

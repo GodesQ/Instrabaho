@@ -44,7 +44,11 @@
 		                  <div class="fr-hero-m-deails">
 		                     <ul>
 		                        <li> <span> Member since {{ date_format(new DateTime($freelancer->created_at), "F d, Y") }}</span> </li>
-		                        <li><span><i class="fas fa-star colored"></i> No Reviews</span> </li>
+		                        <li>
+                                    @for ($i = 0; $i < $freelancer->rate; $i++)
+                                        <i class="fas fa-star" style="color: #fdbf2d !important;" aria-hidden="true"></i>
+                                    @endfor
+                                </li>
 		                     </ul>
 		                  </div>
 		               </div>
@@ -76,16 +80,16 @@
 		            <div class="fr-hero-m-jobs-bottom">
 		               <ul>
 		                  <li> <span><small>{{ count($active_services) }}</small> Active Services</span> </li>
-		                  <li> <span><small>00</small> Completed Projects</span> </li>
-		                  <li> <span><small>00</small> Completed Services</span> </li>
-		                  <li> <span><small>00</small> Reviews</span> </li>
+		                  <li> <span><small>{{ $freelancer->projects_completed()->count() }}</small> Completed Projects</span> </li>
+		                  <li> <span><small>0</small> Completed Services</span> </li>
+		                  <li> <span><small>{{ $freelancer->total_reviews }}</small> {{ $freelancer->total_reviews > 1 ? 'Reviews' : 'Review' }}</span> </li>
 		               </ul>
 		            </div>
 		         </div>
 		      </div>
 		   </div>
 		</section>
-		<section class="fr-services-content-2">
+		{{-- <section class="fr-services-content-2">
 		   <div class="container">
 		      <div class="row">
 		         <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
@@ -128,7 +132,7 @@
 		         </div>
 		      </div>
 		   </div>
-		</section>
+		</section> --}}
 		<section class="fr-product-description padding-bottom-80">
 		   <div class="container">
 		      <div class="row">
@@ -150,7 +154,7 @@
 		               </div>
 		               <div class="fr-recent-model">
 		                  <ul>
-                            @foreach ($freelancer->projects as $project)
+                            @forelse ($freelancer->projects as $project)
                                 <li>
                                     <div class="fancy-model">
                                     <a data-fancybox="portfolio" href="{{ $project->project_url }}" data-caption="" data-wheel="false">
@@ -161,7 +165,11 @@
                                     <h6><a href="{{ $project->project_url }}" target="_blank">{{ $project->project_name }}</a></h6>
                                     </div>
                                 </li>
-                            @endforeach
+                            @empty
+                            <div class="heading-contents">
+                                <h3 class="text-center">No Projects Found</h3>
+                            </div>
+                            @endforelse
 		                  </ul>
 		               </div>
 		            </div>
@@ -285,13 +293,13 @@
 		                           <p>{{ $freelancer->address }}</p>
 		                        </div>
 		                     </li>
-							 <li>
+							 {{-- <li>
 		                        <i class="fas fa-phone"></i>
 		                        <div class="meta">
 		                           <span>Contact No.</span>
 		                           <p>{{$freelancer->contactno}}</p>
 		                        </div>
-		                     </li>
+		                     </li> --}}
 		                  </ul>
 		               </div>
 		               <div class="fr-product-progress sidebar-box">

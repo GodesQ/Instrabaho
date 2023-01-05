@@ -25,7 +25,7 @@ class EmployersController extends Controller
 
         $id = $request->id;
 
-        $save = Employer::create([
+        $employer = Employer::create([
             'user_id' => $id,
             'display_name' => $request->display_name,
             'contactno' => $request->contactno,
@@ -37,11 +37,12 @@ class EmployersController extends Controller
             'longitude' => $request->longitude
         ]);
 
-        if($save) {
+        if($employer) {
             return response()->json([
                 'status' => true,
                 'message' => 'Employer Account Successfully Added.',
-                'role' => 'freelancer'
+                'role' => 'employer',
+                'employer' => $employer
             ], 201);
         }
     }

@@ -10,7 +10,12 @@
                             <img src="../../../images/user-profile.png" alt="profile pic" style="width: 100%; height: 100px; object-fit: cover;">
                         @endif
                     </a>
-                    <p class="mb-2"><i class="fas fa-star colored" aria-hidden="true"></i> No Reviews</p>
+                    <div class="my-1 text-center">
+                        @for ($i = 0; $i < $freelancer->rate; $i++)
+                            <i class="fas fa-star" style="color: #fdbf2d !important; font-size: 8px;" aria-hidden="true"></i>
+                        @endfor
+                        <span class="font-weight-bold" style="font-size: 8px;">( {{($freelancer->total_reviews)}} {{ $freelancer->total_reviews > 1 ? 'Reviews' : 'Review' }} )</span>
+                    </div>
                     <!-- <a class="follow follow-freelancer protip text-danger" style="border: 1px solid rgb(255, 0, 0); padding: 0.3rem 1rem;" data-fid="177" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow">
                             <i class="fas fa-heart mr-50 text-danger" aria-hidden="true"></i> Follow
                     </a> -->

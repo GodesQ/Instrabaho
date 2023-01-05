@@ -64,20 +64,21 @@ class HomeScreenController extends Controller
         //         'type' => 'source'
         //     ]
         // ]);
+
         return redirect($gcashSource->redirect['checkout_url']);
     }
 
     public function freelancer(Request $request) {
         // Data of Freelancer
         $user = User::where('username', $request->username)->with('freelancer')->firstOrFail();
-        $freelancer = Freelancer::where('user_id', $user->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills', 'projects')->firstOrFail();
+        $freelancer = Freelancer::where('user_id', $user->id)->with('user', 'certificates', 'experiences', 'educations', 'services', 'skills', 'projects', 'projects_completed')->firstOrFail();
         $active_services = $freelancer->services()->where('expiration_date', '>', Carbon::now())->get();
         $featured_services = $freelancer->services()->where('type', 'featured')->where('expiration_date', '>', Carbon::now())->get();
 
         $my_profile = Employer::where('user_id', session()->get('id'))->with('projects')->first();
 
         $follow_freelancer = false;
-        if($my_profile)  $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $my_profile->id)->exists();
+        if($my_profile) $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $my_profile->id)->exists();
 
         return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer', 'my_profile'));
     }
