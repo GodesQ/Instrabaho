@@ -29,9 +29,10 @@ class EWalletCallBackController extends Controller
     public function success(Request $request) {
 
         $transaction = Transaction::where('transaction_code', $request->txn_code)->with('user_from', 'user_to')->first();
-        $eWalletPayment = EWalletPayment::where('transaction_id', $request->txn_code)->first();
+        $eWalletPayment = EWalletPayment::where('transaction_code', $request->txn_code)->first();
 
         $source = Paymongo::source()->find($transaction->src_id);
+
 
         if ($transaction->status == 'pending' && $eWalletPayment->status == 'pending') {
             $eWalletPayment->update([
@@ -40,7 +41,21 @@ class EWalletCallBackController extends Controller
             ]);
         }
 
-        if($request->type == 'project') {
+        if($request->type == 'deposit' && $transaction->transaction_type == 'deposit') {
+            $user_wallet = UserWallet::where('user_id', $transaction->from_id)->first();
+            if($user_wallet) {
+                $user_wallet->update([
+                    'amount' => $user_wallet->amount += $transaction->amount,
+                ]);
+            } else {
+                $user_wallet = User::create([
+                    'user_id' => $transaction->from_id,
+                    'amount' => $transaction->amount
+                ]);
+            }
+        }
+
+        if($request->type == 'project' && $transaction->transaction_type == 'pay_project') {
             $project_payment = ProjectPayment::where('transaction_code', $request->txn_code)->first();
             $project_contract = ProjectContract::where('id', $project_payment->contract_id)->first();
 
@@ -76,7 +91,7 @@ class EWalletCallBackController extends Controller
                     'amount' => $transaction->sub_amount,
                     'description' => 'Payment for Transaction Code: ' . $transaction->transaction_code,
                     'currency' => 'PHP',
-                    'statement_descriptor' => $transaction->user_from->firstname . ' ' . $transaction->user_to->lastname,
+                    'statement_descriptor' => $transaction->user_from->firstname . ' ' . $transaction->user_from->lastname,
                     'source' => [
                         'id' => $source->id,
                         'type' => 'source',
@@ -134,17 +149,17 @@ class EWalletCallBackController extends Controller
 
     public function failed(Request $request) {
         $transaction = Transaction::where('transaction_code', $request->txn_code)->with('user_from', 'user_to')->first();
-        $eWalletPayment = EWalletPayment::where('transaction_id', $request->txn_code)->first();
+        $eWalletPayment = EWalletPayment::where('transaction_code', $request->txn_code)->first();
         $source = Paymongo::source()->find($transaction->src_id);
 
         if ($transaction->status == 'pending') {
             $transaction->update([
-                'status' => 'fail',
+                'status' => 'failed',
             ]);
 
             $eWalletPayment->update([
                 'source_callback_response' => $source->getAttributes(),
-                'status' => 'fail',
+                'status' => 'failed',
             ]);
         }
 

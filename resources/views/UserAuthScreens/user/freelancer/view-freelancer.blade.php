@@ -204,34 +204,67 @@
 		               </div>
 		            </div>
 		            <div class="main-box">
-		               <div class="heading-contents">
-		                  <h3>Educational Details</h3>
-		               </div>
-		               <div class="fr-expertise-content">
-		                  	@forelse($freelancer->educations as $education)
-								<div class="fr-expertise-product">
-									<div class="fr-expertise-product2"> <i class="fas fa-long-arrow-alt-right"></i> </div>
-									<div class="fr-expertise-details">
-										<h4>{{ $education->education_title }}</h4>
-										<ul class="experties-meta">
-										<li><span> {{ $education->institute_name }}</span> </li>
-										<li>
-											<span>
-											{{ date_format(new DateTime($education->start_date), "F d, Y") }} - {{ !$education->end_date ? 'Current' : date_format(new DateTime($education->start_date), "F d, Y") }}</span>
-										</li>
-										</ul>
-										<p>
-											{{ $education->description }}
-										</p>
-									</div>
-								</div>
-							@empty
-								<div class="heading-contents">
-									<h3 class="text-center">No Education Found</h3>
-								</div>
-							@endforelse
-		               </div>
+                        <div class="heading-contents">
+                            <h3>Educational Details</h3>
+                        </div>
+                        <div class="fr-expertise-content">
+                            @forelse($freelancer->educations as $education)
+                                <div class="fr-expertise-product">
+                                    <div class="fr-expertise-product2"> <i class="fas fa-long-arrow-alt-right"></i> </div>
+                                    <div class="fr-expertise-details">
+                                        <h4>{{ $education->education_title }}</h4>
+                                        <ul class="experties-meta">
+                                        <li><span> {{ $education->institute_name }}</span> </li>
+                                        <li>
+                                            <span>
+                                            {{ date_format(new DateTime($education->start_date), "F d, Y") }} - {{ !$education->end_date ? 'Current' : date_format(new DateTime($education->start_date), "F d, Y") }}</span>
+                                        </li>
+                                        </ul>
+                                        <p>
+                                            {{ $education->description }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="heading-contents">
+                                    <h3 class="text-center">No Education Found</h3>
+                                </div>
+                            @endforelse
+                        </div>
 		            </div>
+                    <div class="main-box">
+                        <div class="heading-contents">
+                            <h3>Reviews</h3>
+                         </div>
+                         <div class="fr-expertise-content">
+                            @forelse($reviews as $review)
+                                <div class="fr-expertise-product">
+                                    <div class="fr-expertise-details">
+                                        <h4 style="margin: 0 !important;">{{ $review->reviewer->user->firstname . ' ' . $review->reviewer->user->lastname }}</h4>
+                                        <div>
+                                            <span>
+                                                @for ($i = 0; $i < $review->freelancer_rate; $i++)
+                                                    <i class="fas fa-star" style="color: #fdbf2d !important; font-size: 8px;" aria-hidden="true"></i>
+                                                @endfor
+                                            </span>
+                                        </div>
+                                        <ul class="">
+                                            <li>
+                                                <span></span>
+                                            </li>
+                                        </ul>
+                                        <p>
+                                            {{ $review->review }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="heading-contents">
+                                    <h3 class="text-center">No Education Found</h3>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
 		            <div class="fl-advert-box">
 		               <a href="/"><img class="brand-text" alt="stack admin logo" src="../../../images/logo/main-logo.png" style="width: 140px;"></a>
 		            </div>

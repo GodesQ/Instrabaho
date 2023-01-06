@@ -286,9 +286,9 @@ use App\Events\ProjectMessageEvent;
         Route::get('/project_pay_job/{type}/{id}', [ProjectPayJobController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
         Route::post('/project_pay_job', [ProjectPayJobController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
 
-        Route::get('/card_payment/security-check/{id}', [ProjectPayJobController::class, 'security_check'])->name('card-payment.security_check');
+        Route::get('/card_payment/security-check/{id}', [TransactionsController::class, 'security_check'])->name('card-payment.security_check');
 
-        Route::put('/card_payment/update/{id}/{type?}', [ProjectPayJobController::class, 'card_update'])->name('card-payment.update');
+        Route::put('/card_payment/update/{id}/{type?}', [TransactionsController::class, 'card_update'])->name('card-payment.update');
 
         Route::get('/transaction_message/card_payment/{txn_code}', [TransactionsController::class, 'card_payment_success'])->name('card_payment.success');
 

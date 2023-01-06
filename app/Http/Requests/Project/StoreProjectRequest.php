@@ -28,7 +28,7 @@ class StoreProjectRequest extends FormRequest
             'category_id' => 'required',
             'description' => 'required',
             'project_cost_type' => 'required',
-            'cost' => 'required|numeric|min:100',
+            'cost' => 'required|numeric',
             'location' => 'required',
             'project_type' => 'required',
             'latitude' => 'required',

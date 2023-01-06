@@ -83,21 +83,31 @@
                                             </ul>
                                         </div>
                                     @else
-                                        <div class="container my-2">
-                                            <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
-                                            <div class="time-tracker-container">
-                                                <div class="time-tracker-inner-container">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <span class="tracker-icon mr-50"><i class="fa fa-stop danger"></i></span> <div class="timerDisplay">{{ $contract->tracker ? $contract->tracker->hours : 00 }} hrs {{ $contract->tracker ? $contract->tracker->minutes : 00 }} m </div>
-                                                            <div class="form-group text-right">
-                                                                <input type="checkbox" id="timer-btn" class="switchery"/>
-                                                            </div>
-                                                            <input type="hidden" name="hours" id="hours_input" value="{{ $contract->tracker ? $contract->tracker->hours : 00 }}">
-                                                            <input type="hidden" name="minutes" id="minutes_input" value="{{ $contract->tracker ? $contract->tracker->minutes : 00 }}">
+                                        @if (session()->get('role') == 'freelancer')
+                                            <div class="container my-2">
+                                                <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
+                                                <div class="time-tracker-container">
+                                                    <div class="time-tracker-inner-container">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span class="tracker-icon mr-50"><i class="fa fa-stop danger"></i></span> <div class="timerDisplay">{{ $contract->tracker ? $contract->tracker->hours : 00 }} hrs {{ $contract->tracker ? $contract->tracker->minutes : 00 }} m </div>
+                                                                <div class="form-group text-right">
+                                                                    <input type="checkbox" id="timer-btn" class="switchery"/>
+                                                                </div>
+                                                                <input type="hidden" name="hours" id="hours_input" value="{{ $contract->tracker ? $contract->tracker->hours : 00 }}">
+                                                                <input type="hidden" name="minutes" id="minutes_input" value="{{ $contract->tracker ? $contract->tracker->minutes : 00 }}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            <div class="container my-2">
+                                                <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
+                                                <ul class="list-group">
+                                                    <input type="checkbox" id="timer-btn" hidden/>
+                                                    <li class="list-group-item">Total Hours: <span class="font-weight-bold working-date-text"></span></li>
+                                                </ul>
+                                            </div>
+                                        @endif
                                     @endif
                                 </div>
                             </div>

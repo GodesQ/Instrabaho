@@ -96,7 +96,7 @@
                                                             <td>{{ $transaction->name_of_transaction }}</td>
                                                             <td>{{ $transaction->amount }}</td>
                                                             <td>{{ $transaction->payment_method }}</td>
-                                                            <td><div class="badge badge-primary">{{ $transaction->status }}</div></td>
+                                                            <td><div class="badge badge-{{ $transaction->status == 'succeeded' || $transaction->status == 'paid' ? 'success' : 'danger' }}">{{$transaction->status}}</div></td>
                                                             <td>{{ date_format(new DateTime($transaction->created_at), "F d, Y") }}</td>
                                                         </tr>
                                                     @empty
@@ -127,7 +127,51 @@
                                                     </div>
                                                     <form action="/deposit" method="POST">
                                                         @csrf
+                                                        <input type="hidden" value="{{ $user->id }}" name="user_id">
                                                         <div class="modal-body">
+                                                            @if($user->prefer_payment_method == 'card')
+                                                                <div class="row">
+                                                                    <div class="col-xl-6">
+                                                                        <div class="form-group">
+                                                                            <label class="label">Card Holder:</label>
+                                                                            <input type="text" class="form-control"  placeholder="Card Holder" name="card_holder" value="{{$user->firstname}} {{$user->lastname}}">
+                                                                            <span class="text-danger danger">@error('card_holder'){{ $message }}@enderror</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <div class="form-group">
+                                                                            <label class="label">Card number:</label>
+                                                                            <input type="text" class="form-control" data-mask="0000000000000000" name="card_number">
+                                                                            <span class="text-danger danger">@error('card_number'){{ $message }}@enderror</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <div class="row">
+                                                                            <div class="col-xl-6 col-sm-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="label">Expiry Month:</label>
+                                                                                    <input type="text" class="form-control" data-mask="00" placeholder="00" name="expiry_month">
+                                                                                    <span class="text-danger danger">@error('expiry_month'){{ $message }}@enderror</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-xl-6 col-sm-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="label">Expiry Year:</label>
+                                                                                    <input type="text" class="form-control" data-mask="00" placeholder="00" name="expiry_year">
+                                                                                    <span class="text-danger danger">@error('expiry_year'){{ $message }}@enderror</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <div class="form-group">
+                                                                            <label class="label">CVC:</label>
+                                                                            <input type="text" class="form-control" data-mask="000" placeholder="000" name="cvc">
+                                                                            <span class="text-danger danger">@error('cvc'){{ $message }}@enderror</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
                                                             <label>Amount: </label>
                                                             <div class="form-group">
                                                                 <input type="number" placeholder="Amount" name="amount" class="form-control">
@@ -135,8 +179,8 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <input type="hidden" name="payment_method" value="{{ $user->prefer_payment_method }}">
-                                                            <input type="reset" class="btn btn-secondary btn-lg" data-dismiss="modal" value="close">
-                                                            <input type="submit" class="btn btn-primary btn-lg" name="action" value="Create">
+                                                            <input type="reset" class="btn btn-secondary" data-dismiss="modal" value="close">
+                                                            <input type="submit" class="btn btn-primary" name="action" value="Deposit">
                                                         </div>
                                                     </form>
                                                 </div>
@@ -166,32 +210,33 @@
                                                                     </li>
                                                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                         <fieldset>
+                                                                            <input type="radio" name="payment_method" value="grab_pay" id="input-radio-18" {{ $user->prefer_payment_method == 'grab_pay' ? 'checked' : null }}>
+                                                                            <label for="input-radio-18">GRAB PAY</label>
+                                                                        </fieldset>
+                                                                        <img src="../../../images/logo/grabpay.png" alt="" style="width: 40px;">
+                                                                    </li>
+                                                                    {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                        <fieldset>
                                                                             <input type="radio" name="payment_method" value="paymaya" id="input-radio-15" {{ $user->prefer_payment_method == 'paymaya' ? 'checked' : null }}>
                                                                             <label for="input-radio-15">PAYMAYA</label>
                                                                         </fieldset>
                                                                         <img src="../../../images/logo/paymaya-logo.png" alt="" style="width: 50px;">
-                                                                    </li>
+                                                                    </li> --}}
                                                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                         <fieldset>
-                                                                            <input type="radio" name="payment_method" value="credit_card" id="input-radio-16" {{ $user->prefer_payment_method == 'credit_card' ? 'checked' : null }}>
-                                                                            <label for="input-radio-16">CREDIT CARD</label>
+                                                                            <input type="radio" name="payment_method" value="card" id="input-radio-16" {{ $user->prefer_payment_method == 'card' ? 'checked' : null }}>
+                                                                            <label for="input-radio-16">CARD</label>
                                                                         </fieldset>
                                                                         <img src="../../../images/logo/credit-card.png" alt="" style="width: 50px;">
                                                                     </li>
-                                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                        <fieldset>
-                                                                            <input type="radio" name="payment_method" value="paypal" id="input-radio-18" {{ $user->prefer_payment_method == 'paypal' ? 'checked' : null }}>
-                                                                            <label for="input-radio-18">PAYPAL</label>
-                                                                        </fieldset>
-                                                                        <img src="../../../images/logo/paypal-logo.png" alt="" style="width: 40px;">
-                                                                    </li>
-                                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                                                    {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                         <fieldset>
                                                                             <input type="radio" name="payment_method" value="online_bank" id="input-radio-17" {{ $user->prefer_payment_method == 'online_bank' ? 'checked' : null }}>
                                                                             <label for="input-radio-17">ONLINE BANK</label>
                                                                         </fieldset>
                                                                         <img src="../../../images/logo/online-bank.png" alt="" style="width: 50px;">
-                                                                    </li>
+                                                                    </li> --}}
                                                                 </ul>
                                                                 <span class="text-danger danger">@error('payment_method'){{ $message }}@enderror</span>
                                                             </div>

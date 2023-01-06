@@ -17,6 +17,7 @@ use App\Models\Skill;
 use App\Models\ServiceCategory;
 use App\Models\FreelancerFollower;
 use App\Models\EmployerFollower;
+use App\Models\FreelancerReview;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
@@ -38,36 +39,6 @@ class HomeScreenController extends Controller
         return view('welcome', compact('freelancers', 'projects'));
     }
 
-    public function test(Request $request) {
-        $gcashSource = Paymongo::source()->create([
-            'type' => 'gcash',
-            'amount' => 500,
-            'description' => 'Testing payment',
-            'statement_descriptor' => 'Test Paymongo',
-            'currency' => 'PHP',
-            'redirect' => [
-                'success' => url(''),
-                'failed' => url('') . '/login'
-            ]
-        ]);
-
-        // session()->put('paymongo_id', $gcashSource->id);
-
-        // $payment = Paymongo::payment()
-        // ->create([
-        //     'amount' => 100,
-        //     'currency' => 'PHP',
-        //     'description' => 'Testing payment',
-        //     'statement_descriptor' => 'Test Paymongo',
-        //     'source' => [
-        //         'id' => $gcashSource->id,
-        //         'type' => 'source'
-        //     ]
-        // ]);
-
-        return redirect($gcashSource->redirect['checkout_url']);
-    }
-
     public function freelancer(Request $request) {
         // Data of Freelancer
         $user = User::where('username', $request->username)->with('freelancer')->firstOrFail();
@@ -77,10 +48,12 @@ class HomeScreenController extends Controller
 
         $my_profile = Employer::where('user_id', session()->get('id'))->with('projects')->first();
 
+
+        $reviews = FreelancerReview::where('freelancer_id', $freelancer->id)->orderByRaw('LENGTH(review) DESC')->orderBy('review')->with('reviewer')->get();
         $follow_freelancer = false;
         if($my_profile) $follow_freelancer = FreelancerFollower::where('freelancer_id', $freelancer->id)->where('follower_id', $my_profile->id)->exists();
 
-        return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer', 'my_profile'));
+        return view('UserAuthScreens.user.freelancer.view-freelancer', compact('freelancer', 'featured_services', 'active_services', 'follow_freelancer', 'my_profile', 'reviews'));
     }
 
     public function employer(Request $request) {
@@ -89,6 +62,7 @@ class HomeScreenController extends Controller
 
         $my_profile = Freelancer::where('user_id', session()->get('id'))->first();
         $follow_employer = false;
+
         if($my_profile) {
             $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $my_profile->id)->exists();
         }

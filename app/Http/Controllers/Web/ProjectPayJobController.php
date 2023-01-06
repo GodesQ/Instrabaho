@@ -106,6 +106,7 @@ class ProjectPayJobController extends Controller
                 // Create Transaction Data
                 $create_transaction = Transaction::create([
                     'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
+                    'transaction_type' => 'pay_project',
                     'transaction_code' => $transaction_code,
                     'amount' => $total,
                     'sub_amount' => $project_contract->total_cost,
@@ -165,6 +166,7 @@ class ProjectPayJobController extends Controller
                     // Create Transaction Data
                     $transaction = Transaction::create([
                         'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
+                        'transaction_type' => 'pay_project',
                         'transaction_code' => $transaction_code,
                         'amount' => $total,
                         'sub_amount' => $project_contract->total_cost,
@@ -177,7 +179,7 @@ class ProjectPayJobController extends Controller
                     // Create E-Wallet Payment Data
                     $eWalletPayment = EWalletPayment::create([
                         'user_id' => $employer->user_id,
-                        'transaction_id' => $transaction->transaction_code,
+                        'transaction_code' => $transaction->transaction_code,
                         'amount' => $total,
                         'sub_amount' => $project_contract->total_cost,
                         'type' => $request->payment_method,
@@ -234,6 +236,7 @@ class ProjectPayJobController extends Controller
                 // Create Transaction Data
                 $transaction = Transaction::create([
                     'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
+                    'transaction_type' => 'pay_project',
                     'transaction_code' => $transaction_code,
                     'amount' => $total,
                     'sub_amount' => $project_contract->total_cost,
@@ -353,59 +356,6 @@ class ProjectPayJobController extends Controller
         }
     }
 
-    public function card_update(Request $request) {
-        $transaction = Transaction::where('id', $request->id)->first();
-        $cardPayment = CardPayment::where('transaction_code', $transaction->transaction_code)->first();
-
-        $paymentIntent =  Paymongo::paymentIntent()->find($cardPayment->pi_id);
-
-        if ($paymentIntent->status == 'awaiting_next_action') {
-            return redirect()->route('card-payment.security_check', $transaction->id);
-        }
-
-        $transaction->update([
-            'status' => $paymentIntent->status,
-        ]);
-
-        $cardPayment->update([
-            'status' => $paymentIntent->status,
-            're_query_response' => $paymentIntent->getAttributes(),
-        ]);
-
-        $project_payment = ProjectPayment::where('transaction_code', $transaction->transaction_code)->first();
-
-        if($project_payment) {
-            $project_contract = ProjectContract::where('id', $project_payment->contract_id)->first();
-
-            if($project_contract) {
-                if($project_contract->proposal_type == 'offer') {
-                    ProjectOffer::where('id', $project_contract->proposal_id)->update([
-                        'status' => 'completed'
-                    ]);
-                }
-
-                if($project_contract->proposal_type == 'proposal') {
-                    ProjectProposal::where('id', $project_contract->proposal_id)->update([
-                        'status' => 'completed'
-                    ]);
-                }
-
-                # change the status of contract
-                $project_contract->job_done = true;
-                $project_contract->job_done_date = date('Y-m-d H:i:s');
-                $project_contract->status = true;
-                $project_contract->save();
-
-                #change the status of specific project
-                $project_contract_save = $project_contract->project()->update([
-                    'status' => 'completed'
-                ]);
-            }
-        }
-
-        return redirect()->route('employer.projects.completed');
-    }
-
     private function attachPaymentToIntent($paymentIntent, $paymentMethod, $transaction, $cardPayment)
     {
         try {
@@ -454,13 +404,5 @@ class ProjectPayJobController extends Controller
                     're_query_response' => $paymentIntent->getAttributes(),
                 ]);
         }
-    }
-
-    public function security_check(Request $request) {
-        $transaction = Transaction::where('id', $request->id)->first();
-        $cardPayment = CardPayment::where('transaction_code', $transaction->transaction_code)->first();
-
-        if ($transaction->status != 'awaiting_next_action')  return back()->withErrors('Fail! The Status is not awaiting next action');
-        return view('UserAuthScreens.checkout.security-check', compact('transaction', 'cardPayment'));
     }
 }

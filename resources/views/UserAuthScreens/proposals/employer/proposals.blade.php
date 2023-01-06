@@ -11,7 +11,17 @@
                         @endif
                     </div>
                     <div>
-                        <a href="/freelancer/view/{{ $proposal->freelancer->display_name }}" style="color: #003066;">{{ $proposal->freelancer->user->firstname . " " . $proposal->freelancer->user->lastname }}</a>
+                        <a href="/freelancer/view/{{ $proposal->freelancer->display_name }}" style="color: #003066;">
+                            <span class="mr-50">{{ $proposal->freelancer->user->firstname . " " . $proposal->freelancer->user->lastname }}</span>
+                        </a>
+                        <div>
+                            @for ($i = 0; $i < $proposal->freelancer->rate; $i++)
+                            <span>
+                                <i class="fa fa-star" style="color: #fdbf2d !important; font-size: 10px;" aria-hidden="true"></i>
+                            </span>
+                        @endfor
+                            <span class="font-weight-bold" style="font-size: 10px;">( {{($proposal->freelancer->total_reviews)}} {{ $proposal->freelancer->total_reviews > 1 ? 'Reviews' : 'Review' }} )</span>
+                        </div>
                         <h3 class="text-secondary">{{ $proposal->freelancer->tagline }}</h3>
                         <p class="font-weight-light">{{ strlen($proposal->freelancer->description) > 150 ? substr($proposal->freelancer->description, 0, 150) . "..." : $proposal->freelancer->description }} </p>
                         <div class="mt-2">

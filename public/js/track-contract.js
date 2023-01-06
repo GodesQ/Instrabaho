@@ -113,3 +113,35 @@ function sendTrackerAjax() {
 }
 
 setInterval(sendTrackerAjax, 60000);
+
+
+function diff_hours(dt2, dt1)
+ {
+    var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+    diff /= (60 * 60);
+    return Math.abs(Math.round(diff));
+ }
+
+function diff_mins(startDate, endDate) {
+    const msInMinute = 60 * 1000;
+
+    return Math.round(
+      Math.abs(endDate - startDate) / msInMinute
+    );
+}
+
+function timeConvert(n) {
+    var num = n;
+    var hours = (num / 60);
+    var rhours = Math.floor(hours);
+    var minutes = (hours - rhours) * 60;
+    var rminutes = Math.round(minutes);
+    return num + " minutes = " + rhours + " hour(s) and " + rminutes + " minute(s).";
+}
+
+dt1 = new Date('2023-01-05 11:59:33');
+dt2 = new Date('2023-01-05 17:05:20');
+
+let total_minutes = diff_mins(dt1, dt2);
+
+// console.log(timeConvert(total_minutes));

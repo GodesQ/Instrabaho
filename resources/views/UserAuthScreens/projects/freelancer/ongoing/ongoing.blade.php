@@ -49,9 +49,10 @@
                             </div>
                         </div>
                     @empty
-                        <div class="card" style="width: 100vw important;">
-                            <div class="card-body">
-                                No Projects Found
+                        <div class="container-fluid">
+                            <div class="d-flex justify-content-center align-items-center flex-column">
+                                <img src="../../../images/illustrations/no-data.png" alt="" class="" style="width: 300px !important;">
+                                <h3>No Ongoing Projects Found</h3>
                             </div>
                         </div>
                     @endforelse

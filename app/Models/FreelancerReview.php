@@ -10,4 +10,8 @@ class FreelancerReview extends Model
     use HasFactory;
     protected $table = 'freelancer_reviews';
     protected $guarded = [];
+
+    public function reviewer() {
+        return $this->hasOne(Employer::class, 'id', 'reviewer_id');
+    }
 }

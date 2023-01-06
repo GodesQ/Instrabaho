@@ -69,6 +69,138 @@ class ProjectsController extends Controller
         ], 200);
     }
 
+    public function employer_projects(Request $request) {
+        if(!$request->header('user_id')) return response()->json(['status' => false], 403);
+
+        $user_id = $request->header('user_id');
+        $employer = Employer::where('user_id', $user_id)->first();
+        if(!$employer) return response()->json(['status' => false], 403);
+
+        $projects = Project::where('employer_id', $employer->id)->get();
+
+        return response()->json([
+            'status' => true,
+            'projects' => $projects
+        ], 200);
+    }
+
+    public function employer_ongoing_projects(Request $request) {
+        if(!$request->header('user_id')) return response()->json(['status' => false], 403);
+
+        $user_id = $request->header('user_id');
+        $employer = Employer::where('user_id', $user_id)->first();
+        if(!$employer) return response()->json(['status' => false], 403);
+
+        $proposals = ProjectProposal::where('employer_id', $employer->id)
+        ->where('status', 'approved')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'proposal');
+        })->get();
+
+        $offers = ProjectOffer::where('employer_id', $employer->id)
+        ->where('status', 'approved')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'offer');
+        })->get();
+
+        $ongoing_projects = $proposals->concat($offers);
+
+        return response()->json([
+            'status' => true,
+            'ongoing_projects' => $ongoing_projects
+        ], 200);
+
+    }
+
+    public function employer_completed_projects(Request $request) {
+        if(!$request->header('user_id')) return response()->json(['status' => false], 403);
+
+        $user_id = $request->header('user_id');
+        $employer = Employer::where('user_id', $user_id)->first();
+        if(!$employer) return response()->json(['status' => false], 403);
+
+        $proposals = ProjectProposal::where('employer_id', $employer->id)
+        ->where('status', 'completed')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'proposal');
+        })->get();
+
+        $offers = ProjectOffer::where('employer_id', $employer->id)
+        ->where('status', 'completed')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'offer');
+        })->get();
+
+        $completed_projects = $proposals->concat($offers);
+
+        return response()->json([
+            'status' => true,
+            'completed_projects' => $completed_projects
+        ], 200);
+    }
+
+    public function freelancer_ongoing_projects(Request $request) {
+        if(!$request->header('user_id')) return response()->json(['status' => false], 403);
+
+        $user_id = $request->header('user_id');
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+        if(!$freelancer) return response()->json(['status' => false], 403);
+
+        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)
+        ->where('status', 'approved')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'proposal');
+        })->get();
+
+        $offers = ProjectOffer::where('freelancer_id', $freelancer->id)
+        ->where('status', 'approved')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'offer');
+        })->get();
+
+        $ongoing_projects = $proposals->concat($offers);
+
+        return response()->json([
+            'status' => true,
+            'ongoing_projects' => $ongoing_projects
+        ], 200);
+    }
+
+    public function freelancer_completed_projects(Request $request) {
+        if(!$request->header('user_id')) return response()->json(['status' => false], 403);
+
+        $user_id = $request->header('user_id');
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+        if(!$freelancer) return response()->json(['status' => false], 403);
+
+        $proposals = ProjectProposal::where('freelancer_id', $freelancer->id)
+        ->where('status', 'completed')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'proposal');
+        })->get();
+
+        $offers = ProjectOffer::where('freelancer_id', $freelancer->id)
+        ->where('status', 'completed')
+        ->with('project', 'contract')
+        ->whereHas('contract', function($q) {
+            return $q->where('proposal_type', 'offer');
+        })->get();
+
+        $completed_projects = $proposals->concat($offers);
+
+        return response()->json([
+            'status' => true,
+            'completed_projects' => $completed_projects
+        ], 200);
+    }
+
     public function create(Request $request) {
         $categories = ServiceCategory::all();
         $skills = Skill::toBase()->get();
@@ -83,7 +215,7 @@ class ProjectsController extends Controller
 
     public function store(StoreProjectRequest $request) {
         $images = array();
-
+        if(!$request->header('user_id')) return response()->json(['status' => false], 403);
         if($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $key => $attachment) {
                 $image_name = $attachment->getClientOriginalName();
@@ -96,6 +228,7 @@ class ProjectsController extends Controller
         $user_id = $request->header('user_id');
 
         $employer = Employer::where('user_id', $user_id)->first();
+        if(!$employer) return response()->json(['status' => false], 403);
 
         // #compute total cost
         // $system_deduction = intval($request->cost) * 0.10;
