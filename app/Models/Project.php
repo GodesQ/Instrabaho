@@ -12,6 +12,8 @@ class Project extends Model
     protected $table = 'projects';
     protected $guarded = [];
 
+    protected $appends = ['project_skills'];
+
     protected $casts = [
         'employer_id' => 'integer',
         'cost' => 'integer',
@@ -46,4 +48,13 @@ class Project extends Model
         return $this->belongsToMany(Skill::class, 'skills');
     }
 
+    public function getProjectSkillsAttribute()
+    {
+        return $this->project_skills();
+    }
+
+    public function project_skills() {
+        $skills = Skill::whereIn('id', $this->skills)->get();
+        return $skills;
+    }
 }

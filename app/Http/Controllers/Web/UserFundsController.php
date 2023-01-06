@@ -10,12 +10,12 @@ use App\Models\User;
 use App\Models\Transaction;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Models\EWalletPayment;
+use App\Models\CardPayment;
+use App\Models\ProjectPayment;
 
-use Carbon\Carbon;
+use Luigel\Paymongo\Facades\Paymongo;
 use Illuminate\Support\Str;
-use Crazymeeks\Foundation\PaymentGateway\Dragonpay;
-use Crazymeeks\Foundation\PaymentGateway\Dragonpay\Token;
-use Ixudra\Curl\Facades\Curl;
 
 class UserFundsController extends Controller
 {
@@ -28,97 +28,200 @@ class UserFundsController extends Controller
     }
 
     public function deposit(Request $request) {
-        $user_wallet = UserWallet::where('user_id', session()->get('id'))->first();
-
-        if($request->action == 'Create') {
-            $request->validate([
-                'amount' => 'required|numeric',
-                'payment_method' => 'required'
-            ]);
-
-            // Generate Transaction Code
-            $transaction_code = strtoupper(Str::random(8));
-
-            // Create Transaction
-            $create_transaction = Transaction::create([
-                'name_of_transaction' => 'Deposit',
-                'transaction_code' => $transaction_code,
-                'amount' => $request->amount,
-                'from_id' => 0,
-                'to_id' => session()->get('id'),
-                'payment_method' => $request->payment_method,
-                'status' => 'success'
-            ]);
-
-            // Generate Invoice Code
-            $invoice_code = strtoupper(Str::random(8));
-
-            // Create Invoice
-            $invoice = Invoice::create([
-                'invoice_name' => 'Deposit',
-                'date_issue' => Carbon::now(),
-                'due_date' => Carbon::now()->addDays(5),
-                'invoice_code' => $invoice_code,
-                'bill_from' => 0,
-                'bill_to' => session()->get('id'),
-                'payment_method' => $request->payment_method,
-                'invoice_date' => Carbon::now(),
-            ])->id;
-            
-            // Create Invoice Item
-            $create_invoice_item = InvoiceItem::create([
-                'invoice_id' => $invoice,
-                'item' => 'Deposit Amount in Wallet',
-                'quantity' => 1,
-                'amount' => $request->amount
-            ]);
-            
-            if(!$user_wallet) {
-                $create_wallet = UserWallet::create([
-                    'user_id' => session()->get('id'),
-                    'amount' =>  $request->amount,
-                ]);
-            } else {
-                $create_wallet = UserWallet::where('user_id', $user_wallet->user_id)->update([
-                    'amount' => $user_wallet->amount + $request->amount,
-                ]);
-            }
-
-            $parameters = [
-                'txnid' => $transaction_code, 
-                'amount' => $request->amount, 
-                'ccy' => 'PHP',
-                'description' => 'Deposit Money', 
-                'email' => session()->get('email'),
-                'param1' => session()->get('id'), 
-            ];
-    
-            $merchant_account = [
-                'merchantid' => env('DRAGON_PAY_MERCHANTID'),
-                'password'   => env('DRAGON_PAY_MERCHANTKEY')
-            ];
-            
-            // Initialize Dragonpay
-            $dragonpay = new Dragonpay($merchant_account);
-            $dragonpay->setParameters($parameters)->away();
-            // return back()->with('success', 'Add Amount Successfully');
-        }
-        
         $request->validate([
-            'payment_method' => 'required'
+            'user_id' => 'required|exists:user,id',
+            'amount' => 'required|numeric',
+            'payment_method' => 'required|in:gcash,grab_pay,card,paymaya'
         ]);
 
-        if(!$user_wallet) {
-            $create_wallet = UserWallet::create([
-                'user_id' => session()->get('id'),
-                'amount' => $user_wallet + 0,
-            ]);
+        $amount = $request->amount;
+        $user = User::where('id', $request->user_id)->first();
 
-            User::where('id', session()->get('id'))->update([
-                'prefer_payment_method' => $request->payment_method
-            ]);
+        switch ($request->payment_method) {
+            case 'gcash':
+            case 'grab_pay':
+
+                // Generate Transaction Code
+                $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
+
+                $transaction = Transaction::create([
+                    'name_of_transaction' => 'Deposit',
+                    'transaction_type' => 'deposit',
+                    'transaction_code' => $transaction_code,
+                    'amount' => $amount,
+                    'sub_amount' => $amount,
+                    'from_id' => $user->id,
+                    'to_id' => 0,
+                    'payment_method' => $request->payment_method,
+                    'status' => 'initial'
+                ]);
+
+                // Create E-Wallet Payment Data
+                $eWalletPayment = EWalletPayment::create([
+                    'user_id' => $user->id,
+                    'transaction_code' => $transaction->transaction_code,
+                    'amount' => $amount,
+                    'sub_amount' => $amount,
+                    'type' => $request->payment_method,
+                    'status' => 'initial',
+                ]);
+
+                $payload = [
+                    'type' => $request->payment_method,
+                    'amount' => $amount,
+                    'currency' => 'PHP',
+                    'redirect' => [
+                        'success' => route('transaction.success', ['txn_code' => $transaction->transaction_code, 'type' => 'deposit']),
+                        'failed' =>  route('transaction.failed', ['txn_code' => $transaction->transaction_code, 'type' => 'deposit']),
+                    ]
+                ];
+
+                $eWalletPayment->update([
+                    'payload' => $payload
+                ]);
+
+                $source = Paymongo::source()->create($payload);
+
+                $eWalletPayment->update([
+                    'src_id' => $source->id,
+                    'source_response' => $source->getAttributes(),
+                    'status' => $source->status,
+                ]);
+
+                $transaction->update([
+                    'src_id' => $source->id,
+                    'status' => $source->status,
+                ]);
+
+                return redirect($source->redirect['checkout_url']);
+
+            case 'card':
+                // Generate Transaction Code
+                $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
+
+                // Create Transaction Data
+                $transaction = Transaction::create([
+                    'name_of_transaction' => 'Deposit',
+                    'transaction_type' => 'deposit',
+                    'transaction_code' => $transaction_code,
+                    'amount' => $amount,
+                    'sub_amount' => $amount,
+                    'from_id' => $user->id,
+                    'to_id' =>0,
+                    'payment_method' => $request->payment_method,
+                    'status' => 'initial'
+                ]);
+
+
+                $cardPayment = CardPayment::create([
+                    'user_id' => $user->id,
+                    'amount' => $amount,
+                    'sub_amount' => $amount,
+                    'transaction_code' => $transaction->transaction_code
+                ]);
+
+                $payload = [
+                    'amount' => $amount,
+                    'payment_method_allowed' => [
+                        'card'
+                    ],
+                    'payment_method_options' => [
+                        'card' => [
+                            'request_three_d_secure' => 'automatic'
+                        ]
+                    ],
+                    'description' => 'Card Payment for Transaction Code: ' . $transaction->transaction_code,
+                    'statement_descriptor' => 'INSTRABAHO',
+                    'currency' => 'PHP',
+                ];
+
+                $cardPayment->update([
+                    'payload' => $payload
+                ]);
+
+                $paymentIntent = Paymongo::paymentIntent()->create($payload);
+
+                $cardPayment->update([
+                    'pi_id' => $paymentIntent->id,
+                    'payment_intent_response' => $paymentIntent->getAttributes(),
+                    'status' => $paymentIntent->status,
+                ]);
+
+                $transaction->update([
+                    'status' => $paymentIntent->status,
+                ]);
+
+                $paymentMethod = Paymongo::paymentMethod()->create([
+                    'type' => 'card',
+                    'details' => [
+                        'card_number' => $request->card_number,
+                        'exp_month' => (int) $request->expiry_month,
+                        'exp_year' => (int) $request->expiry_year,
+                        'cvc' => $request->cvc,
+                    ],
+                    'billing' => [
+                        'name' => $user->firstname . ' ' . $user->lastname,
+                        'email' => $user->email,
+                    ]
+                ]);
+
+                $cardPayment->update([
+                    'pm_id' => $paymentMethod->id,
+                    'payment_method_response' => $paymentMethod->getAttributes(),
+                ]);
+
+                return $this->attachPaymentToIntent($paymentIntent, $paymentMethod, $transaction, $cardPayment);
+        }
+    }
+
+    private function attachPaymentToIntent($paymentIntent, $paymentMethod, $transaction, $cardPayment) {
+        try {
+            $paymentIntent = $paymentIntent->attach($paymentMethod->id);
+        } catch (\Luigel\Paymongo\Exceptions\BadRequestException $e) {
+            $exception = json_decode($e->getMessage(),  true);
+            return redirect()->back()->with('error', $exception['errors'][0]['detail']);
         }
 
-        return back()->with('success', 'Add Amount Successfully');
+        $cardPayment->update([
+            'payment_attach_response' => $paymentIntent->getAttributes(),
+            'status' => $paymentIntent->status,
+        ]);
+
+        $transaction->update([
+            'status' => $paymentIntent->status,
+        ]);
+
+        switch ($paymentIntent->status) {
+            case 'awaiting_next_action':
+                return redirect()->route('card-payment.security_check', $transaction->id);
+
+            case 'succeeded':
+                return back()->with('success', 'Deposit Successfully.');
+            case 'awaiting_payment_method':
+                return dd([
+                    'CHECK LAST PAYMENT ERROR',
+                    $paymentIntent,
+                ]);
+            case 'processing':
+                # delay 2 seconds
+                sleep(2);
+
+                $paymentIntent =  Paymongo::paymentIntent()->find($cardPayment->pi_id);
+
+                if ($paymentIntent->status == 'awaiting_next_action') {
+                    return redirect()->route('card-payment.security_check', $transaction->id);
+                }
+
+                $transaction->update([
+                    'status' => $paymentIntent->status,
+                ]);
+
+                $cardPayment->update([
+                    'status' => $paymentIntent->status,
+                    're_query_response' => $paymentIntent->getAttributes(),
+                ]);
+        }
     }
+
+
 }

@@ -50,4 +50,8 @@ class ProjectProposalController extends Controller
             ], 201);
         }
     }
+
+    public function proposal(Request $request) {
+
+    }
 }

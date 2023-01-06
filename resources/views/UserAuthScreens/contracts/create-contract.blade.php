@@ -36,10 +36,10 @@
                                     <div class="row p-1 border-bottom align-items-center">
                                         <div class="col-lg-8">
                                             <h5 class="font-weight-normal primary">Convenience Fee </h5>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus velit rem consequatur veniam sunt veritatis doloremque magni sit.</p>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voleniam sunt veritatis doloremque magni sit.</p>
                                         </div>
                                         <div class="col-lg-4">
-                                            <h6 class="text-lg-right">₱ <span class="font-weight-bold">50.00</span></h6>
+                                            <h6 class="text-lg-right">₱ <span class="font-weight-bold" id="convenience-fee-display">50.00</span></h6>
                                         </div>
                                     </div>
                                     <div class="row p-1 border-bottom">
@@ -47,7 +47,7 @@
                                             <h5 class="font-weight-normal primary">Total Cost</h5>
                                         </div>
                                         <div class="col-lg-6">
-                                            <h6 class="text-lg-right">₱ <span id="total-project-cost-text" class="font-weight-bold">{{ number_format(intval($data->project->cost) - 50, 2)}}</span></h6>
+                                            <h6 class="text-lg-right"><span id="total-project-cost-text" class="font-weight-bold">₱ {{ number_format(intval($data->project->cost) - 50, 2)}}</span></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                             <div class="form-group">
                                                 <label for="cost_type" class="font-weight-bold">Prefer Payment Type</label>
                                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, unde!</p>
-                                                <select name="cost_type" id="cost_type" class="select2">
+                                                <select name="cost_type" id="cost_type" class="select2" onchange="selectCostType(this)">
                                                     <option value="Fixed">Fixed</option>
                                                     <option value="Hourly">Hourly</option>
                                                 </select>
@@ -136,6 +136,16 @@
             computeContract(e.target.value);
         })
 
+        function selectCostType(e) {
+            if(e.value == 'Hourly') {
+                $('#total-project-cost-text').html('Depend on the total hours consume from the project.');
+                $('#total_cost').val(0);
+            } else {
+                let cost_value = $('#cost').val();
+                computeContract(cost_value);
+            }
+        }
+
         function computeContract(cost) {
             let total_cost = document.querySelector('#total_cost');
             let total_cost_text = document.querySelector('#total-project-cost-text');
@@ -147,7 +157,7 @@
             let total = cost - convenience_fee;
 
             total_cost.value = total;
-            total_cost_text.innerHTML = Number(total).toFixed(2);
+            total_cost_text.innerHTML = '₱ ' + Number(total).toFixed(2);
             project_cost_text.innerHTML = Number(cost).toFixed(2);
         }
     </script>

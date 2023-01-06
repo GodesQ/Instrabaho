@@ -17,13 +17,12 @@ class EmployerAccess
      */
     public function handle(Request $request, Closure $next)
     {
+        // return response()->json($request->all());
         if($request->wantsJson()){
             # check if the request consist of session data header
             if(!$request->hasHeader('role')) return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
-
             $role = $request->header('role');
             if($role != 'employer') return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
-
             return $next($request);
         } else {
             abort_if(session()->get('role') != 'employer', 403);

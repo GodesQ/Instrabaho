@@ -25,7 +25,7 @@ class ProjectsController extends Controller
     public function index() {
         $user_id = session()->get('id');
         $employer = Employer::where('user_id', $user_id)->first();
-        $projects = Project::where('employer_id', $employer->id)->cursorPaginate(10);
+        $projects = Project::where('employer_id', $employer->id)->get();
         return view('UserAuthScreens.projects.projects', compact('projects'));
     }
 
@@ -65,6 +65,7 @@ class ProjectsController extends Controller
         $ongoing_projects = $proposals->concat($offers);
         return view('UserAuthScreens.projects.employer.ongoing.ongoing', compact('ongoing_projects'));
     }
+
 
     public function employer_completed(Request $request) {
         $employer = Employer::where('user_id', session()->get('id'))->first();
@@ -165,7 +166,7 @@ class ProjectsController extends Controller
         $create = Project::create(array_merge($request->validated(), [
             'employer_id' => $employer->id,
             'attachments' => $json_images,
-            'skills' => json_encode($request->skills),
+            'skills' => $request->skills,
             'start_date' => date_format($start_date, 'Y-m-d'),
             'end_date' => date_format($end_date, 'Y-m-d'),
             'datetime' => $request->datetime,

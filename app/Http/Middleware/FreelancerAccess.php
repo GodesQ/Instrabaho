@@ -17,11 +17,11 @@ class FreelancerAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->is('api/*')){
+        if($request->wantsJson()){
             # check if the request consist of session data header
-            abort_if($request->hasHeader('session_data'), 403);
-            $session_data = $request->header('session_data');
-            abort_if($session_data['role'] != 'freelancer', 403);
+            if(!$request->hasHeader('role')) return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
+            $role = $request->header('role');
+            if($role != 'freelancer') return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
             return $next($request);
         }else{
             abort_if(session()->get('role') != 'freelancer', 403);

@@ -134,7 +134,7 @@
                                 <a href="/the-process">The Process</a>
                             </li>
                             <li class="active-link">
-                                <a href="/search_freelancers" >Freelance Search</a>
+                                <a href="/search_freelancers" >Worker Search</a>
                             </li>
                             <li class="">
                                 <a href="/search_projects">Projects Search</a>

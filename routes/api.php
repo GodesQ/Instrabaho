@@ -44,6 +44,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::group(['prefix'=> 'employer', 'middleware'=> ['employer.access']], function(){
         # Routes for projects
+        Route::get('/projects', [ProjectsController::class, 'employer_projects']);
+        Route::get('/projects/ongoing', [ProjectsController::class, 'employer_ongoing_projects']);
+        Route::get('/projects/completed', [ProjectsController::class, 'employer_completed_projects']);
         Route::get('/create_project', [ProjectsController::class, 'create']);
         Route::post('/store_project', [ProjectsController::class, 'store']);
         Route::get('/edit_project/{project_id}', [ProjectsController::class, 'edit']);
@@ -52,11 +55,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::group(['prefix'=> 'freelancer', 'middleware'=> ['freelancer.access']], function(){
-
+        Route::get('/projects/ongoing', [ProjectsController::class, 'freelancer_ongoing_projects']);
+        Route::get('/projects/completed', [ProjectsController::class, 'freelancer_completed_projects']);
     });
 
-    Route::post('/submit_proposal', [ProjectProposalController::class, 'submit_proposal']);
-
+    Route::post('/submit_proposal', [ProjectProposalController::class, 'store'])->middleware('freelancer.access');
+    Route::post('/proposal/info/{id}', [ProjectProposalController::class, 'proposal']);
 
 
     Route::post('logout', [AuthController::class, 'logout']);

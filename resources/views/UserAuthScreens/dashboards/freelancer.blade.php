@@ -22,7 +22,7 @@
         <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-12 col-12 power-consumption-stats-chart">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title font-weight-bold">New Job Offers near you</h3>
+                    <h3 class="card-title font-weight-bold">New Job near you</h3>
                     <div class="row projects-data">
                         @forelse ($projects as $project)
                             <div class="col-xxl-4 col-xl-6">
