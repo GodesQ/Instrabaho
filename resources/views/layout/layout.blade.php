@@ -32,21 +32,16 @@
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/fonts/simple-line-icons/style.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/fonts/meteocons/style.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/users.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css-rtl/plugins/forms/wizard.css')}}">
 		<!-- END: Page CSS-->
 
 		<!-- BEGIN: Custom CSS-->
 		<link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/style.css') }}">
 
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="{{ URL::asset('app-assets/vendors/css/forms/toggle/switchery.min.css') }}"
+        <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/toggle/switchery.min.css') }}"
         />
 
         <!-- Bootstrap core CSS -->
-        <link
-            href="{{ URL::asset('css/bootstrap.min.css') }}"
+        <link href="{{ URL::asset('css/bootstrap.min.css') }}"
             rel="stylesheet"
         />
 

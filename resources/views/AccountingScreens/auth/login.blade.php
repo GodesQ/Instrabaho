@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
     <link
         rel="icon"
-        href="https://instrabaho.com/wp-content/uploads/2021/02/cropped-favicon-32x32.png"
+        href="../../../images/cropped-favicon-32x32.png"
         sizes="32x32"
     />
 
@@ -83,6 +83,7 @@
                                 <div class="card-header border-0">
                                     <div class="card-title text-center">
                                         <img src="../../../images/logo/main-logo.png" style="width: 250px;" alt="branding logo">
+                                        <h4 class="mt-1">Accounting</h4>
                                     </div>
                                 </div>
                                 @if(Session::get('fail'))

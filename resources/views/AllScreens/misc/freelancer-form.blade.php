@@ -29,8 +29,8 @@
                         <div class="col-md-3"></div>
                         <div class="col-md-6 col-sm-11 ">
                             <div class="card">
-                                <div class="card-header bg-gradient-x-primary text-white">
-                                    <h4 style="color: #ffffff;">Freelancer Form</h4>
+                                <div class="card-header bg-primary text-white">
+                                    <h4 style="color: #fff;">Freelancer/Worker Form</h4>
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body">
@@ -52,9 +52,9 @@
                                                         <div class="form-group">
                                                             <label for="displayName">Freelancer Type:</label>
                                                             <select name="freelancer_type" id="" class="select2 form-control">
+                                                                <option value="Individual">Individual</option>
                                                                 <option value="Company">Company</option>
                                                                 <option value="Group">Group</option>
-                                                                <option value="Individual">Individual</option>
                                                                 <option value="Student">Student</option>
                                                             </select>
                                                         </div>
@@ -65,7 +65,7 @@
                                                         <div class="form-group">
                                                             <label for="hourlyRate">Hourly Rate :</label>
                                                             <input type="number" name="hourly_rate" class="form-control" id="hourlyRate">
-                                                            <span style="font-style: italic; padding: 8px;">Provide your hourly rate without currency symbol</span>
+                                                            <span style="font-style: italic; padding: 8px;">Provide your hourly rate</span>
                                                         </div>
                                                     </div>
 
@@ -109,6 +109,7 @@
                                                         <button type="button" class="btn btn-primary my-3" id="get-current-location">Current <i class="fa fa-map-marker"></i></button>
                                                     </div>
                                                     <div class="col-md-12">
+                                                        <div class="primary text-primary">You can drag the marker to get the specific location</div>
                                                         <div id="map-canvas"></div>
                                                     </div>
                                                     <div class="col-md-6 d-none">
