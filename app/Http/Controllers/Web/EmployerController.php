@@ -9,6 +9,7 @@ use App\Models\Employer;
 use App\Models\Project;
 use App\Models\Freelancer;
 use App\Models\EmployerFollower;
+use App\Models\ProjectContract;
 use App\Http\Requests\EmployerRegisterForm\RegisterEmployerRequest;
 use DB;
 
@@ -33,8 +34,10 @@ class EmployerController extends Controller
     public function dashboard() {
         $role = session()->get('role');
         $id = session()->get('id');
-        $employer = Employer::where('user_id', $id)->first();
-        return view('UserAuthScreens.dashboards.employer', compact('employer'));
+        $employer = Employer::where('user_id', $id)->firstOrFail();
+        $ongoing_projects = Project::where('status', 'approved')->where('employer_id', $employer->id)->latest('id')->get();
+        $completed_projects = Project::where('status', 'completed')->where('employer_id', $employer->id)->latest('id')->get();
+        return view('UserAuthScreens.dashboards.employer', compact('employer', 'ongoing_projects', 'completed_projects'));
     }
 
     public function profile(Request $request) {

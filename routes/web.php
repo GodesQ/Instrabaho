@@ -300,7 +300,7 @@ use App\Events\ProjectMessageEvent;
     Route::post('/accounting/login', [AccountingAuthController::class, 'save_login'])->name('login.post');
 
     Route::group(['prefix' => 'accounting', 'as' => 'accounting.', 'middleware' => ['accounting.access']], function() {
-
+        Route::get('/dashboard', [])->name('accounting.dashboard');
     });
 
     /* ----------------------------------------- ADMIN ROUTES -------------------------------------------- */

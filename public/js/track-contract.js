@@ -43,6 +43,7 @@ $(document).ready(function () {
 let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
 let timerRef = document.querySelector('.timerDisplay');
 let trackerIcon = document.querySelector('.tracker-icon');
+let status_input = document.querySelector('#status');
 let int = null;
 
 hours = $('#hours').val();
@@ -51,19 +52,25 @@ minutes = $('#minutes').val();
 $(document).on("change", "#timer-btn", function (e) {
     if(e.target.checked) {
         if(int!==null){
-        clearInterval(int);
-    }
-
-    trackerIcon.innerHTML = `<i class="fa fa-play success"><i/>`;
-    int = setInterval(displayTimer, 10);
+            clearInterval(int);
+            status_input.value = 'stop';
+            sendTrackerAjax();
+            timerRef.innerHTML = ` ${0} hrs ${0} m ${0} s`;
+        }
+        trackerIcon.innerHTML = `<i class="fa fa-play success"><i/>`;
+        int = setInterval(displayTimer, 10);
+        status_input.value = 'start';
+        sendTrackerAjax();
     } else {
         trackerIcon.innerHTML = `<i class="fa fa-stop danger"><i/>`;
         clearInterval(int);
+        status_input.value = 'stop';
+        sendTrackerAjax();
     }
 });
 
 function displayTimer() {
-    milliseconds+=10;
+    milliseconds+=10;  
     if(milliseconds == 1000) {
         milliseconds = 0;
         seconds++;
@@ -77,15 +84,15 @@ function displayTimer() {
         }
     }
 
-let h = hours < 10 ? "0" + hours : hours;
-let m = minutes < 10 ? "0" + minutes : minutes;
-let s = seconds < 10 ? "0" + seconds : seconds;
-let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+    let h = hours < 10 ? "0" + hours : hours;
+    let m = minutes < 10 ? "0" + minutes : minutes;
+    let s = seconds < 10 ? "0" + seconds : seconds;
+    let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
 
-$('#hours_input').val(h);
-$('#minutes_input').val(m);
+    $('#hours_input').val(h);
+    $('#minutes_input').val(m);
 
-timerRef.innerHTML = ` ${h} hrs ${m} m ${s} s`;
+    timerRef.innerHTML = ` ${h} hrs ${m} m ${s} s`;
 }
 
 function sendTrackerAjax() {
@@ -93,16 +100,18 @@ function sendTrackerAjax() {
 
         let hours = $('#hours_input').val();
         let minutes = $('#minutes_input').val();
-        let id = $('#contract_id').attr("data-id");
+        let contract_id = $('#contract_id').attr("data-id");
+        let status = $('#status').val();
 
         $.ajax({
             url: `/project/contract/store_time`,
             method: 'PUT',
             data: {
                 _token: token,
-                id: id,
+                contract_id: contract_id,
                 hours: hours,
-                minutes: minutes
+                minutes: minutes,
+                status: status
             },
             success: function (response) {
                 console.log(response);

@@ -128,59 +128,29 @@ class ProjectContractController extends Controller
 
         if(!$contract) return response()->json([
             'status' => false,
-            'message' => 'Contract is not invalid'
+            'message' => 'Contract is not invalid',
         ]);
 
         $contract_tracker = ProjectContractTracker::where('contract_id', $contract->id)->first();
 
         # if contract_tracker is exist
         if($contract_tracker) {
-            $total_hours = $contract_tracker->hours + $request->hours;
-            $total_minutes = $contract_tracker->minutes + $request->minutes;
-
-            $remaining_minutes = 0;
-
-            # check if the total minutes is greater than 60
-            if($total_minutes >= 60) {
-                $remaining_minutes = $total_minutes - 60;
-                $total_minutes = $total_minutes + $remaining_minutes;
-                $total_hours = $total_hours + 1;
-            }
-
-            $total_hours_cost = $contract->total_cost * $total_hours;
-
-            $contract_tracker->hours = $total_hours;
-            $contract_tracker->minutes = $total_minutes;
-            $contract_tracker->total_hours_cost = $total_hours_cost;
-            $save = $contract_tracker->save();
-
-            if($save) return response()->json([
-                'status' => true,
-                'message' => 'Success Updating Tracker',
-                'total_hours_cost' => $total_hours_cost,
-                'total_hours' => $total_hours,
-                'total_minutes' => $total_minutes,
-            ]);
-
-        } else {
-
-            $total_hours_cost = $contract->total_cost * $request->hours;
-
-            $save = ProjectContractTracker::create([
-                'contract_id' => $contract->id,
+            $contract_tracker = $contract_tracker->update([
                 'minutes' => $request->minutes,
                 'hours' => $request->hours,
-                'total_hours_cost' => $total_hours_cost,
+                'cur_time' => date('Y-m-d H:i:s'),
+                'status' => $request->status,
             ]);
-
-            if($save) return response()->json([
-                'status' => true,
-                'message' => 'Success Creating Tracker',
-                'total_hours_cost' => $total_hours_cost,
-                'total_hours' => $request->hours,
-                'total_minutes' => $request->minutes,
+        } else {
+            $contract_tracker = ProjectContractTracker::create([
+                'contract_id' => $request->contract_id,
+                'hours' => $request->hours,
+                'minutes' => $request->minutes,
+                'cur_time' =>  date('Y-m-d H:i:s'),
+                'status' => $request->status,
             ]);
         }
+
     }
     public function create(Request $request) {
         if($request->type == 'proposal') {

@@ -64,6 +64,7 @@
 
                                     @csrf
                                     <input type="hidden" name="contract_id" data-id="{{ $contract->id }}" id="contract_id">
+                                    <input type="hidden" name="status" value="{{ $contract->status == 'stop' ? 'stop' : 'start' }}" id="status">
                                     <div class="text-right">
                                         @if (session()->get('role') == 'employer' && $contract->is_start_working && !$contract->status)
                                             <a href="/project_pay_job/project/{{ $contract->id }}" class="btn btn-primary job-completed-btn">Job Complete</a>
@@ -92,10 +93,17 @@
                                                             <span class="tracker-icon mr-50"><i class="fa fa-stop danger"></i></span> <div class="timerDisplay">{{ $contract->tracker ? $contract->tracker->hours : 00 }} hrs {{ $contract->tracker ? $contract->tracker->minutes : 00 }} m </div>
                                                                 <div class="form-group text-right">
                                                                     <input type="checkbox" id="timer-btn" class="switchery"/>
+                                                                    <span class="timer-btn-label">Start Time</span>
                                                                 </div>
                                                                 <input type="hidden" name="hours" id="hours_input" value="{{ $contract->tracker ? $contract->tracker->hours : 00 }}">
                                                                 <input type="hidden" name="minutes" id="minutes_input" value="{{ $contract->tracker ? $contract->tracker->minutes : 00 }}">
                                                         </div>
+                                                        <hr>
+                                                        <ul class="list-group my-1">
+                                                            <input type="checkbox" id="timer-btn" hidden/>
+                                                            <li class="list-group-item">Total Hours: <span class="font-weight-bold hours-text">0</span> hrs</li>
+                                                            <li class="list-group-item">Total Minutes: <span class="font-weight-bold minutes-text">0</span> min</li>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,7 +112,8 @@
                                                 <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
                                                 <ul class="list-group">
                                                     <input type="checkbox" id="timer-btn" hidden/>
-                                                    <li class="list-group-item">Total Hours: <span class="font-weight-bold working-date-text"></span></li>
+                                                    <li class="list-group-item">Total Hours: <span class="font-weight-bold hours-text">0</span> hrs</li>
+                                                    <li class="list-group-item">Total Minutes: <span class="font-weight-bold minutes-text">0</span> min</li>
                                                 </ul>
                                             </div>
                                         @endif
@@ -129,7 +138,11 @@
                                                     <li class="list-group-item">Title of Project: <span class="font-weight-bold">{{ $contract->project->title }}</span></li>
                                                     <li class="list-group-item">Start Date: <span class="font-weight-bold">{{ date_format(new DateTime($contract->start_date), 'F d, Y') }}</span></li>
                                                     <li class="list-group-item">End Date: <span class="font-weight-bold">{{ date_format(new DateTime($contract->end_date), 'F d, Y') }}</span></li>
-                                                    <li class="list-group-item">Total Cost: <span class="font-weight-bold">₱ {{ number_format($contract->total_cost, 2) }}</span></li>
+                                                    @if($contract->cost_type == 'Fixed')
+                                                        <li class="list-group-item">Total Cost: <span class="font-weight-bold">₱ {{ number_format($contract->total_cost, 2) }}</span></li>
+                                                    @else
+                                                        <li class="list-group-item">Total Cost: <span class="font-weight-bold">The total cost will see after the job completed.</span></li>
+                                                    @endif
                                                     <li class="list-group-item">Project Cost Type: <span class="font-weight-bold">{{ $contract->cost_type }}</span></li>
                                                     <li class="list-group-item">Address: <span class="font-weight-bold">{{ $contract->project->location }}</span></li>
                                                 </ul>
@@ -161,7 +174,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </div>
 @endsection
