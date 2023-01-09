@@ -48,7 +48,7 @@ class EWalletCallBackController extends Controller
                     'amount' => $user_wallet->amount += $transaction->amount,
                 ]);
             } else {
-                $user_wallet = User::create([
+                $user_wallet = UserWallet::create([
                     'user_id' => $transaction->from_id,
                     'amount' => $transaction->amount
                 ]);

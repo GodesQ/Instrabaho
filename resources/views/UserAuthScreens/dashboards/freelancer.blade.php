@@ -18,6 +18,10 @@
         </script>
     @endpush
 @endif
+    <div class="container-fluid my-2">
+        <h2 class="font-weight-bold">Welcome <span class="primary h2 font-weight-bold">{{ $freelancer->display_name }}</span>!</h2>
+        <h6>Hope you're having a great time freelancing.</h6>
+    </div>
     <div class="row minimal-modern-charts">
         <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-12 col-12 power-consumption-stats-chart">
             <div class="card">

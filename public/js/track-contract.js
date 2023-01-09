@@ -41,87 +41,83 @@ $(document).ready(function () {
 });
 
 let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+let total_hours = $('#total_hours_input').val();
+let total_minutes = $('#total_minutes_input').val();
 let timerRef = document.querySelector('.timerDisplay');
 let trackerIcon = document.querySelector('.tracker-icon');
 let status_input = document.querySelector('#status');
 let int = null;
 
-hours = $('#hours').val();
-minutes = $('#minutes').val();
+hours = $('#current_hours_input').val();
+minutes = $('#current_minutes_input').val();
+
 
 $(document).on("change", "#timer-btn", function (e) {
+    const date = new Date();
     if(e.target.checked) {
-        if(int!==null){
-            clearInterval(int);
-            status_input.value = 'stop';
-            sendTrackerAjax();
-            timerRef.innerHTML = ` ${0} hrs ${0} m ${0} s`;
-        }
-        trackerIcon.innerHTML = `<i class="fa fa-play success"><i/>`;
-        int = setInterval(displayTimer, 10);
-        status_input.value = 'start';
+        $('.start_date').html(date.toLocaleString());
+        $('.end_date').html(null);
+        $('#start_date_input').val(date.toLocaleString());
+        $('#end_date_input').val(null);
+        $('#current_minute_input').val(0);
+        $('#current_hours_input').val(0);
+        $('#status').val('start');
         sendTrackerAjax();
     } else {
-        trackerIcon.innerHTML = `<i class="fa fa-stop danger"><i/>`;
-        clearInterval(int);
-        status_input.value = 'stop';
-        sendTrackerAjax();
+        $('.end_date').html(date.toLocaleString());
+        $('#end_date_input').val(date.toLocaleString());
+        $('#current_minute_input').val(0);
+        $('#current_hours_input').val(0);
+        $('#status').val('start');
     }
 });
 
-function displayTimer() {
-    milliseconds+=10;  
-    if(milliseconds == 1000) {
-        milliseconds = 0;
-        seconds++;
-        if(seconds == 60){
-            seconds = 0;
-            minutes++;
-            if(minutes == 60) {
-                minutes = 0;
-                hours++;
-            }
-        }
-    }
+// function displayTimer() {
+//     milliseconds+=10;
+//     if(milliseconds == 1000) {
+//         milliseconds = 0;
+//             seconds++;
+//         if(seconds == 60){
+//             seconds = 0;
+//             minutes++;
+//             if(minutes == 60) {
+//                 minutes = 0;
+//                 hours++;
+//             }
+//         }
+//     }
 
-    let h = hours < 10 ? "0" + hours : hours;
-    let m = minutes < 10 ? "0" + minutes : minutes;
-    let s = seconds < 10 ? "0" + seconds : seconds;
-    let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+//     let h = hours < 10 ? "0" + hours : hours;
+//     let m = minutes < 10 ? "0" + minutes : minutes;
+//     let s = seconds < 10 ? "0" + seconds : seconds;
+//     let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
 
-    $('#hours_input').val(h);
-    $('#minutes_input').val(m);
+//     $('#current_hours_input').val(h);
+//     $('#current_minutes_input').val(m);
 
-    timerRef.innerHTML = ` ${h} hrs ${m} m ${s} s`;
-}
+//     timerRef.innerHTML = ` ${h} hrs ${m} m ${s} s`;
+// }
 
 function sendTrackerAjax() {
     if(document.querySelector('#timer-btn').checked) {
-
-        let hours = $('#hours_input').val();
-        let minutes = $('#minutes_input').val();
-        let contract_id = $('#contract_id').attr("data-id");
-        let status = $('#status').val();
-
         $.ajax({
             url: `/project/contract/store_time`,
-            method: 'PUT',
+            method: 'POST',
             data: {
                 _token: token,
-                contract_id: contract_id,
-                hours: hours,
-                minutes: minutes,
-                status: status
+                contract_id: $('#contract_id').attr('data-id'),
+                start_date: $('#start_date_input').val(),
+                end_date: $('#end_date_input').val(),
+                current_minute: $('#current_minute_input').val(),
+                current_hours: $('#current_hours_input').val(),
+                status: $('#status').val()
             },
             success: function (response) {
                 console.log(response);
             },
         });
-
     }
 }
-
-setInterval(sendTrackerAjax, 60000);
 
 
 function diff_hours(dt2, dt1)
@@ -151,6 +147,6 @@ function timeConvert(n) {
 dt1 = new Date('2023-01-05 11:59:33');
 dt2 = new Date('2023-01-05 17:05:20');
 
-let total_minutes = diff_mins(dt1, dt2);
+// let total_minutes = diff_mins(dt1, dt2);
 
 // console.log(timeConvert(total_minutes));

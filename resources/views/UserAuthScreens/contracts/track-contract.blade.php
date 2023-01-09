@@ -65,6 +65,11 @@
                                     @csrf
                                     <input type="hidden" name="contract_id" data-id="{{ $contract->id }}" id="contract_id">
                                     <input type="hidden" name="status" value="{{ $contract->status == 'stop' ? 'stop' : 'start' }}" id="status">
+                                    <input type="hidden" name="start_date" id="start_date_input" value="{{ optional($contract->tracker)->start_time }}">
+                                    <input type="hidden" name="end_date" id="end_date_input" value="{{ optional($contract->tracker)->stop_time }}">
+                                    <input type="hidden" name="current_minute_input" id="current_minute_input" value="">
+                                    <input type="hidden" name="current_hours_input" id="current_hours_input" value="">
+
                                     <div class="text-right">
                                         @if (session()->get('role') == 'employer' && $contract->is_start_working && !$contract->status)
                                             <a href="/project_pay_job/project/{{ $contract->id }}" class="btn btn-primary job-completed-btn">Job Complete</a>
@@ -75,6 +80,7 @@
                                         @endif
                                     </div>
                                     <hr>
+
                                     @if($contract->cost_type == 'Fixed')
                                         <div class="container my-2">
                                             <h4 class="font-weight-bold text-uppercase">Fixed Type Project</h4>
@@ -87,25 +93,18 @@
                                         @if (session()->get('role') == 'freelancer')
                                             <div class="container my-2">
                                                 <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
-                                                <div class="time-tracker-container">
-                                                    <div class="time-tracker-inner-container">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <span class="tracker-icon mr-50"><i class="fa fa-stop danger"></i></span> <div class="timerDisplay">{{ $contract->tracker ? $contract->tracker->hours : 00 }} hrs {{ $contract->tracker ? $contract->tracker->minutes : 00 }} m </div>
-                                                                <div class="form-group text-right">
-                                                                    <input type="checkbox" id="timer-btn" class="switchery"/>
-                                                                    <span class="timer-btn-label">Start Time</span>
-                                                                </div>
-                                                                <input type="hidden" name="hours" id="hours_input" value="{{ $contract->tracker ? $contract->tracker->hours : 00 }}">
-                                                                <input type="hidden" name="minutes" id="minutes_input" value="{{ $contract->tracker ? $contract->tracker->minutes : 00 }}">
-                                                        </div>
-                                                        <hr>
-                                                        <ul class="list-group my-1">
-                                                            <input type="checkbox" id="timer-btn" hidden/>
-                                                            <li class="list-group-item">Total Hours: <span class="font-weight-bold hours-text">0</span> hrs</li>
-                                                            <li class="list-group-item">Total Minutes: <span class="font-weight-bold minutes-text">0</span> min</li>
-                                                        </ul>
-                                                    </div>
+                                                <div class="form-group text-right">
+                                                    <input type="checkbox" id="timer-btn" class="switchery"/>
+                                                    <span class="timer-btn-label">Start</span>
                                                 </div>
+                                                <ul class="list-group my-1">
+                                                    {{-- <input type="checkbox" id="timer-btn" hidden/> --}}
+                                                    <li class="list-group-item">Start DateTime : <span class="font-weight-bold start_date"></span></li>
+                                                    <li class="list-group-item">Stop DateTime : <span class="font-weight-bold end_date"></span></li>
+                                                    <li class="list-group-item">Total Hours : <span class="font-weight-bold total-hours-text">0</span> hrs</li>
+                                                    <li class="list-group-item">Total Minutes : <span class="font-weight-bold total-minutes-text">0</span> min</li>
+                                                </ul>
+
                                             </div>
                                         @else
                                             <div class="container my-2">
@@ -174,7 +173,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
 @endsection

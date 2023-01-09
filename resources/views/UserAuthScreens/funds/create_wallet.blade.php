@@ -8,6 +8,7 @@
                     <p>Create Wallet for all transactions here in INSTRABAHO.</p>
                     <form action="/deposit" method="POST">
                         @csrf
+                        <input type="hidden" value="{{ $user->id }}" name="user_id">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -22,39 +23,40 @@
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <fieldset>
-                                                <input type="radio" name="payment_method" value="gcash" id="input-radio-14">
+                                                <input type="radio" name="payment_method" value="gcash" {{ $user->prefer_payment_method == 'gcash' ? 'checked' : null }} id="input-radio-14">
                                                 <label for="input-radio-14">G CASH</label>
                                             </fieldset>
                                             <img src="../../../images/logo/gcash-logo.png" alt="" style="width: 50px;">
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <fieldset>
-                                                <input type="radio" name="payment_method" value="paymaya" id="input-radio-15">
+                                                <input type="radio" name="payment_method" value="grab_pay" id="input-radio-18" {{ $user->prefer_payment_method == 'grab_pay' ? 'checked' : null }}>
+                                                <label for="input-radio-18">GRAB PAY</label>
+                                            </fieldset>
+                                            <img src="../../../images/logo/grabpay.png" alt="" style="width: 40px;">
+                                        </li>
+                                        {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <fieldset>
+                                                <input type="radio" name="payment_method" value="paymaya" id="input-radio-15" {{ $user->prefer_payment_method == 'paymaya' ? 'checked' : null }}>
                                                 <label for="input-radio-15">PAYMAYA</label>
                                             </fieldset>
                                             <img src="../../../images/logo/paymaya-logo.png" alt="" style="width: 50px;">
-                                        </li>
+                                        </li> --}}
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <fieldset>
-                                                <input type="radio" name="payment_method" value="credit_card" id="input-radio-16">
-                                                <label for="input-radio-16">CREDIT CARD</label>
+                                                <input type="radio" name="payment_method" value="card" id="input-radio-16" {{ $user->prefer_payment_method == 'card' ? 'checked' : null }}>
+                                                <label for="input-radio-16">CARD</label>
                                             </fieldset>
                                             <img src="../../../images/logo/credit-card.png" alt="" style="width: 50px;">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                        {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <fieldset>
-                                                <input type="radio" name="payment_method" value="paypal" id="input-radio-18">
-                                                <label for="input-radio-18">PAYPAL</label>
-                                            </fieldset>
-                                            <img src="../../../images/logo/paypal-logo.png" alt="" style="width: 40px;">
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <fieldset>
-                                                <input type="radio" name="payment_method" value="online_bank" id="input-radio-17">
+                                                <input type="radio" name="payment_method" value="online_bank" id="input-radio-17" {{ $user->prefer_payment_method == 'online_bank' ? 'checked' : null }}>
                                                 <label for="input-radio-17">ONLINE BANK</label>
                                             </fieldset>
                                             <img src="../../../images/logo/online-bank.png" alt="" style="width: 50px;">
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                     <span class="text-danger danger">@error('payment_method'){{ $message }}@enderror</span>
                                 </div>

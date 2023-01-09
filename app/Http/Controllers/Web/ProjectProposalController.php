@@ -98,7 +98,6 @@ class ProjectProposalController extends Controller
         return view('UserAuthScreens.proposals.freelancer.index-proposals', compact('freelancer', 'pending_proposals', 'approved_proposals', 'offers'));
     }
 
-
     public function proposal(Request $request) {
         $role = session()->get('role');
 

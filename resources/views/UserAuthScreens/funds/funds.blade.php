@@ -28,6 +28,16 @@
             </script>
         @endpush
     @endif
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            @push('scripts')
+                <script>
+                    toastr.error('{{ $error }}', 'Error')
+                </script>
+            @endpush
+        @endforeach
+    @endif
     <div class="page-wrapper">
         <div class="page-content">
             <div class="page-body">
@@ -37,7 +47,89 @@
                             <div class="col-xl-8 col-md-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="card-title">Total Funds</div>
+                                        <div class="card-header">
+                                            <h4 class="card-title" id="file-repeater">Total Funds</h4>
+                                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                            <div class="heading-elements">
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#withdrawForm">Withdraw </button>
+                                            </div>
+                                            <div class="modal fade text-left" id="withdrawForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <label class="modal-title text-text-bold-600" id="myModalLabel33">Withdraw Form</label>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form action="/withdraw" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" value="{{ $user->id }}" name="user_id">
+                                                            <div class="modal-body">
+                                                                @if($user->prefer_payment_method == 'gcash' || $user->prefer_payment_method == 'grab_pay')
+                                                                    <label>Cellphone Number: </label>
+                                                                    <div class="form-group">
+                                                                        <input type="number" placeholder="e.g 09*********" name="cellphone_number" class="form-control">
+                                                                    </div>
+                                                                @endif
+                                                                @if($user->prefer_payment_method == 'card')
+                                                                    <div class="row">
+                                                                        <div class="col-xl-6">
+                                                                            <div class="form-group">
+                                                                                <label class="label">Card Holder: </label>
+                                                                                <input type="text" class="form-control"  placeholder="Card Holder" name="card_holder" value="{{$user->firstname}} {{$user->lastname}}">
+                                                                                <span class="text-danger danger">@error('card_holder'){{ $message }}@enderror</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-xl-6">
+                                                                            <div class="form-group">
+                                                                                <label class="label">Card number:</label>
+                                                                                <input type="text" class="form-control" data-mask="0000000000000000" name="card_number">
+                                                                                <span class="text-danger danger">@error('card_number'){{ $message }}@enderror</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-xl-6">
+                                                                            <div class="row">
+                                                                                <div class="col-xl-6 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="label">Expiry Month:</label>
+                                                                                        <input type="text" class="form-control" data-mask="00" placeholder="00" name="expiry_month">
+                                                                                        <span class="text-danger danger">@error('expiry_month'){{ $message }}@enderror</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xl-6 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="label">Expiry Year:</label>
+                                                                                        <input type="text" class="form-control" data-mask="00" placeholder="00" name="expiry_year">
+                                                                                        <span class="text-danger danger">@error('expiry_year'){{ $message }}@enderror</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-xl-6">
+                                                                            <div class="form-group">
+                                                                                <label class="label">CVC:</label>
+                                                                                <input type="text" class="form-control" data-mask="000" placeholder="000" name="cvc">
+                                                                                <span class="text-danger danger">@error('cvc'){{ $message }}@enderror</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                                <label>Amount: </label>
+                                                                <div class="form-group">
+                                                                    <input type="number" placeholder="Amount" name="amount" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input type="hidden" name="payment_method" value="{{ $user->prefer_payment_method }}">
+                                                                <input type="reset" class="btn btn-secondary" data-dismiss="modal" value="close">
+                                                                <input type="submit" class="btn btn-primary" name="action" value="Withdraw">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-md-12 my-2">
@@ -50,7 +142,7 @@
                                                                 </div>
                                                                 <div class="icon-wallet font-size-large"></div>
                                                             </div>
-                                                            <div>
+                                                            {{-- <div>
                                                                 <div class="d-flex align-items-center" style="gap: 8px;">
                                                                     <i class="fa fa-circle text-primary" style="font-size: 7px;"></i> <span style="font-size: 11px;" class="text-primary">Income</span>
                                                                 </div>
@@ -61,11 +153,32 @@
                                                                     <i class="fa fa-circle text-warning" style="font-size: 7px;"></i> <span style="font-size: 11px;" class="text-warning">Spending</span>
                                                                 </div>
                                                                 <h4 class="font-weight-bold">₱ 0.00</h4>
+                                                            </div> --}}
+                                                        </div>
+                                                        {{-- <div class="col-xl-9 col-lg-8 col-md-8">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="card" style="box-shadow: 1px 2px 3px rgba(87, 87, 87, 0.25) !important;">
+                                                                        <div class="card-header pb-50 border-bottom">
+                                                                            <div class="card-title"><i class="fa fa-circle primary mr-1 "></i> Income</div>
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <h2 class="font-weight-bold">₱ <span class="h2">4032.00</span> <span>/ Month</span></h2>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="card" style="box-shadow: 1px 2px 3px rgba(87, 87, 87, 0.25) !important;">
+                                                                        <div class="card-header pb-50 border-bottom">
+                                                                            <div class="card-title"><i class="fa fa-circle warning mr-1 "></i> Spending</div>
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <h2 class="font-weight-bold">₱ <span class="h2">816.00</span> <span>/ Month</span></h2>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-xl-9 col-lg-8 col-md-8">
-                                                            <div id="column-basic-chart"></div>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
                                             </div>

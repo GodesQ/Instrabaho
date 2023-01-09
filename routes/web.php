@@ -220,7 +220,7 @@ use App\Events\ProjectMessageEvent;
         Route::post('/project/contract/validate-code', [ProjectContractController::class, 'post_validate_code'])->name('contract.post_validate_code')->middleware('employer.access');
         Route::get('/project/contract/track/{id}', [ProjectContractController::class, 'track'])->name('contract.track');
         Route::put('/project/contract/start_working', [ProjectContractController::class, 'start_working'])->name('contract.start_working');
-        Route::put('/project/contract/store_time', [ProjectContractController::class, 'store_time'])->name('contract.store_time');
+        Route::post('/project/contract/store_time', [ProjectContractController::class, 'store_time'])->name('contract.store_time');
 
         Route::get('/review_freelancer/{job_type}/{contract_id}', [FreelancerReviewsController::class, 'create'])->name('review.freelancer');
         Route::post('/review_freelancer', [FreelancerReviewsController::class, 'store'])->name('post-review.freelancer');
