@@ -94,12 +94,12 @@
                                             <div class="container my-2">
                                                 <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
                                                 <div class="form-group text-right">
-                                                    <input type="checkbox" id="timer-btn" class="switchery"/>
+                                                    <input type="checkbox" id="timer-btn" class="switchery" {{ optional($contract->tracker)->status == 'start' ? 'checked' : null }}/>
                                                     <span class="timer-btn-label">Start</span>
                                                 </div>
                                                 <ul class="list-group my-1">
                                                     {{-- <input type="checkbox" id="timer-btn" hidden/> --}}
-                                                    <li class="list-group-item">Start DateTime : <span class="font-weight-bold start_date"></span></li>
+                                                    <li class="list-group-item">Start DateTime : <span class="font-weight-bold start_date">{{ date_format(new DateTIme(optional($contract->tracker)->start_time), 'm/d/Y h:i:s A') }}</span></li>
                                                     <li class="list-group-item">Stop DateTime : <span class="font-weight-bold end_date"></span></li>
                                                     <li class="list-group-item">Total Hours : <span class="font-weight-bold total-hours-text">0</span> hrs</li>
                                                     <li class="list-group-item">Total Minutes : <span class="font-weight-bold total-minutes-text">0</span> min</li>

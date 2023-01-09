@@ -66,7 +66,9 @@ $(document).on("change", "#timer-btn", function (e) {
     } else {
         $('.end_date').html(date.toLocaleString());
         $('#end_date_input').val(date.toLocaleString());
-        $('#current_minute_input').val(0);
+        
+        let time = timeConvert(diff_mins());
+        $('#current_minute_input').val();
         $('#current_hours_input').val(0);
         $('#status').val('start');
     }
@@ -141,7 +143,11 @@ function timeConvert(n) {
     var rhours = Math.floor(hours);
     var minutes = (hours - rhours) * 60;
     var rminutes = Math.round(minutes);
-    return num + " minutes = " + rhours + " hour(s) and " + rminutes + " minute(s).";
+    var time = {
+        'rhours' : rhours,
+        rminutes : rminutes
+    };
+    return time;
 }
 
 dt1 = new Date('2023-01-05 11:59:33');
