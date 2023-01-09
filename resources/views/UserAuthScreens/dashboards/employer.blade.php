@@ -21,7 +21,7 @@
 @endif
 
     <div class="container-fluid">
-        <h2 class="font-weight-bold">Welcome {{ $employer->display_name }}!</h2>
+        <h2 class="font-weight-bold">Welcome <span class="primary h2 font-weight-bold">{{ $employer->display_name }}</span>!</h2>
         <h6>Hope you're having a great time finding workers.</h6>
     </div>
     <div class="row my-2">
@@ -48,7 +48,7 @@
                     <div class="card-title">Recent Payments</div>
                 </div>
                 <div class="card-body">
-                       
+
                 </div>
             </div>
         </div>

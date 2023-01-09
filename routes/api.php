@@ -57,10 +57,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix'=> 'freelancer', 'middleware'=> ['freelancer.access']], function(){
         Route::get('/projects/ongoing', [ProjectsController::class, 'freelancer_ongoing_projects']);
         Route::get('/projects/completed', [ProjectsController::class, 'freelancer_completed_projects']);
+        Route::get('proposal_lists', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('freelancer.proposals');
     });
 
     Route::post('/submit_proposal', [ProjectProposalController::class, 'store'])->middleware('freelancer.access');
-    Route::post('/proposal/info/{id}', [ProjectProposalController::class, 'proposal']);
+    Route::get('/proposal/info/{id}', [ProjectProposalController::class, 'proposal']);
 
 
     Route::post('logout', [AuthController::class, 'logout']);
