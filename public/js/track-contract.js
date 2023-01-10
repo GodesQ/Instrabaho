@@ -79,7 +79,7 @@ $(document).on("change", "#timer-btn", function (e) {
 //     if(milliseconds == 1000) {
 //         milliseconds = 0;
 //             seconds++;
-//         if(seconds == 60){
+//         if(seconds == 60){j
 //             seconds = 0;
 //             minutes++;
 //             if(minutes == 60) {

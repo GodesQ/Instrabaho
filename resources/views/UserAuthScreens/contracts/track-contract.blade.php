@@ -94,35 +94,23 @@
                                             </ul>
                                         </div>
                                     @else
-                                        @if (session()->get('role') == 'freelancer')
-                                            <div class="container my-2">
-                                                <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
+                                        <div class="container my-2">
+                                            <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
+                                            @if(session()->get('role') == 'freelancer')
                                                 <div class="form-group text-right">
                                                     <input type="checkbox" id="timer-btn" class="switchery" {{ optional($contract->tracker)->status == 'start' ? 'checked' : null }}/>
                                                     <span class="timer-btn-label">Start</span>
                                                 </div>
-                                                <ul class="list-group my-1">
-                                                    {{-- <input type="checkbox" id="timer-btn" hidden/> --}}
-                                                    <li class="list-group-item">Start DateTime : <span class="font-weight-bold start_date">{{ date_format(new DateTIme(optional($contract->tracker)->start_time), 'm/d/Y h:i:s A') }}</span></li>
-                                                    <li class="list-group-item">Stop DateTime : <span class="font-weight-bold end_date">{{ optional($contract->tracker)->status == 'stop' ? date_format(new DateTIme(optional($contract->tracker)->stop_time), 'm/d/Y h:i:s A') : null }}</span></li>
-                                                    <li class="list-group-item">Total Hours : <span class="font-weight-bold total-hours-text">{{ optional($contract->tracker)->hours }}</span> hrs</li>
-                                                    <li class="list-group-item">Total Minutes : <span class="font-weight-bold total-minutes-text">{{ optional($contract->tracker)->minutes }}</span> min</li>
-                                                    <li class="list-group-item">Total Hours Cost : ₱ <span class="font-weight-bold total-hours-cost-text">{{ number_format(optional($contract->tracker)->total_hours_cost, 2) }}</span></li>
-                                                </ul>
-
-                                            </div>
-                                        @else
-                                            <div class="container my-2">
-                                                <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">Start DateTime : <span class="font-weight-bold start_date">{{ date_format(new DateTIme(optional($contract->tracker)->start_time), 'm/d/Y h:i:s A') }}</span></li>
-                                                    <li class="list-group-item">Stop DateTime : <span class="font-weight-bold end_date">{{ optional($contract->tracker)->status == 'stop' ? date_format(new DateTIme(optional($contract->tracker)->stop_time), 'm/d/Y h:i:s A') : null }}</span></li>
-                                                    <li class="list-group-item">Total Hours : <span class="font-weight-bold total-hours-text">{{ optional($contract->tracker)->hours }}</span> hrs</li>
-                                                    <li class="list-group-item">Total Minutes : <span class="font-weight-bold total-minutes-text">{{ optional($contract->tracker)->minutes }}</span> min</li>
-                                                    <li class="list-group-item">Total Hours Cost : ₱ <span class="font-weight-bold total-minutes-text">{{ number_format(optional($contract->tracker)->total_hours_cost, 2) }}</span></li>
-                                                </ul>
-                                            </div>
-                                        @endif
+                                            @endif
+                                            <ul class="list-group my-1">
+                                                {{-- <input type="checkbox" id="timer-btn" hidden/> --}}
+                                                <li class="list-group-item">Start DateTime : <span class="font-weight-bold start_date">{{ $contract->tracker ? date_format(new DateTIme(optional($contract->tracker)->start_time), 'm/d/Y h:i:s A') : null }}</span></li>
+                                                <li class="list-group-item">Stop DateTime : <span class="font-weight-bold end_date">{{ optional($contract->tracker)->status == 'stop' ? date_format(new DateTIme(optional($contract->tracker)->stop_time), 'm/d/Y h:i:s A') : null }}</span></li>
+                                                <li class="list-group-item">Total Hours : <span class="font-weight-bold total-hours-text">{{ optional($contract->tracker)->hours }}</span> hrs</li>
+                                                <li class="list-group-item">Total Minutes : <span class="font-weight-bold total-minutes-text">{{ optional($contract->tracker)->minutes }}</span> min</li>
+                                                <li class="list-group-item">Total Hours Cost : ₱ <span class="font-weight-bold total-hours-cost-text">{{ number_format(optional($contract->tracker)->total_hours_cost, 2) }}</span></li>
+                                            </ul>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
