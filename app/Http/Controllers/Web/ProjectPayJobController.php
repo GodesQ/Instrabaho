@@ -48,7 +48,7 @@ class ProjectPayJobController extends Controller
         }
 
         if($request->type == 'project') {
-            $job = ProjectContract::where('id', $request->id)->where('status', 0)->where('is_start_working', 1)->with('project', 'proposal', 'employer', 'freelancer')->firstOrFail();
+           $job = ProjectContract::where('id', $request->id)->where('status', 0)->where('is_start_working', 1)->with('project', 'proposal', 'employer', 'freelancer')->firstOrFail();
             $job_data = [
                 'title' => $job->project->title,
                 'cost' => $job->total_cost,
