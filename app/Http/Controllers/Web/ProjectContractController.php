@@ -13,6 +13,7 @@ use App\Models\ProjectOffer;
 use App\Models\Freelancer;
 use App\Models\Employer;
 use App\Models\ProjectContractTracker;
+use App\Models\ProjectContractTrackerLog;
 
 use DB;
 
@@ -155,22 +156,39 @@ class ProjectContractController extends Controller
             # check if the total minutes is greater than 60
             if($total_minutes >= 60) {
                 $remaining_minutes = $total_minutes - 60;
-                $total_minutes = $total_minutes + $remaining_minutes;
+                $total_minutes = $remaining_minutes;
                 $total_hours = $total_hours + 1;
             }
 
-            $total_hours_cost = $contract->total_cost * $total_hours;
-            $contract_tracker->hours = $total_hours;
+            $total_hours_cost = $contract->cost * $total_hours;
+
 
             $start_date = $request->start_date ? date_create($request->start_date) : null;
             $end_date = $request->end_date ? date_create($request->end_date) : null;
 
+            # update
+            $contract_tracker->hours = $total_hours;
             $contract_tracker->minutes = $total_minutes;
             $contract_tracker->total_hours_cost = $total_hours_cost;
             $contract_tracker->start_time = $start_date ? date_format($start_date, 'Y-m-d H:i:s') : null;
             $contract_tracker->stop_time = $end_date ? date_format($end_date, 'Y-m-d H:i:s') : null;
             $contract_tracker->status = $request->status;
             $save = $contract_tracker->save();
+
+            # add log
+            if($request->status == 'start') {
+                $string_start_date = $start_date->format('Y-m-d h:i:s A');
+                $log = ProjectContractTrackerLog::create([
+                    'tracker_id' => $contract_tracker->id,
+                    'log' => 'start on ' . $string_start_date
+                ]);
+            } else {
+                $string_end_date = $end_date->format('Y-m-d h:i:s A');
+                $log = ProjectContractTrackerLog::create([
+                    'tracker_id' => $contract_tracker->id,
+                    'log' => 'stop on ' . $string_end_date
+                ]);
+            }
 
             if($save) return response()->json([
                 'status' => true,
@@ -183,8 +201,7 @@ class ProjectContractController extends Controller
             ]);
 
         } else {
-            $total_hours_cost = $contract->total_cost * $request->hours;
-
+            $total_hours_cost = $contract->cost * $request->hours;
             $start_date = $request->start_date ? date_create($request->start_date) : null;
             $end_date = $request->end_date ? date_create($request->end_date) : null;
 
@@ -197,6 +214,11 @@ class ProjectContractController extends Controller
                 'stop_time' => $end_date ? date_format($end_date, 'Y-m-d H:i:s') : null,
                 'status' => $request->status
             ]);
+
+            $contract->is_start_working = true;
+            $contract->start_working_date = $start_date ? date_format($start_date, 'Y-m-d H:i:s') : null;
+            $contract->save();
+
 
             if($contract_tracker) return response()->json([
                 'status' => true,

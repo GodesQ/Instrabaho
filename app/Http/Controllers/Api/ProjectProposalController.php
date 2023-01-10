@@ -97,7 +97,7 @@ class ProjectProposalController extends Controller
         if(!$user_id) return response()->json(['status' => false, 'message' => 'Not Found'], 404);
 
         #get the freelancer data
-        $freelancer = Freelancer::where('user_id', $user_id)->with('project_proposals', 'project_offers')->firstOrFail();
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOrFail();
 
         #get the pending proposals
         $pending_proposals = $freelancer->project_proposals()->where('status', 'pending')->with('project')->get();

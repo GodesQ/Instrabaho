@@ -66,11 +66,11 @@ $(document).on("change", "#timer-btn", function (e) {
     } else {
         $('.end_date').html(date.toLocaleString());
         $('#end_date_input').val(date.toLocaleString());
-        
-        let time = timeConvert(diff_mins());
-        $('#current_minute_input').val();
-        $('#current_hours_input').val(0);
-        $('#status').val('start');
+        let time = timeConvert(diff_mins(new Date($('#start_date_input').val()), new Date($('#end_date_input').val())));
+        $('#current_minute_input').val(time.rminutes);
+        $('#current_hours_input').val(time.rhours);
+        $('#status').val('stop');
+        sendTrackerAjax();
     }
 });
 
@@ -101,7 +101,7 @@ $(document).on("change", "#timer-btn", function (e) {
 // }
 
 function sendTrackerAjax() {
-    if(document.querySelector('#timer-btn').checked) {
+    if(navigator.onLine) {
         $.ajax({
             url: `/project/contract/store_time`,
             method: 'POST',
@@ -115,7 +115,8 @@ function sendTrackerAjax() {
                 status: $('#status').val()
             },
             success: function (response) {
-                console.log(response);
+                $('.total-hours-text').html(response.total_hours);
+                $('.total-minutes-text').html(response.total_minutes);
             },
         });
     }
@@ -144,7 +145,7 @@ function timeConvert(n) {
     var minutes = (hours - rhours) * 60;
     var rminutes = Math.round(minutes);
     var time = {
-        'rhours' : rhours,
+        rhours : rhours,
         rminutes : rminutes
     };
     return time;
