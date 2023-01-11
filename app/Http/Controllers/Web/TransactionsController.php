@@ -42,9 +42,13 @@ class TransactionsController extends Controller
     }
 
     public function ewallet_payment_success(Request $request) {
-        $transaction = Transaction::where('transaction_code', $request->txn_code)->with('user_from', 'user_to')->first();
-        $eWalletPayment = EWalletPayment::where('transaction_id', $request->txn_code)->first();
-        return view('UserAuthScreens.transactions.e-wallet-payment.success');
+        $transaction = Transaction::where('transaction_code', $request->txn_code)
+                        ->where('status', 'paid')
+                        ->orWhere('status', 'chargeable')
+                        ->with('user_from', 'user_to')->firstOrFail();
+        $eWalletPayment = EWalletPayment::where('transaction_code', $request->txn_code)->first();
+        
+        return view('UserAuthScreens.transactions.e-wallet-payment.success', compact('transaction', 'eWalletPayment'));
     }
 
     public function ewallet_payment_failed(Request $request) {

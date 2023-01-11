@@ -157,7 +157,7 @@ class EWalletCallBackController extends Controller
 
                 break;
         }
-        return view('AllScreens.misc.transaction-messages.success');
+            return redirect()->route('transaction_message.ewallet.success', $transaction->transaction_code);
     }
 
     public function failed(Request $request) {
@@ -176,6 +176,5 @@ class EWalletCallBackController extends Controller
             ]);
         }
 
-        return view('AllScreens.misc.transaction-messages.failed');
-    }
+        return redirect()->route('transaction_message.ewallet.failed', $transaction->transaction_code);    }
 }

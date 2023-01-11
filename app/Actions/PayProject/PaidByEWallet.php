@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\PayProject;
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -58,8 +58,8 @@ class PaidByEWallet {
             'amount' => $employer_total_cost,
             'currency' => 'PHP',
             'redirect' => [
-                'success' => route('transaction.success', ['txn_code' => $transaction->transaction_code, 'type' => $request->job_type]),
-                'failed' =>  route('transaction.failed', ['txn_code' => $transaction->transaction_code, 'type' => $request->job_type]),
+                'success' => route('ewallet.success', ['txn_code' => $transaction->transaction_code, 'type' => $request->job_type]),
+                'failed' =>  route('ewallet.failed', ['txn_code' => $transaction->transaction_code, 'type' => $request->job_type]),
             ]
         ];
 
