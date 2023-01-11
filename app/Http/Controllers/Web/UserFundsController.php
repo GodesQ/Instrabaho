@@ -71,8 +71,8 @@ class UserFundsController extends Controller
                     'amount' => $amount,
                     'currency' => 'PHP',
                     'redirect' => [
-                        'success' => route('transaction.success', ['txn_code' => $transaction->transaction_code, 'type' => 'deposit']),
-                        'failed' =>  route('transaction.failed', ['txn_code' => $transaction->transaction_code, 'type' => 'deposit']),
+                        'success' => route('ewallet.success', ['txn_code' => $transaction->transaction_code, 'type' => 'deposit']),
+                        'failed' =>  route('ewallet.failed', ['txn_code' => $transaction->transaction_code, 'type' => 'deposit']),
                     ]
                 ];
 

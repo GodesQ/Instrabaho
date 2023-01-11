@@ -25,7 +25,7 @@ use App\Models\EWalletPayment;
 use App\Models\CardPayment;
 use App\Models\ProjectPayment;
 
-use App\Actions\PaidByEWallet;
+use App\Actions\PayProject\PaidByEWallet;
 
 use App\Http\Requests\PayJob\PayJobRequest;
 
@@ -173,11 +173,9 @@ class ProjectPayJobController extends Controller
             case 'grab_pay':
                 $paid_by_ewallet = new PaidByEWallet;
                 return $paid_by_ewallet->action($project_contract, $request, $employer_total_cost, $total, $employer, $freelancer);
-
             case 'paymaya':
                 # code...
                 break;
-
             case 'card':
                 // Generate Transaction Code
                 $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));

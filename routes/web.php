@@ -293,8 +293,11 @@ use App\Events\ProjectMessageEvent;
 
         Route::get('/transaction_message/card_payment/{txn_code}', [TransactionsController::class, 'card_payment_success'])->name('card_payment.success');
 
-        Route::get('/transaction_message/{txn_code}/{type?}/success', [EWalletCallbackController::class, 'success'])->name('transaction.success');
-        Route::get('/transaction_message/{txn_code}/{type?}/failed', [EWalletCallbackController::class, 'failed'])->name('transaction.failed');
+        Route::get('/ewallet/{txn_code}/{type?}/success', [EWalletCallbackController::class, 'success'])->name('ewallet.success');
+        Route::get('/ewallet/{txn_code}/{type?}/failed', [EWalletCallbackController::class, 'failed'])->name('ewallet.failed');
+    
+        Route::get('/transaction_message/ewallet/{txn_code}/success', [TransactionsController::class, 'ewallet_payment_success'])->name('transaction_message.ewallet.success');
+        Route::get('/transaction_message/ewallet/{txn_code}/failed', [TransactionsController::class, 'ewallet_payment_failed'])->name('transaction_message.ewallet.failed');
     });
 
     Route::get('/accounting/login', [AccountingAuthController::class, 'login'])->name('accounting.login.get');
