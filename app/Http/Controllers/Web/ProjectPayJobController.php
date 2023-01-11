@@ -25,6 +25,8 @@ use App\Models\EWalletPayment;
 use App\Models\CardPayment;
 use App\Models\ProjectPayment;
 
+use App\Actions\PaidByEWallet;
+
 use App\Http\Requests\PayJob\PayJobRequest;
 
 class ProjectPayJobController extends Controller
@@ -40,6 +42,7 @@ class ProjectPayJobController extends Controller
             $job_data = [
                 'title' => $job->service->name,
                 'cost' => $job->service->cost,
+                'cost_type' => 'Fixed',
                 'job_type' => $request->type,
                 'job_id' => $job->id,
                 'from_id' => $job->buyer_id,
@@ -48,16 +51,18 @@ class ProjectPayJobController extends Controller
         }
 
         if($request->type == 'project') {
-           $job = ProjectContract::where('id', $request->id)->where('status', 0)->where('is_start_working', 1)->with('project', 'proposal', 'employer', 'freelancer')->firstOrFail();
+           $job = ProjectContract::where('id', $request->id)->where('status', 0)->where('is_start_working', 1)->with('project', 'proposal', 'employer', 'freelancer', 'tracker')->firstOrFail();
             $job_data = [
                 'title' => $job->project->title,
-                'cost' => $job->total_cost,
+                'cost' => $job->cost_type == 'Hourly' ? $job->tracker->total_hours_cost : $job->cost,
+                'cost_type' => $job->cost_type,
                 'job_type' => $request->type,
                 'job_id' => $job->id,
                 'from_id' => $job->employer_id,
                 'to_id' => $job->freelancer_id,
             ];
         }
+        // dd($job_data);
 
         return view('UserAuthScreens.checkout.pay-job', compact('job_data', 'user'));
     }
@@ -68,6 +73,8 @@ class ProjectPayJobController extends Controller
 
         $system_deduction = $request->job_cost * 0.15;
         $total = 0;
+
+        $employer_total_cost = 0;
 
         //check if the employer exist
         $employer = Employer::where('id', $request->employer_id)->with('user')->firstOr(function () {
@@ -84,6 +91,13 @@ class ProjectPayJobController extends Controller
             $project_contract = ProjectContract::where('id', $request->job_id)->with('project')->firstOrFail();
             if($project_contract->status) return back()->with('fail', "This Job is already completed.");
             $total = $project_contract->total_cost - $system_deduction;
+
+            if($project_contract->cost_type == "Hourly") {
+                $total = $project_contract->tracker->total_hours_cost - $system_deduction;
+                $employer_total_cost = $project_contract->tracker->total_hours_cost + 50;
+            } else {
+                $employer_total_cost =  $project_contract->total_cost;
+            }
         }
 
         switch ($request->payment_method) {
@@ -96,7 +110,7 @@ class ProjectPayJobController extends Controller
 
                 $freelancer_wallet = UserWallet::where('user_id', $freelancer->user->id)->first();
 
-                $deduct_to_employer = $this->DeductToEmployer($employer_wallet, $employer, $project_contract->total_cost);
+                $deduct_to_employer = $this->DeductToEmployer($employer_wallet, $employer, $employer_total_cost);
 
                 $add_amount_to_freelancer = $this->AddAmountToFreelancer($freelancer, $total, $freelancer_wallet);
 
@@ -108,7 +122,7 @@ class ProjectPayJobController extends Controller
                     'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
                     'transaction_type' => 'pay_project',
                     'transaction_code' => $transaction_code,
-                    'amount' => $total,
+                    'amount' => $employer_total_cost,
                     'sub_amount' => $project_contract->total_cost,
                     'from_id' => $employer->user_id,
                     'to_id' => $freelancer->user_id,
@@ -147,83 +161,18 @@ class ProjectPayJobController extends Controller
                         'user_id' => $employer->user_id,
                         'contract_id' => $project_contract->id,
                         'transaction_code' => $create_transaction->transaction_code,
-                        'sub_total' => $project_contract->total_cost,
-                        'total' => $total,
+                        'employer_total' => $employer_total_cost,
+                        'freelancer_total' => $total,
                         'status' => 'paid',
                     ]);
-
                 }
+
                 return redirect()->route('transaction.success', ['txn_code' => $transaction->transaction_code])->with('success', 'Success Sending Payment');
 
             case 'gcash':
             case 'grab_pay':
-
-                // Generate Transaction Code
-                $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
-
-                if($project_contract) {
-
-                    // Create Transaction Data
-                    $transaction = Transaction::create([
-                        'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
-                        'transaction_type' => 'pay_project',
-                        'transaction_code' => $transaction_code,
-                        'amount' => $total,
-                        'sub_amount' => $project_contract->total_cost,
-                        'from_id' => $employer->user_id,
-                        'to_id' => $freelancer->user_id,
-                        'payment_method' => $request->payment_method,
-                        'status' => 'initial'
-                    ]);
-
-                    // Create E-Wallet Payment Data
-                    $eWalletPayment = EWalletPayment::create([
-                        'user_id' => $employer->user_id,
-                        'transaction_code' => $transaction->transaction_code,
-                        'amount' => $total,
-                        'sub_amount' => $project_contract->total_cost,
-                        'type' => $request->payment_method,
-                        'status' => 'initial',
-                    ]);
-
-                    // Create Project Payment Data
-                    $project_payment = ProjectPayment::create([
-                        'user_id' => $employer->user_id,
-                        'contract_id' => $project_contract->id,
-                        'transaction_code' => $transaction->transaction_code,
-                        'sub_total' => $project_contract->total_cost,
-                        'total' => $total,
-                    ]);
-                }
-
-                $payload = [
-                    'type' => $request->payment_method,
-                    'amount' => $project_contract->total_cost,
-                    'currency' => 'PHP',
-                    'redirect' => [
-                        'success' => route('transaction.success', ['txn_code' => $transaction->transaction_code, 'type' => $request->job_type]),
-                        'failed' =>  route('transaction.failed', ['txn_code' => $transaction->transaction_code, 'type' => $request->job_type]),
-                    ]
-                ];
-
-                $eWalletPayment->update([
-                    'payload' => $payload
-                ]);
-
-                $source = Paymongo::source()->create($payload);
-
-                $eWalletPayment->update([
-                    'src_id' => $source->id,
-                    'source_response' => $source->getAttributes(),
-                    'status' => $source->status,
-                ]);
-
-                $transaction->update([
-                    'src_id' => $source->id,
-                    'status' => $source->status,
-                ]);
-
-                return redirect($source->redirect['checkout_url']);
+                $paid_by_ewallet = new PaidByEWallet;
+                return $paid_by_ewallet->action($project_contract, $request, $employer_total_cost, $total, $employer, $freelancer);
 
             case 'paymaya':
                 # code...
@@ -238,7 +187,7 @@ class ProjectPayJobController extends Controller
                     'name_of_transaction' => $request->job_type == 'service' ? 'Pay Service' : 'Pay Project',
                     'transaction_type' => 'pay_project',
                     'transaction_code' => $transaction_code,
-                    'amount' => $total,
+                    'amount' => $employer_total_cost,
                     'sub_amount' => $project_contract->total_cost,
                     'from_id' => $employer->user_id,
                     'to_id' => $freelancer->user_id,
@@ -252,19 +201,19 @@ class ProjectPayJobController extends Controller
                     'user_id' => $employer->user_id,
                     'contract_id' => $project_contract->id,
                     'transaction_code' => $transaction->transaction_code,
-                    'sub_total' => $project_contract->total_cost,
-                    'total' => $total,
+                    'employer_total' => $employer_total_cost,
+                    'freelancer_total' => $total,
                 ]);
 
                 $cardPayment = CardPayment::create([
                     'user_id' => $employer->user_id,
-                    'amount' => $total,
+                    'amount' => $employer_total_cost,
                     'sub_amount' => $project_contract->total_cost,
                     'transaction_code' => $transaction->transaction_code
                 ]);
 
                 $payload = [
-                    'amount' => $project_contract->total_cost,
+                    'amount' => $employer_total_cost,
                     'payment_method_allowed' => [
                         'card'
                     ],

@@ -59,6 +59,19 @@ class EWalletCallBackController extends Controller
             $project_payment = ProjectPayment::where('transaction_code', $request->txn_code)->first();
             $project_contract = ProjectContract::where('id', $project_payment->contract_id)->first();
 
+            $user_wallet = UserWallet::where('user_id', $transaction->to_id)->first();
+
+            if($user_wallet) {
+                $user_wallet->update([
+                    'amount' => $user_wallet->amount += $project_payment->freelancer_total,
+                ]);
+            } else {
+                $user_wallet = UserWallet::create([
+                    'user_id' => $transaction->from_id,
+                    'amount' => $project_payment->freelancer_total
+                ]);
+            }
+
             if($project_contract) {
                 if($project_contract->proposal_type == 'offer') {
                     ProjectOffer::where('id', $project_contract->proposal_id)->update([
@@ -88,7 +101,7 @@ class EWalletCallBackController extends Controller
         switch ($source->status) {
             case 'chargeable':
                 $payment = Paymongo::payment()->create([
-                    'amount' => $transaction->sub_amount,
+                    'amount' => $transaction->amount,
                     'description' => 'Payment for Transaction Code: ' . $transaction->transaction_code,
                     'currency' => 'PHP',
                     'statement_descriptor' => $transaction->user_from->firstname . ' ' . $transaction->user_from->lastname,
