@@ -46,7 +46,6 @@ class ProjectProposalController extends Controller
         if($proposal) {
             #create notification
             $action->createNotification($proposal, 'submit_proposal');
-
             return back()->with('success', 'Proposal sent successfully');
         }
 

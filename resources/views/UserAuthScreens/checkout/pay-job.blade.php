@@ -39,6 +39,7 @@
             <div class="container">
                 <form method="POST" action="/project_pay_job">
                     @csrf
+                    <input type="hidden" name="cost_type" value="{{ $job_data['cost_type'] }}" id="cost_type">
                     <div class="row">
                         <div class="col-md-7">
                             <div class="card">
@@ -151,7 +152,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -171,14 +171,29 @@
                                             <h5 class="font-weight-bold">Payment Type :</h5>
                                             <h4 class="payment_method_display"></h4>
                                         </div>
-                                        <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
-                                            <h5 class="font-weight-bold">System Deduction :</h5>
-                                            <h4 class="system_deduction_display"></h4>
-                                        </div>
+                                        @if ($job_data['cost_type'] == 'Hourly')
+                                            <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
+                                                <h5 class="font-weight-bold">Comission for Employer :</h5>
+                                                <h4 class="">50.00</h4>
+                                            </div>
+                                            {{-- <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
+                                                <h5 class="font-weight-bold">Deduction for Freelancer :</h5>
+                                                <h4 class="system_deduction_display"></h4>
+                                            </div> --}}
+                                        @else
+                                            {{-- <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
+                                                <h5 class="font-weight-bold">Deduction for Freelancer :</h5>
+                                                <h4 class="system_deduction_display"></h4>
+                                            </div> --}}
+                                        @endif
                                         <hr>
                                         <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
                                             <h5 class="font-weight-bold">Sub Total :</h5>
                                             <h4>₱ <span class="job_cost_display">{{ number_format($job_data['cost'], 2) }}</span></h4>
+                                        </div>
+                                        <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
+                                            <h5 class="font-weight-bold">Commision :</h5>
+                                            <h4>₱ <span class="job_cost_display">50.00</h4>
                                         </div>
                                         <div class="d-lg-flex justify-content-between align-items-center font-weight-normal my-50">
                                             <h5 class="font-weight-bold">Total :</h5>
@@ -243,10 +258,19 @@
 
         function setSystemDeduction() {
             let job_cost = $('#job_cost').val();
+            let cost_type = $('#cost_type').val();
             let system_deduction = Number(job_cost) * 0.15;
             $('.system_deduction_display').text(system_deduction.toFixed(2));
             $('#system_deduction').val(system_deduction.toFixed(2));
-            let total_cost = job_cost - system_deduction;
+            let total_cost = 0;
+
+            if(cost_type == 'Hourly') {
+                total_cost = Number(job_cost) + 50;
+            } else {
+                total_cost = job_cost;
+            }
+
+            console.log(total_cost);
             $('.total_display').text(total_cost.toFixed(2));
             $('#total').val(total_cost.toFixed(2));
         }

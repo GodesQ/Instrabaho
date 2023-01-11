@@ -75,10 +75,6 @@
                                             <a href="/project_pay_job/project/{{ $contract->id }}" class="btn btn-primary job-completed-btn">Job Complete</a>
                                         @endif
 
-                                        @if (session()->get('role') == 'employer' && $contract->cost_type == 'Hourly')
-                                            <a href="/project_pay_job/project/{{ $contract->id }}" class="btn btn-primary job-completed-btn">Job Complete</a>
-                                        @endif
-
                                         @if (session()->get('role') == 'freelancer' && $contract->cost_type == 'Fixed' && !$contract->is_start_working)
                                             <button id="start-working-btn" data-id="{{ $contract->id }}" class="btn btn-primary start-working-btn">Start Working</button>
                                         @endif

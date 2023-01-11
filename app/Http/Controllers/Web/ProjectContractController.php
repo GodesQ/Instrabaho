@@ -162,6 +162,7 @@ class ProjectContractController extends Controller
 
             $total_hours_cost = $contract->cost * $total_hours;
 
+            if($total_minutes != 0) $total_hours_cost += $contract->cost / 60 * $total_minutes;
 
             $start_date = $request->start_date ? date_create($request->start_date) : null;
             $end_date = $request->end_date ? date_create($request->end_date) : null;
