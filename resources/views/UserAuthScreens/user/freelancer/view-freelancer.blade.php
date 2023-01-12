@@ -45,8 +45,9 @@
 		                     <ul>
 		                        <li> <span> Member since {{ date_format(new DateTime($freelancer->created_at), "F d, Y") }}</span> </li>
 		                        <li>
-                                    @for ($i = 0; $i < $freelancer->rate; $i++)
-                                        <i class="fas fa-star" style="color: #fdbf2d !important;" aria-hidden="true"></i>
+                                    <span class="primary mr-25">{{ number_format($freelancer->rate, 1) }}</span>
+                                    @for ($i = 0; $i < round($freelancer->rate); $i++)
+                                        <i class="fas fa-star" style="color: #04bbff !important;" aria-hidden="true"></i>
                                     @endfor
                                 </li>
 		                     </ul>
@@ -57,7 +58,9 @@
 		         <div class="col-lg-3 col-xl-3 col-xs-12 col-md-3 col-sm-12">
 		            <div class="fr-hero-hire">
 		               <div class="fr-hero-short-list">
-		                  <p><span class="currency">₱ </span><span class="price">{{ number_format($freelancer->hourly_rate, 2) }}</span></p>
+		                    <p><span class="currency">₱ </span>
+                                <span class="price">{{ number_format($freelancer->hourly_rate, 2) }}</span>
+                            </p>
 		                  <span class="type">(per hour)</span>
 		               </div>
 		               <div class="fr-hero-short-list-2">
@@ -244,7 +247,7 @@
                                         <div>
                                             <span>
                                                 @for ($i = 0; $i < $review->freelancer_rate; $i++)
-                                                    <i class="fas fa-star" style="color: #fdbf2d !important; font-size: 8px;" aria-hidden="true"></i>
+                                                    <i class="fas fa-star" style="color: #04bbff !important; font-size: 8px;" aria-hidden="true"></i>
                                                 @endfor
                                             </span>
                                         </div>

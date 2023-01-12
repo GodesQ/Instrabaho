@@ -303,19 +303,21 @@ address = document.querySelector('#address');
                 });
 
                 let stars =  '';
-                for (let index = 0; index < data.rate; index++) {
-                    stars += '<i class="fas fa-star" style="color: #fdbf2d !important; font-size: 10px !important;" aria-hidden="true"></i>';
+                for (let index = 0; index < Math.floor(data.rate); index++) {
+                    stars += '<i class="fas fa-star" style="color: #04bbff !important; font-size: 8px !important;" aria-hidden="true"></i>';
                 }
 
                 (function (marker, data) {
                         google.maps.event.addListener(marker, "click", function (e) {
                         infoWindow.setContent(`
-                            <div class="d-flex justify-content-between" style="gap: 10px; max-width: 220px; height: 70px; max-height: 70px;">
-                                <a style="width: 50%; height: 100%;" href="/freelancers/${data.user.username}"><img src="${data.user.profile_image ?  `../../../images/user/profile/${data.user.profile_image}` : '../../../images/user-profile.png' }" style="width: 100%; height: 100%; object-fit: cover;" />
-                                <div style="50%"></a>
-                                    <a href="/freelancers/${data.user.username}" class="font-weight-bold" style="font-size: 11px;">${data.user.firstname} ${data.user.lastname}</a>
-                                    <div style="font-size: 10px !important;">${stars} <span class="mx-1 font-weight-bold">${data.total_reviews} ${data.total_reviews > 1 ? 'Reviews' : 'Review'}</span></div>
-                                    <div style="font-size: 9px;" class="my-1"><i class="fa fa-map-marker mr-25"></i> ${data.address}</div>
+                            <div class="d-flex justify-content-around" style="max-width: 225px; width: 190px; height: 70px; max-height: 70px;">
+                                <a style="width: 40%; height: 100%;" href="/freelancers/${data.user.username}">
+                                    <img src="${data.user.profile_image ?  `../../../images/user/profile/${data.user.profile_image}` : '../../../images/user-profile.png' }" style="width: 100%; height: 100%; object-fit: cover;" />
+                                </a>
+                                <div style="60%">
+                                    <a href="/freelancers/${data.user.username}" class="font-weight-bold" style="font-size: 10px;">${data.user.firstname} ${data.user.lastname}</a>
+                                    <div style="font-size: 8px !important;">${stars} <span class="mx-1 font-weight-bold">${data.total_reviews} ${data.total_reviews > 1 ? 'Reviews' : 'Review'}</span></div>
+                                    <div style="font-size: 9px;" class="my-1 font-weight-bold">Distance: ${Number(data.distance).toFixed(2) } km</div>
                                     <h6 class="primary mt-1" style="font-size: 11px;">₱ ${Number(data.hourly_rate).toFixed(2)}</h6>
                                 <div>
                             </div>

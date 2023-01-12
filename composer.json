@@ -16,6 +16,7 @@
         "luigel/laravel-paymongo": "^1.5",
         "pusher/pusher-php-server": "^7.2",
         "simplesoftwareio/simple-qrcode": "^4.2",
+        "stevebauman/location": "^6.5",
         "webpatser/laravel-uuid": "^4.0",
         "yajra/laravel-datatables-oracle": "^9.21"
     },

@@ -17,7 +17,7 @@
                         <div>
                             @for ($i = 0; $i < $proposal->freelancer->rate; $i++)
                             <span>
-                                <i class="fa fa-star" style="color: #fdbf2d !important; font-size: 10px;" aria-hidden="true"></i>
+                                <i class="fa fa-star" style="color: #04bbff !important; font-size: 10px;" aria-hidden="true"></i>
                             </span>
                         @endfor
                             <span class="font-weight-bold" style="font-size: 10px;">( {{($proposal->freelancer->total_reviews)}} {{ $proposal->freelancer->total_reviews > 1 ? 'Reviews' : 'Review' }} )</span>

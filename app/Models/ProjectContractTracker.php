@@ -10,4 +10,8 @@ class ProjectContractTracker extends Model
     use HasFactory;
     protected $table = 'project_contract_tracker';
     protected $guarded = [];
+
+    public function tracker_logs() {
+        return $this->hasMany(ProjectContractTrackerLog::class, 'tracker_id');
+    }
 }

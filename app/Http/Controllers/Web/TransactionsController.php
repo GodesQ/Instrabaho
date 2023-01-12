@@ -46,8 +46,9 @@ class TransactionsController extends Controller
                         ->where('status', 'paid')
                         ->orWhere('status', 'chargeable')
                         ->with('user_from', 'user_to')->firstOrFail();
+
         $eWalletPayment = EWalletPayment::where('transaction_code', $request->txn_code)->first();
-        
+
         return view('UserAuthScreens.transactions.e-wallet-payment.success', compact('transaction', 'eWalletPayment'));
     }
 
