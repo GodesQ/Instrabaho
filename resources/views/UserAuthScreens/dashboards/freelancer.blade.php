@@ -18,10 +18,50 @@
         </script>
     @endpush
 @endif
+<style>
+    .evo-calendar {
+        box-shadow: 0 10px 50px -20px #b4e6f8;
+    }
+    .calendar-sidebar {
+        background-color: #04bbff !important;
+        box-shadow: 5px 0 18px -3px #b4e6f8;
+    }
+    .calendar-sidebar>.month-list>.calendar-months>li.active-month {
+        background-color: #1a90f0;
+    }
+    .calendar-sidebar>.month-list>.calendar-months>li:hover {
+        background-color: #8bc8fa;
+    }
+    .calendar-sidebar>span#sidebarToggler {
+        background-color: #04bbff !important;
+    }
+    #eventListToggler {
+        background-color: #04bbff;
+        box-shadow: 5px 0 18px -3px #b4e6f8;
+    }
+    th[colspan="7"] {
+        color: #04bbff;
+    }
+    .event-list>.event-empty {
+        border: 1px solid #04bbff;
+        background-color: #e5f3ff;
+    }
+    .event-list>.event-empty>p {
+        color: #04bbff;
+    }
+    @media screen and (max-width: 425px) {
+        .calendar-sidebar>.calendar-year {
+            background-color: #04bbff;
+
+        }
+    }
+</style>
+
     <div class="container-fluid my-2">
         <h2 class="font-weight-bold">Welcome <span class="primary h2 font-weight-bold">{{ $freelancer->display_name }}</span>!</h2>
         <h6>Hope you're having a great time freelancing.</h6>
     </div>
+    {{-- <div id="calendar" class="my-3"></div> --}}
     <div class="row minimal-modern-charts">
         <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-12 col-12 power-consumption-stats-chart">
             <div class="card">
@@ -153,11 +193,31 @@
                     </table>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
 
 @push('scripts')
 <script src="../../../app-assets/js/scripts/charts/apexcharts/charts-apexcharts.js"></script>
-
+<script>
+    $(document).ready(function() {
+        let date = new Date();
+        $('#calendar').evoCalendar({
+            theme: 'Orange Coral',
+            calendarEvents: [
+                {
+                    id: '4hducye', // Event's id (required, for removing event)
+                    date: date, // Date of event
+                    type: 'event', // Type of event (event|holiday|birthday)
+                },
+                // {
+                //     id: '4hducye', // Event's id (required, for removing event)
+                //     date: date, // Date of event
+                //     type: 'event', // Type of event (event|holiday|birthday)
+                // },
+            ]
+        })
+    })
+</script>
 @endpush

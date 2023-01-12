@@ -23,6 +23,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Luigel\Paymongo\Facades\Paymongo;
 
+use Stevebauman\Location\Facades\Location;
+
 class HomeScreenController extends Controller
 {
 
@@ -217,8 +219,10 @@ class HomeScreenController extends Controller
 
     public function freelancers(Request $request) {
         $skills = Skill::all();
+        $ip = $request->ip();
+        $currentUserInfo = Location::get();
 
-        #get all freelancers and create pagination
+        # get all freelancers and create pagination
         $freelancers = Freelancer::select('*')->paginate(10);
         return view('CustomerScreens.home_screens.freelancer.freelancer-search', compact('freelancers', 'skills'));
     }

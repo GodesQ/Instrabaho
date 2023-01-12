@@ -104,16 +104,15 @@ class Freelancer extends Model
     }
 
     public function rate() {
-        $one_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 1)->count();
-        $two_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 2)->count();
-        $three_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 3)->count();
-        $four_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 4)->count();
-        $five_rates = FreelancerReview::where('freelancer_id', $this->id)->where('freelancer_rate', 5)->count();
 
-        $sub_average = $five_rates + $four_rates + $three_rates + $two_rates + $one_rates;
-        $average = $sub_average == 0 ? 0 : (5 * $five_rates + 4 * $four_rates + 3 * $three_rates + 2 * $two_rates + 1 * $one_rates) / $sub_average;
+        #sum of all rates
+        $sum_rate = FreelancerReview::where('freelancer_id', $this->id)->sum('freelancer_rate');
+        # total of reviews
+        $total_of_reviews = FreelancerReview::where('freelancer_id', $this->id)->count();
+
+        $average = $sum_rate == 0 ? 0 : $sum_rate / $total_of_reviews;
+
         $total_average = number_format($average, 1);
-
         return (float) number_format($total_average, 1);
     }
 

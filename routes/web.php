@@ -288,14 +288,12 @@ use App\Events\ProjectMessageEvent;
         Route::post('/project_pay_job', [ProjectPayJobController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
 
         Route::get('/card_payment/security-check/{id}', [CardPaymentCallBackController::class, 'security_check'])->name('card-payment.security_check');
-
         Route::put('/card_payment/update/{id}/{type?}', [CardPaymentCallBackController::class, 'card_update'])->name('card-payment.update');
-
-        Route::get('/transaction_message/card_payment/{txn_code}', [TransactionsController::class, 'card_payment_success'])->name('card_payment.success');
 
         Route::get('/ewallet/{txn_code}/{type?}/success', [EWalletCallbackController::class, 'success'])->name('ewallet.success');
         Route::get('/ewallet/{txn_code}/{type?}/failed', [EWalletCallbackController::class, 'failed'])->name('ewallet.failed');
-    
+
+        Route::get('/transaction_message/card_payment/{txn_code}/success', [TransactionsController::class, 'card_payment_success'])->name('card_payment.success');
         Route::get('/transaction_message/ewallet/{txn_code}/success', [TransactionsController::class, 'ewallet_payment_success'])->name('transaction_message.ewallet.success');
         Route::get('/transaction_message/ewallet/{txn_code}/failed', [TransactionsController::class, 'ewallet_payment_failed'])->name('transaction_message.ewallet.failed');
     });

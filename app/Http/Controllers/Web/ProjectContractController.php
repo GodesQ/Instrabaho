@@ -93,8 +93,6 @@ class ProjectContractController extends Controller
             abort_if($freelancer->user_id != session()->get('id'), 403);
             return view('UserAuthScreens.contracts.track-contract', compact('contract'));
         }
-
-
     }
 
     public function validate_code(Request $request) {
@@ -220,6 +218,21 @@ class ProjectContractController extends Controller
             $contract->start_working_date = $start_date ? date_format($start_date, 'Y-m-d H:i:s') : null;
             $contract->save();
 
+            # add log
+            if($request->status == 'start') {
+                $string_start_date = $start_date->format('Y-m-d h:i:s A');
+                $log = ProjectContractTrackerLog::create([
+                    'tracker_id' => $contract_tracker->id,
+                    'log' => 'start on ' . $string_start_date
+                ]);
+            } else {
+                $string_end_date = $end_date->format('Y-m-d h:i:s A');
+                $log = ProjectContractTrackerLog::create([
+                    'tracker_id' => $contract_tracker->id,
+                    'log' => 'stop on ' . $string_end_date
+                ]);
+            }
+
 
             if($contract_tracker) return response()->json([
                 'status' => true,
@@ -232,58 +245,6 @@ class ProjectContractController extends Controller
             ]);
 
         }
-
-        //  # if contract_tracker is exist
-        //  if($contract_tracker) {
-        //     $total_hours = $contract_tracker->hours + $request->hours;
-        //     $total_minutes = $contract_tracker->minutes + $request->minutes;
-
-        //     $remaining_minutes = 0;
-
-        //     # check if the total minutes is greater than 60
-        //     if($total_minutes >= 60) {
-        //         $remaining_minutes = $total_minutes - 60;
-        //         $total_minutes = $total_minutes + $remaining_minutes;
-        //         $total_hours = $total_hours + 1;
-
-        //     }
-
-        //     $total_hours_cost = $contract->total_cost * $total_hours;
-
-        //     $contract_tracker->hours = $total_hours;
-        //     $contract_tracker->minutes = $total_minutes;
-        //     $contract_tracker->total_hours_cost = $total_hours_cost;
-        //     $contract_tracker->cur_time = date('Y-m-d H:i:s');
-        //     $save = $contract_tracker->save();
-
-        //     if($save) return response()->json([
-        //         'status' => true,
-        //         'message' => 'Success Updating Tracker',
-        //         'total_hours_cost' => $total_hours_cost,
-        //         'total_hours' => $total_hours,
-        //         'total_minutes' => $total_minutes,
-        //     ]);
-
-        // } else {
-
-        //     $total_hours_cost = $contract->total_cost * $request->hours;
-
-        //     $save = ProjectContractTracker::create([
-        //         'contract_id' => $contract->id,
-        //         'minutes' => $request->minutes,
-        //         'hours' => $request->hours,
-        //         'total_hours_cost' => $total_hours_cost,
-        //         'cur_time' => date('Y-m-d H:i:s')
-        //     ]);
-
-        //     if($save) return response()->json([
-        //         'status' => true,
-        //         'message' => 'Success Creating Tracker',
-        //         'total_hours_cost' => $total_hours_cost,
-        //         'total_hours' => $request->hours,
-        //         'total_minutes' => $request->minutes,
-        //     ]);
-        // }
     }
 
     public function create(Request $request) {

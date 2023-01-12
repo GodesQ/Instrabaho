@@ -106,6 +106,37 @@
                                                 <li class="list-group-item">Total Minutes : <span class="font-weight-bold total-minutes-text">{{ optional($contract->tracker)->minutes }}</span> min</li>
                                                 <li class="list-group-item">Total Hours Cost : ₱ <span class="font-weight-bold total-hours-cost-text">{{ number_format(optional($contract->tracker)->total_hours_cost, 2) }}</span></li>
                                             </ul>
+                                            <div class="text-right">
+                                                <a type="button" href="primary" data-toggle="modal" data-target="#defaultSize">
+                                                    Tracker Logs
+                                                </a>
+                                                <div class="modal fade text-left" id="defaultSize" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="myModalLabel18"><i class="fa fa-file"></i>Tracker Logs</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <ul class="list-group">
+                                                                    @forelse ($contract->tracker->tracker_logs as $tracker)
+                                                                        <li class="list-group-item">
+                                                                            {{ $tracker->log }}
+                                                                        </li>
+                                                                    @empty
+                                                                        <li class="list-group-item">No Logs Found</li>
+                                                                    @endforelse
+                                                                </ul>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     @endif
                                 </div>

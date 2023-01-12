@@ -5,53 +5,49 @@
                 <div class="fr3-job-img">
                     <a href="/freelancers/{{ $freelancer->user->username }}">
                         @if($freelancer->user->profile_image)
-                            <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" alt="profile pic" style="width: 100px; height: 90px; object-fit: cover;">
+                            <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" alt="profile pic" style="width: 110px; height: 100px; object-fit: cover;">
                         @else
                             <img src="../../../images/user-profile.png" alt="profile pic" style="width: 100%; height: 100px; object-fit: cover;">
                         @endif
                     </a>
                     <div class="my-1 text-center">
-                        @for ($i = 0; $i < $freelancer->rate; $i++)
-                            <i class="fas fa-star" style="color: #fdbf2d !important; font-size: 8px;" aria-hidden="true"></i>
-                        @endfor
-                        <span class="font-weight-bold" style="font-size: 8px;">( {{($freelancer->total_reviews)}} {{ $freelancer->total_reviews > 1 ? 'Reviews' : 'Review' }} )</span>
+                        @if($freelancer->rate)
+                            <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
+                            @for ($i = 0; $i < round($freelancer->rate); $i++)
+                                <i class="fas fa-star" style="color: #04bbff !important; font-size: 9px;" aria-hidden="true"></i>
+                            @endfor
+                        @else
+                        {{-- @for ($i = 0; $i < 5; $i++)
+                            <i class="far fa-star" style="color: #04bbff !important; font-size: 8px;" aria-hidden="true"></i>
+                        @endfor --}}
+                        @endif
+                        <div class="font-weight-bold my-25" style="font-size: 9px;">( {{ ($freelancer->total_reviews) }} {{ $freelancer->total_reviews > 1 ? 'Reviews' : 'Review' }} )</div>
                     </div>
                     <!-- <a class="follow follow-freelancer protip text-danger" style="border: 1px solid rgb(255, 0, 0); padding: 0.3rem 1rem;" data-fid="177" data-pt-position="top" data-pt-scheme="black" data-pt-title="Follow">
                             <i class="fas fa-heart mr-50 text-danger" aria-hidden="true"></i> Follow
                     </a> -->
                 </div>
                 <div class="fr3-job-text">
-                    <span class="name"><a href="/freelancers/{{ $freelancer->user->username }}"><i class="fa fa-check verified protip" data-pt-position="top" data-pt-scheme="black" data-pt-title="Verified" aria-hidden="true"></i>{{ $freelancer->display_name }}</a></span>
                     <a href="/freelancers/{{ $freelancer->user->username }}">
-                        <h3>{{ $freelancer->tagline }}</h3>
+                        <h3 cla>{{ $freelancer->user->firstname . ' ' . $freelancer->user->lastname  }}</h3>
                     </a>
-                    <p class="excerpt">{{ htmlentities(substr($freelancer->description, 0, 100)) }}...</p>
                     <p class="price-tag"><span class="currency">₱ </span><span class="price">{{ number_format($freelancer->hourly_rate, 2) }}</span><span class="bottom-text"> / hr</span></p>
-                    <ul class="lists d-flex justify-content-start" style="gap: 10px;">
-                        <li style="width: 30%;">
-                            @if($freelancer->distance)
-                                <div class="font-weight-bold" style="color: #000;">Distance :</div>
-                                {{ number_format($freelancer->distance, 2) }} km
-                            @else
-                                <div class="font-weight-bold" style="color: #000;">Member Since :</div>
-                                {{ date_format(new DateTime($freelancer->created_at), "F d, Y") }}
-                                @endif
-                        </li>
-                        <li style="width: 70%;">
-                            <div class="font-weight-bold" style="color: #000;">Location : </div>
-                            {{ $freelancer->address }}
-                        </li>
-                    </ul>
+                    @if($freelancer->distance)
+                        <div class="font-weight-bold" style="color: #000;">Distance :</div>
+                        {{ number_format($freelancer->distance, 2) }} km
+                    @endif
                     <hr>
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="fr3-product-skills">
+                        <div  style="width: 63%;" class="fr3-product-skills">
                             @forelse($freelancer->skills as $skill)
-                                <a href="">{{ $skill->skill->skill_name }}</a>
+                                <a href="#" style="padding: 0.4rem;">{{ $skill->skill->skill_name }}</a>
                             @empty
                             <a href="#" class="bg-info text-white">No Skills Found</a>
                             @endforelse
-                            </div>
-                        <a href="/freelancers/{{ $freelancer->user->username }}" class="btn btn-md btn-primary">View Profile </a>
+                        </div>
+                        <div style="width: 37%;" class="text-right">
+                            <a href="/freelancers/{{ $freelancer->user->username }}" class="btn btn-md btn-primary">View Profile </a>
+                        </div>
                     </div>
                 </div>
             </div>
