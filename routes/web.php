@@ -203,8 +203,8 @@ use App\Events\ProjectMessageEvent;
         Route::get('/projects/selected_dates', [ProjectsController::class, 'selected_dates'])->name('projects.selected_dates');
 
         # Route for offers to freelancer from employer
-        Route::post('/offer/store', [ProjectOffersController::class, 'store'])->name('project.offer.store');
-        Route::put('/offer/accept_offer', [ProjectOffersController::class, 'accept_offer'])->name('project.offer.accept_offer');
+        Route::post('/offer/store', [ProjectOffersController::class, 'store'])->name('project.offer.store')->middleware('employer.access');
+        Route::put('/offer/accept_offer', [ProjectOffersController::class, 'accept_offer'])->name('project.offer.accept_offer')->middleware('freelancer.access');
         Route::get('/offer/info/{id}', [ProjectOffersController::class, 'offer'])->name('offer.view');
 
         # proposal routes

@@ -56,8 +56,7 @@ address = document.querySelector('#address');
             // get all checked skills
             $.each($("#freelancer_type:checked"), function(){
                 selected_freelancer_type.push($(this).val());
-             });
-
+            });
 
             let filter_data = {
                 title: $('#title').val(),
@@ -84,6 +83,14 @@ address = document.querySelector('#address');
                     setLocations(data.freelancers);
                 }
             })
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+              x.innerHTML = "Geolocation is not supported by this browser.";
+            }
         }
 
         var mapOptions = {

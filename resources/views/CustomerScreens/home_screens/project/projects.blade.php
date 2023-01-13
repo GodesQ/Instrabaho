@@ -67,7 +67,14 @@
         </div>
     </div>
  @empty
-
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-center align-items-center flex-column">
+                <img src="../../../images/illustrations/no-data.png" style="width: 300px;" alt="">
+                <h2>No Projects Found</h2>
+            </div>
+        </div>
+    </div>
 @endforelse
 
     <div class="fl-navigation">

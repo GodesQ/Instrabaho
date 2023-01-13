@@ -149,7 +149,7 @@
                                                 <h6>
                                                     <a href="/project/view/{{ $project->id }}" style="color: black; font-weight: 500;">{{ $project->title }}</a>
                                                 </h6>
-                                                <div style="color: #000;">{{ $project->employer->display_name }}</div>
+                                                <div style="color: #000;">{{ $project->employer->user->firstname . ' ' . $project->employer->user->lastname }}</div>
                                                 <div>{{ $project->location }}</div>
                                                 {{-- <div class="my-2">
                                                     {{-- <div class="font-weight-medium"><i class="feather icon-target success"></i> Actively Looking for</div> --}}
@@ -166,7 +166,7 @@
                                                 </div> --}}
                                                 <div class="my-1 mt-3">
                                                     <a href="/project/view/{{ $project->id }}" class="primary mx-2">View Project</a>
-                                                    <a href="" class="btn btn-primary">Send Proposal</a>
+                                                    <a href="/project/view/11#fr-bid-form" class="btn btn-primary">Send Proposal</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,10 +236,10 @@
                               <div class="fr-latest-profile">
                                  <a class="user-image" href="/freelancers/{{ $freelancer->user->username }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
                                  <div class=" text-center">
-                                    <span class="fr-latest-name">{{ $freelancer->tagline }}</span>
-                                    <h4>
-                                       <a href="/freelancers/{{ $freelancer->user->username }}" class="h4">{{ $freelancer->user->username }}</a>
-                                    </h4>
+                                    {{-- <span class="fr-latest-name">{{ $freelancer->tagline }}</span> --}}
+                                    <h5>
+                                       <a href="/freelancers/{{ $freelancer->user->username }}" class="h5">{{ $freelancer->user->firstname . ' ' . $freelancer->user->lastname }}</a>
+                                    </h5>
                                  </div>
                               </div>
                               <div class="d-flex justify-content-between align-items-center">
@@ -247,11 +247,11 @@
                                  <div class="text-right">Reviews : 20</div>
                               </div>
                            </div>
-                           <div class="mt-3 p-1 px-2 d-flex justify-content-around align-items-center flex-column" style="background: #f8f8f8 !important; height: 200px;">
+                           <div class="mt-3 p-1 d-flex justify-content-around align-items-center flex-column" style="background: #f8f8f8 !important; height: 200px;">
                               <p class="text-center">{{ strlen($freelancer->description) > 100 ? substr($freelancer->description, 0, 100) . '...' : $freelancer->description }}</p>
-                              <div class="group-buttons">
-                                 <a href="/freelancers/{{ $freelancer->user->username }}" class="btn btn-outline-primary" style="width: 100% !important">View Profile</a>
-                                 <button class="btn btn-primary mt-2" style="width: 100% !important">Send Offer</button>
+                              <div class="container-fluid">
+                                    <a href="/freelancers/{{ $freelancer->user->username }}" class="btn btn-outline-primary" style="width: 100% !important;">My Profile</a>
+                                    <button class="btn btn-primary mt-2" style="width: 100% !important;">Send Offer</button>
                               </div>
                            </div>
                         </div>

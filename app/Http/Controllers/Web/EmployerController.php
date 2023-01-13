@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Employer;
 use App\Models\Project;
 use App\Models\Freelancer;
+use App\Models\User;
 use App\Models\EmployerFollower;
 use App\Models\ProjectContract;
 use App\Http\Requests\EmployerRegisterForm\RegisterEmployerRequest;
@@ -19,7 +20,8 @@ class EmployerController extends Controller
 {
     public function role_form() {
         $id = session()->get('id');
-        return view('AllScreens.misc.employer-form', compact('id'));
+        $user = User::where('id', $id)->first();
+        return view('AllScreens.misc.employer-form', compact('id', 'user'));
     }
 
     public function save_role_form(RegisterEmployerRequest $request) {

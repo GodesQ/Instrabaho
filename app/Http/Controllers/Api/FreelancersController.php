@@ -66,18 +66,16 @@ class FreelancersController extends Controller
         $request->validate([
             'id' => 'required|exists:user,id',
             'display_name' => 'required',
-            'freelancer_type' => 'required',
             'hourly_rate' => 'required|integer',
             'contactno' => 'required',
-            'gender' => 'required|in:Male,Female',
-            'tagline' => 'required',
-            'description' => 'required|min:10',
             'address' => 'required',
             'latitude' => 'required',
             'longitude' => 'required'
         ]);
 
         $id = $request->header('user_id');
+        if(!$id) return response()->json(['status' => false], 403);
+
         $freelancer = Freelancer::where('user_id', $id)->first();
 
         if($freelancer) {
