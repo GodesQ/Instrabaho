@@ -166,7 +166,7 @@
                                                 </div> --}}
                                                 <div class="my-1 mt-3">
                                                     <a href="/project/view/{{ $project->id }}" class="primary mx-2">View Project</a>
-                                                    <a href="/project/view/11#fr-bid-form" class="btn btn-primary">Send Proposal</a>
+                                                    <a href="/project/view/{{ $project->id }}#fr-bid-form" class="btn btn-primary">Send Proposal</a>
                                                 </div>
                                             </div>
                                         </div>
