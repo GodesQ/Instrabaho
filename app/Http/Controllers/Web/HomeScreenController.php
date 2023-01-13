@@ -159,7 +159,7 @@ class HomeScreenController extends Controller
 
         $projects = Project::select('*')
         ->when($title, function($q) use ($title) {
-            return $q->where(DB::raw('lower(title)', 'like', '%' . strtolower($title) . '%'));
+            return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%');
         })
         ->when($categories, function ($q) use ($categories) {
             if($categories[0]) return $q->whereIn('category_id', $categories);
