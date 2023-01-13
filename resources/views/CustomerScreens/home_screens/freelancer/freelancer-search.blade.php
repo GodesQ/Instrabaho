@@ -45,7 +45,6 @@
                             <div class="search-map"></div>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-xxl-8 col-xl-7">
                     <div class="row freelancers-data" >

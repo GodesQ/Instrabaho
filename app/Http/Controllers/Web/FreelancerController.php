@@ -32,22 +32,19 @@ class FreelancerController extends Controller
     public function freelancer_role_form() {
         $id = session()->get('id');
         $freelancer = Freelancer::where('user_id', $id)->first();
-        if($freelancer) {
-            return redirect()->route('freelancer.dasboard');
-        }
-        return view('AllScreens.misc.freelancer-form', compact('id'));
+        if($freelancer) return redirect()->route('freelancer.dasboard');
+
+        $user = User::where('id', $id)->first();
+
+        return view('AllScreens.misc.freelancer-form', compact('id', 'user'));
     }
 
     public function save_freelancer_role_form(Request $request) {
 
         $request->validate([
             'display_name' => 'required',
-            'freelancer_type' => 'required',
             'hourly_rate' => 'required',
             'contactno' => 'required',
-            'gender' => 'required',
-            'tagline' => 'required',
-            'description' => 'required',
             'address' => 'required',
             'latitude' => 'required',
             'longitude' => 'required'
@@ -60,12 +57,8 @@ class FreelancerController extends Controller
         $save = Freelancer::create([
             'user_id' => $id,
             'display_name' => $request->display_name,
-            'freelancer_type' => $request->freelancer_type,
             'hourly_rate' => $request->hourly_rate,
             'contactno' => $request->contactno,
-            'gender' => $request->gender,
-            'tagline' => $request->tagline,
-            'description' => $request->description,
             'address' => $request->address,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude

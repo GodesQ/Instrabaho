@@ -41,7 +41,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header bg-gradient-x-primary text-white">
-                                    <h4 style="color: #ffffff;">Employer Form</h4>
+                                    <h4>Employer Form</h4>
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body">
@@ -53,46 +53,14 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="displayName">Display Name : <span class="danger text-danger">*</span> </label>
-                                                            <input type="text" name="display_name" class="form-control" id="displayName" value="{{ old('display_name') }}"  style="border: {{$errors->has('display_name') ? '1px solid #ff7588 !important' : 'none'}};">
+                                                            <input type="text" name="display_name" readonly class="form-control" id="displayName" value="{{ $user->firstname . ' ' . $user->lastname }}"  style="border: {{$errors->has('display_name') ? '1px solid #ff7588 !important' : 'none'}};">
                                                             <span style="font-style: italic; padding: 8px;">It will display on public profile</span>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="tagLine">Tagline : <span class="danger text-danger">*</span></label>
-                                                            <input type="text" name="tagline" class="form-control" style="border: {{$errors->has('tagline') ? '1px solid #ff7588 !important' : 'none'}};" id="tagLine" value="{{ old('tagline') }}">
-                                                            <span style="font-style: italic; padding: 8px;">It will display on public profile</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="hourlyRate">Number of Employees : <span class="danger text-danger">*</span></label>
-                                                            <select name="number_employees"  style="border: {{$errors->has('number_employees') ? '1px solid #ff7588 !important' : 'none'}};" id="number_employees" value="{{ old('number_employees') }}" class="custom-select form-control" >
-                                                                <option value="">Select number of employees</option>
-                                                                <option value="0">0 Employee</option>
-                                                                <option value="1-10">1 - 10 Employees</option>
-                                                                <option value="11-20">11 - 20 Employees</option>
-                                                                <option value="21-30">21 - 30 Employees</option>
-                                                                <option value="31-50">31 - 50 Employees</option>
-                                                                <option value="50+">More than 50</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="contactno">Contact No: <span class="danger text-danger">*</span></label>
                                                             <input type="number" name="contactno" class="form-control" id="contactno" maxlength="11" style="border: {{$errors->has('contactno') ? '1px solid #ff7588 !important' : 'none'}};" value="{{ old('contactno') }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="gender">Description : <span class="danger text-danger">*</span></label>
-                                                            <textarea name="description" class="form-control" id="" cols="30" rows="10" style="border: {{$errors->has('description') ? '1px solid #ff7588 !important' : 'none'}};">{{ old('description') }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>

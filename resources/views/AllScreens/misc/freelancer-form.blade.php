@@ -17,6 +17,10 @@
             height: 300px;
             width: 100%;
         }
+        input:read-only {
+            background-color: rgb(224, 224, 224) !important;
+            color: rgb(0, 0, 0) !important;
+        }
     </style>
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -41,72 +45,33 @@
                                             <br>
                                             <fieldset>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="displayName">Display Name :</label>
-                                                            <input type="text" name="display_name" class="form-control" id="displayName">
+                                                            <input type="text" name="display_name" readonly value="{{ $user->firstname . ' ' . $user->lastname}}" class="form-control" id="displayName">
                                                             <span style="font-style: italic; padding: 8px;">It will display on public profile</span>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="displayName">Freelancer Type:</label>
-                                                            <select name="freelancer_type" id="" class="select2 form-control">
-                                                                <option value="Individual">Individual</option>
-                                                                <option value="Company">Company</option>
-                                                                <option value="Group">Group</option>
-                                                                <option value="Student">Student</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="hourlyRate">Hourly Rate :</label>
                                                             <input type="number" name="hourly_rate" class="form-control" id="hourlyRate">
-                                                            <span style="font-style: italic; padding: 8px;">Provide your hourly rate</span>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="contactno">Contact No:</label>
-                                                            <input type="number" name="contactno"class="form-control" id="contactno">
+                                                            <input type="number" name="contactno"class="form-control" id="contactno" maxlength="11">
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="gender">Gender :</label>
-                                                            <select class="custom-select form-control" id="gender" name="gender">
-                                                                <option value="Male">Male</option>
-                                                                <option value="Female">Female</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="tagLine">Tagline :</label>
-                                                            <input name="tagline" type="text" class="form-control" id="tagLine">
-                                                            <span style="font-style: italic; padding: 8px;">It will display on public profile</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="description">Description :</label>
-                                                            <textarea name="description" class="form-control" id="description" cols="30" rows="5"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
                                                     <div class="form-group">
                                                         <div class="form-label font-weight-bold my-50">Address <span class="danger text-danger">*</span></div>
-                                                        <input type="text" name="address" id="map-search" class="form-control controls" style="border: {{$errors->has('address') ? '1px solid #ff7588 !important' : 'none'}};" value="{{ old('address') }}">
-                                                        <button type="button" class="btn btn-primary my-3" id="get-current-location">Current <i class="fa fa-map-marker"></i></button>
+                                                        <div class="input-group">
+                                                            <input type="text" name="address" id="map-search" class="form-control controls" value="{{ old('address') }}">
+                                                            <div class="input-group-append" id="button-addon2">
+                                                                <button class="btn btn-primary" type="button" id="get-current-location">Current Location</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="primary text-primary">You can drag the marker to get the specific location</div>
@@ -118,7 +83,7 @@
                                                             <input type="text" name="latitude" class="form-control latitude" value="{{ old('latitude') }}">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6d-none">
+                                                    <div class="col-md-6 d-none">
                                                         <div class="form-group d-none">
                                                             <div class="form-label font-weight-bold my-50">Longitude</div>
                                                             <input type="text" name="longitude" class="form-control longitude" value="{{ old('longitude') }}">
