@@ -107,6 +107,8 @@ class HomeScreenController extends Controller
         ->latest('id')
         ->paginate(10);
 
+        $test = 'test';
+
         $view_data = view('CustomerScreens.home_screens.service.services', compact('services'))->render();
 
         return response()->json([
@@ -159,7 +161,7 @@ class HomeScreenController extends Controller
 
         $projects = Project::select('*')
         ->when($title, function($q) use ($title) {
-            return $q->where(DB::raw('lower(title)', 'like', '%' . strtolower($title) . '%'));
+            return $q->where(DB::raw('lower(title)'), 'like', '%' . strtolower($title) . '%');
         })
         ->when($categories, function ($q) use ($categories) {
             if($categories[0]) return $q->whereIn('category_id', $categories);
