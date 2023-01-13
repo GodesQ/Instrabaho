@@ -107,6 +107,8 @@ class HomeScreenController extends Controller
         ->latest('id')
         ->paginate(10);
 
+        $test = 'test';
+
         $view_data = view('CustomerScreens.home_screens.service.services', compact('services'))->render();
 
         return response()->json([
