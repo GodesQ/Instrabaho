@@ -93,10 +93,12 @@
                                         <div class="container my-2">
                                             <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
                                             @if(session()->get('role') == 'freelancer')
-                                                <div class="form-group text-right">
-                                                    <input type="checkbox" id="timer-btn" class="switchery" {{ optional($contract->tracker)->status == 'start' ? 'checked' : null }}/>
-                                                    <span class="timer-btn-label">Start</span>
-                                                </div>
+                                                @if (!$contract->status && !$contract->job_done)
+                                                    <div class="form-group text-right">
+                                                        <input type="checkbox" id="timer-btn" class="switchery" {{ optional($contract->tracker)->status == 'start' ? 'checked' : null }}/>
+                                                        <span class="timer-btn-label">Start</span>
+                                                    </div>
+                                                @endif
                                             @endif
                                             <ul class="list-group my-1">
                                                 {{-- <input type="checkbox" id="timer-btn" hidden/> --}}
