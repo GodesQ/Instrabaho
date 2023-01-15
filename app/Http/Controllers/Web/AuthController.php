@@ -18,7 +18,7 @@ use App\Models\Employer;
 class AuthController extends Controller
 {
     public function login() {
-        if(session()->get('role')) return redirect('/');
+        if(session()->get('role') && session()->get('id')) return redirect('/');
         return view('AllScreens.auth.login');
     }
 
