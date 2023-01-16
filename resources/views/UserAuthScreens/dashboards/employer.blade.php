@@ -176,31 +176,3 @@ $(window).on("load", function(){
 </script>
 @endpush
 
- <form id="signup-form" action="/submit-reset-form" method="POST">
-                            @csrf
-                            <input type="hidden" name="verify_token" value="{{ $token }}">
-                            <div class="fr-sign-form">
-                                <div class="fr-sign-logo"> <img src="../../../images/icons/password.png" alt="" class="img-fluid"> </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" placeholder="Password" class="form-control" id="password-field" required="" data-smk-msg="Please provide password">
-                                    <div data-toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password change-top" aria-hidden="true"></div>
-                                    <span class="text-danger danger">@error('password'){{ $message }}@enderror</span>
-                                </div>
-                            </div>
-                            <div class="fr-sign-form">
-                                <div class="fr-sign-logo"> <img src="../../../images/icons/password.png" alt="" class="img-fluid"> </div>
-                                <div class="form-group">
-                                    <input type="password" name="password_confirmation" placeholder="Confirm Password" class="form-control" id="password-field" required="" data-smk-msg="Please provide password">
-                                    <div data-toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password change-top" aria-hidden="true"></div>
-                                    <span class="text-danger danger">@error('password_confirmation'){{ $message }}@enderror</span>
-                                </div>
-                            </div>
-                            <div class="fr-sign-submit">
-                            <div class="form-group d-grid">
-                                <input type="hidden" name="email" value="{{ $email }}">
-                                <button type="submit" class="btn btn-theme btn-loading" id="signup-btn"> Sign in
-                                    <span class="bubbles"> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle" aria-hidden="true"></i> </span>
-                                </button>
-                            </div>
-                            </div>
-                        </form>
