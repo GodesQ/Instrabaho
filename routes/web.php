@@ -87,7 +87,7 @@ use App\Events\ProjectMessageEvent;
     Route::get('/success-verify-message', [AuthController::class, 'success_verify_message'])->name('success-verify-message');
 
     Route::post('/send_forgot_form', [ForgotPasswordController::class, 'send_forgot_form'])->name('send_forgot_form');
-    Route::get('/forgot-message', [ForgotPasswordController::class, 'forgot_ message']);
+    Route::get('/forgot-message', [ForgotPasswordController::class, 'forgot_message']);
     Route::get('/forgot-reset-form', [ForgotPasswordController::class, 'forgot_reset_form']);
     Route::post('/submit-reset-form', [ForgotPasswordController::class, 'submit_reset_form']);
 
