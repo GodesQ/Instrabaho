@@ -303,12 +303,12 @@
     <!-- END: Theme JS-->
     <script src="{{ asset('app-assets/vendors/js/charts/chart.min.js')}} "></script>
 
-    <script src="../../../app-assets/js/scripts/charts/chartjs/bar/bar.js"></script>
-    <script src="../../../app-assets/js/scripts/charts/chartjs/bar/bar-stacked.js"></script>
-    <script src="../../../app-assets/js/scripts/charts/chartjs/bar/bar-multi-axis.js"></script>
-    <script src="../../../app-assets/js/scripts/charts/chartjs/bar/column.js"></script>
-    <script src="../../../app-assets/js/scripts/charts/chartjs/bar/column-stacked.js"></script>
-    <script src="../../../app-assets/js/scripts/charts/chartjs/bar/column-multi-axis.js"></script>
+    <script src="{{ asset('app-assets/js/scripts/charts/chartjs/bar/bar.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/charts/chartjs/bar/bar-stacked.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/charts/chartjs/bar/bar-multi-axis.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/charts/chartjs/bar/column.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/charts/chartjs/bar/column-stacked.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/charts/chartjs/bar/column-multi-axis.js') }}"></script>
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('js/sidebar-project.js')}}"></script>
     <script src="{{ asset('js/html5-qrcode.min.js') }}"></script>
