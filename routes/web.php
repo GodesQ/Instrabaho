@@ -67,7 +67,7 @@ use App\Events\ProjectMessageEvent;
     Route::get('/search_freelancers', [HomeScreenController::class, 'freelancers']);
     Route::get('/search_freelancers/fetch_data', [HomeScreenController::class, 'fetch_freelancers']);
 
-    Route::get('/project/view/{id}', [HomeScreenController::class, 'project'])->name('project.view');
+    Route::get('/projects/{id}/{title}', [HomeScreenController::class, 'project'])->name('project.view');
     Route::get('/service/view/{id}', [HomeScreenController::class, 'service'])->name('service.view');
 
     Route::get('/freelancers/{username}', [HomeScreenController::class, 'freelancer'])->name('freelancer.view');

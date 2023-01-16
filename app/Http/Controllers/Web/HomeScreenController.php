@@ -53,15 +53,12 @@ class HomeScreenController extends Controller
 
     public function employer(Request $request) {
         $employer = Employer::where('user_id', $request->id)->with('user', 'projects')->firstOrFail();
-        $featured_projects = Project::where('employer_id', $employer->id)->where('project_type', 'featured')->get();
+        $completed_projects = Project::where('employer_id', $employer->id)->where('status', 'completed')->get();
 
         $my_profile = Freelancer::where('user_id', session()->get('id'))->first();
-        $follow_employer = false;
+        $follow_employer = $my_profile ? $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $my_profile->id)->exists() : false;
 
-        if($my_profile) {
-            $follow_employer = EmployerFollower::where('employer_id', $employer->id)->where('follower_id', $my_profile->id)->exists();
-        }
-        return view('UserAuthScreens.user.employer.view-employer', compact('employer', 'featured_projects', 'follow_employer'));
+        return view('UserAuthScreens.user.employer.view-employer', compact('employer', 'completed_projects', 'follow_employer'));
     }
 
     public function services(Request $request) {
@@ -195,7 +192,7 @@ class HomeScreenController extends Controller
     }
 
     public function project(Request $request) {
-        $project =  Project::where('id', $request->id)->with('employer', 'category')->firstOrFail();
+        $project =  Project::where('title', $request->title)->with('employer', 'category')->firstOrFail();
         $project->setSkills($project->skills);
         $project->getSkills();
         $skills_array = Skill::whereIn('id', $project->skills)->get();

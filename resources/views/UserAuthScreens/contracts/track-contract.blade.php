@@ -123,13 +123,17 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <ul class="list-group">
-                                                                    @forelse ($contract->tracker->tracker_logs as $tracker)
-                                                                        <li class="list-group-item">
-                                                                            {{ $tracker->log }}
-                                                                        </li>
-                                                                    @empty
-                                                                        <li class="list-group-item">No Logs Found</li>
-                                                                    @endforelse
+                                                                    @if($contract->tracker)
+                                                                        @forelse ($contract->tracker->tracker_logs as $tracker)
+                                                                            <li class="list-group-item">
+                                                                                {{ $tracker->log }}
+                                                                            </li>
+                                                                        @empty
+                                                                            <li class="list-group-item">No Logs Found</li>
+                                                                        @endforelse
+                                                                    @else
+                                                                        <div class="text-center">No Logs Found</div>
+                                                                    @endif
                                                                 </ul>
                                                             </div>
                                                             <div class="modal-footer">
@@ -166,7 +170,7 @@
                                                     @else
                                                         <li class="list-group-item">Total Cost: <span class="font-weight-bold">The total cost will see after the job completed.</span></li>
                                                     @endif
-                                                    <li class="list-group-item">Project Cost Type: <span class="font-weight-bold">{{ $contract->cost_type }}</span></li>
+                                                    <li class="list-group-item">Project Cost: <span class="font-weight-bold">₱ {{ number_format($contract->cost, 2) }} ({{ $contract->cost_type }})</span></li>
                                                     <li class="list-group-item">Address: <span class="font-weight-bold">{{ $contract->project->location }}</span></li>
                                                 </ul>
                                             </div>

@@ -18,7 +18,7 @@
                         <p>({{ $project->project_cost_type }})</p>
                     </div>
                     <div class="fr-right-details2">
-                        <a href="{{ route('project.view', $project->id)}}">
+                        <a href="/projects/{{ $project->id }}/{{ $project->title }}">
                         <h3 title="{{ $project->title }}">{{ $project->title }}</h3>
                         </a>
                     </div>
@@ -31,7 +31,6 @@
                             @foreach($project->skills_name as $skill)
                                 <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
                             @endforeach --}}
-
                         </ul>
                     </div>
                     <div class="fr-right-index">
@@ -60,7 +59,7 @@
                 </div>
                 <div class="fr-right-bid" style="width: 20%">
                     <ul>
-                        <li><a href="{{ route('project.view', $project->id)}}" class="btn btn-theme btn-theme-secondary text-right">View Project </a></li>
+                        <li><a href="/projects/{{ $project->id }}/{{ $project->title }}" class="btn btn-theme btn-theme-secondary text-right">View Project </a></li>
                     </ul>
                 </div>
             </div>
