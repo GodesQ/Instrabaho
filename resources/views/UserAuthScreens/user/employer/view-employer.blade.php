@@ -83,22 +83,6 @@
                         <ul>
                             <li>
                                 <div class="fr-c-full-details">
-                                    <span>Department</span>
-                                    <p>
-                                    Customer Support
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="fr-c-full-details">
-                                    <span>Number of Employees</span>
-                                    <p>
-                                        {{ $employer->number_employees }} Employees
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="fr-c-full-details">
                                     <span>Member Since</span>
                                     <p>{{ date_format(new DateTime($employer->created_at), "F d, Y")}}</p>
                                 </div>
@@ -119,35 +103,28 @@
                 </div>
                 <div class="col-lg-8 col-xl-8 col-md-12 col-xs-12 col-sm-12">
                     <div class="fr-product-des-box heading-contents custom-class">
-                        <h3>About Us</h3>
+                        <h3>Employer Summary</h3>
                         {{ $employer->description }}
                     </div>
-                    <h6>Featured Projects</h6>
-                    @forelse($featured_projects as $featured_project)
+                    <h6>Completed Projects</h6>
+                    @forelse($completed_projects as $completed_project)
                         <div class="posted-projects">
                             <div class="fr-right-detail-box">
                             <div class="fr-right-detail-content">
                                 <div class="fr-right-details-products">
                                     <div class="fr-jobs-price">
-                                        <div class="style-hd">
-                                        $20.00
-                                        </div>
+                                        <div class="style-hd">₱ {{ number_format($completed_project->cost, 2) }}</div>
                                         <p class="price_type protip" data-pt-title="For 80 hours total will be  $1,600.00" data-pt-position="top" data-pt-scheme="black">Hourly  <i class="far fa-question-circle"></i></p>
                                     </div>
                                     <div class="fr-right-details2">
-                                        <a href="job-details-page.html">
-                                        <h3>{{ $featured_project->title }}</h3>
+                                        <a href="/projects/{{ $completed_project->id }}/{{ $completed_project->title }}">
+                                        <h3>{{ $completed_project->title }}</h3>
                                         </a>
                                     </div>
                                     <div class="fr-right-product">
                                         <ul class="skills">
                                             <!-- convert the json array ids into model and get to fetch in blade -->
-                                            @php $featured_project->setSkills(json_decode($featured_project->skills)) @endphp
-                                            @php $featured_project->getSkills() @endphp
 
-                                            @foreach($featured_project->skills_name as $skill)
-                                                <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
-                                            @endforeach
                                         <!-- <li class="hide"><a href="#">Support Agent</a></li>
                                         <li class="hide"><a href="#">Support Agent</a></li>
                                         <li class="hide"><a href="#">Support Agent</a></li> -->
@@ -155,7 +132,7 @@
                                         </ul>
                                     </div>
                                     <div class="fr-right-index">
-                                        <div>{{ substr($featured_project->description, 0, 200) }}...</div>
+                                        <div>{{ substr($completed_project->description, 0, 200) }}...</div>
                                     </div>
                                 </div>
                             </div>
@@ -165,20 +142,20 @@
                                         <li>
                                         <p class="heading">Level: </p>
                                             <span>
-                                                {{ $featured_project->project_level }}
+                                                {{ $completed_project->project_level }}
                                             </span>
                                         </li>
                                         <li>
                                         <p class="heading">Location: </p>
                                             <span>
-                                                {{ $featured_project->location }}
+                                                {{ $completed_project->location }}
                                             </span>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="fr-right-bid">
                                     <ul>
-                                        <li><a href="/project/{{ $featured_project->id }}" class="btn btn-theme">View Detail</a></li>
+                                        <li><a href="/projects/{{ $completed_project->id }}/{{ $completed_project->title }}" class="btn btn-theme">View Detail</a></li>
                                     </ul>
                                 </div>
                             </div>

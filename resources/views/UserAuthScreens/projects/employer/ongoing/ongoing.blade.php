@@ -18,7 +18,7 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <a href="/project/view/{{ $data->project->id }}" class="font-weight-bold h4 info">{{ $data->project->title }}</a>
+                                            <a href="/projects/{{ $data->project->id }}/{{ $data->project->title }}" class="font-weight-bold h4 info">{{ $data->project->title }}</a>
                                             <h6 class="warning">{{ $data->project->category->name }}</h6>
                                         </div>
                                         <span class="dropdown">

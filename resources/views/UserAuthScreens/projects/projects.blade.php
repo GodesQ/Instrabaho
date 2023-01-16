@@ -59,7 +59,7 @@
                                         Project Budget :
                                     </div>
                                     <div class="col-md-6 my-25 text-xl-right">
-                                        ₱ {{ number_format($project->cost, 2) }}
+                                        ₱ {{ number_format($project->cost, 2) }} ({{ $project->project_cost_type }})
                                     </div>
                                     <div class="col-md-6 my-25 font-weight-bold">
                                         Start Date :

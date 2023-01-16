@@ -136,39 +136,34 @@
              </div>
             <div class="row">
                 @forelse ($projects as $project)
-                    <div class="col-xl-6 col-lg-6">
-                        <a href="/project/view/{{ $project->id }}">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start px-3 py-4">
-                                        <div style="width: 14%">
-                                            <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 80px; height: 80px; border-radius: 50%;">
-                                        </div>
-                                        <div style="width: 80%" class="fr-project-content">
-                                            <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important;">
-                                                <h6>
-                                                    <a href="/project/view/{{ $project->id }}" style="color: black; font-weight: 500;">{{ $project->title }}</a>
-                                                </h6>
-                                                <div style="color: #000;">{{ $project->employer->user->firstname . ' ' . $project->employer->user->lastname }}</div>
-                                                <div>{{ $project->location }}</div>
-                                                {{-- <div class="my-2">
-                                                    {{-- <div class="font-weight-medium"><i class="feather icon-target success"></i> Actively Looking for</div> --}}
-                                                    {{-- <ul class="fr-project-skills" style="margin-top: 10px;">
+                    <div class="col-xl-4 col-lg-6">
+                        <a href="/projects/{{ $project->id }}/{{ $project->title }}">
+                            <div class="d-flex justify-content-between align-items-start px-3 py-4" style="box-shadow: 10px 10px 5px 0px rgba(181, 230, 250, 0.22);">
+                                <div style="width: 25%">
+                                    <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 65px; height: 65px; border-radius: 50%;">
+                                </div>
+                                <div style="width: 75%" class="fr-project-content">
+                                    <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important; height: 100px; max-height: 150px;">
+                                        <h6 style="margin: 0 !important;">
+                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}" style="color: black; font-weight: 500; font-size: 15px;">{{ $project->title }}</a>
+                                        </h6>
+                                        <div style="color: rgb(99, 99, 99); padding: 0;">{{ $project->employer->user->firstname . ' ' . $project->employer->user->lastname }}</div>
 
-                                                        <!-- convert the json array ids into model and get to fetch in blade -->
-                                                        @php $project->setSkills(json_decode($project->skills)) @endphp
-                                                        @php $project->getSkills() @endphp
+                                        {{-- <div class="my-2">
+                                            {{-- <div class="font-weight-medium"><i class="feather icon-target success"></i> Actively Looking for</div> --}}
+                                            {{-- <ul class="fr-project-skills" style="margin-top: 10px;">
 
-                                                        @foreach($project->skills_name as $skill)
-                                                            <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div> --}}
-                                                <div class="my-1 mt-3">
-                                                    <a href="/project/view/{{ $project->id }}" class="primary mx-2">View Project</a>
-                                                    <a href="/project/view/{{ $project->id }}#fr-bid-form" class="btn btn-primary">Send Proposal</a>
-                                                </div>
-                                            </div>
+                                                <!-- convert the json array ids into model and get to fetch in blade -->
+                                                @php $project->setSkills(json_decode($project->skills)) @endphp
+                                                @php $project->getSkills() @endphp
+
+                                                @foreach($project->skills_name as $skill)
+                                                    <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </div> --}}
+                                        <div class="my-1 mt-3">
+                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}#fr-bid-form" class="btn btn-outline-primary">Apply Now</a>
                                         </div>
                                     </div>
                                 </div>

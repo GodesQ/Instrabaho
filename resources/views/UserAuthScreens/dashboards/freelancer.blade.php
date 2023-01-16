@@ -74,15 +74,15 @@
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
-                                                <a href="/project/view/{{ $project->id }}" class="font-weight-bold h4 info">{{ strlen($project->title) > 15 ? substr($project->title, 0, 15) . '...' : $project->title }}</a>
+                                                <a href="/projects/{{ $project->id }}/{{ $project->title }}" class="font-weight-bold h4 info">{{ strlen($project->title) > 15 ? substr($project->title, 0, 15) . '...' : $project->title }}</a>
                                                 <div class="warning">{{ $project->employer->user->firstname . " " . $project->employer->user->lastname }}</div>
                                                 <div class="font-weight-bold">Location: <span class="font-weight-normal">{{ substr($project->location, 0, 25) }}...</span></div>
                                                 <div class="font-weight-bold">Distance: <span class="font-weight-normal">{{ number_format($project->distance, 2) }} km</span></div>
                                             </div>
                                         </div>
                                         <div class=" my-1 d-flex justify-content-end align-items-center">
-                                            <a href="/project/view/{{ $project->id }}" class="btn btn-outline-primary mr-50">View Project</a>
-                                            <a href="/project/view/{{ $project->id }}#fr-bid-form" class="btn btn-primary">Apply</a>
+                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}" class="btn btn-outline-primary mr-50">View Project</a>
+                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}#fr-bid-form" class="btn btn-primary">Apply</a>
                                         </div>
                                     </div>
                                 </div>
@@ -118,7 +118,7 @@
                                 @forelse ($recent_projects as $recent_project)
                                     <tr>
                                         <td>
-                                            <a href="/project/view/{{ $recent_project->project->id }}" class="font-weight-bold primary">
+                                            <a href="/projects/{{ $recent_project->project->id }}/{{ $recent_project->project->title }}" class="font-weight-bold primary">
                                                 {{ substr($recent_project->project->title, 0, 20) . "..." }}
                                             </a>
                                         </td>
@@ -127,7 +127,7 @@
                                             <span class="dropdown">
                                                 <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-v"></i></a>
                                                 <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
-                                                    <a href="/project/view/{{ $recent_project->project->id }}" class="dropdown-item delete"><i class="feather icon-eye"></i> View Project</a>
+                                                    <a href="/projects/{{ $recent_project->project->id }}/{{ $recent_project->project->title }}" class="dropdown-item delete"><i class="feather icon-eye"></i> View Project</a>
                                                     <a href="/project/contract/view/{{ $recent_project->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Contract</a>
                                                 </span>
                                             </span>
@@ -166,7 +166,7 @@
                             @forelse ($projects_schedule_week as $project)
                                 <tr>
                                     <td>
-                                        <a href="/project/view/{{ $project->project->id }}" class="font-weight-bold primary">
+                                        <a href="/projects/{{ $project->project->id }}/{{ $project->project->title }}" class="font-weight-bold primary">
                                             {{ substr($project->project->title, 0, 20) . "..."  }}
                                         </a>
                                     </td>
@@ -176,7 +176,7 @@
                                             <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="fa fa-ellipsis-v"></i></a>
                                             <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
                                                 <a href="" class="dropdown-item delete"><i class="feather icon-x"></i> Cancel Project</a>
-                                                <a href="/project/view/{{ $project->project->id }}" class="dropdown-item delete"><i class="feather icon-eye"></i> View Project</a>
+                                                <a href="/projects/{{ $project->project->id }}/{{ $project->project->title }}" class="dropdown-item delete"><i class="feather icon-eye"></i> View Project</a>
                                                 <a href="/project/contract/view/{{ $project->id }}" class="dropdown-item"><i class="feather icon-file "></i> View Contract</a>
                                             </span>
                                         </span>

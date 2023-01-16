@@ -92,7 +92,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <div class="form-label my-1 font-weight-bold">Project Title</div>
-                                                            <input type="text" class="form-control" name="title" id="project" required value="{{ old('title') }}" maxlength="100">
+                                                            <input type="text" class="form-control" name="title" id="project" placeholder="e.g Fix my Aircon" required value="{{ old('title') }}" maxlength="100">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
