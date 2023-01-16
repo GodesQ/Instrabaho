@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Employer;
 use App\Models\Project;
-use App\Models\Freelancer; 
+use App\Models\Freelancer;
 use App\Models\User;
 use App\Models\EmployerFollower;
 use App\Models\ProjectContract;
@@ -43,7 +43,11 @@ class EmployerController extends Controller
         $completed_projects = Project::where('status', 'completed')->where('employer_id', $employer->id)->latest('id')->get();
         $recent_workers = ProjectContract::where('employer_id', $employer->id)->with('freelancer')->limit(3)->get();
         $recent_payments = Transaction::where('from_id', $employer->user_id)->where('transaction_type', 'pay_project')->limit(3)->latest('id')->get();
-        return view('UserAuthScreens.dashboards.employer', compact('employer', 'ongoing_projects', 'completed_projects', 'recent_workers', 'recent_payments'));
+        $test = ['test', 'test1'];
+
+        $json_test = json_encode($test);
+
+        return view('UserAuthScreens.dashboards.employer', compact('employer', 'ongoing_projects', 'completed_projects', 'recent_workers', 'recent_payments', 'json_test'));
     }
 
     public function profile(Request $request) {

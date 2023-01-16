@@ -10,9 +10,7 @@
             <div class="page-body">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xl-3 col-lg-2">
-                            
-                        </div>
+                        <div class="col-xl-3 col-lg-2"></div>
                         <div class="col-xl-6 col-lg-8">
                             <div class="card">
                                 <div class="card-header">
@@ -30,13 +28,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-2">
-                            
-                        </div>
+                        <div class="col-xl-3 col-lg-2"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
- 

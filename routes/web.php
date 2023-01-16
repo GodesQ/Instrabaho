@@ -294,6 +294,7 @@ use App\Events\ProjectMessageEvent;
         Route::get('/ewallet/{txn_code}/{type?}/failed', [EWalletCallbackController::class, 'failed'])->name('ewallet.failed');
 
         Route::get('/transaction_message/card_payment/{txn_code}/success', [TransactionsController::class, 'card_payment_success'])->name('card_payment.success');
+        Route::get('/transaction_message/card_payment/{txn_code}/failed', [TransactionsController::class, 'card_payment_failed'])->name('card_payment.failed');
         Route::get('/transaction_message/ewallet/{txn_code}/success', [TransactionsController::class, 'ewallet_payment_success'])->name('transaction_message.ewallet.success');
         Route::get('/transaction_message/ewallet/{txn_code}/failed', [TransactionsController::class, 'ewallet_payment_failed'])->name('transaction_message.ewallet.failed');
     });

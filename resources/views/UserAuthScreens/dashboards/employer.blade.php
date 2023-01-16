@@ -28,11 +28,15 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title"></div>
+                    <div class="card-title">Total Projects</div>
+                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <h3 class="font-weight-bold">105</h3>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <div class="height-300">
-                        <canvas id="column-chart"></canvas>
+                    <div class="height-250">
+                        <canvas id="total-projects-chart"></canvas>
                     </div>
                 </div>
             </div>
@@ -90,3 +94,85 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+
+// Column chart
+// ------------------------------
+$(window).on("load", function(){
+    //Get the context of the Chart canvas element we want to select
+    var ctx = $("#total-projects-chart");
+
+    // Chart Options
+    var chartOptions = {
+        // Elements options apply to all of the options unless overridden in a dataset
+        // In this case, we are setting the border of each bar to be 2px wide and green
+        elements: {
+            rectangle: {
+                borderWidth: 2,
+                borderColor: '#000000',
+                borderSkipped: 'bottom'
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        responsiveAnimationDuration:500,
+        legend: {
+            position: 'top',
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                gridLines: {
+                    color: "#f3f3f3",
+                    drawTicks: false,
+                },
+                scaleLabel: {
+                    display: true,
+                }
+            }],
+            yAxes: [{
+                display: true,
+                gridLines: {
+                    color: "#f3f3f3",
+                    drawTicks: false,
+                },
+                scaleLabel: {
+                    display: true,
+                }
+            }]
+        },
+        title: {
+            display: true,
+            text: 'Total Projects'
+        }
+    };
+
+    // Chart Data
+    var chartData = {
+        labels: ["January", "February",],
+        datasets: [{
+            label: "Projects Per Month",
+            data: [65, 59, 80, 81, 56],
+            backgroundColor: "#04bbff",
+            hoverBackgroundColor: "#04bbff",
+            borderColor: "transparent"
+        }]
+    };
+
+    var config = {
+        type: 'bar',
+
+        // Chart Options
+        options : chartOptions,
+
+        data : chartData
+    };
+
+    // Create the chart
+    var lineChart = new Chart(ctx, config);
+    });
+</script>
+@endpush
+
