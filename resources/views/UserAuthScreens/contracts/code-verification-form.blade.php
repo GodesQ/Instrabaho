@@ -26,6 +26,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-center align-items-center flex-column">
                             <img src="../../../images/logo/main-logo.png" alt="Instrabaho Logo" style="width: 70%;" class="img-responsive">
+                            <div style="width:300px;" class="my-2" id="reader"></div>
                             <form action="{{ route('contract.post_validate_code') }}" method="post" class="my-2">
                                 @csrf
                                 <div class="form-group">
@@ -41,4 +42,18 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function onScanSuccess(qrCodeMessage) {
+            console.log(qrCodeMessage);
+        }
+        function onScanError(errorMessage) {
+            //handle scan error
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner( "reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
+    </script>
+@endpush
 
