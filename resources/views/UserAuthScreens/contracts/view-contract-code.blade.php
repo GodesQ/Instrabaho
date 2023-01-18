@@ -20,7 +20,7 @@
                             <div class="my-2" style="font-size: 20px;">
                                 Code : {{ $contract->code }}
                             </div>
-                            {{  QrCode::mergeString('/public/images/main-logo.png')->eyeColor(0, 5, 187, 255, 255, 120, 0)->eyeColor(1, 5, 187, 255, 255, 120, 0)->eyeColor(2, 5, 187, 255, 255, 120, 0)->style('round')->size(300)->generate($redirect_link); }}
+                            {{  QrCode::mergeString('/public/images/main-logo.png')->eyeColor(0, 5, 187, 255, 255, 120, 0)->eyeColor(1, 5, 187, 255, 255, 120, 0)->eyeColor(2, 5, 187, 255, 255, 120, 0)->style('round')->size(300)->generate($contract->code); }}
                         </div>
                     </div>
                 </div>

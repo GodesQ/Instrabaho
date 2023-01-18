@@ -13,6 +13,16 @@
         </script>
     @endpush
 @endif
+<style>
+    #reader__dashboard_section_csr button {
+        padding: 0.5rem 1rem;
+        background: #04bbff;
+        color: #fff;
+        font-weight: 500;
+        border: none;
+        border-radius: 5px;
+    }
+</style>
 
 <div class="page-wrapper">
     <div class="page-content">
@@ -49,9 +59,7 @@
             $('#code').val(qrCodeMessage);
             // $('#code-form').submit();
         }
-        function onScanError(errorMessage) {
-            //
-        }
+        function onScanError(errorMessage) {}
 
         var html5QrcodeScanner = new Html5QrcodeScanner( "reader", { fps: 10, qrbox: 250 });
         html5QrcodeScanner.render(onScanSuccess, onScanError);
