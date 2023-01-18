@@ -136,7 +136,7 @@
              </div>
             <div class="row">
                 @forelse ($projects as $project)
-                    <div class="col-xl-4 col-lg-6">
+                    <div class="col-xl-4 col-lg-6 my-3">
                         <a href="/projects/{{ $project->id }}/{{ $project->title }}">
                             <div class="px-3 py-4" style="box-shadow: 10px 10px 5px 0px rgba(181, 230, 250, 0.22);">
                                 <div class="d-flex justify-content-between align-items-start">
