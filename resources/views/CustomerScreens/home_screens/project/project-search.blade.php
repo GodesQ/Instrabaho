@@ -48,10 +48,10 @@
        </div>
     </div>
 </section> --}}
-<section class="fr-top-srvices section-padding ">
-    <div class="container">
+<section class="fr-top-srvices mt-5">
+    <div class="container-fluid">
        <div class="row">
-          <div class="col-xl-4 col-xs-12 col-sm-12 col-md-12">
+          <div class="col-xxl-3 col-xl-4 col-xs-12 col-sm-12 col-md-12">
              <div class="service-side position-sticky">
                 <div class="heading">
                    <h4>Search Filters</h4>
@@ -171,7 +171,7 @@
                 </div>
              </div>
           </div>
-          <div class="col-xl-8 col-xs-12 col-sm-12 col-md-12">
+          <div class="col-xxl-9 col-xl-8 col-xs-12 col-sm-12 col-md-12">
              <div class="row">
                 <div class="col-xl-12 col-xs-12 col-sm-12 col-md-12">
                    <div class="services-filter-2">

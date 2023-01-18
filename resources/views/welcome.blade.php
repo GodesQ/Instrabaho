@@ -138,42 +138,50 @@
                 @forelse ($projects as $project)
                     <div class="col-xl-4 col-lg-6">
                         <a href="/projects/{{ $project->id }}/{{ $project->title }}">
-                            <div class="d-flex justify-content-between align-items-start px-3 py-4" style="box-shadow: 10px 10px 5px 0px rgba(181, 230, 250, 0.22);">
-                                <div style="width: 25%">
-                                    <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 65px; height: 65px; border-radius: 50%;">
-                                </div>
-                                <div style="width: 75%" class="fr-project-content">
-                                    <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important; height: 100px; max-height: 150px;">
-                                        <h6 style="margin: 0 !important;">
-                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}" style="color: black; font-weight: 500; font-size: 15px;">{{ $project->title }}</a>
-                                        </h6>
-                                        <div style="color: rgb(99, 99, 99); padding: 0;">{{ $project->employer->user->firstname . ' ' . $project->employer->user->lastname }}</div>
+                            <div class="px-3 py-4" style="box-shadow: 10px 10px 5px 0px rgba(181, 230, 250, 0.22);">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div style="width: 30%">
+                                        @if ($project->employer->user->profile_image)
+                                            <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 65px; height: 65px; border-radius: 50%;">
+                                        @else
+                                            <img src="../../../images/user-profile.png" alt="" style="width: 65px; height: 65px; border-radius: 50%;">
+                                        @endif
 
-                                        {{-- <div class="my-2">
-                                            {{-- <div class="font-weight-medium"><i class="feather icon-target success"></i> Actively Looking for</div> --}}
-                                            {{-- <ul class="fr-project-skills" style="margin-top: 10px;">
-
-                                                <!-- convert the json array ids into model and get to fetch in blade -->
-                                                @php $project->setSkills(json_decode($project->skills)) @endphp
-                                                @php $project->getSkills() @endphp
-
-                                                @foreach($project->skills_name as $skill)
-                                                    <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
-                                                @endforeach
-                                            </ul>
-                                        </div> --}}
-                                        <div class="my-1 mt-3">
-                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}#fr-bid-form" class="btn btn-outline-primary">Apply Now</a>
+                                    </div>
+                                    <div style="width: 65%" class="fr-project-content">
+                                        <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important; min-height: 120px; max-height: 200px;">
+                                            <div style="margin: 0 !important;" class="h6">
+                                                <a href="/projects/{{ $project->id }}/{{ $project->title }}" style="color: black; font-weight: 500; font-size: 15px;">{{ strlen($project->title) > 40 ? substr($project->title, 0, 40) . '...' : $project->title }}</a>
+                                            </div>
+                                            <div style="color: rgb(99, 99, 99); padding: 0;">{{ $project->employer->user->firstname . ' ' . $project->employer->user->lastname }}</div>
+                                             <div class="my-2">
+                                                <div class="font-weight-medium"><i class="feather icon-target warning"></i> Actively Looking for</div>
+                                                <ul class="fr-project-skills">
+                                                    <!-- convert the json array ids into model and get to fetch in blade -->
+                                                    @foreach($project->project_skills as $skill)
+                                                        <li class="badge badge-warning p-50 my-50 font-weight-normal" style="background: #004E88 !important;">{{ $skill->skill_name }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div style="width: 5%;" class="d-flex justify-content-between flex-row">
+                                        <a href="" class="secondary h5"><i class="fa fa-bookmark"></i></a>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <a href="/projects/{{ $project->id }}/{{ $project->title }}" class="btn btn-outline-primary">Apply Now <i class="fa fa-send"></i></a>
                                 </div>
                             </div>
                         </a>
                     </div>
                 @empty
-
+                    <h2>No Available Projects For Now</h2>
                 @endforelse
             </div>
+          </div>
+          <div class="text-center mt-5">
+                <a href="/search_projects" class="primary text-underline">See all Available Projects</a>
           </div>
        </div>
     </div>
