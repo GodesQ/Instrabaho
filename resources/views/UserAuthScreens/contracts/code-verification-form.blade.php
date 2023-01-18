@@ -9,7 +9,7 @@
 @if (Session::get('fail'))
     @push('scripts')
         <script>
-            toastr.error('{{ Session::get("fail") }}', 'Failed');
+            toastr.warning('{{ Session::get("fail") }}', 'Warning');
         </script>
     @endpush
 @endif
@@ -50,7 +50,7 @@
             // $('#code-form').submit();
         }
         function onScanError(errorMessage) {
-            alert(errorMessage);
+            //
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner( "reader", { fps: 10, qrbox: 250 });
