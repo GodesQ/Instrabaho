@@ -27,7 +27,7 @@
                         <div class="d-flex justify-content-center align-items-center flex-column">
                             <img src="../../../images/logo/main-logo.png" alt="Instrabaho Logo" style="width: 70%;" class="img-responsive">
                             <div style="width:300px;" class="my-2" id="reader"></div>
-                            <form action="{{ route('contract.post_validate_code') }}" method="post" class="my-2">
+                            <form action="{{ route('contract.post_validate_code') }}" method="post" id="code-form" class="my-2">
                                 @csrf
                                 <div class="form-group">
                                     <input type="text" name="code" id="code" class="form-control" placeholder="Type the given code here.">
@@ -46,10 +46,11 @@
 @push('scripts')
     <script>
         function onScanSuccess(qrCodeMessage) {
-            console.log(qrCodeMessage);
+            $('#code').val(qrCodeMessage);
+            // $('#code-form').submit();
         }
         function onScanError(errorMessage) {
-            //handle scan error
+            alert(errorMessage);
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner( "reader", { fps: 10, qrbox: 250 });
