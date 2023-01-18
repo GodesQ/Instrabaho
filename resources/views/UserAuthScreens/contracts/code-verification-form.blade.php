@@ -57,7 +57,7 @@
     <script>
         function onScanSuccess(qrCodeMessage) {
             $('#code').val(qrCodeMessage);
-            // $('#code-form').submit();
+            $('#code-form').submit();
         }
         function onScanError(errorMessage) {}
 
