@@ -29,8 +29,8 @@ class HomeScreenController extends Controller
 {
 
     public function index() {
-        $freelancers = Freelancer::limit(10)->with('user')->get();
-        $projects = Project::where('status', 'pending')->limit(8)->with('category', 'employer')->latest('id')->get();
+        $freelancers = Freelancer::limit(8)->with('user')->get();
+        $projects = Project::where('status', 'pending')->limit(6)->with('category', 'employer')->latest('id')->get();
         return view('welcome', compact('freelancers', 'projects'));
     }
 

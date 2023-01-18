@@ -1,70 +1,51 @@
 @forelse($projects as $project)
-    <div class="col-xl-12 col-xs-12 col-lg-12 col-sm-12 col-md-12">
-        <div class="fr-right-detail-box">
-            <div class="fr-right-detail-content">
-                <div class="fr-right-details-products">
-                    @if($project->project_type == 'featured')
-                        <div class="features-star"><i class="fa fa-star" aria-hidden="true"></i></div>
+<div class="col-xxl-4 col-xl-6 col-md-6 my-2">
+    <a href="/projects/{{ $project->id }}/{{ $project->title }}">
+        <div class="px-3 py-4" style="box-shadow: 10px 10px 5px 0px rgba(181, 230, 250, 0.22);">
+            <div class="d-flex justify-content-between align-items-start">
+                <div style="width: 30%">
+                    @if ($project->employer->user->profile_image)
+                        <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 55px; height: 55px; border-radius: 50%;">
+                    @else
+                        <img src="../../../images/user-profile.png" alt="" style="width: 65px; height: 65px; border-radius: 50%;">
                     @endif
-                    <div class="fr-right-views">
-                        <ul>
-                        <li><span><a href="employer-detail.html"><i class="fa fa-check" aria-hidden="true"></i>{{ $project->employer->display_name }}</a></span> </li>
-                        </ul>
+                    {{-- <div class="d-flex">
+                        @for ($i = 0; $i < round($project->employer->rate); $i++)
+                            <i class="fas fa-star my-2" style="color: #04bbff !important; font-size: 9px;" aria-hidden="true"></i>
+                        @endfor
                     </div>
-                    <div class="fr-jobs-price">
-                        <div class="style-hd">
-                        <span class="style-6"><span class="currency">₱ </span><span class="price">{{ number_format($project->cost, 2) }}</span></span><small class="protip" data-pt-position="top" data-pt-scheme="black" data-pt-title=""><i class="far fa-question-circle" aria-hidden="true"></i></small>
+                    <div style="font-size: 9px;">{{ $project->employer->total_reviews }} Reviews</div> --}}
+                </div>
+                <div style="width: 65%" class="fr-project-content">
+                    <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important; min-height: 145px; max-height: 200px;">
+                        <div style="margin: 0 !important;" class="h6">
+                            <a href="/projects/{{ $project->id }}/{{ $project->title }}" style="color: black; font-weight: 500; font-size: 15px;">{{ strlen($project->title) > 40 ? substr($project->title, 0, 40) . '...' : $project->title }}</a>
                         </div>
-                        <p>({{ $project->project_cost_type }})</p>
+                        <div style="color: rgb(99, 99, 99); padding: 0;">
+                            {{ $project->employer->user->firstname . ' ' . $project->employer->user->lastname }}
+                        </div>
+                        <div  class="primary font-weight-normal">₱ {{ number_format($project->cost, 2) }} <span>({{ $project->project_cost_type }})</span></div>
+                         <div class="my-2">
+                            <div class="font-weight-medium"><i class="feather icon-target warning"></i> Actively Looking for</div>
+                            <ul class="fr-project-skills">
+                                <!-- convert the json array ids into model and get to fetch in blade -->
+                                @foreach($project->project_skills as $skill)
+                                    <li class="badge badge-warning p-50 my-50 font-weight-normal" style="background: #004E88 !important;">{{ $skill->skill_name }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
-                    <div class="fr-right-details2">
-                        <a href="/projects/{{ $project->id }}/{{ $project->title }}">
-                        <h3 title="{{ $project->title }}">{{ $project->title }}</h3>
-                        </a>
-                    </div>
-                    <div class="fr-right-product">
-                        <ul class="skills">
-                            {{-- <!-- convert the json array ids into model and get to fetch in blade -->
-                            @php $project->setSkills(json_decode($project->skills)) @endphp
-                            @php $project->getSkills() @endphp
-
-                            @foreach($project->skills_name as $skill)
-                                <li class=""><a href="#">{{ $skill->skill_name }}</a></li>
-                            @endforeach --}}
-                        </ul>
-                    </div>
-                    <div class="fr-right-index">
-                        <p>{{ substr($project->description, 0, 200) . '...' }}</p>
-                    </div>
+                </div>
+                <div style="width: 5%;" class="d-flex justify-content-between flex-row">
+                    <a href="" class="secondary h5"><i class="fa fa-bookmark"></i></a>
                 </div>
             </div>
-            <div class="fr-right-information">
-                <div class="fr-right-list" style="width: 80%">
-                    <ul>
-                        <li>
-                            <p class="heading font-weight-bold">Proposals</p>
-                            <span>1 Received</span>
-                        </li>
-                        <li>
-                            <p class="heading font-weight-bold">Location</p>
-                            <span>{{ substr($project->location, 0, 30) }}...</span>
-                        </li>
-                        @if($project->distance)
-                            <li>
-                                <p class="heading font-weight-bold">Distance</p>
-                                <span>{{ number_format($project->distance, 2) }} km</span>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-                <div class="fr-right-bid" style="width: 20%">
-                    <ul>
-                        <li><a href="/projects/{{ $project->id }}/{{ $project->title }}" class="btn btn-theme btn-theme-secondary text-right">View Project </a></li>
-                    </ul>
-                </div>
+            <div class="text-right">
+                <a href="/projects/{{ $project->id }}/{{ $project->title }}" class="btn btn-outline-primary">Apply Now <i class="fa fa-send"></i></a>
             </div>
         </div>
-    </div>
+    </a>
+</div>
  @empty
     <div class="card">
         <div class="card-body">

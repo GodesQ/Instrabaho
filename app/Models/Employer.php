@@ -9,7 +9,12 @@ class Employer extends Model
 {
     use HasFactory;
     protected $table = 'user_employer';
-    protected $guarded = []; 
+    protected $guarded = [];
+
+    protected $appends = [
+        'rate' => 'integer',
+        'total_reviews' => 'integer'
+    ];
 
     public function user() {
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -21,5 +26,31 @@ class Employer extends Model
 
     public function projects() {
         return $this->hasMany(Project::class, 'employer_id');
+    }
+
+    public function getRateAttribute()
+    {
+        return $this->rate();
+    }
+
+    public function getTotalReviewsAttribute() {
+        return $this->total_reviews();
+    }
+
+    public function rate() {
+
+        #sum of all rates
+        $sum_rate = EmployerReview::where('employer_id', $this->id)->sum('employer_rate');
+        # total of reviews
+        $total_of_reviews = EmployerReview::where('employer_id', $this->id)->count();
+
+        $average = $sum_rate == 0 ? 0 : $sum_rate / $total_of_reviews;
+
+        $total_average = number_format($average, 1);
+        return (float) number_format($total_average, 1);
+    }
+
+    public function total_reviews() {
+        return EmployerReview::where('employer_id', $this->id)->count();
     }
 }
