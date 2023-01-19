@@ -108,7 +108,7 @@ class Freelancer extends Model
         #sum of all rates
         $sum_rate = FreelancerReview::where('freelancer_id', $this->id)->sum('freelancer_rate');
         # total of reviews
-        $total_of_reviews = FreelancerReview::where('freelancer_id', $this->id)->count();
+        $total_of_reviews = $this->total_reviews();
 
         $average = $sum_rate == 0 ? 0 : $sum_rate / $total_of_reviews;
 

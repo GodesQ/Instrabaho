@@ -6,11 +6,13 @@
     <div class="page-wrapper">
         <div class="page-content">
             <div class="page-body">
-                <div class="page-header my-2">
-                    <h2 class="font-weight-bold">
-                        Completed Projects
-                    </h2>
-                </div>
+                @if ($completed_projects->count())
+                    <div class="page-header my-2">
+                        <h2 class="font-weight-bold">
+                            Completed Projects
+                        </h2>
+                    </div>
+                @endif
                 <div class="row">
                     @forelse ($completed_projects as $completed_project)
                         <div class="col-xxl-3 col-xl-4 col-lg-6">
@@ -31,10 +33,6 @@
                                         </span>
                                     </div>
                                     <p>{{ strlen($completed_project->project->description) > 100 ? substr($completed_project->project->description, 0, 100) . '...' : $completed_project->project->description }}</p>
-                                    {{-- <ul>
-                                        <li><i class="fa fa-calendar mr-1"></i> Start Date : <span class="font-weight-bold">{{ $proposal->contract->start_date ? $proposal->contract->start_date : 'No Start Date' }}</span></li>
-                                        <li><i class="fa fa-calendar mr-1"></i> End Date : <span class="font-weight-bold">{{ $proposal->contract->end_date ? $proposal->contract->end_date : 'No End Date' }}</span></li>
-                                    </ul> --}}
                                     <div class="text-right">
                                         <a href="/project/contract/view/{{ $completed_project->contract ? $completed_project->contract->id : null }}" class="info mx-50">View Contract</a>
                                         @if(!$completed_project->contract->is_freelancer_review)

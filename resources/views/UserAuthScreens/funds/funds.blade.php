@@ -134,7 +134,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 my-2">
                                                     <div class="row">
-                                                        <div class="col-xl-3 col-lg-4 col-md-4">
+                                                        <div class="col-xl-3 col-lg-3 col-md-4">
                                                             <div class="badge badge-secondary d-flex justify-content-between align-items-center p-1 px-2 my-2">
                                                                 <div>
                                                                     <h2 class="font-weight-bold">₱ {{ number_format($user->wallet->amount, 2) }}</h2>
@@ -155,69 +155,38 @@
                                                                 <h4 class="font-weight-bold">₱ 0.00</h4>
                                                             </div> --}}
                                                         </div>
-                                                        {{-- <div class="col-xl-9 col-lg-8 col-md-8">
-                                                            <div class="row">
-                                                                <div class="col-lg-6">
-                                                                    <div class="card" style="box-shadow: 1px 2px 3px rgba(87, 87, 87, 0.25) !important;">
-                                                                        <div class="card-header pb-50 border-bottom">
-                                                                            <div class="card-title"><i class="fa fa-circle primary mr-1 "></i> Income</div>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <h2 class="font-weight-bold">₱ <span class="h2">4032.00</span> <span>/ Month</span></h2>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="card" style="box-shadow: 1px 2px 3px rgba(87, 87, 87, 0.25) !important;">
-                                                                        <div class="card-header pb-50 border-bottom">
-                                                                            <div class="card-title"><i class="fa fa-circle warning mr-1 "></i> Spending</div>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <h2 class="font-weight-bold">₱ <span class="h2">816.00</span> <span>/ Month</span></h2>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                        <div class="col-xl-9 col-lg-9 col-md-8">
+                                                            <div class="container-fluid table-responsive">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <td>Transaction Code</td>
+                                                                            <td>Name of Transaction</td>
+                                                                            <td>Amount</td>
+                                                                            <td>Payment Method</td>
+                                                                            <td>Status</td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @forelse($transactions as $transaction)
+                                                                            <tr>
+                                                                                <td>{{ $transaction->transaction_code }}</td>
+                                                                                <td>{{ $transaction->name_of_transaction }}</td>
+                                                                                <td>{{ $transaction->amount }}</td>
+                                                                                <td>{{ $transaction->payment_method }}</td>
+                                                                                <td><div class="badge badge-{{ $transaction->status == 'succeeded' || $transaction->status == 'paid' ? 'success' : 'danger' }}">{{$transaction->status}}</div></td>
+                                                                            </tr>
+                                                                        @empty
+
+                                                                        @endforelse
+                                                                    </tbody>
+                                                                </table>
+                                                                {!! $transactions->links() !!}
                                                             </div>
-                                                        </div> --}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="card-title">
-                                            Transactions
-                                        </div>
-                                        <div class="container-fluid table-responsive">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <td>Transaction Code</td>
-                                                        <td>Name of Transaction</td>
-                                                        <td>Amount</td>
-                                                        <td>Payment Method</td>
-                                                        <td>Status</td>
-                                                        <td>Transaction Date</td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @forelse($transactions as $transaction)
-                                                        <tr>
-                                                            <td>{{ $transaction->transaction_code }}</td>
-                                                            <td>{{ $transaction->name_of_transaction }}</td>
-                                                            <td>{{ $transaction->amount }}</td>
-                                                            <td>{{ $transaction->payment_method }}</td>
-                                                            <td><div class="badge badge-{{ $transaction->status == 'succeeded' || $transaction->status == 'paid' ? 'success' : 'danger' }}">{{$transaction->status}}</div></td>
-                                                            <td>{{ date_format(new DateTime($transaction->created_at), "F d, Y") }}</td>
-                                                        </tr>
-                                                    @empty
-
-                                                    @endforelse
-                                                </tbody>
-                                            </table>
-                                            {!! $transactions->links() !!}
                                         </div>
                                     </div>
                                 </div>
@@ -375,3 +344,39 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(window).on("load", function(){
+
+            //Get the context of the Chart canvas element we want to select
+            var ctx = $("#funds-chart");
+
+            // Chart Options
+            var chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                responsiveAnimationDuration:500,
+
+            };
+            // Chart Data
+            var chartData = {
+                labels: ["Income", "Spending"],
+                datasets: [{
+                    label: "My First dataset",
+                    data: [65, 35],
+                    backgroundColor: ['#04BBFF', '#FF7E00'],
+                }]
+            };
+
+            var config = {
+                type: 'doughnut',
+                // Chart Options
+                options : chartOptions,
+                data : chartData,
+            };
+            // Create the chart
+            var doughnutSimpleChart = new Chart(ctx, config);
+        });
+    </script>
+@endpush

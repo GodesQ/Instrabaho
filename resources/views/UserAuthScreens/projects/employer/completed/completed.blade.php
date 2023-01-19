@@ -6,11 +6,13 @@
     <div class="page-wrapper">
         <div class="page-content">
             <div class="page-body">
-                <div class="page-header my-2">
-                    <h2 class="font-weight-bold">
-                        Completed Projects
-                    </h2>
-                </div>
+                @if ($completed_projects->count())
+                    <div class="page-header my-2">
+                        <h2 class="font-weight-bold">
+                            Completed Projects
+                        </h2>
+                    </div>
+                @endif
                 <div class="row">
                     @forelse ($completed_projects as $completed_project)
                         <div class="col-xxl-3 col-xl-4 col-lg-6">
