@@ -17,10 +17,6 @@
                                 @for ($i = 0; $i < round($freelancer->rate); $i++)
                                     <i class="fas fa-star" style="color: #04bbff !important; font-size: 9px;" aria-hidden="true"></i>
                                 @endfor
-                            @else
-                            {{-- @for ($i = 0; $i < 5; $i++)
-                                <i class="far fa-star" style="color: #04bbff !important; font-size: 8px;" aria-hidden="true"></i>
-                            @endfor --}}
                             @endif
                             <div class="font-weight-bold my-25" style="font-size: 9px;">( {{ ($freelancer->total_reviews) }} {{ $freelancer->total_reviews > 1 ? 'Reviews' : 'Review' }} )</div>
                         </div>

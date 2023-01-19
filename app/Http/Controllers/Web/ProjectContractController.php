@@ -68,31 +68,24 @@ class ProjectContractController extends Controller
 
     public function track(Request $request) {
         $contract = ProjectContract::where('id', $request->id)->with('project', 'proposal', 'tracker', 'freelancer', 'employer')->firstOrFail();
-        if(!$contract->is_verify_code) {
-            if(session()->get('role') == 'employer') {
-                $employer = Employer::where('id', $contract->employer_id)->first();
-                abort_if($employer->user_id != session()->get('id'), 403);
-                return redirect()->route('contract.validate_code', $contract->id)->with('fail', 'Verify First before continue.');
-            }
+        $role = session()->get('role');
 
-            if(session()->get('role') == 'freelancer') {
-                $freelancer = Freelancer::where('id', $contract->freelancer_id)->first();
-                abort_if($freelancer->user_id != session()->get('id'), 403);
-                return redirect()->route('contract.code', $contract->id)->with('fail', 'Verify First before continue.');
-            }
-        }
+        # define the user using role
+        $user_class = $role == 'employer' ? Employer::class : Freelancer::class;
+        $user_contract_id = $role == 'employer' ? $contract->employer_id : $contract->freelancer_id;
 
-        if(session()->get('role') == 'employer') {
-            $employer = Employer::where('id', $contract->employer_id)->first();
-            abort_if($employer->user_id != session()->get('id'), 403);
+        if($contract->is_verify_code) {
+            $user = $user_class::where('id', $user_contract_id)->first();
+            abort_if($user->user_id != session()->get('id'), 403);
             return view('UserAuthScreens.contracts.track-contract', compact('contract'));
         }
 
-        if(session()->get('role') == 'freelancer') {
-            $freelancer = Freelancer::where('id', $contract->freelancer_id)->first();
-            abort_if($freelancer->user_id != session()->get('id'), 403);
-            return view('UserAuthScreens.contracts.track-contract', compact('contract'));
-        }
+        $user = $user_class::where('id', $user_contract_id)->first();
+        abort_if($user->user_id != session()->get('id'), 403);
+
+        if($role == 'employer') return redirect()->route('contract.validate_code', $contract->id)->with('fail', 'Verify First before continue.');
+
+        return redirect()->route('contract.code', $contract->id)->with('fail', 'Verify First before continue.');
     }
 
     public function validate_code(Request $request) {
