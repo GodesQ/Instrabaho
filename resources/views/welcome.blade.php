@@ -247,11 +247,10 @@
                               </div>
                               <div class="d-flex justify-content-between align-items-center">
                                  <div>Starting from : <span class="info">₱ {{ number_format($freelancer->hourly_rate, 2) }}</span></div>
-                                 <div class="text-right">Reviews : 20</div>
+                                 <div class="text-right">Reviews : {{ $freelancer->total_reviews }}</div>
                               </div>
                            </div>
-                           <div class="mt-3 p-1 d-flex justify-content-around align-items-center flex-column" style="background: #f8f8f8 !important; height: 200px;">
-                              <p class="text-center">{{ strlen($freelancer->description) > 100 ? substr($freelancer->description, 0, 100) . '...' : $freelancer->description }}</p>
+                           <div class="mt-3 p-1 d-flex justify-content-around align-items-center flex-column" style="background: #f8f8f8 !important; height: 100px;">
                               <div class="container-fluid">
                                     <a href="/freelancers/{{ $freelancer->user->username }}" class="btn btn-outline-primary" style="width: 100% !important;">My Profile</a>
                                     <button class="btn btn-primary mt-2" style="width: 100% !important;">Send Offer</button>
