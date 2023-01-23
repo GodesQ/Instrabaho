@@ -112,7 +112,7 @@ $(document).ready(function() {
 
             (function (marker, data) {
                     google.maps.event.addListener(marker, "click", function (e) {
-                    infoWindow.setContent(`<a href="/project/view/${data.id}" class="font-weight-bold">${data.title}</a><br>
+                    infoWindow.setContent(`<a href="/projects/${data.id}/${data.title}" class="font-weight-bold">${data.title}</a><br>
                         ${data.location}`);
                     infoWindow.open(map, marker);
                     });
