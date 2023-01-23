@@ -11,10 +11,7 @@ class Employer extends Model
     protected $table = 'user_employer';
     protected $guarded = [];
 
-    protected $appends = [
-        'rate' => 'integer',
-        'total_reviews' => 'integer'
-    ];
+    protected $appends = ['rate', 'total_reviews'];
 
     public function user() {
         return $this->hasOne(User::class, 'id', 'user_id');
