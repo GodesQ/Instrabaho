@@ -12,10 +12,7 @@ class Freelancer extends Model
     protected $table = 'user_freelancer';
     protected $guarded = [];
 
-    protected $casts = [
-        'user_id' => 'integer',
-        'hourly_rate' => 'integer',
-    ];
+    protected $casts = ['user_id', 'hourly_rate'];
 
     protected $appends = ['rate', 'total_reviews'];
 
