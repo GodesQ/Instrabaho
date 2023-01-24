@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', 'Freelancer Search')
+
 @section('content')
     <section class="fr-lance-details" style="padding: 25px !important;">
         <div class="container-fluid">

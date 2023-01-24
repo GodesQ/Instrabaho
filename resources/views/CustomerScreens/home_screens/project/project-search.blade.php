@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', 'Project Search')
+
 @section('content')
 
 @if(Session::get('fail'))

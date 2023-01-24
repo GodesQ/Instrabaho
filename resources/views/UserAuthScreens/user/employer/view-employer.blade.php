@@ -1,7 +1,10 @@
 @extends('layout.layout')
 
-@section('content')
+@section('title')
+    {{ $employer->display_name }}
+@endsection
 
+@section('content')
 @if(Session::get('success'))
 	@push('scripts')
 		<script>
