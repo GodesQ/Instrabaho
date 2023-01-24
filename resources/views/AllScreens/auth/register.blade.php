@@ -1,4 +1,5 @@
 @extends('layout.layout')
+    @section('title', 'Register')
     @section('content')
 		<section class="fr-sign-in-hero">
             <div class="row">
