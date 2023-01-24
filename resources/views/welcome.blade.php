@@ -219,14 +219,18 @@
           <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
              <div class="heading-panel  section-center">
                 <div class="heading-meta">
-                   <h2>TOP RATED SKILLED WORKERS</h2>
+                   <h2>TOP SKILLED WORKERS</h2>
                    <p>Work with skilled people at the most affordable price to get your job done</p>
                 </div>
              </div>
              <div class="row grid">
                @forelse($freelancers as $freelancer)
                   <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                     <div class="fr-latest-grid">
+                     <div class="fr-latest-grid py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6>₱ {{ number_format($freelancer->hourly_rate, 2) }}</h6>
+                            <a href="" class="secondary h5"><i class="fa fa-bookmark"></i></a>
+                        </div>
                         <div class="fr-latest-img d-flex justify-content-center">
                             @if ($freelancer->user->profile_image)
                                 <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}" class="rounded" alt="" style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
@@ -235,26 +239,55 @@
                             @endif
                         </div>
                         <div class="fr-latest-details">
-                           <div class="fr-latest-content-service">
-                              <div class="fr-latest-profile">
+                           <div class="fr-latest-content-service" style="min-height: 130px;">
+                              <div class="">
                                  <a class="user-image" href="/freelancers/{{ $freelancer->user->username }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a>
                                  <div class=" text-center">
-                                    {{-- <span class="fr-latest-name">{{ $freelancer->tagline }}</span> --}}
                                     <h5>
                                        <a href="/freelancers/{{ $freelancer->user->username }}" class="h5">{{ $freelancer->user->firstname . ' ' . $freelancer->user->lastname }}</a>
                                     </h5>
                                  </div>
                               </div>
-                              <div class="d-flex justify-content-between align-items-center">
-                                 <div>Starting from : <span class="info">₱ {{ number_format($freelancer->hourly_rate, 2) }}</span></div>
-                                 <div class="text-right">Reviews : {{ $freelancer->total_reviews }}</div>
+                              <div class="text-center">
+                                @if($freelancer->rate)
+                                    <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
+                                    @for ($i = 0; $i < round($freelancer->rate); $i++)
+                                        <i class="fas fa-star" style="color: #04bbff !important; font-size: 12px;" aria-hidden="true"></i>
+                                        @if($i == 1)
+                                            @break
+                                        @endif
+                                    @endfor
+
+                                @else
+                                    <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <i class="far fa-star" style="color: #04bbff !important; font-size: 12px;" aria-hidden="true"></i>
+                                    @endfor
+                                @endif
                               </div>
+                                <div class="mt-2">
+                                    <ul class="fr-project-skills text-center">
+                                        <!-- convert the json array ids into model and get to fetch in blade -->
+                                        @forelse($freelancer->skills as $skill)
+                                            <li class="badge p-50 my-50 font-weight-normal border-primary" style="background: none !important; color: #000;">{{ $skill->skill->skill_name }}</li>
+                                        @empty
+                                            <li class="badge p-50 my-50 font-weight-normal border-primary" style="background: none !important; color: #000;">No Skills Found</li>
+                                        @endforelse
+                                    </ul>
+                                </div>
                            </div>
-                           <div class="mt-3 p-1 d-flex justify-content-around align-items-center flex-column" style="background: #f8f8f8 !important; height: 100px;">
-                              <div class="container-fluid">
-                                    <a href="/freelancers/{{ $freelancer->user->username }}" class="btn btn-outline-primary" style="width: 100% !important;">My Profile</a>
-                                    <button class="btn btn-primary mt-2" style="width: 100% !important;">Send Offer</button>
-                              </div>
+
+                           <div class="mt-3">
+                                <div class="p-3 rounded" style="background: rgb(236, 236, 236) !important;">
+                                    <div class="row justify-content-center">
+                                        <div class="col-6">
+                                            <a href="/freelancers/{{ $freelancer->user->username }}" class="btn" style="width: 100% !important; background: #fff;">View Profile </a>
+                                        </div>
+                                        <div class="col-6">
+                                            <button class="btn btn-primary" style="width: 100% !important;">Send Offer </button>
+                                        </div>
+                                    </div>
+                                </div>
                            </div>
                         </div>
                      </div>
