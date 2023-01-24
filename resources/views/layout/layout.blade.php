@@ -3,13 +3,10 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-            name="description"
-            content="Instrabaho is a community where you can post a project if you are an employer or you may post service if you are a freelancer. This initiative is to help"
-        />
-        <meta name="author" content="" />
-        <meta name="generator" content="Hugo 0.83.1" />
-        <title>INSTRABAHO</title>
+        <meta name="description" content="Instrabaho is a community where you can post a project if you are an employer or you may post service if you are a freelancer. This initiative is to help" />
+        <meta name="author" content="GODESQ DIGITAL MARKERTING SERVICES" />
+        <meta name="generator" content="INSTRABAHO" />
+        <title>@yield('title')</title>
 
 
 		<!-- BEGIN: Vendor CSS-->

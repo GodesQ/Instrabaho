@@ -1,4 +1,5 @@
 @extends('layout.layout')
+@section('title', 'INSTRABAHO - HOME')
 
 @section('content')
 @if(Session::get('success'))
@@ -252,10 +253,7 @@
                                 @if($freelancer->rate)
                                     <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
                                     @for ($i = 0; $i < round($freelancer->rate); $i++)
-                                        <i class="fas fa-star" style="color: #04bbff !important; font-size: 12px;" aria-hidden="true"></i>
-                                        @if($i == 1)
-                                            @break
-                                        @endif
+                                            <i class="fas fa-star" style="color: #04bbff !important; font-size: 12px;" aria-hidden="true"></i>
                                     @endfor
 
                                 @else
@@ -268,8 +266,11 @@
                                 <div class="mt-2">
                                     <ul class="fr-project-skills text-center">
                                         <!-- convert the json array ids into model and get to fetch in blade -->
-                                        @forelse($freelancer->skills as $skill)
+                                        @forelse($freelancer->skills as $key => $skill)
                                             <li class="badge p-50 my-50 font-weight-normal border-primary" style="background: none !important; color: #000;">{{ $skill->skill->skill_name }}</li>
+                                            @if($key == 1)
+                                                @break
+                                            @endif
                                         @empty
                                             <li class="badge p-50 my-50 font-weight-normal border-primary" style="background: none !important; color: #000;">No Skills Found</li>
                                         @endforelse

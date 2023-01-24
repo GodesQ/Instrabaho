@@ -1,5 +1,7 @@
 @extends("layout.layout")
 
+@section('title', 'Process')
+
 @section('content')
 <section class="fr-list-product bg-img">
     <div class="container">

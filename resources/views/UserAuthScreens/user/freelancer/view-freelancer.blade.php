@@ -1,5 +1,9 @@
 @extends('layout.layout')
 
+@section('title')
+    {{ $freelancer->display_name }}
+@endsection
+
 @section('content')
 
 @if(Session::get('success'))
