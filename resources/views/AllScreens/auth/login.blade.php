@@ -1,4 +1,5 @@
 @extends('layout.layout')
+@section('title', 'Login')
 @section('content')
 
     @if(Session::get('success'))
