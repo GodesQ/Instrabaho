@@ -108,8 +108,6 @@ $(document).ready(function() {
                 labelInBackground: true
             });
 
-
-
             (function (marker, data) {
                     google.maps.event.addListener(marker, "click", function (e) {
                     infoWindow.setContent(`<a href="/projects/${data.id}/${data.title}" class="font-weight-bold">${data.title}</a><br>
