@@ -205,15 +205,14 @@
                                 class="img-fluid"
                             />
                             <p>
-                                A modern user-focused, premium freelance
-                                marketplace WordPress Theme, developed using
-                                best practices from the market.
+                                Instrabaho is a community where you can post a project if you are an employer or you may post service if you are a freelancer.
+                                This initiative is to help people who lose their job during the time of the pandemic.
                             </p>
                         </div>
                         <div class="fr-footer-icons">
                             <ul>
                                 <li>
-                                    <a href="about-us.html"
+                                    <a href="#"
                                         ><i
                                             class="fab fa-facebook-f"
                                             aria-hidden="true"
@@ -221,7 +220,7 @@
                                     ></a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html"
+                                    <a href="#"
                                         ><i
                                             class="fab fa-twitter"
                                             aria-hidden="true"
@@ -229,7 +228,7 @@
                                     ></a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html"
+                                    <a href="#"
                                         ><i
                                             class="fab fa-linkedin-in"
                                             aria-hidden="true"
@@ -237,7 +236,7 @@
                                     ></a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html"
+                                    <a href="#"
                                         ><i
                                             class="fab fa-youtube"
                                             aria-hidden="true"
@@ -245,7 +244,7 @@
                                     ></a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html"
+                                    <a href="#"
                                         ><i
                                             class="fab fa-instagram"
                                             aria-hidden="true"
@@ -259,17 +258,17 @@
                         class="col-xxl-3 col-lg-4 col-xl-3 col-xs-12 col-sm-6 col-md-4"
                     >
                         <div class="fr-footer-content">
-                            <h3 class="fr-style-8">Job Locations</h3>
+                            <h3 class="fr-style-8">Top Job Locations</h3>
                             <ul>
                                 <li>
-                                    <a href="search-page.html">Arad, Bahrain</a>
+                                    <a href="#">Manila</a>
                                 </li>
                                 <li>
-                                    <a href="search-page.html">Australia</a>
+                                    <a href="#">Quezon City</a>
                                 </li>
-                                <li><a href="search-page.html">Bahrain</a></li>
-                                <li><a href="search-page.html">Muharraq</a></li>
-                                <li><a href="search-page.html">Germany</a></li>
+                                <li><a href="#">Rizal</a></li>
+                                <li><a href="#">Cebu</a></li>
+                                <li><a href="#">Davao</a></li>
                             </ul>
                         </div>
                     </div>
@@ -277,17 +276,17 @@
                         class="col-xxl-3 col-lg-4 col-xl-3 col-xs-12 col-sm-6 col-md-4"
                     >
                         <div class="fr-footer-content">
-                            <h3 class="fr-style-8">Services Locations</h3>
+                            <h3 class="fr-style-8">Top Jobs Offer</h3>
                             <ul>
-                                <li><a href="search-page.html">Pakistan</a></li>
-                                <li><a href="search-page.html">Germany</a></li>
+                                <li><a href="#">Plumbing</a></li>
+                                <li><a href="#">Technician</a></li>
                                 <li>
-                                    <a href="search-page.html">Australia</a>
+                                    <a href="#">Welder</a>
                                 </li>
                                 <li>
-                                    <a href="search-page.html">California</a>
+                                    <a href="#">Cook</a>
                                 </li>
-                                <li><a href="search-page.html">Hamburg</a></li>
+                                <li><a href="#">Carpenter</a></li>
                             </ul>
                         </div>
                     </div>
@@ -297,18 +296,17 @@
                         <div class="fr-footer-content">
                             <h3 class="fr-style-8">Most Visited Links</h3>
                             <ul>
-                                <li><a href="search-page.html">Blog</a></li>
-                                <li><a href="search-page.html">About Us</a></li>
+                                <li><a href="#">About Us</a></li>
                                 <li>
-                                    <a href="search-page.html">Services Search</a>
+                                    <a href="/search_projects">Projects Search</a>
                                 </li>
                                 <li>
-                                    <a href="search-page.html"
-                                        >Freelancer Search</a
+                                    <a href="/search_freelancers"
+                                        >Freelancers Search</a
                                     >
                                 </li>
                                 <li>
-                                    <a href="search-page.html"
+                                    <a href="#"
                                         >Terms and Conditions</a
                                     >
                                 </li>
@@ -319,8 +317,8 @@
             </div>
             <div class="fr-bottom">
                 <p>
-                    Copyright 2021 ©
-                    <a href="https://scriptsbundle.com">Instrabaho</a>, All
+                    Copyright 2023 ©
+                    <a href="https://instrabaho.com">Instrabaho</a>, All
                     Rights Reserved.
                 </p>
             </div>
