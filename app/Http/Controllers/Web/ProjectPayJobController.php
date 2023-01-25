@@ -163,7 +163,6 @@ class ProjectPayJobController extends Controller
                         'transaction_code' => $create_transaction->transaction_code,
                         'employer_total' => $employer_total_cost,
                         'freelancer_total' => $total,
-                        'status' => 'paid',
                     ]);
                 }
 

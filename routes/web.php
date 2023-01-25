@@ -102,29 +102,6 @@ use App\Events\ProjectMessageEvent;
         session()->put('evt_id', $evt);
     });
 
-    Route::get('/allwebhooks', function(Request $request) {
-        // $webhook = Paymongo::webhook()->create([
-        //     'url' => 'http://127.0.0.1:8000/webhooks',
-        //     'events' => [
-        //         'source.chargeable',
-        //         'payment.paid',
-        //         'payment.failed'
-        //     ]
-        // ]);
-
-        // $webhook = Paymongo::webhook()->find('hook_3G54foSjYh7Qz3nbyUn7u8XY')->update([
-        //     'url' => 'http://127.0.0.1:8000/webhooks'
-        // ]);
-
-        $webhook = Paymongo::webhook()->all();
-        dd($webhook);
-        // Enable webhook
-        // $webhook = Paymongo::webhook()->find('hook_3G54foSjYh7Qz3nbyUn7u8XY')->enable();
-
-        // Disable webhook
-        // $webhook = Paymongo::webhook()->find('hook_3G54foSjYh7Qz3nbyUn7u8XY')->disable();
-    });
-
     /*
     |--------------------------------------------------------------------------
     | PROTECTED Routes

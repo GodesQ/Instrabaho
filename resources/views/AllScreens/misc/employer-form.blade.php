@@ -1,4 +1,5 @@
 @extends('layout.layout')
+@section('title', 'Employer Account Form')
 
 @section('content')
 

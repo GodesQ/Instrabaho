@@ -174,7 +174,7 @@
                                                                                 <td>{{ $transaction->name_of_transaction }}</td>
                                                                                 <td>{{ $transaction->amount }}</td>
                                                                                 <td>{{ $transaction->payment_method }}</td>
-                                                                                <td><div class="badge badge-{{ $transaction->status == 'succeeded' || $transaction->status == 'paid' ? 'success' : 'danger' }}">{{$transaction->status}}</div></td>
+                                                                                <td><div class="badge badge-{{ $transaction->status == 'succeeded' || $transaction->status == 'paid' || $transaction->status == 'success' ? 'success' : 'danger' }}">{{$transaction->status}}</div></td>
                                                                             </tr>
                                                                         @empty
 

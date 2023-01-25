@@ -1,4 +1,6 @@
 @extends('layout.layout')
+
+@section('title', 'Forgot Password Form')
 @section('content')
 
     @if(Session::get('success'))

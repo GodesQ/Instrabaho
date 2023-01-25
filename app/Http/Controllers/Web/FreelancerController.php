@@ -75,7 +75,7 @@ class FreelancerController extends Controller
         $recent_projects = ProjectContract::where('freelancer_id', $freelancer->id)
         ->with('project', 'proposal')
         ->whereHas('project', function($q) {
-            return $q->where('status', 'completed');
+                return $q->completed();
         })->limit(5)->get();
 
         $projects_schedule_week = ProjectContract::where('freelancer_id', $freelancer->id)
@@ -84,7 +84,7 @@ class FreelancerController extends Controller
                     )
         ->with('project', 'proposal')
         ->whereHas('project', function($q) {
-            return $q->where('status', 'approved');
+            return $q->approved();
         })
         ->limit(5)
         ->get();
@@ -102,6 +102,7 @@ class FreelancerController extends Controller
             + sin(radians(" .$freelancer->latitude. "))
             * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $freelancer->id)->where('status', 'pending');
         })
+        ->pending()
         ->with('category', 'employer')
         ->latest('id')
         ->get(10);
@@ -122,11 +123,11 @@ class FreelancerController extends Controller
         $request->validate([
             'gender' => 'required|in:Male,Female',
         ]);
+
         $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
         $freelancer = Freelancer::where('user_id', $request->id)->first();
 
         $freelancer->update($data);
-
         $freelancer->user()->update([
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,

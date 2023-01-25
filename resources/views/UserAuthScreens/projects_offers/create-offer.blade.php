@@ -1,5 +1,9 @@
 @extends('layout.layout')
 
+@section('title')
+    Send offer to {{ $freelancer->display_name }}
+@endsection
+
 @section('content')
 
 <style>

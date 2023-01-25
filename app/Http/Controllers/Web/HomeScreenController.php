@@ -193,10 +193,6 @@ class HomeScreenController extends Controller
 
     public function project(Request $request) {
         $project =  Project::where('title', $request->title)->with('employer', 'category')->firstOrFail();
-        $project->setSkills($project->skills);
-        $project->getSkills();
-        $skills_array = Skill::whereIn('id', $project->skills)->get();
-
         # if the user is login as freelancer
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
 
@@ -214,7 +210,7 @@ class HomeScreenController extends Controller
         $ip = $request->ip();
         $currentUserInfo = Location::get();
         # get all freelancers and create pagination
-        $freelancers = Freelancer::select('*')->paginate(10);
+        $freelancers = Freelancer::select('*')->paginate(9);
         return view('CustomerScreens.home_screens.freelancer.freelancer-search', compact('freelancers', 'skills'));
     }
 
@@ -248,7 +244,7 @@ class HomeScreenController extends Controller
         })
 
         ->with('user', 'certificates', 'experiences', 'educations', 'skills', 'services')
-        ->paginate($result);
+        ->paginate(9);
 
         $view_data = view('CustomerScreens.home_screens.freelancer.freelancers', compact('freelancers'))->render();
 
