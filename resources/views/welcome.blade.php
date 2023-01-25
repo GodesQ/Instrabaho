@@ -143,14 +143,13 @@
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div style="width: 30%">
                                         @if ($project->employer->user->profile_image)
-                                            <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 65px; height: 65px; border-radius: 50%;">
+                                            <img class="" src="../../../images/user/profile/{{ $project->employer->user->profile_image }}" alt="profile image" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover;">
                                         @else
                                             <img src="../../../images/user-profile.png" alt="" style="width: 65px; height: 65px; border-radius: 50%;">
                                         @endif
-
                                     </div>
                                     <div style="width: 65%" class="fr-project-content">
-                                        <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important; min-height: 120px; max-height: 200px;">
+                                        <div class="fr-project-f-des" style="background: transparent !important; padding: 0 !important; min-height: 125px; max-height: 200px;">
                                             <div style="margin: 0 !important;" class="h6">
                                                 <a href="/projects/{{ $project->id }}/{{ $project->title }}" style="color: black; font-weight: 500; font-size: 15px;">{{ strlen($project->title) > 40 ? substr($project->title, 0, 40) . '...' : $project->title }}</a>
                                             </div>
@@ -167,7 +166,7 @@
                                         </div>
                                     </div>
                                     <div style="width: 5%;" class="d-flex justify-content-between flex-row">
-                                        <a href="" class="secondary h5"><i class="fa fa-bookmark"></i></a>
+                                        <a href="" class="secondary h5"><i class="far fa-bookmark primary"></i></a>
                                     </div>
                                 </div>
                                 <div class="text-right">
@@ -220,7 +219,7 @@
           <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
              <div class="heading-panel  section-center">
                 <div class="heading-meta">
-                   <h2>TOP SKILLED WORKERS</h2>
+                   <h2>OUR SKILLED WORKERS</h2>
                    <p>Work with skilled people at the most affordable price to get your job done</p>
                 </div>
              </div>
@@ -230,7 +229,7 @@
                      <div class="fr-latest-grid py-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h6>₱ {{ number_format($freelancer->hourly_rate, 2) }}</h6>
-                            <a href="" class="secondary h5"><i class="fa fa-bookmark"></i></a>
+                            <a href="" class="secondary h5"><i class="far fa-bookmark primary"></i></a>
                         </div>
                         <div class="fr-latest-img d-flex justify-content-center">
                             @if ($freelancer->user->profile_image)
@@ -267,7 +266,7 @@
                                     <ul class="fr-project-skills text-center">
                                         <!-- convert the json array ids into model and get to fetch in blade -->
                                         @forelse($freelancer->skills as $key => $skill)
-                                            <li class="badge p-50 my-50 font-weight-normal border-primary" style="background: none !important; color: #000;">{{ $skill->skill->skill_name }}</li>
+                                            <li class="badge badge-warning p-50 my-50 font-weight-normal" style="background: #004E88 !important;">{{ $skill->skill->skill_name }}</li>
                                             @if($key == 1)
                                                 @break
                                             @endif
@@ -299,6 +298,9 @@
             </div>
          </div>
        </div>
+        <div class="text-center mt-2">
+            <a href="/search_freelancers" class="primary text-underline">See all Available Workers</a>
+        </div>
     </div>
  </section>
 
