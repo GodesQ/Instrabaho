@@ -165,7 +165,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-5">
-                    <a href="/search_projects" class="primary text-underline">See all Available Projects</a>
+                    <a href="/search_projects" class="primary text-underline">View all Available Projects</a>
                 </div>
             </div>
         </div>
@@ -301,7 +301,7 @@
             </div>
         </div>
         <div class="text-center mt-2">
-            <a href="/search_freelancers" class="primary text-underline">See all Available Workers</a>
+            <a href="/search_freelancers" class="primary text-underline">View all Available Workers</a>
         </div>
     </div>
 </section>
