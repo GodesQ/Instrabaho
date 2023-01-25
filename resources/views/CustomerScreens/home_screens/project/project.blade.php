@@ -1,5 +1,7 @@
 @extends('layout.layout')
-
+@section('title')
+    {{ $project->title }}
+@endsection
 @section('content')
 
 @if(Session::get('success'))

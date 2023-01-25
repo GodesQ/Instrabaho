@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div style="width: 5%;" class="d-flex justify-content-between flex-row">
-                    <a href="" class="secondary h5"><i class="fa fa-bookmark"></i></a>
+                    <a href="" class="secondary h5"><i class="far fa-bookmark primary"></i></a>
                 </div>
             </div>
             <div class="text-right">
