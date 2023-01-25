@@ -88,21 +88,7 @@
        </div>
     </div>
 </section>
- <div class="section-padding-extra text-center call-actionz">
-     <div class="container">
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-               <div class="parallex-text">
-                  <h5>Since the Start </h5>
-                  <h4>We Provide Stable Service With Experts</h4>
-                  <p>Freelancers around the globe, are looking for work and provide the best they have. Start now </p>
-                  <a href="project-details.html" class="btn btn-theme-secondary">View Projects</a>
-                  <a href="services-details-page.html" class="btn btn-theme">Post a Service</a>
-               </div>
-            </div>
-         </div>
-     </div>
- </div>
+
  <!-- <section class="text-center text-center-padding">
     <div class="container">
        <div class="row ">

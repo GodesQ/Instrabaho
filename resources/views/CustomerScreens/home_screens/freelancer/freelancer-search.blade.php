@@ -3,7 +3,7 @@
 @section('title', 'Freelancer Search')
 
 @section('content')
-    <section class="fr-lance-details" style="padding: 25px !important;">
+    <section class="fr-lance-details">
         <div class="container-fluid">
             <div class="row my-3 align-items-center">
                 <div class="my-1 col-md-3">
