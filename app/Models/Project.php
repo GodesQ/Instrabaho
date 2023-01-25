@@ -23,13 +23,16 @@ class Project extends Model
         'skills' => 'array'
     ];
 
-    public function getSkills() {
-        return $this->skills_name;
+    public function scopeCompleted($query) {
+        return $query->where('status', 'completed');
     }
 
-    public function setSkills($value) {
-        $skills = Skill::whereIn('id', $value)->get('skill_name');
-        return $this->skills_name = $skills;
+    public function scopeApproved($query) {
+        return $query->where('status', 'approved');
+    }
+
+    public function scopePending($query) {
+        return $query->where('status', 'pending');
     }
 
     public function employer() {
@@ -44,9 +47,9 @@ class Project extends Model
         return $this->hasOne(ProjectContract::class, 'project_id', 'id');
     }
 
-    public function skills() {
-        return $this->belongsToMany(Skill::class, 'skills');
-    }
+    // public function skills() {
+    //     return $this->belongsToMany(Skill::class, 'skills');
+    // }
 
     public function getProjectSkillsAttribute()
     {

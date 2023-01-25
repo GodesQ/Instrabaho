@@ -26,7 +26,7 @@ class PayJobRequest extends FormRequest
         return [
             'job_cost' => 'required|numeric',
             'system_deduction' => 'required|numeric',
-            'total' => 'required|numeric',
+            'total' => 'nullable|numeric',
             'employer_id' => 'required|numeric',
             'freelancer_id' => 'required|numeric',
             'payment_method' => 'required',

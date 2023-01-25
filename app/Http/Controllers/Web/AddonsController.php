@@ -43,16 +43,16 @@ class AddonsController extends Controller
                 'user_role_id' => $freelancer->id,
         ]));
 
-        if($user_type == 'admin' && $save) return redirect()->route('admin.addons')->with('success', 'Addon Created Successfully');
-        if($save) {
-            return redirect()->route('freelancer.addons.index')->with('success','Addons Added Successfully');
-        }
+        if(!$save) return back()->with('fail', 'Something went wrong;');
+
+        if($user_type == 'admin') return redirect()->route('admin.addons')->with('success', 'Addon Created Successfully');
+
+        return redirect()->route('freelancer.addons.index')->with('success','Addons Added Successfully');
     }
 
-    public function edit(Request $request) {
-        $id = $request->id;
-        $addon = Addon::where('id', $request->id)->first();
-       return view('UserAuthScreens.addons.edit-addon', compact('addon'));
+    public function edit(Request $request, Addon $id) {
+        $addon = $id;
+        return view('UserAuthScreens.addons.edit-addon', compact('addon'));
     }
 
     public function update(UpdateAddonRequest $request) {
@@ -73,8 +73,6 @@ class AddonsController extends Controller
             ]);
         }
     }
-
-    // ADMIN CRUD
 
     public function admin_index() {
         return view('AdminScreens.addons.addons');

@@ -58,7 +58,7 @@ class AuthController extends Controller
     }
 
     public function register() {
-        if(Auth::guard('user')->user()) return redirect('/');
+        if(session()->get('role') && session()->get('id')) return redirect('/');
         return view('AllScreens.auth.register');
     }
 
@@ -77,9 +77,8 @@ class AuthController extends Controller
         ];
 
         // SEND EMAIL FOR VERIFICATION
-        Mail::to($request->email)->send(new VerifyAccount($details));
-
-        if($save)  return redirect('/verify-message');
+         Mail::to($request->email)->send(new VerifyAccount($details));
+        if($save) return redirect('/verify-message');
     }
 
     public function verify_email(Request $request)

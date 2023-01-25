@@ -1,4 +1,5 @@
 @extends('layout.layout')
+@section('title', 'Freelancer Account Form')
 
 @section('content')
 
