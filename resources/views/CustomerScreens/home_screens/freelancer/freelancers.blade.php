@@ -3,7 +3,7 @@
         <div class="col-xs-12 col-lg-4 col-sm-6 col-md-6 col-xxl-4 grid-item">
             <div class="fr-latest-grid py-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h6>₱ {{ number_format($freelancer->hourly_rate, 2) }}</h6>
+                        <h6>₱ {{ number_format($freelancer->hourly_rate, 2) }}</h6>
                     <a href="" class="secondary h5"><i class="far fa-bookmark primary"></i></a>
                 </div>
                 <div class="fr-latest-img d-flex justify-content-center">
@@ -34,6 +34,7 @@
                                     <i class="fas fa-star" style="color: #04bbff !important; font-size: 12px;"
                                         aria-hidden="true"></i>
                                 @endfor
+
                             @else
                                 <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
                                 @for ($i = 0; $i < 5; $i++)
@@ -57,6 +58,9 @@
                                     Found</li>
                             @endforelse
                         </ul>
+                        @if($freelancer->distance)
+                            <h6 class="font-weight-bold text-center my-1" style="font-size: 12px;"><i class="fas fa-map-marker"></i> Distance : {{ number_format($freelancer->distance, 2) }} km</h6>
+                        @endif
                     </div>
                 </div>
 

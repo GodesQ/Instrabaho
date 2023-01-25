@@ -317,7 +317,7 @@ address = document.querySelector('#address');
                 (function (marker, data) {
                         google.maps.event.addListener(marker, "click", function (e) {
                         infoWindow.setContent(`
-                            <div class="d-flex justify-content-around" style="max-width: 225px; width: 190px; height: 70px; max-height: 70px;">
+                            <div class="d-flex justify-content-around" style="max-width: 225px; width: 180px; height: 70px; max-height: 70px;">
                                 <a style="width: 40%; height: 100%;" href="/freelancers/${data.user.username}">
                                     <img src="${data.user.profile_image ?  `../../../images/user/profile/${data.user.profile_image}` : '../../../images/user-profile.png' }" style="width: 100%; height: 100%; object-fit: cover;" />
                                 </a>
