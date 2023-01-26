@@ -3,6 +3,7 @@ var latEl, longEl, address, my_marker, circle;
 
 latEl = document.querySelector( '.latitude' )
 longEl = document.querySelector( '.longitude' )
+currentLocationButton = document.getElementById( 'get-current-location' )
 address = document.querySelector('#address');
 
 
@@ -347,6 +348,40 @@ address = document.querySelector('#address');
 
             infoWindow.open( map, marker );
         }
+
+        currentLocationButton.addEventListener('click', (e) => {
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(function(position){
+                    var currentLatitude = position.coords.latitude;
+                    var currentLongitude = position.coords.longitude;
+                    var infoWindowHTML = "Latitude: " + currentLatitude + "<br>Longitude: " + currentLongitude;
+                    var infoWindow = new google.maps.InfoWindow({map: map, content: infoWindowHTML});
+                    var currentLocation = { lat: currentLatitude, lng: currentLongitude };
+                    // infoWindow.setPosition(currentLocation);
+                    my_marker.setPosition(currentLocation);
+                    map.setZoom( 15 );
+                    var geocoder = new google.maps.Geocoder();
+                    geocoder.geocode( { latLng: my_marker.getPosition() }, function ( result, status ) {
+                        if ( 'OK' === status ) {  // This line can also be written like if ( status == google.maps.GeocoderStatus.OK ) {
+                            address = result[0].formatted_address;
+                            resultArray =  result[0].address_components;
+                            address.value = address;
+                            latEl.value = currentLatitude;
+                            longEl.value = currentLongitude;
+                        } else {
+                            console.log( 'Geocode was not successful for the following reason: ' + status );
+                        }
+
+                        infoWindow = new google.maps.InfoWindow({
+                            content: address
+                        });
+
+                        infoWindow.open( map, my_marker );
+                    });
+                });
+            }
+        });
+
     }
 
     $(document).on('click', '.boundary-btn', function(event) {

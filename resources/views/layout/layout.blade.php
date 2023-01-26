@@ -340,6 +340,7 @@
         <!-- END: Theme JS-->
 
         <!-- BEGIN: Page JS-->
+        <script src="{{ asset('app-assets/js/scripts/navs/navs.js')}}"></script>
         <script src="{{ asset('app-assets/js/scripts/forms/switch.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script type="text/javascript" src="{{ asset('/js/jquery-migrate-3.3.2.js') }}"></script>
