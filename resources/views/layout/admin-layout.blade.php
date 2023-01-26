@@ -328,6 +328,13 @@
                             </a>
                         </li>
                     @endcan
+                    @can('manage_admins')
+                        <li class="{{ Request::path() == 'admin/accountings' ? 'active' : '' }} nav-item">
+                            <a href="/admin/accountings"><i class="feather icon-user"></i>
+                                <span class="menu-title" data-i18n="Accountings">Accountings</span>
+                            </a>
+                        </li>
+                    @endcan
                     <li class=" navigation-header"><span>Misc</span><i class=" feather icon-minus"
                             data-toggle="tooltip" data-placement="right" data-original-title="Misc"></i>
                     </li>

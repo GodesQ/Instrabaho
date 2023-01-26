@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\UserWallet;
 use App\Models\User;
@@ -13,6 +14,11 @@ use App\Models\InvoiceItem;
 use App\Models\EWalletPayment;
 use App\Models\CardPayment;
 use App\Models\ProjectPayment;
+use App\Models\GcashWithdrawal;
+use App\Models\CardWithdrawal;
+use App\Models\Withdrawal;
+
+use App\Http\Requests\Withdrawal\PostWithdrawal;
 
 use Luigel\Paymongo\Facades\Paymongo;
 use Illuminate\Support\Str;
@@ -25,6 +31,65 @@ class UserFundsController extends Controller
         $transactions = Transaction::where('from_id', session()->get('id'))->orWhere('to_id', session()->get('id'))->cursorPaginate(10);
         // dd($transactions);
         return view('UserAuthScreens.funds.funds', compact('user', 'transactions'));
+    }
+
+    public function withdrawals(PostWithdrawal $request) {
+        $amount = $request->amount;
+        $user = User::where('id', session()->get('id'))->firstOr(function() {
+            return back()->with('fail', 'Invalid User');
+        });
+
+        switch ($request->payment_method) {
+            case 'gcash':
+                DB::beginTransaction();
+
+                try {
+                    $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
+                    $transaction = Transaction::create([
+                        'name_of_transaction' => 'Withdrawal',
+                        'transaction_type' => 'withdraw',
+                        'transaction_code' => $transaction_code,
+                        'amount' => $amount,
+                        'sub_amount' => $amount,
+                        'from_id' => $user->id,
+                        'to_id' => 0,
+                        'payment_method' => $request->payment_method,
+                        'status' => 'pending'
+                    ]);
+
+                    $reference_no = 'REF-NO' . '-' . strtoupper(Str::random(16));
+                    $withdrawal = Withdrawal::create([
+                        'reference_no' => $reference_no,
+                        'user_id' => $user->id,
+                        'transaction_code' => $transaction->transaction_code,
+                        'txn_id' => $transaction->id,
+                        'withdrawal_type' => $request->payment_method,
+                        'sub_amount' => $amount,
+                        'total_amount' => $amount,
+                        'status' => 'pending'
+                    ]);
+
+                    $gcash_withdrawal = GcashWithdrawal::create([
+                        'withdrawal_id' => $withdrawal->id,
+                        'gcash_number' => $request->gcash_number,
+                    ]);
+
+                } catch(\Exception $e)
+                {
+                    DB::rollback();
+                    throw $e;
+                }
+                return back()->with('success', 'Withdraw Request Successfully Send');
+            case 'card':
+                # code...
+                break;
+            default:
+
+                # code...
+                break;
+        }
+
+
     }
 
     public function deposit(Request $request) {
