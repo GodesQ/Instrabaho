@@ -40,6 +40,8 @@ use App\Http\Controllers\Web\ProjectPayJobController;
 use App\Http\Controllers\Web\CardPaymentCallBackController;
 
 use App\Http\Controllers\Web\Accounting\AccountingAuthController;
+use App\Http\Controllers\Web\Accounting\AccountingController;
+
 
 use App\Http\Controllers\Web\Admin\AdminAuthController;
 use App\Http\Controllers\Web\Admin\AdminController;
@@ -260,6 +262,7 @@ use App\Events\ProjectMessageEvent;
 
         Route::get('/user_fund', [UserFundsController::class, 'user_funds'])->name('user_funds');
         Route::post('/deposit', [UserFundsController::class, 'deposit'])->name('deposit');
+        Route::post('/withdrawals', [UserFundsController::class, 'withdrawals'])->name('withdrawals');
 
         Route::get('/project_pay_job/{type}/{id}', [ProjectPayJobController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
         Route::post('/project_pay_job', [ProjectPayJobController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
@@ -298,6 +301,13 @@ use App\Events\ProjectMessageEvent;
         Route::put('admins/update', [AdminController::class, 'update'])->name('admins.update');
         Route::get('admins/create', [AdminController::class, 'create'])->name('admins.create');
         Route::post('admins/store', [AdminController::class, 'store'])->name('admins.store');
+
+        Route::get('accountings', [AccountingController::class, 'index'])->name('accounting');
+        Route::get('accountings/data_table', [AccountingController::class, 'data_table'])->name('accounting.data_table');
+        Route::get('accountings/create', [AccountingController::class, 'create'])->name('accounting.create');
+        Route::post('accountings/store', [AccountingController::class, 'store'])->name('accounting.store');
+        Route::get('accounting/edit/{id}', [AcountingController::class, 'edit'])->name('accounting.edit');
+        Route::post('accountings/update', [AccountingController::class, 'update'])->name('accounting.update');
 
         Route::get('freelancer_packages', [FreelancePackagesController::class, 'index'])->name('freelancer_packages');
         Route::get('freelancer_packages/data_table', [FreelancePackagesController::class, 'data_table'])->name('freelancer_packages.data_table');

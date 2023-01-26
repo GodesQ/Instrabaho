@@ -363,18 +363,18 @@ address = document.querySelector('#address');
                     var geocoder = new google.maps.Geocoder();
                     geocoder.geocode( { latLng: my_marker.getPosition() }, function ( result, status ) {
                         if ( 'OK' === status ) {  // This line can also be written like if ( status == google.maps.GeocoderStatus.OK ) {
-                            address = result[0].formatted_address;
+                            addressValue = result[0].formatted_address;
                             resultArray =  result[0].address_components;
-                            address.value = address;
+                            address.value = addressValue;
                             latEl.value = currentLatitude;
                             longEl.value = currentLongitude;
                         } else {
                             console.log( 'Geocode was not successful for the following reason: ' + status );
                         }
 
-                        infoWindow = new google.maps.InfoWindow({
-                            content: address
-                        });
+                        // infoWindow = new google.maps.InfoWindow({
+                        //     content: address.value
+                        // });
 
                         infoWindow.open( map, my_marker );
                     });

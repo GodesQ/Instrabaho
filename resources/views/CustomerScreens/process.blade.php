@@ -47,7 +47,6 @@
             </ul>
             <div class="tab-content px-1 pt-1 mt-5">
                 <div class="tab-pane active" id="tab31" role="tabpanel" aria-labelledby="base-tab31">
-                    <h1 class="text-center mb-5 font-weight-bold">Freelancer/Worker</h1>
                     <div class="row">
                         <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="about-grid-margin">
@@ -176,7 +175,6 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="tab32" role="tabpanel" aria-labelledby="base-tab32">
-                    <h1 class="text-center mb-5 font-weight-bold">Employer/Client</h1>
                     <div class="row">
                         <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="about-grid-margin">

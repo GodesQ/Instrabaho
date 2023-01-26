@@ -232,7 +232,6 @@
                                     <div class="fr-latest-details">
                                         <div class="fr-latest-content-service" style="min-height: 120px;">
                                             <div class="">
-                                                {{-- <a class="user-image" href="/freelancers/{{ $freelancer->user->username }}"><img src="img/services-imgs/eshal-dp.jpg" alt="" class="img-fluid"></a> --}}
                                                 <div class=" text-center my-1">
                                                     <h5>
                                                         <a href="/freelancers/{{ $freelancer->user->username }}"
@@ -263,7 +262,9 @@
                                                         <li class="badge badge-warning p-50 my-50 font-weight-normal"
                                                             style="background: #004E88 !important;">
                                                             {{ $skill->skill->skill_name }}</li>
-                                                        @if ($key == 1)
+                                                        @if ($key === 1)
+                                                            <li class="badge badge-warning p-50 my-50 font-weight-normal"
+                                                            style="background: #004E88 !important;">{{ '+ ' . ($freelancer->skills->count() - 2 > 0 ? $freelancer->skills->count() - 2 : null) }}</li>
                                                         @break
                                                     @endif
                                                 @empty
@@ -285,8 +286,9 @@
                                                     </a>
                                                 </div>
                                                 <div class="col-6">
-                                                    <button class="btn btn-primary"
-                                                        style="width: 100% !important;">Send Offer </button>
+                                                    <a href="/employer/offer/create_offer/{{ $freelancer->display_name }}"
+                                                        class="btn btn-primary" style="width: 100% !important;">Send
+                                                        Offer </a>
                                                 </div>
                                             </div>
                                         </div>
