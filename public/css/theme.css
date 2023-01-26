@@ -13313,17 +13313,18 @@ ins, mark {
 }
 .about-grid-margin .about-grid-img {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .about-grid-margin .about-grid-img img {
-    -webkit-box-shadow: 0 11px 29px 0 rgba(0,0,0,.3);
-    box-shadow: 0 11px 29px 0 rgba(0,0,0,.3);
     border-radius: 3px;
-    width: 100%;
+    width: 60%;
 }
 .about-grid-content h2 {
     margin-bottom: 20px;
     font-weight: 600;
-    font-size: 36px;
+    font-size: 30px;
 	line-height: 1.5;
 }
 .about-grid-content .subtitle {
