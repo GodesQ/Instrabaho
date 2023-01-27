@@ -147,7 +147,15 @@
                                             @php
                                                 $attachments = json_decode($service->attachments);
                                             @endphp
-                                            @foreach ($attachments as $image)
+                                                <li class="clone " aria-hidden="true">
+                                                    <a data-fancybox="services"
+                                                        href="../../../images/services/{{ $attachments[0] }}"
+                                                        target="_blank"><img
+                                                            style="width: 100%; min-height: 300px !important; max-height: 400px; object-fit: cover;"
+                                                            src="../../../images/services/{{ $attachments[0] }}"
+                                                            draggable="false"></a>
+                                                </li>
+                                            {{-- @foreach ($attachments as $image)
                                                 <li class="clone " aria-hidden="true">
                                                     <a data-fancybox="services"
                                                         href="../../../images/services/{{ $image }}"
@@ -156,7 +164,7 @@
                                                             src="../../../images/services/{{ $image }}"
                                                             draggable="false"></a>
                                                 </li>
-                                            @endforeach
+                                            @endforeach --}}
                                         </ul>
                                     </div>
                                     <ul class="flex-direction-nav">
@@ -167,7 +175,7 @@
                                     </ul>
                                 </div>
                                 <div class="flexslider carousel fr-slick-thumb">
-                                    <div class="flex-viewport">
+                                    {{-- <div class="flex-viewport">
                                         <ul class="slides">
                                             @foreach ($attachments as $image)
                                                 <li class="clone " aria-hidden="true">
@@ -178,7 +186,7 @@
                                                 </li>
                                             @endforeach
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                     <ul class="flex-direction-nav">
                                         <li class="flex-nav-prev"><a class="flex-prev flex-disabled" href="#"
                                                 tabindex="-1"><i class="fas fa-angle-left" aria-hidden="true"></i></a>

@@ -133,10 +133,9 @@ class HomeScreenController extends Controller
         //     + sin(radians(" .$user->latitude. "))
         //     * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $user->id);
         // })
-        ->where('status', '!=', 'completed')
         ->with('category', 'employer')
         ->latest('id')
-        ->paginate(10);
+        ->paginate(12);
 
         $service_categories = ServiceCategory::toBase()->get();
         $skills = Skill::toBase()->get();
@@ -177,10 +176,9 @@ class HomeScreenController extends Controller
             $range = explode(';', $my_range);
             return $q->whereBetween('cost', [$range[0], $range[1]]);
         })
-        ->where('status', '!=', 'completed')
         ->with('category', 'employer')
         ->latest('id')
-        ->paginate(10);
+        ->paginate(12);
 
         $view_data = view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
 

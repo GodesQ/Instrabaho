@@ -1781,7 +1781,7 @@ color: #777;
 .fr-gt-content h3 {
 	font-size: 24px;
 	margin-bottom: 8px;
-	color: #004E88;
+	color: #fff;
 }
 .fr-gt-content p {
 	font-size: 16px;
@@ -1805,14 +1805,14 @@ color: #777;
 	list-style: none;
 }
 .fr-footer .fr-footer-content ul li a {
-	color: #004E88;
+	color: #dddddd;
 	transition: .6s;
 }
 .fr-footer .fr-footer-content ul li {
 	margin-bottom: 10px;
 }
 .fr-footer .fr-footer-content .fr-style-8 {
-	color: #004E88;
+	color: #dddddd;
 	font-size: 20px;
 	margin-bottom: 20px;
 	}
@@ -10903,7 +10903,7 @@ padding: 8px;
 	height: auto;
 	background-position: center center;
 	background-size: cover;
-	padding: 80px 0px 50px 0px;
+	padding: 40px 0px 50px 0px;
 }
 .fr-serv-2 .row {
 	padding: 0 !important;
@@ -13743,7 +13743,7 @@ ins, mark {
 }
 .hero-slider.logoslider
 {
-	min-height: 583px;
+	min-height: 450px;
 }
 .fr-hero-ad.fr-hero
 {
