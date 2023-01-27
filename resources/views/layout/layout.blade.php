@@ -38,28 +38,25 @@
         />
 
         <!-- Bootstrap core CSS -->
-        <link href="{{ URL::asset('css/bootstrap.min.css') }}"
-            rel="stylesheet"
-        />
+        <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
 
         <!-- MENU CSS -->
         <link href="{{ URL::asset('css/sbmenu.css') }}" rel="stylesheet" />
+
         <!-- SELECT 2 CSS -->
         <link href="{{ URL::asset('css/select2.css') }}" rel="stylesheet" />
+
         <!-- PROTIP CSS -->
         <link href="{{ URL::asset('css/protip.min.css') }}" rel="stylesheet" />
+
         <!-- YOUTUBE POPUP CSS -->
-        <link
-            href="{{ URL::asset('css/youtube-popup.css') }}"
-            rel="stylesheet"
-        />
+        <link href="{{ URL::asset('css/youtube-popup.css') }}" rel="stylesheet" />
+
         <!-- FLEXSLIDER CSS -->
         <link href="{{ URL::asset('css/flexslider.css') }}" rel="stylesheet" />
+
         <!-- PRETTY CHECK BOX CSS -->
-        <link
-            href="{{ URL::asset('css/pretty-checkbox.min.css') }}"
-            rel="stylesheet"
-        />
+        <link href="{{ URL::asset('css/pretty-checkbox.min.css') }}" rel="stylesheet" />
 
         {{-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"> --}}
 
@@ -70,10 +67,7 @@
         <link rel="stylesheet" href="{{ URL::asset('css/fontawesome1.css') }}" />
 
         <!-- owl-carousel-css -->
-        <link
-            rel="stylesheet"
-            href="{{ URL::asset('css/owl.carousel.min.css') }}"
-        />
+        <link rel="stylesheet" href="{{ URL::asset('css/owl.carousel.min.css') }}"/>
         <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/freelancer-search.css') }}">
 
         <!-- MAIN CSS -->
@@ -192,9 +186,14 @@
             </div>
         </div>
         @yield('content')
-        <section class="fr-footer padding-top-80">
+
+        <section class="fr-footer pt-2 mt-4" style="background: #004E88;">
             <div class="container">
-                <div class="row padding-bottom-80">
+                <div class="d-flex justify-content-between align-items-center py-5" style="border-bottom: 1px solid #fff;">
+                    <h1 style="color: #fff !important;">Start Working <br> with <span style="color: #04bbff;">Instrabaho</span> Today</h1>
+                    <a href="/register" class="btn btn-theme">Register Now</a>
+                </div>
+                <div class="row padding-bottom-60 py-5" style="border-bottom: 1px solid #fff;">
                     <div
                         class="col-xxl-4 col-xl-3 col-lg-12 col-12 col-sm-12 col-md-12"
                     >
@@ -204,7 +203,7 @@
                                 alt=""
                                 class="img-fluid"
                             />
-                            <p>
+                            <p style="color: #fff !important;">
                                 Instrabaho is a community where you can post a project if you are an employer or you may post service if you are a freelancer.
                                 This initiative is to help people who lose their job during the time of the pandemic.
                             </p>
@@ -259,7 +258,7 @@
                     >
                         <div class="fr-footer-content">
                             <h3 class="fr-style-8">Top Job Locations</h3>
-                            <ul>
+                            <ul >
                                 <li>
                                     <a href="#">Manila</a>
                                 </li>

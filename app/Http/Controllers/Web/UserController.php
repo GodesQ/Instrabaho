@@ -60,6 +60,10 @@ class UserController extends Controller
 
 
     public function change_user_picture(Request $request) {
+        $request->validate([
+            'new_profile_picture' => 'required|file|max:2192'
+        ]);
+
         $profile = User::where('id', $request->id)->first();
         $profile_image = $request->old_profile_picture;
         $cover_image = $request->old_cover_picture;

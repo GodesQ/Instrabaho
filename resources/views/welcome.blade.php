@@ -85,7 +85,7 @@
                                 <a href="https://www.youtube.com/watch?v=C0DPdy98e4c" target="_blank" rel="nofollow"
                                     class="popup-video"><i class="fas fa-play-circle"></i></a>
                                 <div class="fr-hero3-text">
-                                    <span>Watch Demo</span>
+                                    <span>See How It Works</span>
                                     <p>Get started in minutes</p>
                                 </div>
                             </div>
@@ -97,17 +97,80 @@
     </div>
     <section class="fr-serv-2 fr-services-content-2">
         <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
+                    <div class="heading-panel  section-center">
+                        <div class="heading-meta">
+                            <h2>Most Used Services In Instrabaho</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/plumber.png" alt="" style="width: 20%;">
+                                <div class="mt-3" style="color: #000;">PLUMBER</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column"" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/electrician.png" alt="" style="width: 20%;">
+                                <div class="mt-3" style="color: #000;">ELECTRICIAN</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/painter.png" alt="" style="width: 20%;">
+                                <div class="mt-3" style="color: #000;">PAINTER</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/technician.png" alt="" style="width: 20%;">
+                                <div class="mt-3" style="color: #000;">TECHNICIAN</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/barber.png" alt="" style="width: 20%;">
+                                <div class="mt-3" style="color: #000;">BARBER</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/driver.png" alt="" style="width: 20%;">
+                                <div class="mt-3" style="color: #000;">DRIVER</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/welder.png" alt="" style="width: 20%;">
+                                <div class="mt-3" style="color: #000;">WELDER</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/carpenter.png" alt="" style="width: 20%;">
+                                <div class="mt-3" style="color: #000;">CARPENTER</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="fr-serv-2 fr-services-content-2">
+        <div class="container">
             <div class="row fr-serv2">
                 <div class="col-xl-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
                     <div class="heading-panel  section-center">
                         <div class="heading-meta">
-                            <h2>Boss! Kailangan mo ng tulong?</h2>
-                            <p>Recent Posted Projects</p>
+                            <h2>Latest Posted Projects</h2>
+                            <p>Verified Client Recent Projects</p>
                         </div>
                     </div>
                     <div class="row">
                         @forelse ($projects as $project)
-                            <div class="col-xl-4 col-lg-6 my-3">
+                            <div class="col-xl-4 col-lg-6 col-12 col-md-6 my-3">
                                 <a href="/projects/{{ $project->id }}/{{ $project->title }}">
                                     <div class="px-3 py-4" style="box-shadow: 5px 5px 5px 0px rgba(181, 230, 250, 0.22);">
                                         <div class="d-flex justify-content-between align-items-start">
@@ -213,87 +276,96 @@
                     <div class="row grid">
                         @forelse($freelancers as $freelancer)
                             <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
-                                <div class="fr-latest-grid py-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h6>₱ {{ number_format($freelancer->hourly_rate, 2) }}</h6>
-                                        <a href="" class="secondary h5"><i
-                                                class="far fa-bookmark primary"></i></a>
-                                    </div>
-                                    <div class="fr-latest-img d-flex justify-content-center">
-                                        @if ($freelancer->user->profile_image)
-                                            <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}"
-                                                class="rounded" alt=""
-                                                style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
-                                        @else
-                                            <img src="../../../images/user-profile.png" alt=""
-                                                style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
-                                        @endif
-                                    </div>
-                                    <div class="fr-latest-details">
-                                        <div class="fr-latest-content-service" style="min-height: 120px;">
-                                            <div class="">
-                                                <div class=" text-center my-1">
-                                                    <h5>
-                                                        <a href="/freelancers/{{ $freelancer->user->username }}"
-                                                            class="h5">{{ $freelancer->user->firstname . ' ' . $freelancer->user->lastname }}</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                            <div class="text-center">
-                                                @if ($freelancer->rate)
-                                                    <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
-                                                    @for ($i = 0; $i < round($freelancer->rate); $i++)
-                                                        <i class="fas fa-star"
-                                                            style="color: #04bbff !important; font-size: 12px;"
-                                                            aria-hidden="true"></i>
-                                                    @endfor
+                                <a href="/freelancers/{{ $freelancer->user->username }}">
+                                    <div class="fr-latest-grid py-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6>₱ {{ number_format($freelancer->hourly_rate, 2) }}</h6>
+                                            <a href="" class="secondary h5"><i
+                                                    class="far fa-bookmark primary"></i></a>
+                                        </div>
+                                        <div class="fr-latest-img d-flex justify-content-center">
+                                            <a href="/freelancers/{{ $freelancer->user->username }}">
+                                                @if ($freelancer->user->profile_image)
+                                                    <img src="../../../images/user/profile/{{ $freelancer->user->profile_image }}"
+                                                        class="rounded" alt=""
+                                                        style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
                                                 @else
-                                                    <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
-                                                    @for ($i = 0; $i < 5; $i++)
-                                                        <i class="far fa-star"
+                                                    <img src="../../../images/user-profile.png" alt=""
+                                                        style="width: 130px; height: 130px; object-fit: cover; border-radius: 50% !important;">
+                                                @endif
+                                            </a>
+                                        </div>
+                                        <div class="fr-latest-details">
+                                            <div class="fr-latest-content-service" style="min-height: 120px;">
+                                                <div class="">
+                                                    <div class=" text-center my-1">
+                                                        <h5>
+                                                            <a href="/freelancers/{{ $freelancer->user->username }}"
+                                                                class="h5">{{ $freelancer->user->firstname . ' ' . $freelancer->user->lastname }}</a>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center">
+                                                    @if ($freelancer->rate)
+                                                        <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
+                                                        @for ($i = 0; $i < round($freelancer->rate); $i++)
+                                                            <i class="fas fa-star"
+                                                                style="color: #04bbff !important; font-size: 12px;"
+                                                                aria-hidden="true"></i>
+                                                        @endfor
+                                                        @for ($i = 0; $i < 5 - $freelancer->rate; $i++)
+                                                            <i class="far fa-star"
                                                             style="color: #04bbff !important; font-size: 12px;"
                                                             aria-hidden="true"></i>
-                                                    @endfor
-                                                @endif
-                                            </div>
-                                            <div class="mt-2">
-                                                <ul class="fr-project-skills text-center">
-                                                    @forelse($freelancer->skills as $key => $skill)
-                                                        <li class="badge badge-warning p-50 my-50 font-weight-normal"
-                                                            style="background: #004E88 !important;">
-                                                            {{ $skill->skill->skill_name }}</li>
-                                                        @if ($key === 1)
-                                                            <li class="badge badge-warning p-50 my-50 font-weight-normal"
-                                                            style="background: #004E88 !important;">{{ '+ ' . ($freelancer->skills->count() - 2 > 0 ? $freelancer->skills->count() - 2 : null) }}</li>
-                                                        @break
+                                                        @endfor
+                                                    @else
+                                                        <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
+                                                        @for ($i = 0; $i < 5; $i++)
+                                                            <i class="far fa-star"
+                                                                style="color: #04bbff !important; font-size: 12px;"
+                                                                aria-hidden="true"></i>
+                                                        @endfor
                                                     @endif
-                                                @empty
-                                                    <li class="badge p-50 my-50 font-weight-normal border-primary"
-                                                        style="background: none !important; color: #000;">No Skills
-                                                        Found</li>
-                                                @endforelse
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-3">
-                                        <div class="p-3 rounded" style="background: rgb(236, 236, 236) !important;">
-                                            <div class="row justify-content-center">
-                                                <div class="col-6">
-                                                    <a href="/freelancers/{{ $freelancer->user->username }}"
-                                                        class="btn"
-                                                        style="width: 100% !important; background: #fff;">View Profile
-                                                    </a>
                                                 </div>
-                                                <div class="col-6">
-                                                    <a href="/employer/offer/create_offer/{{ $freelancer->display_name }}"
-                                                        class="btn btn-primary" style="width: 100% !important;">Send
-                                                        Offer </a>
+                                                <div class="mt-2">
+                                                    <ul class="fr-project-skills text-center">
+                                                        @forelse($freelancer->skills as $key => $skill)
+                                                            <li class="badge badge-warning p-50 my-50 font-weight-normal"
+                                                                style="background: #004E88 !important;">
+                                                                {{ $skill->skill->skill_name }}</li>
+                                                            @if ($key === 1)
+                                                                <li class="badge badge-warning p-50 my-50 font-weight-normal"
+                                                                style="background: #004E88 !important;">{{ ($freelancer->skills->count() - 2 > 0 ? '+ ' . ($freelancer->skills->count() - 2) : null) }}</li>
+                                                            @break
+                                                        @endif
+                                                    @empty
+                                                        <li class="badge p-50 my-50 font-weight-normal border-primary"
+                                                            style="background: none !important; color: #000;">No Skills
+                                                            Found</li>
+                                                    @endforelse
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <div class="p-3 rounded" style="background: rgb(236, 236, 236) !important;">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-6">
+                                                        <a href="/freelancers/{{ $freelancer->user->username }}"
+                                                            class="btn"
+                                                            style="width: 100% !important; background: #fff;">View Profile
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <a href="/employer/offer/create_offer/{{ $freelancer->display_name }}"
+                                                            class="btn btn-primary" style="width: 100% !important;">Send
+                                                            Offer </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     @empty

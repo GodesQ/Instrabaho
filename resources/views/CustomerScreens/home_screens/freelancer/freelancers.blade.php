@@ -34,7 +34,10 @@
                                     <i class="fas fa-star" style="color: #04bbff !important; font-size: 12px;"
                                         aria-hidden="true"></i>
                                 @endfor
-
+                                @for ($i = 0; $i < round(5 - $freelancer->rate); $i++)
+                                    <i class="far fa-star" style="color: #04bbff !important; font-size: 12px;"
+                                        aria-hidden="true"></i>
+                                @endfor
                             @else
                                 <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
                                 @for ($i = 0; $i < 5; $i++)
