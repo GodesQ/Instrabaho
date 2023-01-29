@@ -173,7 +173,7 @@ class ProjectsController extends Controller
             'total_cost' => $request->cost,
         ]));
 
-        if($create) return redirect()->route('employer.projects.index')->with('success', 'Project Created Successfully');
+        if($create) return redirect()->route('employer.projects.show', $create->title)->with('success', 'Project Created Successfully');
 
         return back()->withErrors('Fail. Error while trying to save project');
     }
