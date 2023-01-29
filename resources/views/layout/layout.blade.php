@@ -187,7 +187,7 @@
         </div>
         @yield('content')
 
-        <section class="fr-footer pt-2 mt-4" style="background: #004E88;">
+        <section class="fr-footer pt-2" style="background: #004E88;">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center py-5" style="border-bottom: 1px solid #fff;">
                     <h1 style="color: #fff !important;">Start Working <br> with <span style="color: #04bbff;">Instrabaho</span> Today</h1>
@@ -201,7 +201,7 @@
                             <img
                                 src="../../../images/logo/main-logo.png"
                                 alt=""
-                                class="img-fluid"
+                                class="img-fluid" 
                             />
                             <p style="color: #fff !important;">
                                 Instrabaho is a community where you can post a project if you are an employer or you may post service if you are a freelancer.
