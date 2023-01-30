@@ -4712,11 +4712,14 @@ a.close.disabled {
 .carousel-inner {
   position: relative;
   width: 100%;
-  overflow: hidden; }
+  overflow: hidden;
+  height: 100vh;
+ }
   .carousel-inner::after {
     display: block;
     clear: both;
-    content: ""; }
+    content: "";
+    }
 
 .carousel-item {
   position: relative;

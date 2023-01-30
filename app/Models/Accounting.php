@@ -10,5 +10,5 @@ class Accounting extends Model
     use HasFactory;
     protected $table = 'accounting';
     protected $guarded = [];
+    protected $hidden = ['password'];
 }
-          

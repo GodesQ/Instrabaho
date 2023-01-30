@@ -126,13 +126,13 @@ class HomeScreenController extends Controller
         $user = session()->get('role') == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
 
         $projects = Project::select('*')
-        // ->when($user_id, function ($q) use ($user, $user_id) {
-        //     return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $user->latitude . "))
-        //     * cos(radians(projects.latitude))
-        //     * cos(radians(projects.longitude) - radians(" . $user->longitude . "))
-        //     + sin(radians(" .$user->latitude. "))
-        //     * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $user->id);
-        // })
+        ->when($user_id, function ($q) use ($user, $user_id) {
+            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $user->latitude . "))
+            * cos(radians(projects.latitude))
+            * cos(radians(projects.longitude) - radians(" . $user->longitude . "))
+            + sin(radians(" .$user->latitude. "))
+            * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $user->id);
+        })
         ->with('category', 'employer')
         ->latest('id')
         ->paginate(12);

@@ -280,10 +280,10 @@ use App\Events\ProjectMessageEvent;
     });
 
     Route::get('/accounting/login', [AccountingAuthController::class, 'login'])->name('accounting.login.get');
-    Route::post('/accounting/login', [AccountingAuthController::class, 'save_login'])->name('login.post');
+    Route::post('/accounting/login', [AccountingAuthController::class, 'save_login'])->name('accounting.login.post');
 
-    Route::group(['prefix' => 'accounting', 'as' => 'accounting.', 'middleware' => ['accounting.access']], function() {
-        Route::get('/dashboard', [])->name('accounting.dashboard');
+    Route::group(['prefix' => 'accounting', 'as' => 'accounting.'], function() {
+        Route::get('/dashboard', [AccountingController::class, 'dashboard'])->name('dashboard');
     });
 
     /* ----------------------------------------- ADMIN ROUTES -------------------------------------------- */
@@ -306,7 +306,7 @@ use App\Events\ProjectMessageEvent;
         Route::get('accountings/data_table', [AccountingController::class, 'data_table'])->name('accounting.data_table');
         Route::get('accountings/create', [AccountingController::class, 'create'])->name('accounting.create');
         Route::post('accountings/store', [AccountingController::class, 'store'])->name('accounting.store');
-        Route::get('accounting/edit/{id}', [AcountingController::class, 'edit'])->name('accounting.edit');
+        Route::get('accounting/edit/{id}', [AccountingController::class, 'edit'])->name('accounting.edit');
         Route::post('accountings/update', [AccountingController::class, 'update'])->name('accounting.update');
 
         Route::get('freelancer_packages', [FreelancePackagesController::class, 'index'])->name('freelancer_packages');

@@ -100,7 +100,7 @@
                                 @endif
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form-horizontal" action="{{ route('login.post') }}" method="POST">
+                                        <form class="form-horizontal" action="{{ route('accounting.login.post') }}" method="POST">
                                             @csrf
                                             <fieldset class="form-group position-relative has-icon-left">
                                                 <input type="text" class="form-control" id="user-name" placeholder="Your Username" name="username">

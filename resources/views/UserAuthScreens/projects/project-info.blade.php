@@ -17,6 +17,9 @@
                             <a class="nav-link active" id="base-tab31" data-toggle="tab" aria-controls="tab31" href="#tab31" role="tab" aria-selected="true">Project Info</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" id="base-tab34" data-toggle="tab" aria-controls="tab34" href="#tab34" role="tab" aria-selected="false">Recommend Freelancers</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" id="base-tab32" data-toggle="tab" aria-controls="tab32" href="#tab32" role="tab" aria-selected="false">Proposals</a>
                         </li>
                         <li class="nav-item">
@@ -27,6 +30,9 @@
                     <div class="tab-content px-1 pt-1">
                         <div class="tab-pane active" id="tab31" role="tabpanel" aria-labelledby="base-tab31">
                             @include('UserAuthScreens.projects.edit-project')
+                        </div>
+                        <div class="tab-pane" id="tab34" role="tabpanel" aria-labelledby="base-tab34">
+                            @include('UserAuthScreens.projects.project-recommendations')
                         </div>
                         <div class="tab-pane" id="tab32" role="tabpanel" aria-labelledby="base-tab32">
                             @include('UserAuthScreens.proposals.employer.proposals')

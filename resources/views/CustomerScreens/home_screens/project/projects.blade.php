@@ -22,16 +22,17 @@
                     </div>
                     <div style="width: 65%" class="fr-project-content">
                         <div class="fr-project-f-des"
-                            style="background: transparent !important; padding: 0 !important; min-height: 145px; max-height: 200px;">
+                            style="background: transparent !important; padding: 0 !important; min-height: 165px; max-height: 200px;">
                             <div style="margin: 0 !important;" class="h6">
                                 <a href="/projects/{{ $project->id }}/{{ $project->title }}"
-                                    style="color: black; font-weight: 500; font-size: 15px;">{{ strlen($project->title) > 40 ? substr($project->title, 0, 40) . '...' : $project->title }}</a>
+                                    style="color: #004E88; font-weight: 500; font-size: 15px;">{{ strlen($project->title) > 40 ? substr($project->title, 0, 40) . '...' : $project->title }}</a>
                             </div>
                             <div style="color: rgb(99, 99, 99); padding: 0;">
                                 {{ $project->employer->user->firstname . ' ' . $project->employer->user->lastname }}
                             </div>
                             <div class="primary font-weight-normal">₱ {{ number_format($project->cost, 2) }}
-                                <span>({{ $project->project_cost_type }})</span></div>
+                                <span>({{ $project->project_cost_type }})</span>
+                            </div>
                             <div class="my-2">
                                 <div class="font-weight-medium"><i class="feather icon-target warning"></i> Actively
                                     Looking for</div>
@@ -43,6 +44,9 @@
                                     @endforeach
                                 </ul>
                             </div>
+                            @if ($project->distance)
+                                <div style="color: #004E88;">Distance : <span class="font-weight-bold">{{ number_format($project->distance, 2) }} km</span></div>
+                            @endif
                         </div>
                     </div>
                     <div style="width: 5%;" class="d-flex justify-content-between flex-row">

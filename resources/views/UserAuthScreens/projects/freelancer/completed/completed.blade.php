@@ -16,7 +16,7 @@
                 <div class="row">
                     @forelse ($completed_projects as $completed_project)
                         <div class="col-xxl-3 col-xl-4 col-lg-6">
-                            <div class="card">
+                            <div class="card" style="height: 165px;">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>

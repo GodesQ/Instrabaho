@@ -6,7 +6,7 @@
             <div class="page-body">
                 <div class="container-fluid">
                     <div class="text-right my-1">
-                        <a href="" class="btn btn-primary">Create Accounting</a>
+                        <a href="{{ route('admin.accounting.create') }}" class="btn btn-primary">Create Accounting</a>
                     </div>
                     <div class="card">
                         <div class="card-body table-responsive">

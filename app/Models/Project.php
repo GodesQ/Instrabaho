@@ -60,4 +60,8 @@ class Project extends Model
         $skills = Skill::whereIn('id', $this->skills)->get();
         return $skills;
     }
+
+    public function scopeBestResult($query, $value) {
+
+    }
 }

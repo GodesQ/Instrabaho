@@ -57,13 +57,7 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="../../../images/slider/Instrabaho_Slider_01_WEB15.png" alt="1558" />
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="../../../images/slider/Instrabaho_Slider_01_WEB16.png" alt="1558" />
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="../../../images/slider/Instrabaho_Slider_01_WEB18.png" alt="1558" />
+                <img class="d-block w-100" src="../../../images/slider/landing_page.png" alt="1558" />
             </div>
         </div>
         <div class="fr-hero3 hero-slider logoslider" style="z-index: 2;">
@@ -275,7 +269,7 @@
                     </div>
                     <div class="row grid">
                         @forelse($freelancers as $freelancer)
-                            <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6  grid-item">
+                            <div class="col-xl-3 col-xs-12 col-lg-4 col-sm-6 col-md-6 grid-item">
                                 <a href="/freelancers/{{ $freelancer->user->username }}">
                                     <div class="fr-latest-grid py-3">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -321,9 +315,7 @@
                                                     @else
                                                         <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
                                                         @for ($i = 0; $i < 5; $i++)
-                                                            <i class="far fa-star"
-                                                                style="color: #04bbff !important; font-size: 12px;"
-                                                                aria-hidden="true"></i>
+                                                            <i class="far fa-star" style="color: #04bbff !important; font-size: 12px;" aria-hidden="true"></i>
                                                         @endfor
                                                     @endif
                                                 </div>
