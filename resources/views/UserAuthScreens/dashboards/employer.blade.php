@@ -47,7 +47,7 @@
                     <div class="card-title">Recent Workers</div>
                     <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
-                        <a href="#" class="primary font-weight-bold">View All</a>
+                        {{-- <a href="#" class="primary font-weight-bold">View All</a> --}}
                     </div>
                 </div>
                 <div class="card-body">
@@ -73,7 +73,7 @@
                     <div class="card-title">Recent Payments</div>
                     <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
-                        <a href="#" class="primary font-weight-bold">View All</a>
+                        {{-- <a href="#" class="primary font-weight-bold">View All</a> --}}
                     </div>
                 </div>
                 <div class="card-body">

@@ -104,6 +104,7 @@ class Freelancer extends Model
 
         #sum of all rates
         $sum_rate = FreelancerReview::where('freelancer_id', $this->id)->sum('freelancer_rate');
+
         # total of reviews
         $total_of_reviews = $this->total_reviews();
 

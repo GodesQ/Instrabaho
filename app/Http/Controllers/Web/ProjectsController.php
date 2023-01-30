@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
 use App\Models\ServiceCategory;
 use App\Models\Skill;
@@ -30,7 +31,7 @@ class ProjectsController extends Controller
     }
 
     public function show(Request $request) {
-        $project = Project::where('title', $request->title)->first();
+        $project = Project::where('title', $request->title)->firstOrFail();
         $categories = ServiceCategory::all();
         $skills = Skill::toBase()->get();
         $employer = Employer::where('user_id', auth('user')->user()->id)->first();
@@ -42,7 +43,26 @@ class ProjectsController extends Controller
         # get the offer lists
         $offers = ProjectOffer::where('project_id', $project->id)->with('freelancer')->get();
 
-        return view('UserAuthScreens.projects.project-info', compact('project', 'skills', 'employer', 'categories', 'project_images', 'proposals', 'offers'));
+        $project_latitude = $project->latitude;
+        $project_longitude = $project->longitude;
+        $project_skills = $project->skills;
+        // dd($project_skills);
+
+        $recommendations = Freelancer::select('*')
+                        ->when($project_latitude && $project_longitude, function ($q) use($project_latitude, $project_longitude) {
+                            return $q->addSelect(DB::raw("6371 * acos(cos(radians(" . $project_latitude . "))
+                            * cos(radians(user_freelancer.latitude))
+                            * cos(radians(user_freelancer.longitude) - radians(" . $project_longitude . "))
+                            + sin(radians(" .$project_latitude. "))
+                            * sin(radians(user_freelancer.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance", 'asc');
+                        })
+                        ->with('skills')
+                        ->whereHas('skills', function ($q) use ($project_skills) {
+                            return $q->whereIn('skill_id', [$project_skills]);
+                        })
+                        ->limit(10)->get();
+
+        return view('UserAuthScreens.projects.project-info', compact('project', 'skills', 'employer', 'categories', 'project_images', 'proposals', 'offers', 'recommendations'));
     }
 
     public function employer_ongoing(Request $request) {

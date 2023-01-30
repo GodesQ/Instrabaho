@@ -24,7 +24,7 @@ class AccountingAuthController extends Controller
 
         if(!$accounting) return back()->withErrors("Your Email doesn't exists.");
 
-        if(Hash::check($request->password, $user->password)) {
+        if(Hash::check($request->password, $accounting->password)) {
             session()->put([
                 'id' => $accounting->id,
                 'username' => $accounting->username,
@@ -34,6 +34,6 @@ class AccountingAuthController extends Controller
             return back()->withErrors("Your Email doesn't exists.");
         }
 
-        return redirect('/accounting/dashboard')->with('success', 'Login Successfully');
+        return redirect()->route('accounting.dashboard')->with('success', 'Login Successfully');
     }
 }

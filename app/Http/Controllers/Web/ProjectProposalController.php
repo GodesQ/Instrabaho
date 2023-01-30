@@ -92,7 +92,7 @@ class ProjectProposalController extends Controller
         $approved_proposals = $freelancer->project_proposals()->where('status', 'approved')->with('project')->get();
 
         #get the offers
-        $offers = $freelancer->project_offers()->with('project')->get();
+        $offers = $freelancer->project_offers()->where('status', 'pending')->with('project')->get();
 
         return view('UserAuthScreens.proposals.freelancer.index-proposals', compact('freelancer', 'pending_proposals', 'approved_proposals', 'offers'));
     }
