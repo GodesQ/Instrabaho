@@ -32,7 +32,7 @@ class ProjectMessageEvent implements ShouldBroadCast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('project-chats');
+        return new Channel('project-chats');
     }
 
     public function broadcastAs()

@@ -181,7 +181,7 @@
                             <span class="menu-title" data-i18n="Dashboard">Dashboard</span>
                         </a>
                     </li>
-                    @if (Gate::check('manage_freelance_packages') || Gate::check('manage_employer_packages'))
+                    {{-- @if (Gate::check('manage_freelance_packages') || Gate::check('manage_employer_packages'))
                         <li class=" nav-item"><a href="#"><i class="feather icon-box"></i><span class="menu-title"
                                     data-i18n="Packages">Packages</span></a>
                             <ul class="menu-content">
@@ -199,7 +199,7 @@
                                 @endcan
                             </ul>
                         </li>
-                    @endif
+                    @endif --}}
                     @can('manage_services')
                         <li class="{{ Request::path() == 'admin/services' ? 'active' : '' }} nav-item">
                             <a href="/admin/services"><i class="feather icon-arrow-up-circle"></i>
@@ -387,9 +387,19 @@
                             </a>
                         </li>
                     @endcan
+                    <li class="{{ Request::path() == 'admin/transactions' ? 'active' : '' }} nav-item">
+                        <a href="/admin/transactions"><i class="fa fa-money"></i>
+                            <span class="menu-title" data-i18n="Transactions">Transactions</span>
+                        </a>
+                    </li>
                     <li class="{{ Request::path() == 'admin/user_permissions' ? 'active' : '' }} nav-item">
-                        <a href="/admin/user_permissions"><i class="fa fa-lock"></i>
-                            <span class="menu-title" data-i18n="User Permission">User Permission</span>
+                        <a href="/admin/user_permissions"><i class="fa fa-money"></i>
+                            <span class="menu-title" data-i18n="Withdrawals">Withdrawals</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::path() == 'admin/user_permissions' ? 'active' : '' }} nav-item">
+                        <a href="/admin/user_permissions"><i class="fa fa-money"></i>
+                            <span class="menu-title" data-i18n="Deposits">Deposits</span>
                         </a>
                     </li>
                     @can('manage_settings')

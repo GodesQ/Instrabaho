@@ -1,7 +1,7 @@
 @forelse($projects as $project)
     <div class="col-xxl-4 col-xl-6 col-md-6 my-3">
         <a href="/projects/{{ $project->id }}/{{ $project->title }}">
-            <div class="px-3 py-4" style="box-shadow: 10px 10px 5px 0px rgba(181, 230, 250, 0.22);">
+            <div class="px-3 py-4" style="box-shadow: 5px 5px 5px 0px rgba(181, 230, 250, 0.22);">
                 <div class="d-flex justify-content-between align-items-start">
                     <div style="width: 30%">
                         @if ($project->employer->user->profile_image)

@@ -27,6 +27,8 @@ use App\Models\CardPayment;
 use App\Models\ProjectPayment;
 
 use App\Http\Requests\PayJob\PayJobRequest;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class TransactionsController extends Controller
 {
@@ -55,5 +57,33 @@ class TransactionsController extends Controller
     public function ewallet_payment_failed(Request $request) {
         $transaction = Transaction::where('transaction_code', $request->txn_code)->first();
         return view('UserAuthScreens.transactions.e-wallet-payment.failed');
+    }
+
+    public function index() {
+        return view('AdminScreens.transactions.transactions');
+    }
+
+    public function data_table(Request $request) {
+        abort_if(!$request->ajax(), 404);
+        $data = Transaction::select('*')->with('user_from');
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('from', function($row) {
+                    return $row->user_from->firstname . ' ' . $row->user_from->lastname;
+                })
+                ->addColumn('status', function($row) {
+                    if($row->status == 'succeeded' || $row->status == 'paid' || $row->status == 'success') {
+                        return '<div class="badge badge-success">'. $row->status .'</div>';
+                    } else {
+                        return '<div class="badge badge-primary">'. $row->status .'</div>';
+                    }
+                })
+                ->addColumn('action', function($row){
+                    $btn = '<a href="/admin/projects/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action', 'from', 'status'])
+                ->toJson();
     }
 }
