@@ -6,7 +6,7 @@
     <section class="fr-lance-details">
         <div class="container-fluid">
             <div class="row my-3 align-items-center">
-                <div class="my-1 col-md-3">
+                <div class="my-1 col-xl-3 col-sm-6 col-12">
                     <div class="input-group">
                         <input type="search" class="form-control" id="address" name="address" placeholder="Search by Location...">
                         <div class="input-group-append" id="button-addon2">
@@ -16,7 +16,7 @@
                     <input type="hidden" name="latitude" class="form-control latitude">
                     <input type="hidden" name="longitude" class="form-control longitude">
                 </div>
-                <div class="my-2 col-md-2">
+                <div class="my-2 col-xl-2 col-sm-6 col-12">
                     <select name="radius" id="radius" class="form-control">
                         <option value="5">5 km</option>
                         <option value="10">10 km</option>
@@ -26,18 +26,18 @@
                         <option value="100">100 km</option>
                     </select>
                 </div>
-                <div class="my-2 col-md-2">
+                <div class="my-2 col-xl-2 col-sm-6 col-12">
                     <select name="result" id="result" class="form-control">
                         <option value="10">10 Result</option>
                         <option value="25">25 Result</option>
                         <option value="50">50 Result</option>
                     </select>
                 </div>
-                <div class="my-1 col-md-3">
+                <div class="my-1 col-xl-3 col-sm-6 col-12">
                     <input type="search" class="form-control" id="title" name="address"
                         placeholder="Search by Keyword...">
                 </div>
-                <div class="my-1 col-md-2 d-flex">
+                <div class="my-1 col-xl-2 col-lg-12 d-flex">
                     <button class="btn btn-lg btn-primary btn-block" id="filter-btn">Filter</button>
                     {{-- <button class="btn btn-secondary btn-lg ml-1"><i class="fa fa-filter"></i></button> --}}
                 </div>
