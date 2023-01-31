@@ -378,6 +378,10 @@ use App\Events\ProjectMessageEvent;
 
         Route::get('saved_services', [SaveServiceController::class, 'admin_index'])->name('saved_services');
 
+        Route::get('transactions', [TransactionsController::class, 'index'])->name('transactions');
+        Route::get('transactions/data_table', [TransactionsController::class, 'data_table'])->name('transactions.data_table');
+
+
         Route::get('user_types', [UserTypesController::class, 'index'])->name('user_types');
         Route::get('user_types/data_table', [UserTypesController::class, 'data_table'])->name('user_types.data_table');
         Route::post('user_types/store', [UserTypesController::class, 'store'])->name('user_types.store');

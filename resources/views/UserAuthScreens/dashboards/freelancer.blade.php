@@ -70,7 +70,7 @@
                     <div class="row projects-data">
                         @forelse ($projects as $project)
                             <div class="col-xxl-4 col-xl-6">
-                                <div class="card border-primary rounded">
+                                <div class="card rounded" style="box-shadow: 5px 5px 5px 0px rgba(181, 230, 250, 0.22) !important;">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>

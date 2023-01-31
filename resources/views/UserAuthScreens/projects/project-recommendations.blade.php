@@ -29,9 +29,9 @@
                                 @endfor
                             @endif
                         </div>
-                        <ul>
+                        <ul class="text-center">
                             @forelse($freelancer->skills as $key => $skill)
-                                    <li class="badge badge-warning p-50 font-weight-normal"
+                                    <li class="badge badge-warning p-50 font-weight-normal "
                                         style="background: #004E88 !important;">
                                         {{ $skill->skill->skill_name }}</li>
                                     @if ($key === 1)
