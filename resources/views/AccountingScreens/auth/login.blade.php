@@ -91,12 +91,14 @@
                                             {{ Session::get('fail') }}
                                         </div>
                                 @endif
-                                @if(Session::get('errors'))
-                                    @push('scripts')
-                                        <script>
-                                            toastr.error('{{ Session::get("errors") }}', 'Fail');
-                                        </script>
-                                    @endpush
+                                @if ($errors->any())
+                                    @foreach ($errors->all() as $error)
+                                        @push('scripts')
+                                            <script>
+                                                toastr.error('{{ $error }}', 'Error')
+                                            </script>
+                                        @endpush
+                                    @endforeach
                                 @endif
                                 <div class="card-content">
                                     <div class="card-body">

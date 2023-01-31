@@ -176,31 +176,30 @@
         <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
             <div class="main-menu-content">
                 <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                    <li class=" navigation-header"><span>General</span><i class=" feather icon-minus"
-                            data-toggle="tooltip" data-placement="right" data-original-title="General"></i>
-                    </li>
                     <li class="{{ Request::path() == 'admin' ? 'active' : '' }} nav-item">
                         <a href="/admin"><i class="feather icon-home"></i>
                             <span class="menu-title" data-i18n="Dashboard">Dashboard</span>
                         </a>
                     </li>
-                    <li class=" nav-item"><a href="#"><i class="feather icon-box"></i><span class="menu-title"
-                                data-i18n="Packages">Packages</span></a>
-                        <ul class="menu-content">
-                            @can('manage_freelance_packages')
-                                <li class="{{ Request::path() == 'admin/freelancer_packages' ? 'active' : '' }}"><a
-                                        class="menu-item" href="/admin/freelancer_packages"
-                                        data-i18n="Freelance Packages">Freelance Packages</a>
-                                </li>
-                            @endcan
-                            @can('manage_employer_packages')
-                                <li class="{{ Request::path() == 'admin/employer_packages' ? 'active' : '' }}"><a
-                                        class="menu-item" href="/admin/employer_packages"
-                                        data-i18n="Employer Packages">Employer Packages</a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </li>
+                    @if (Gate::check('manage_freelance_packages') || Gate::check('manage_employer_packages'))
+                        <li class=" nav-item"><a href="#"><i class="feather icon-box"></i><span class="menu-title"
+                                    data-i18n="Packages">Packages</span></a>
+                            <ul class="menu-content">
+                                @can('manage_freelance_packages')
+                                    <li class="{{ Request::path() == 'admin/freelancer_packages' ? 'active' : '' }}"><a
+                                            class="menu-item" href="/admin/freelancer_packages"
+                                            data-i18n="Freelance Packages">Freelance Packages</a>
+                                    </li>
+                                @endcan
+                                @can('manage_employer_packages')
+                                    <li class="{{ Request::path() == 'admin/employer_packages' ? 'active' : '' }}"><a
+                                            class="menu-item" href="/admin/employer_packages"
+                                            data-i18n="Employer Packages">Employer Packages</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endif
                     @can('manage_services')
                         <li class="{{ Request::path() == 'admin/services' ? 'active' : '' }} nav-item">
                             <a href="/admin/services"><i class="feather icon-arrow-up-circle"></i>
@@ -215,14 +214,11 @@
                             </a>
                         </li>
                     @endcan
-                    <li class="{{ Request::path() == 'admin/addons' ? 'active' : '' }} nav-item">
+                    {{-- <li class="{{ Request::path() == 'admin/addons' ? 'active' : '' }} nav-item">
                         <a href="/admin/addons"><i class="feather icon-arrow-up-circle"></i>
                             <span class="menu-title" data-i18n="Addons">Addons</span>
                         </a>
-                    </li>
-                    <li class=" navigation-header"><span>Users</span><i class=" feather icon-minus"
-                            data-toggle="tooltip" data-placement="right" data-original-title="Apps"></i>
-                    </li>
+                    </li> --}}
                     @can('manage_freelancers')
                         <li class="{{ Request::path() == 'admin/freelancers' ? 'active' : '' }} nav-item">
                             <a href="/admin/freelancers"><i class="feather icon-user"></i>
@@ -251,9 +247,6 @@
                             </a>
                         </li>
                     @endcan
-                    <li class=" navigation-header"><span>Misc</span><i class=" feather icon-minus"
-                            data-toggle="tooltip" data-placement="right" data-original-title="Misc"></i>
-                    </li>
                     @can('manage_skills')
                         <li class="{{ Request::path() == 'admin/skills' ? 'active' : '' }} nav-item">
                             <a href="/admin/skills"><i class="feather icon-activity"></i>
@@ -261,97 +254,125 @@
                             </a>
                         </li>
                     @endcan
-                    <li class="{{ Request::path() == 'admin/service_categories' ? 'active' : '' }} nav-item">
-                        <a href="/admin/service_categories"><i class="feather icon-activity"></i>
-                            <span class="menu-title" data-i18n="Service Categories">Service Categories</span>
-                        </a>
-                    </li>
-                    <li><a class="menu-item" href="#" data-i18n="Freelancer"><i
-                                class="feather icon-bookmark"></i> Saved Jobs</a>
-                        <ul class="menu-content">
-                            <li>
-                                <a class="menu-item" href="" data-i18n="Saved Services">Saved Services</a>
-                            </li>
-                            <li class="{{ Request::path() == 'admin/saved_projects' ? 'active' : '' }}">
-                                <a class="menu-item" href="/admin/saved_projects" data-i18n="Saved Projects">Saved
-                                    Projects</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="menu-item" href="#" data-i18n="Freelancer"><i
-                                class="feather icon-heart"></i> Followed Users</a>
-                        <ul class="menu-content">
-                            <li class="{{ Request::path() == 'admin/freelancers_followers' ? 'active' : '' }}">
-                                <a class="menu-item" href="/admin/freelancers_followers"
-                                    data-i18n="Followed Freelancers">Followed Freelancers</a>
-                            </li>
-                            <li>
-                                <a class="menu-item" href="" data-i18n="Followed Employers">Followed
-                                    Employers</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class=" navigation-header"><span>REPORTS</span><i class=" feather icon-minus"
-                            data-toggle="tooltip" data-placement="right" data-original-title="REPORTS"></i>
-                    </li>
-                    <li class=" nav-item"><a href="#"><i class="icon-graph"></i><span class="menu-title"
-                                data-i18n="Sales Report">Sales Report</span></a>
-                        <ul class="menu-content">
-                            <li class="">
-                                <a class="menu-item" href="" data-i18n="Daily Reports">Daily Reports</a>
-                            </li>
-                            <li>
-                                <a class="menu-item" href="" data-i18n="Monthly Reports">Monthly Reports</a>
-                            </li>
-                            <li>
-                                <a class="menu-item" href="" data-i18n="Yearly Reports">Yearly Reports</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class=" nav-item"><a href="#"><i class="icon-graph"></i><span class="menu-title"
-                                data-i18n="Jobs Report">Jobs Report</span></a>
-                        <ul class="menu-content">
-                            <li class="">
-                                <a class="menu-item" href="" data-i18n="Services Report">Services Report</a>
-                            </li>
-                            <li>
-                                <a class="menu-item" href="" data-i18n="Projects Report">Projects Report</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
-                        <a href="/admin"><i class="feather icon-grid"></i>
-                            <span class="menu-title" data-i18n="Active Employer Reports">Active Employer
-                                Reports</span>
-                        </a>
-                    </li>
-                    <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
-                        <a href="/admin"><i class="feather icon-grid"></i>
-                            <span class="menu-title" data-i18n="Active Freelancer Reports">Active Freelancer
-                                Reports</span>
-                        </a>
-                    </li>
-                    <li class=" navigation-header"><span>CONTROLS</span><i class=" feather icon-minus"
-                            data-toggle="tooltip" data-placement="right" data-original-title="CONTROLS"></i>
-                    </li>
-                    <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
+                    @can('manage_categories')
+                        <li class="{{ Request::path() == 'admin/service_categories' ? 'active' : '' }} nav-item">
+                            <a href="/admin/service_categories"><i class="feather icon-activity"></i>
+                                <span class="menu-title" data-i18n="Service Categories">Service Categories</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @if(Gate::check('manage_saved_projects') || Gate::check('manage_saved_services'))
+                        <li><a class="menu-item" href="#" data-i18n="Freelancer"><i
+                                    class="feather icon-bookmark"></i> Saved Jobs</a>
+                            <ul class="menu-content">
+                                @can('manage_saved_services')
+                                    <li>
+                                        <a class="menu-item" href="" data-i18n="Saved Services">Saved Services</a>
+                                    </li>
+                                @endcan
+                                @can('manage_saved_projects')
+                                    <li class="{{ Request::path() == 'admin/saved_projects' ? 'active' : '' }}">
+                                        <a class="menu-item" href="/admin/saved_projects" data-i18n="Saved Projects">Saved
+                                            Projects</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endif
+                    @if(Gate::check('manage_followed_freelancers') || Gate::check('manage_followed_employers'))
+                        <li><a class="menu-item" href="#" data-i18n="Freelancer"><i
+                                    class="feather icon-heart"></i> Followed Users</a>
+                            <ul class="menu-content">
+                                @can('manage_followed_freelancers')
+                                    <li class="{{ Request::path() == 'admin/freelancers_followers' ? 'active' : '' }}">
+                                        <a class="menu-item" href="/admin/freelancers_followers"
+                                            data-i18n="Followed Freelancers">Followed Freelancers</a>
+                                    </li>
+                                @endcan
+                                @can('manage_followed_employers')
+                                    <li>
+                                        <a class="menu-item" href="" data-i18n="Followed Employers">Followed
+                                            Employers</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endif
+                    @if(Gate::check('manage_daily_report') || Gate::check('manage_monthly_report') || Gate::check('manage_yearly_report'))
+                        <li class=" nav-item"><a href="#"><i class="icon-graph"></i><span class="menu-title"
+                                    data-i18n="Sales Report">Sales Report</span></a>
+                            <ul class="menu-content">
+                                @can('manage_daily_report')
+                                    <li class="">
+                                        <a class="menu-item" href="" data-i18n="Daily Reports">Daily Reports</a>
+                                    </li>
+                                @endcan
+                                @can('manage_monthly_report')
+                                    <li>
+                                        <a class="menu-item" href="" data-i18n="Monthly Reports">Monthly Reports</a>
+                                    </li>
+                                @endcan
+                                @can('manage_yearly_report')
+                                    <li>
+                                        <a class="menu-item" href="" data-i18n="Yearly Reports">Yearly Reports</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endif
+                    @if(Gate::check('manage_services_report') || Gate::check('manage_projects_report'))
+                        <li class=" nav-item"><a href="#"><i class="icon-graph"></i><span class="menu-title"
+                                    data-i18n="Jobs Report">Jobs Report</span></a>
+                            <ul class="menu-content">
+                                @can('manage_services_report')
+                                    <li class="">
+                                        <a class="menu-item" href="" data-i18n="Services Report">Services Report</a>
+                                    </li>
+                                @endcan
+                                @can('manage_projects_report')
+                                    <li>
+                                        <a class="menu-item" href="" data-i18n="Projects Report">Projects Report</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endif
+                    @can('manage_active_employer_report')
+                        <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
+                            <a href="/admin"><i class="feather icon-grid"></i>
+                                <span class="menu-title" data-i18n="Active Employer Reports">Active Employer
+                                    Reports</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('manage_active_freelancer_report')
+                        <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
+                            <a href="/admin"><i class="feather icon-grid"></i>
+                                <span class="menu-title" data-i18n="Active Freelancer Reports">Active Freelancer
+                                    Reports</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    {{-- <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
                         <a href="/admin"><i class="fa fa-calendar"></i>
                             <span class="menu-title" data-i18n="Run Scheduled Tasks">Run Scheduled Tasks</span>
                         </a>
-                    </li>
-                    <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
-                        <a href="/admin"><i class="fa fa-shield"></i>
-                            <span class="menu-title" data-i18n="Blocked Users">Blocked Users</span>
-                        </a>
-                    </li>
-                    <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
-                        <a href="/admin"><i class="fa fa-check-circle"></i>
-                            <span class="menu-title" data-i18n="Verify Users">Verify Users</span>
-                        </a>
-                    </li>
-                    <li class=" navigation-header"><span>OTHERS</span><i class=" feather icon-minus"
-                            data-toggle="tooltip" data-placement="right" data-original-title="OTHERS"></i>
-                    </li>
+                    </li> --}}
+                    @can('manage_blocked_users')
+                        <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
+                            <a href="/admin"><i class="fa fa-shield"></i>
+                                <span class="menu-title" data-i18n="Blocked Users">Blocked Users</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('manage_verify_users')
+                        <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
+                            <a href="/admin"><i class="fa fa-check-circle"></i>
+                                <span class="menu-title" data-i18n="Verify Users">Verify Users</span>
+                            </a>
+                        </li>
+                    @endcan
                     @can('manage_user_types')
                         <li class="{{ Request::path() == 'admin/user_types' ? 'active' : '' }} nav-item">
                             <a href="/admin/user_types"><i class="fa fa-user-circle"></i>
@@ -366,11 +387,18 @@
                             </a>
                         </li>
                     @endcan
-                    <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
-                        <a href="/admin"><i class="feather icon-settings"></i>
-                            <span class="menu-title" data-i18n="Settings">Settings</span>
+                    <li class="{{ Request::path() == 'admin/user_permissions' ? 'active' : '' }} nav-item">
+                        <a href="/admin/user_permissions"><i class="fa fa-lock"></i>
+                            <span class="menu-title" data-i18n="User Permission">User Permission</span>
                         </a>
                     </li>
+                    @can('manage_settings')
+                        <li class="{{ Request::path() == '/admin/services' ? 'active' : '' }} nav-item">
+                            <a href="/admin"><i class="feather icon-settings"></i>
+                                <span class="menu-title" data-i18n="Settings">Settings</span>
+                            </a>
+                        </li>
+                    @endcan
                 </ul>
             </div>
         </div>
