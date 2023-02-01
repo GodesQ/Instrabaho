@@ -38,6 +38,7 @@ use App\Http\Controllers\Web\EmployerReviewsController;
 use App\Http\Controllers\Web\EWalletCallBackController;
 use App\Http\Controllers\Web\ProjectPayJobController;
 use App\Http\Controllers\Web\CardPaymentCallBackController;
+use App\Http\Controllers\Web\WithdrawalController;
 
 use App\Http\Controllers\Web\Accounting\AccountingAuthController;
 use App\Http\Controllers\Web\Accounting\AccountingController;
@@ -380,6 +381,10 @@ use App\Events\ProjectMessageEvent;
 
         Route::get('transactions', [TransactionsController::class, 'index'])->name('transactions');
         Route::get('transactions/data_table', [TransactionsController::class, 'data_table'])->name('transactions.data_table');
+
+        Route::get('withdrawals', [WithdrawalController::class, 'index'])->name('withdrawals');
+        Route::get('withdrawals/data_table', [WithdrawalController::class, 'data_table'])->name('withdrawals.data_table');
+        Route::get('withdrawals/show/{id}', [WithdrawalController::class, 'show'])->name('withdrawals.show');
 
 
         Route::get('user_types', [UserTypesController::class, 'index'])->name('user_types');
