@@ -392,13 +392,13 @@
                             <span class="menu-title" data-i18n="Transactions">Transactions</span>
                         </a>
                     </li>
-                    <li class="{{ Request::path() == 'admin/user_permissions' ? 'active' : '' }} nav-item">
-                        <a href="/admin/user_permissions"><i class="fa fa-money"></i>
+                    <li class="{{ Request::path() == 'admin/withdrawals' ? 'active' : '' }} nav-item">
+                        <a href="/admin/withdrawals"><i class="fa fa-money"></i>
                             <span class="menu-title" data-i18n="Withdrawals">Withdrawals</span>
                         </a>
                     </li>
-                    <li class="{{ Request::path() == 'admin/user_permissions' ? 'active' : '' }} nav-item">
-                        <a href="/admin/user_permissions"><i class="fa fa-money"></i>
+                    <li class="{{ Request::path() == '' ? 'active' : '' }} nav-item">
+                        <a href=""><i class="fa fa-money"></i>
                             <span class="menu-title" data-i18n="Deposits">Deposits</span>
                         </a>
                     </li>

@@ -74,12 +74,14 @@ class TransactionsController extends Controller
                 ->addColumn('status', function($row) {
                     if($row->status == 'succeeded' || $row->status == 'paid' || $row->status == 'success') {
                         return '<div class="badge badge-success">'. $row->status .'</div>';
+                    } else if($row->status == 'pending' || $row->status == 'initial') {
+                        return '<div class="badge badge-warning">'. $row->status .'</div>';
                     } else {
-                        return '<div class="badge badge-primary">'. $row->status .'</div>';
+                        return '<div class="badge badge-danger">'. $row->status .'</div>';
                     }
                 })
                 ->addColumn('action', function($row){
-                    $btn = '<a href="/admin/projects/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-edit"></i></a>
+                    $btn = '<a href="/admin/projects/edit/'. $row->id .'" class="edit datatable-btn datatable-btn-edit"><i class="fa fa-eye"></i></a>
                             <a href="javascript:void(0)" class="edit datatable-btn datatable-btn-remove"><i class="fa fa-trash"></i></a>';
                     return $btn;
                 })
