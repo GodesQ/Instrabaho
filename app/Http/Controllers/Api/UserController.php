@@ -70,7 +70,7 @@ class UserController extends Controller
 
         if($save) return response()->json([
             'status' => true,
-            'message' => 'Image Successfully Updated.'
+            'message' => 'Password Successfully Updated.'
         ], 200);
 
         return response()->json([
