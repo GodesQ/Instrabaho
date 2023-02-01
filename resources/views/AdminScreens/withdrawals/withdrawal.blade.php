@@ -63,6 +63,22 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        <div class="row my-1">
+                                            <div class="col-xl-5 col-lg-12 font-weight-bold">
+                                                Withdrawal Sub Amount :
+                                            </div>
+                                            <div class="col-xl-7 col-lg-12">
+                                                ₱ {{ number_format($withdrawal->sub_amount, 2) }}
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col-xl-5 col-lg-12 font-weight-bold">
+                                                Withdrawal Total Amount :
+                                            </div>
+                                            <div class="col-xl-7 col-lg-12">
+                                                ₱ {{ number_format($withdrawal->total_amount, 2) }}
+                                            </div>
+                                        </div>
                                     </div>
                                     @if ($withdrawal->withdrawal_type == 'gcash')
                                         <h3>GCASH Information</h3>
@@ -114,8 +130,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="container">
-
+                                    <div class="text-right mt-2">
+                                        <button data-value="failed" class="btn btn-outline-secondary">Change to Failed</button>
+                                        <button data-value="processing" class="btn btn-outline-secondary">Change to Processing</button>
+                                        <button data-value="paid" class="btn btn-secondary">Change to Paid</button>
                                     </div>
                                 </div>
                             </div>
@@ -126,3 +144,9 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+
+    </script>
+@endpush
