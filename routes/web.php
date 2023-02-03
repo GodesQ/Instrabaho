@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*===MIDDLEWARE===*/
 use App\Http\Middleware\WebAuth;
@@ -50,6 +51,9 @@ use App\Http\Controllers\Web\Admin\UserPermissionController;
 use App\Http\Controllers\Web\Admin\UserTypesController;
 
 use App\Events\ProjectMessageEvent;
+
+use Pusher\Pusher;
+
 /*
 |--------------------------------------------------------------------------
 | PUBLIC Routes
@@ -75,6 +79,26 @@ use App\Events\ProjectMessageEvent;
 
     Route::get('/freelancers/{username}', [HomeScreenController::class, 'freelancer'])->name('freelancer.view');
     Route::get('/employer/view/{id}', [HomeScreenController::class, 'employer'])->name('employer.view');
+
+    Route::post('/project-chats', function (Request $request) {
+        $user = auth('user')->user();
+
+        $socket_id = $request->socket_id;
+        $channel_name = $request->channel_name;
+        $key = getenv('PUSHER_APP_KEY');
+        $secret = getenv('PUSHER_APP_SECRET');
+        $app_id = getenv('PUSHER_APP_ID');
+
+        if ($user) {
+            $pusher = new Pusher($key, $secret, $app_id);
+            $auth = $pusher->socket_Auth($channel_name, $socket_id);
+            return response()->json($auth);
+        } else {
+            header('', true, 403);
+            echo "Forbidden";
+            return;
+        }
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -252,6 +276,10 @@ use App\Events\ProjectMessageEvent;
         Route::post('/submit_proposal', [ServicesProposalController::class, 'submit_proposal'])->name('submit_proposal');
         Route::post('/purchased_service/change_status', [ServicesProposalController::class, 'change_status'])->name('change_status');
 
+        Route::get('/test_email', function() {
+            return view('AllScreens.emails.paid-withdrawal');
+        });
+
         // This is for service chat
         Route::get('/get_chat/{id}', [ChatController::class, 'get_chat'])->name('get_chat');
         Route::post('/send_chat', [ChatController::class, 'send_chat'])->name('send_chat');
@@ -263,7 +291,7 @@ use App\Events\ProjectMessageEvent;
 
         Route::get('/user_fund', [UserFundsController::class, 'user_funds'])->name('user_funds');
         Route::post('/deposit', [UserFundsController::class, 'deposit'])->name('deposit');
-        Route::post('/withdrawals', [UserFundsController::class, 'withdrawals'])->name('withdrawals');
+        Route::post('/withdrawals', [WithdrawalController::class, 'withdraw'])->name('withdrawals');
 
         Route::get('/project_pay_job/{type}/{id}', [ProjectPayJobController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
         Route::post('/project_pay_job', [ProjectPayJobController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');
@@ -377,6 +405,8 @@ use App\Events\ProjectMessageEvent;
         Route::get('employers_followers', [FollowEmployerController::class, 'admin_index'])->name('employers_followers');
         Route::get('employers_followers/data_table', [FollowEmployerController::class, 'data_table'])->name('employers_followers.datatables');
 
+        // Route::get('verified_freelancers', );
+
         Route::get('saved_services', [SaveServiceController::class, 'admin_index'])->name('saved_services');
 
         Route::get('transactions', [TransactionsController::class, 'index'])->name('transactions');
@@ -385,6 +415,7 @@ use App\Events\ProjectMessageEvent;
         Route::get('withdrawals', [WithdrawalController::class, 'index'])->name('withdrawals');
         Route::get('withdrawals/data_table', [WithdrawalController::class, 'data_table'])->name('withdrawals.data_table');
         Route::get('withdrawals/show/{id}', [WithdrawalController::class, 'show'])->name('withdrawals.show');
+        Route::put('withdrawals/update_status', [WithdrawalController::class, 'update_status'])->name('withdrawals.update_status');
 
 
         Route::get('user_types', [UserTypesController::class, 'index'])->name('user_types');

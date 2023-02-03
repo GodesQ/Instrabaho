@@ -61,7 +61,7 @@ class Project extends Model
         return $skills;
     }
 
-    public function scopeBestResult($query, $value) {
+    protected function scopeNotSameResult() {
 
     }
 }
