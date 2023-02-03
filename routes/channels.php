@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 */
 
 Broadcast::channel('project-chats.{id}', function ($user, $id) {
-    return (int) \Auth::guard('user')->user()->id == (int) $id;
+
 });
 
 Broadcast::channel('Chat.{session}', function ($user, Session $session) {
