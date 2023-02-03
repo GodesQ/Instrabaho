@@ -5,6 +5,9 @@
         <div class="page-content">
             <div class="page-body">
                 <div class="container">
+                    <div class="my-1">
+                        <a href="/admin/withdrawals" class="btn btn-secondary">Back to Withdrawal List</a>
+                    </div>
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -37,7 +40,7 @@
                                         </div>
                                         <div class="row my-1">
                                             <div class="col-xl-5 col-lg-12 font-weight-bold">
-                                                Withdraw Transaction Code :
+                                                Transaction Code :
                                             </div>
                                             <div class="col-xl-7 col-lg-12">
                                                 {{ $withdrawal->transaction_code }}
@@ -45,7 +48,7 @@
                                         </div>
                                         <div class="row my-1">
                                             <div class="col-xl-5 col-lg-12 font-weight-bold">
-                                                Withdrawal Type :
+                                                Type :
                                             </div>
                                             <div class="col-xl-7 col-lg-12">
                                                 {{ $withdrawal->withdrawal_type }}
@@ -53,7 +56,7 @@
                                         </div>
                                         <div class="row my-1">
                                             <div class="col-xl-5 col-lg-12 font-weight-bold">
-                                                Withdrawal Status :
+                                                Status :
                                             </div>
                                             <div class="col-xl-7 col-lg-12">
                                                 @if($withdrawal->status == 'pending')
@@ -65,7 +68,7 @@
                                         </div>
                                         <div class="row my-1">
                                             <div class="col-xl-5 col-lg-12 font-weight-bold">
-                                                Withdrawal Sub Amount :
+                                                Sub Amount :
                                             </div>
                                             <div class="col-xl-7 col-lg-12">
                                                 ₱ {{ number_format($withdrawal->sub_amount, 2) }}
@@ -73,7 +76,7 @@
                                         </div>
                                         <div class="row my-1">
                                             <div class="col-xl-5 col-lg-12 font-weight-bold">
-                                                Withdrawal Total Amount :
+                                                Total Amount :
                                             </div>
                                             <div class="col-xl-7 col-lg-12">
                                                 ₱ {{ number_format($withdrawal->total_amount, 2) }}
@@ -92,6 +95,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                     @endif
                                 </div>
                                 <div class="col-lg-6">
@@ -131,9 +135,16 @@
                                         </div>
                                     </div>
                                     <div class="text-right mt-2">
-                                        <button data-value="failed" class="btn btn-outline-secondary">Change to Failed</button>
-                                        <button data-value="processing" class="btn btn-outline-secondary">Change to Processing</button>
-                                        <button data-value="paid" class="btn btn-secondary">Change to Paid</button>
+                                        <input type="hidden" name="withdrawal_id" id="withdrawal_id" value="{{ $withdrawal->id }}">
+                                        @if($withdrawal->status != 'paid')
+                                            <button data-value="failed" class="btn btn-outline-secondary statusBtn">Change to Failed</button>
+                                        @endif
+                                        @if($withdrawal->status != 'processing' && $withdrawal->status != 'paid')
+                                            <button data-value="processing" class="btn btn-outline-secondary statusBtn">Change to Processing</button>
+                                        @endif
+                                        @if($withdrawal->status != 'failed' && $withdrawal->status != 'paid')
+                                            <button data-value="paid" class="btn btn-secondary statusBtn">Change to Paid</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -147,6 +158,65 @@
 
 @push('scripts')
     <script>
+        $('.statusBtn').on('click', function(e) {
+            let data_value = $(this).attr("data-value");
+            let csrf = "{{ csrf_token() }}";
+            let withdrawal_id = $('#withdrawal_id').val();
+                Swal.fire({
+                    title: "Change Status",
+                    text: "Are you sure you want to change the status?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#000",
+                    confirmButtonText: "Yes, change it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(this).html('Processing...');
+                        $.ajax({
+                            url: '{{ route("admin.withdrawals.update_status") }}',
+                            method: 'PUT',
+                            data: {
+                                _token: csrf,
+                                status: data_value,
+                                id: withdrawal_id
+                            },
+                            success: function (response) {
+                                if(response.status) {
+                                    $(this).html('Successfully Paid');
+                                    Swal.fire(
+                                        "Success!",
+                                        response.message,
+                                        "success"
+                                    ).then((result) => {
+                                        if (result.isConfirmed) {
 
+                                            location.reload();
+                                        }
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        "Failed!",
+                                        response.message,
+                                        "error"
+                                    ).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.reload();
+                                        }
+                                    });
+                                }
+                            },
+                            error: function (xhr) {
+                                if(xhr.status == 422) {
+                                    let errors = JSON.parse(xhr.responseText).errors;
+                                    errors.status.forEach(stat => {
+                                        toastr.error(stat, 'Failed');
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+        })
     </script>
 @endpush

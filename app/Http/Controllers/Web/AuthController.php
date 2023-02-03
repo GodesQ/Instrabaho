@@ -37,6 +37,7 @@ class AuthController extends Controller
 
         $user = Auth::guard('user')->user();
 
+
         $request->session()->put([
             'id' => $user->id,
             'username' => $user->username,

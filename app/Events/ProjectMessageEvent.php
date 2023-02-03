@@ -14,15 +14,17 @@ class ProjectMessageEvent implements ShouldBroadCast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
+    public $chat;
+    public $session_id;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct($message, $session_id)
     {
-        $this->message = $message;
+        $this->chat = $message;
+        $this->session_id = $session_id;
     }
 
     /**
@@ -32,7 +34,7 @@ class ProjectMessageEvent implements ShouldBroadCast
      */
     public function broadcastOn()
     {
-        return new Channel('project-chats');
+        return new PrivateChannel('project-chats.' .  $this->session_id);
     }
 
     public function broadcastAs()

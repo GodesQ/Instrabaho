@@ -119,7 +119,7 @@ class FreelancerController extends Controller
     }
 
     public function update_profile(Request $request) {
-        event(new ProjectMessageEvent('hello world'));
+        event(new ProjectMessageEvent('hello world', session()->get('id')));
 
         $request->validate([
             'gender' => 'required|in:Male,Female',

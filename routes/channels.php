@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,13 +14,12 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('project-chats', function ($user, $id) {
-    return true;
-});
+Broadcast::channel('project-chats.{id}', function ($user, $id) {
+    return (int) \Auth::guard('user')->user()->id == (int) $id;
+}, ['guards' => ['auth:user']]);
 
 Broadcast::channel('Chat.{session}', function ($user, Session $session) {
     if ($user->id == $session->user1_id || $user->id == $session->user2_id) {
         return true;
     }
-    return false;
 });

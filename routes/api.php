@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\FreelancersController;
 use App\Http\Controllers\Api\EmployersController;
 use App\Http\Controllers\Api\ProjectProposalController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ProjectChatController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,8 +24,6 @@ use App\Http\Controllers\Api\UserController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-
-
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 

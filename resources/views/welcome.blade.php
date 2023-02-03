@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'INSTRABAHO - HOME')
+@section('title', 'INSTRABAHO - ONLINE PLATFORM FOR SKILLED WORKERS AND EMPLOYERS')
 
 @section('content')
     @if (Session::get('success'))
@@ -376,13 +376,20 @@
  <script>
      // Enable pusher logging - don't include this in production
      Pusher.logToConsole = true;
-    let backendBaseUrl = "http://127.0.0.1:8000";
+    let backendBaseUrl = "http://192.168.100.71:8000";
+    let session_id = 11;
 
     var pusher = new Pusher('0a303fc13dbe529739fa', {
         cluster: 'ap1',
+        authEndpoint: `${backendBaseUrl}/broadcasting/auth`,
+        auth: {
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            }
+        }
     });
 
-    var channel = pusher.subscribe('project-chats');
+    var channel = pusher.subscribe('private-project-chats.' + session_id);
 
     channel.bind('new-project-chats', function(data) {
         console.log(data);

@@ -76,13 +76,13 @@
                                             <div>
                                                 <a href="/projects/{{ $project->id }}/{{ $project->title }}" class="font-weight-medium h4 info">{{ strlen($project->title) > 15 ? substr($project->title, 0, 15) . '...' : $project->title }}</a>
                                                 <div class="warning">{{ $project->employer->user->firstname . " " . $project->employer->user->lastname }}</div>
-                                                <div class="font-weight-bold">Location: <span class="font-weight-normal">{{ substr($project->location, 0, 25) }}...</span></div>
+                                                <div class="font-weight-bold">Location: <span class="font-weight-normal">{{ substr($project->location, 0, 20) }}...</span></div>
                                                 <div class="font-weight-bold">Distance: <span class="font-weight-normal">{{ number_format($project->distance, 2) }} km</span></div>
                                             </div>
                                         </div>
                                         <div class=" my-1 d-flex justify-content-end align-items-center">
-                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}" class="btn btn-outline-primary mr-50">View Project</a>
-                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}#fr-bid-form" class="btn btn-primary">Apply</a>
+                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}" class="btn btn-outline-primary mr-50">View Project <i class="fa fa-eye"></i></a>
+                                            <a href="/projects/{{ $project->id }}/{{ $project->title }}#fr-bid-form" class="btn btn-primary">Apply <i class="fa fa-send"></i></a>
                                         </div>
                                     </div>
                                 </div>
