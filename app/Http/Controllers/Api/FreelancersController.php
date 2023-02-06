@@ -7,10 +7,30 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\Freelancer;
 use App\Models\User;
+use App\Http\Requests\Freelancer\UpdateProfileRequest;
 
 class FreelancersController extends Controller
 {
-    //
+    public function update_profile(UpdateProfileRequest $request) {
+        if($request->header('user_id')) response()->json(['status' => false, 'message' => "Forbidden."], 403);
+
+        $freelancer = Freelancer::where('user_id', $request->header('user_id'))->firstOr(function () {
+            return response()->json(['status' => false, 'message' => "Freelancer doesn't exist."], 406);
+        });
+
+        $freelancer_data = array_diff($request->validated(), [$request->username, $request->firstname, $request->lastname, $request->middlename, $request->email]);
+
+        $freelancer_update = $freelancer->update($freelancer_data);
+        $freelancer_user_update = $freelancer->user()->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'middlename' => $request->middlename,
+            'username' => $request->username,
+        ]);
+
+        if($freelancer_update && $freelancer_user_update) return response()->json(['status' => true, 'message' => 'User updated successfully'], 200);
+        return response()->json(['status' => false, 'message' => 'Something went wrong'], 500);
+    }
 
     public function freelancers(Request $request) {
         $freelancers = Freelancer::with('user', 'freelancer_skills')->get();

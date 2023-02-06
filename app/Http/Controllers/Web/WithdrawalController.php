@@ -153,6 +153,10 @@ class WithdrawalController extends Controller
             'status' => $request->status,
         ]);
 
+        $withdraw_data->transaction->update([
+            'status' => $request->status,
+        ]);
+
         if($update_withdraw) return response()->json(['status' => true, 'message' => 'Status change successfully']);
     }
 }

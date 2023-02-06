@@ -190,7 +190,6 @@
                                         "success"
                                     ).then((result) => {
                                         if (result.isConfirmed) {
-
                                             location.reload();
                                         }
                                     });
