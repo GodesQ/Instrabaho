@@ -372,7 +372,7 @@
     </div>
 </section>
 
-{{-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+ <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
  <script>
      // Enable pusher logging - don't include this in production
      Pusher.logToConsole = true;
@@ -396,12 +396,12 @@
     });
 
     channel.bind('pusher:subscription_succeeded', function(members) {
-
+        console.log(members);
     });
 
     channel.bind('pusher:subscription_error', function(data) {
 
     });
 
- </script> --}}
+ </script>
 @endsection
