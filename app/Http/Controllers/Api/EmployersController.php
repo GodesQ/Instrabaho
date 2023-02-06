@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Employer;
 use App\Models\User;
+use App\Http\Requests\Employer\UpdateProfileRequest;
 
 class EmployersController extends Controller
 {
@@ -44,5 +45,27 @@ class EmployersController extends Controller
         }
     }
 
+    public function update_profile(UpdateProfileRequest $request) {
+        if($request->header('user_id')) return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
+        $employer = Employer::where('user_id', $request->header('user_id'))->firstOr(function() {
+            return response()->json([
+                'status' => false,
+                'message' => "Employer doesn't exist"
+            ]);
+        });
 
+        $employer_data = array_diff($request->validated(), [$request->firstname, $request->lastname, $request->middlename, $request->username, $request->email]);
+        $employer_update = $employer->update($employer_data);
+
+        $employer_user_update = $employer->user()->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'middlename' => $request->middlename,
+            'username' => $request->username,
+            'email' => $request->email,
+        ]);
+
+        if($employer_update && $employer_user_update) return response()->json(['status' => true, 'message' => 'User updated successfully.']);
+        return response()->json(['status' => false, 'message' => 'Something went wrong']);
+    }
 }

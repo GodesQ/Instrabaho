@@ -68,10 +68,10 @@ class AuthController extends Controller
             'status' => $redirect_status,
             'message' => 'User Logged In Successfully',
             'user' => $user,
+            'user_role_data' => $request->role == 'freelancer' ? $user_freelancer : $user_employer,
             'role' => $request->role,
             'token' => $user->createToken("API TOKEN")->plainTextToken
         ], 200);
-
     }
 
     public function register(Request $request) {

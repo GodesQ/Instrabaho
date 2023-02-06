@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/store_proposal', [ProjectProposalController::class, 'store'])->name('proposal.store');
 
     Route::group(['prefix'=> 'employer', 'middleware'=> ['employer.access']], function(){
+        Route::post('/update_profile', [EmployersController::class, 'update_profile'])->name('employer.update_profile');
         # Routes for projects
         Route::get('/projects', [ProjectsController::class, 'employer_projects']);
         Route::get('/projects/ongoing', [ProjectsController::class, 'employer_ongoing_projects']);
@@ -56,6 +57,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::group(['prefix'=> 'freelancer', 'middleware'=> ['freelancer.access']], function(){
         Route::post('/update_profile', [FreelancersController::class, 'update_profile'])->name('freelancer.update_profile');
+
         Route::get('/projects/ongoing', [ProjectsController::class, 'freelancer_ongoing_projects']);
         Route::get('/projects/completed', [ProjectsController::class, 'freelancer_completed_projects']);
         Route::get('proposal_lists', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('freelancer.proposals');
@@ -66,7 +68,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/project_get_chat/{id}/{type}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');
     Route::post('/send_project_chat', [ProjectChatController::class, 'send_project_chat'])->name('send_project_chat');
-
 
     Route::post('logout', [AuthController::class, 'logout']);
 });

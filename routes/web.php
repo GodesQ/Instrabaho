@@ -291,7 +291,7 @@ use Pusher\Pusher;
 
         Route::get('/user_fund', [UserFundsController::class, 'user_funds'])->name('user_funds');
         Route::post('/deposit', [UserFundsController::class, 'deposit'])->name('deposit');
-        Route::post('/withdrawals', [WithdrawalController::class, 'withdraw'])->name('withdrawals');
+        Route::post('/withdrawals', [WithdrawalController::class, 'withdrawals'])->name('withdrawals');
 
         Route::get('/project_pay_job/{type}/{id}', [ProjectPayJobController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');
         Route::post('/project_pay_job', [ProjectPayJobController::class, 'pay_job'])->name('pay_job')->middleware('employer.access');

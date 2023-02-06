@@ -40,55 +40,49 @@ class WithdrawalController extends Controller
             return back()->with('fail', 'Invalid User');
         });
 
+        $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
+        $transaction = Transaction::create([
+            'name_of_transaction' => 'Withdrawal',
+            'transaction_type' => 'withdraw',
+            'transaction_code' => $transaction_code,
+            'amount' => $amount,
+            'sub_amount' => $amount,
+            'from_id' => $user->id,
+            'to_id' => 0,
+            'payment_method' => $request->payment_method,
+            'status' => 'pending'
+        ]);
+
+        $reference_no = 'REF-NO' . '-' . strtoupper(Str::random(16));
+        $withdrawal = Withdrawal::create([
+            'reference_no' => $reference_no,
+            'user_id' => $user->id,
+            'transaction_code' => $transaction->transaction_code,
+            'txn_id' => $transaction->id,
+            'withdrawal_type' => $request->payment_method,
+            'sub_amount' => $amount,
+            'total_amount' => $amount,
+            'status' => 'pending'
+        ]);
+
+
         switch ($request->payment_method) {
             case 'gcash':
-                DB::beginTransaction();
-                try {
-                    $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
-                    $transaction = Transaction::create([
-                        'name_of_transaction' => 'Withdrawal',
-                        'transaction_type' => 'withdraw',
-                        'transaction_code' => $transaction_code,
-                        'amount' => $amount,
-                        'sub_amount' => $amount,
-                        'from_id' => $user->id,
-                        'to_id' => 0,
-                        'payment_method' => $request->payment_method,
-                        'status' => 'pending'
-                    ]);
-
-                    $reference_no = 'REF-NO' . '-' . strtoupper(Str::random(16));
-                    $withdrawal = Withdrawal::create([
-                        'reference_no' => $reference_no,
-                        'user_id' => $user->id,
-                        'transaction_code' => $transaction->transaction_code,
-                        'txn_id' => $transaction->id,
-                        'withdrawal_type' => $request->payment_method,
-                        'sub_amount' => $amount,
-                        'total_amount' => $amount,
-                        'status' => 'pending'
-                    ]);
-
-                    $gcash_withdrawal = GcashWithdrawal::create([
-                        'withdrawal_id' => $withdrawal->id,
-                        'gcash_number' => $request->gcash_number,
-                    ]);
-
-                } catch(\Exception $e)
-                {
-                    DB::rollback();
-                    throw $e;
-                }
+                $gcash_withdrawal = GcashWithdrawal::create([
+                    'withdrawal_id' => $withdrawal->id,
+                    'gcash_number' => $request->gcash_number,
+                ]);
                 return back()->with('success', 'Withdraw Request Successfully Send');
             case 'card':
-
-                break;
-            default:
-
-                break;
+                $card_withdrawal = CardWithdrawal::create([
+                    'withdrawal_id' => $withdrawal->id,
+                    'card_no' => $request->card_number,
+                    'exp_month' => $request->exp_month,
+                    'exp_year' => $request->exp_year,
+                    'cvc' => $request->cvc
+                ]);
+               return back()->with('success', 'Withdraw Request Successfully Send');
         }
-
-
     }
 
     public function index(Request $request) {
@@ -146,6 +140,7 @@ class WithdrawalController extends Controller
                 break;
 
             case 'failed':
+
                 break;
         }
 

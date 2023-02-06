@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Http\Requests\User\ChangePasswordRequest;
 
 class UserController extends Controller
 {
@@ -50,20 +51,14 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function user_change_password(Request $request) {
-
-        $request->validate([
-            'old_password' => 'required|min:3',
-            'new_password' => 'required|min:3',
-            'confirm_password' => 'required|min:3,same:new_password'
-        ]);
+    public function user_change_password(ChangePasswordRequest $request) {
 
         if(!$request->header('user_id')) return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
 
         $user = User::where('id', $request->header('user_id'))->first();
 
-        if(!Hash::check($request->old_password, $user->password)) return back()->with('fail', "Sorry your old password is incorrect.");
-        if($request->confirm_password != $request->new_password) return back()->with('fail', "Sorry your password didn't match to confirm password.");
+        if(!Hash::check($request->old_password, $user->password)) return response()->json(['status' => false, 'message' => 'Sorry your old password is incorrect.']);
+        if($request->confirm_password != $request->new_password) return response()->json(['status' => false, 'message' => "Sorry your password didn't match to confirm password."]);
 
         $user->password = Hash::make($request->new_password);
         $save = $user->save();
@@ -77,5 +72,6 @@ class UserController extends Controller
             'status' => false,
             'message' => 'Fail to change password'
         ], 409);
+
     }
 }
