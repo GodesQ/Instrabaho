@@ -66,7 +66,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/submit_proposal', [ProjectProposalController::class, 'store'])->middleware('freelancer.access');
     Route::get('/proposal/info/{id}', [ProjectProposalController::class, 'proposal']);
 
-    Route::get('/project_get_chat/{id}/{type}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');
+    Route::get('/proposal/get_chat/{id}/{type}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');
     Route::post('/send_project_chat', [ProjectChatController::class, 'send_project_chat'])->name('send_project_chat');
 
     Route::post('logout', [AuthController::class, 'logout']);

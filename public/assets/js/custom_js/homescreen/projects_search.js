@@ -48,7 +48,6 @@ $(document).ready(function() {
         })
     }
 
-
     var map;
     var latEl, longEl, my_marker, circle;
 

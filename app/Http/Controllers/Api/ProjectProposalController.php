@@ -51,13 +51,20 @@ class ProjectProposalController extends Controller
         }
     }
 
-    public function proposal(Request $request) {
+    public function proposal(Request $request, $id) {
         $role = $request->header('role');
-        if(!$role) return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
+
+
+        $owner = Freelancer::where("user_id", $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Owner Not Found'], 404);
+        });
+
 
         # get the proposal data
-        $proposal = ProjectProposal::where('id', $request->id)->with('employer', 'freelancer', 'project')->firstOr(function() {
-           return response()->json(['status' => false, 'message' => 'Not Found'], 404);
+        $proposal = ProjectProposal::where('id', $id)->where('freelancer_id', $owner->id)->with('employer', 'freelancer', 'project')->firstOr(function() {
+           return response()->json(['status' => false, 'message' => 'Proposal Not Found'], 404);
         });
 
         # set initial receiver to employer
@@ -78,7 +85,7 @@ class ProjectProposalController extends Controller
 
         # if the login user is freelancer then change the outgoing and incoming messages user id
         if($role == 'freelancer') {
-            $incoming_msg_id = $proposal->employer_id ;
+            $incoming_msg_id = $proposal->employer_id;
             $outgoing_msg_id = $proposal->freelancer_id;
         }
 

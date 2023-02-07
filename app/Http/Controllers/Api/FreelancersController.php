@@ -27,9 +27,7 @@ class FreelancersController extends Controller
             'middlename' => $request->middlename,
             'username' => $request->username,
         ]);
-
-        if($freelancer_update && $freelancer_user_update) return response()->json(['status' => true, 'message' => 'User updated successfully'], 200);
-        return response()->json(['status' => false, 'message' => 'Something went wrong'], 500);
+        return response()->json(['status' => true, 'message' => 'User updated successfully'], 200);
     }
 
     public function freelancers(Request $request) {
