@@ -95,7 +95,44 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    @endif
 
+                                    @if($withdrawal->withdrawal_type == 'card')
+                                        <h3>CARD Information</h3>
+                                        <div class="container rounded py-1 px-2 my-1" style="background: rgb(247, 247, 247);">
+                                            <div class="row my-1">
+                                                <div class="col-xl-5 col-lg-12 font-weight-bold">
+                                                    Card Number :
+                                                </div>
+                                                <div class="col-xl-7 col-lg-12">
+                                                    {{ $withdrawal->type_data->card_no }}
+                                                </div>
+                                            </div>
+                                            <div class="row my-1">
+                                                <div class="col-xl-5 col-lg-12 font-weight-bold">
+                                                    Card Expiry Month :
+                                                </div>
+                                                <div class="col-xl-7 col-lg-12">
+                                                    {{ $withdrawal->type_data->exp_month }}
+                                                </div>
+                                            </div>
+                                            <div class="row my-1">
+                                                <div class="col-xl-5 col-lg-12 font-weight-bold">
+                                                    Card Expiry Year :
+                                                </div>
+                                                <div class="col-xl-7 col-lg-12">
+                                                    {{ $withdrawal->type_data->exp_year }}
+                                                </div>
+                                            </div>
+                                            <div class="row my-1">
+                                                <div class="col-xl-5 col-lg-12 font-weight-bold">
+                                                    CVC :
+                                                </div>
+                                                <div class="col-xl-7 col-lg-12">
+                                                    {{ $withdrawal->type_data->cvc }}
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endif
                                 </div>
                                 <div class="col-lg-6">

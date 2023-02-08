@@ -91,7 +91,6 @@ class WithdrawalController extends Controller
 
     public function data_table(Request $request) {
         abort_if(!$request->ajax(), 404);
-
         $data = Withdrawal::select('*')->with('user', 'transaction');
         return DataTables::of($data)
                 ->addIndexColumn()
@@ -124,7 +123,7 @@ class WithdrawalController extends Controller
     }
 
     public function update_status(UpdateWithdrawalStatus $request) {
-        if(!$request->ajax()) return response()->json(['status' => false, 'message' => 'Something went wrong, Please try again.']);
+        if(!$request->ajax()) return response()->json(['status' => false, 'message' => 'Not Found'], 404);
 
         $withdraw_data = Withdrawal::where('id', $request->id)->first();
         $user_wallet = UserWallet::where('user_id', $withdraw_data->user_id)->firstOr(function() {
@@ -133,12 +132,11 @@ class WithdrawalController extends Controller
 
         switch ($request->status) {
             case 'paid':
-                Mail::to($withdraw_data->user->email)->send(new PaidWithdrawal($withdraw_data->user));
+                    Mail::to($withdraw_data->user->email)->send(new PaidWithdrawal($withdraw_data->user));
                 break;
             case 'processing':
 
                 break;
-
             case 'failed':
 
                 break;
