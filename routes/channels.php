@@ -19,7 +19,7 @@ Broadcast::channel('project-chats.{id}', function($user, $id) {
     if($user) {
         return (int) $user->id === (int) $id;
     }
-}, ['guard' => 'user']);
+});
 
 
 // Broadcast::channel('Chat.{session}', function ($user, Session $session) {
