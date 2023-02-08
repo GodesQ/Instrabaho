@@ -57,6 +57,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::group(['prefix'=> 'freelancer', 'middleware'=> ['freelancer.access']], function(){
         Route::post('/update_profile', [FreelancersController::class, 'update_profile'])->name('freelancer.update_profile');
+        Route::get('/freelancer_skills', [FreelancersController::class, 'fetch_freelancer_skills']);
+
+        Route::get('/freelancer_projects', [FreelancersController::class, 'fetch_freelancer_projects']);
 
         Route::get('/projects/ongoing', [ProjectsController::class, 'freelancer_ongoing_projects']);
         Route::get('/projects/completed', [ProjectsController::class, 'freelancer_completed_projects']);

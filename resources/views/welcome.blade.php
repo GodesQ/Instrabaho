@@ -396,6 +396,7 @@
     });
 
     channel.bind('pusher:subscription_succeeded', function(members) {
+
     });
 
     channel.bind('pusher:subscription_error', function(data) {
