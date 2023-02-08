@@ -27,10 +27,10 @@ class PostWithdrawal extends FormRequest
             'payment_method' => 'required',
             'amount' => 'required',
             'card_number' => 'required_if:payment_method,card',
-            'gcash_number' => 'required_if:payment_method,gcash',
+            'cvc' => 'required_if:payment_method,card',
             'exp_year' => 'required_if:payment_method,card',
             'exp_month' => 'required_if:payment_method,card',
-            'cvc' => 'required_if:payment_method,card',
+            'gcash_number' => 'required_if:payment_method,gcash',
         ];
     }
 }

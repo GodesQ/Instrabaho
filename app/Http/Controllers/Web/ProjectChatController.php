@@ -34,7 +34,6 @@ class ProjectChatController extends Controller
                 }
             }
         }
-
         echo $output;
     }
 

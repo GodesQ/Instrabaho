@@ -71,6 +71,7 @@
                                                         </div>
                                                         <form action="{{ route('withdrawals') }}" method="POST">
                                                             @csrf
+                                                            <input type="hidden" name="payment_method" value="{{ $user->prefer_payment_method }}">
                                                             <div class="modal-body">
                                                                 @if ($user->prefer_payment_method == 'gcash' || $user->prefer_payment_method == 'grab_pay')
                                                                     <label>Number: </label>
@@ -121,9 +122,9 @@
                                                                                         <input type="text"
                                                                                             class="form-control"
                                                                                             data-mask="00" placeholder="00"
-                                                                                            name="expiry_month">
+                                                                                            name="exp_month">
                                                                                         <span class="text-danger danger">
-                                                                                            @error('expiry_month')
+                                                                                            @error('exp_month')
                                                                                                 {{ $message }}
                                                                                             @enderror
                                                                                         </span>
@@ -136,9 +137,9 @@
                                                                                         <input type="text"
                                                                                             class="form-control"
                                                                                             data-mask="00" placeholder="00"
-                                                                                            name="expiry_year">
+                                                                                            name="exp_year">
                                                                                         <span class="text-danger danger">
-                                                                                            @error('expiry_year')
+                                                                                            @error('exp_year')
                                                                                                 {{ $message }}
                                                                                             @enderror
                                                                                         </span>
