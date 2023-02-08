@@ -65,7 +65,6 @@ class WithdrawalController extends Controller
             'status' => 'pending'
         ]);
 
-
         switch ($request->payment_method) {
             case 'gcash':
                 $gcash_withdrawal = GcashWithdrawal::create([
