@@ -15,9 +15,9 @@ use Illuminate\Http\Request;
 */
 
 
-Broadcast::channel('project-chats.{id}', function($id) {
-    return true;
-});
+// Broadcast::channel('project-chats.{id}', function($user, $id) {
+//     return true;
+// });
 
 
 // Broadcast::channel('Chat.{session}', function ($user, Session $session) {
