@@ -16,9 +16,7 @@ use Illuminate\Http\Request;
 
 
 Broadcast::channel('project-chats.{id}', function($user, $id) {
-    if($user) {
-        return (int) $user->id === (int) $id;
-    }
+    return true;
 }, ['guard' => 'user']);
 
 
