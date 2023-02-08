@@ -7,7 +7,16 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\Freelancer;
 use App\Models\User;
+use App\Models\FreelancerCertificate;
+use App\Models\FreelancerProject;
+use App\Models\FreelancerExperience;
+use App\Models\FreelancerEducation;
+use App\Models\FreelancerSkill;
+use App\Models\Skill;
+
 use App\Http\Requests\Freelancer\UpdateProfileRequest;
+use App\Http\Requests\Freelancer\StoreSkillRequest;
+use App\Http\Requests\Freelancer\StoreProjectRequest;
 
 class FreelancersController extends Controller
 {
@@ -124,6 +133,81 @@ class FreelancersController extends Controller
                 'role' => 'freelancer'
             ], 201);
         }
-
     }
+
+    public function fetch_freelancer_skills(Request $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+        $skills = Skill::all();
+        $freelancer_skills = FreelancerSkill::where('freelancer_id', $freelancer->id)->get();
+        return response()->json([
+            'skills' => $skills,
+            'freelancer_skills' => $freelancer_skills
+        ], 200);
+    }
+
+    public function store_freelancer_skills(StoreSkillRequest $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
+
+        if(!isset($request->skills)) return response()->json(['status' => false, 'message' => 'Add atleast one skills.'], 406);
+
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+        $past_skills = FreelancerSkill::whereIn('freelancer_id', [$freelancer->id])->delete();
+        $save = null;
+
+        foreach ($request->skills as $key => $skill) {
+            $save = $create = FreelancerSkill::create([
+                'freelancer_id' => $freelancer->id,
+                'skill_id' => $skill['skill'],
+                'skill_percentage' =>$skill['skill_percentage']
+            ]);
+        }
+
+        if($save) return response()->json(['status' => true, 'message' => 'Freelancer skills save successfully.'], 201);
+    }
+
+    public function fetch_freelancer_projects(Request $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+        $freelancer_projects = FreelancerProject::where('freelancer_id', $freelancer->id)->get();
+
+        return response()->json([
+            'freelancer_projects' => $freelancer_projects
+        ], 200);
+    }
+
+    public function store_freelancer_projects(StoreProjectRequest $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
+
+        $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
+        $freelancer = Freelancer::where('user_id', $user_id)->first();
+
+        $image_name = null;
+
+        if($request->hasFile('project_image')) {
+            $file = $request->file('project_image');
+            $image_name = $file->getClientOriginalName();
+            $save_file = $file->move(public_path().'/images/freelancer_projects', $image_name);
+        }
+
+        $save = FreelancerProject::create([
+            'freelancer_id' => $freelancer->id,
+            'project_name' => $request->project_name,
+            'project_url' => $request->project_url,
+            'project_image' => $image_name
+        ]);
+
+        return response()->json(['status' => true, 'message' => 'Project Added Successfully']);
+    }
+
+
+
 }
