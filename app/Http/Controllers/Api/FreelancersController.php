@@ -17,6 +17,9 @@ use App\Models\Skill;
 use App\Http\Requests\Freelancer\UpdateProfileRequest;
 use App\Http\Requests\Freelancer\StoreSkillRequest;
 use App\Http\Requests\Freelancer\StoreProjectRequest;
+use App\Http\Requests\Freelancer\StoreCertificateRequest;
+use App\Http\Requests\Freelancer\StoreExperienceRequest;
+use App\Http\Requests\Freelancer\StoreEducationRequest;
 
 class FreelancersController extends Controller
 {
@@ -139,7 +142,11 @@ class FreelancersController extends Controller
         $role = $request->header('role');
         $user_id = $request->header('user_id');
         if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
-        $freelancer = Freelancer::where('user_id', $user_id)->first();
+
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
+
         $skills = Skill::all();
         $freelancer_skills = FreelancerSkill::where('freelancer_id', $freelancer->id)->get();
         return response()->json([
@@ -151,11 +158,14 @@ class FreelancersController extends Controller
     public function store_freelancer_skills(StoreSkillRequest $request) {
         $role = $request->header('role');
         $user_id = $request->header('user_id');
-        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden'], 403);
 
-        if(!isset($request->skills)) return response()->json(['status' => false, 'message' => 'Add atleast one skills.'], 406);
+        if(!isset($request->skills)) return response()->json(['status' => false, 'message' => 'Add atleast one skills'], 406);
 
-        $freelancer = Freelancer::where('user_id', $user_id)->first();
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
+
         $past_skills = FreelancerSkill::whereIn('freelancer_id', [$freelancer->id])->delete();
         $save = null;
 
@@ -174,7 +184,11 @@ class FreelancersController extends Controller
         $role = $request->header('role');
         $user_id = $request->header('user_id');
         if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
-        $freelancer = Freelancer::where('user_id', $user_id)->first();
+
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
+
         $freelancer_projects = FreelancerProject::where('freelancer_id', $freelancer->id)->get();
 
         return response()->json([
@@ -188,7 +202,10 @@ class FreelancersController extends Controller
         if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
 
         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
-        $freelancer = Freelancer::where('user_id', $user_id)->first();
+
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
 
         $image_name = null;
 
@@ -208,6 +225,105 @@ class FreelancersController extends Controller
         return response()->json(['status' => true, 'message' => 'Project Added Successfully']);
     }
 
+    public function fetch_freelancer_certificates(Request $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
 
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
+        $freelancer_certificates = FreelancerCertificate::where('freelancer_id', $freelancer->id)->get();
+
+        return response()->json([
+            'freelancer_certificates' => $freelancer_certificates
+        ], 200);
+    }
+
+    public function store_freelancer_certificates(StoreCertificateRequest $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
+
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
+
+        $image_name = null;
+
+        if($request->hasFile('certificate_image')) {
+            $file = $request->file('certificate_image');
+            $image_name = $file->getClientOriginalName();
+            $save_file = $file->move(public_path().'/images/freelancer_certificates', $image_name);
+        }
+
+        $save = FreelancerCertificate::create([
+            'freelancer_id' => $freelancer->id,
+            'certificate' => $request->certificate,
+            'certificate_date' => $request->certificate_date,
+            'certificate_image' => $image_name
+        ]);
+
+        if($save) return response()->json(['status' => true, 'message' => 'Project Added Successfully']);
+    }
+
+    public function fetch_freelancer_experiences(Request $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
+
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
+
+        $freelancer_experiences = FreelancerExperience::where('freelancer_id', $freelancer->id)->get();
+
+        return response()->json([
+            'freelancer_experiences' => $freelancer_experiences
+        ], 200);
+    }
+
+    public function store_freelancer_experiences(StoreExperienceRequest $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
+
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
+
+        $save = FreelancerExperience::create(array_merge($request->validated(), ['freelancer_id' => $freelancer->id]));
+        if($save) return response()->json(['status' => true, 'message' => 'Experience Added Successfully']);
+    }
+
+    public function fetch_freelancer_educations(Request $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden.'], 403);
+
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
+
+        $freelancer_educations = FreelancerEducation::where('freelancer_id', $freelancer->id)->get();
+
+        return response()->json([
+            'freelancer_educations' => $freelancer_educations
+        ], 200);
+    }
+
+    public function store_freelancer_educations(StoreEducationRequest $request) {
+        $role = $request->header('role');
+        $user_id = $request->header('user_id');
+        if(!$role && !$user_id) return response()->json(['status' => true, 'message' => 'Forbidden'], 403);
+
+        $freelancer = Freelancer::where('user_id', $user_id)->firstOr(function() {
+            return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
+        });
+
+        $save = FreelancerExperience::create(array_merge($request->validated(), ['freelancer_id' => $freelancer->id]));
+        if($save) return response()->json(['status' => true, 'message' => 'Education Added Successfully']);
+
+    }
 
 }

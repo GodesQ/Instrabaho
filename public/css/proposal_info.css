@@ -1,0 +1,19 @@
+.propasal-container {
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    background: #fff !important;
+}
+.proposal-info {
+    width: 50%;
+    height: 100%;
+}
+.proposal-chat {
+    width: 50%;
+    height: 100%;
+    box-shadow: 0 10px 40px 0 rgb(62 57 107 / 7%), 0 2px 9px 0 rgb(62 57 107 / 6%);
+}
+

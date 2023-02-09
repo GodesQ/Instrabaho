@@ -64,6 +64,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/plugins/forms/switch.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/fontawesome1.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('css/proposal_info.css') }}" />
 
 
     <!-- END: Page CSS-->

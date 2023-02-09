@@ -227,7 +227,6 @@ class FreelancerController extends Controller
     }
 
     public function store_experiences(Request $request) {
-
          $validation = $request->validate([
             'experiences.*.experience' => 'required',
             'experiences.*.company_name' => 'required',
@@ -236,9 +235,6 @@ class FreelancerController extends Controller
         ]);
 
         if(!isset($request->experiences)) return back()->with('fail', 'Add atleast one experiences.');
-
-
-
 
         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
         $freelancer = Freelancer::where('user_id', $user_id)->first();
@@ -282,6 +278,7 @@ class FreelancerController extends Controller
                 'description' => $education['description']
             ]);
         }
+
         return back()->with('success', 'Education update successfully.');
     }
 
