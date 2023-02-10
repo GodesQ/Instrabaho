@@ -119,14 +119,13 @@ class FreelancerController extends Controller
     }
 
     public function update_profile(Request $request) {
-
         $request->validate([
             'gender' => 'required|in:Male,Female',
         ]);
 
         $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
         $freelancer = Freelancer::where('user_id', $request->id)->first();
-        event(new ProjectMessageEvent($request->firstname, 11));
+        event(new ProjectMessageEvent($request->firstname, 12));
 
         $freelancer->update($data);
         $freelancer->user()->update([
