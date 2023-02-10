@@ -288,6 +288,7 @@ use Pusher\Pusher;
 
         Route::get('/project_get_chat/{id}/{type}', [ProjectChatController::class, 'project_get_chat'])->name('project_get_chat');
         Route::post('/send_project_chat', [ProjectChatController::class, 'send_project_chat'])->name('send_project_chat');
+        Route::post('/chat_typing', [ProjectChatController::class, 'chat_typing'])->name('chat_typing');
 
         Route::get('/user_fund', [UserFundsController::class, 'user_funds'])->name('user_funds');
         Route::post('/deposit', [UserFundsController::class, 'deposit'])->name('deposit');

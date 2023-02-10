@@ -10,20 +10,21 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ProjectMessageEvent implements ShouldBroadCast
+class ChatTypingEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
+    public $is_typing;
     public $user_id;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message, $user_id)
+    public function __construct($status, $user_id)
     {
-        $this->message = $message;
+        $this->is_typing = $status;
         $this->user_id = $user_id;
     }
 
@@ -34,11 +35,10 @@ class ProjectMessageEvent implements ShouldBroadCast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('project-chats.' .  $this->user_id);
+        return new PrivateChannel('chat-typing.' . $this->user_id);
     }
 
-    public function broadcastAs()
-    {
-        return 'new-project-chats';
+    public function broadcastAs() {
+        return 'new-chat-typing';
     }
 }

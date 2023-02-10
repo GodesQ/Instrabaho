@@ -6,10 +6,14 @@
 @endsection
 
 @section('content')
+
 <div class="page-wrapper">
     <div class="page-content">
         <div class="page-body">
             <div class="container">
+                <div class="btn-group">
+
+                </div>
                 <div class="row">
                     <div class="col-lg-6 rounded">
                         <div class="card">
@@ -20,9 +24,6 @@
                                     </div>
                                     <div class="col-md-12 my-25">
                                         <div class="font-weight-bold">Display Name : <span class="font-weight-normal mx-1">{{ $proposal->freelancer->display_name }}</span></div>
-                                    </div>
-                                    <div class="col-md-12 my-25">
-                                        <div class="font-weight-bold">Tagline : <span class="font-weight-normal mx-1">{{ $proposal->freelancer->tagline }}</span></div>
                                     </div>
                                 </div>
                                 <h3 class="font-weight-bold my-1">Project Info</h3>
@@ -97,9 +98,12 @@
                                 <form action="#" class="typing-area">
                                     @csrf
                                     <input type="hidden" value="{{ $proposal->id }}" id="msg_id" name="msg_id" />
+                                    <input type="hidden" name="receiver_user_id" value="{{ $receiver->user->id }}" id="receiver_user_id">
+                                    <input type="hidden" name="sender_user_id" value="{{ session()->get('id') }}" id="sender_user_id">
                                     <input type="hidden" value="{{ base64_encode('proposal') }}" id="type" name="type">
                                     <input type="text" class="incoming_id" name="incoming_id" value="{{ $incoming_msg_id }}" hidden />
                                     <input type="text" class="outgoing_id" name="outgoing_id" value="{{ $outgoing_msg_id }}" hidden />
+                                    {{-- <textarea name="message" class="form-control" cols="100" rows="2" id="message_input"></textarea> --}}
                                     <input type="text" name="message" class="input-field" id="message_input" placeholder="Type a message here..."/>
                                     <button><i class="fa fa-send"></i></button>
                                 </form>
@@ -192,65 +196,6 @@
 @endsection
 
 @push('scripts')
-<script src="../../../js/project-chat.js"></script>
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-
-<script>
-    window.addEventListener('load', () => {
-        let url_string = location.href;
-        let url = new URL(url_string);
-        var action = url.searchParams.get("act");
-        if(action == 'message') {
-            $('#base-tab32').click();
-        }
-    });
-
-    function updateStatus(e) {
-        Swal.fire({
-            title: "Update Status",
-            text: "Are you sure you want to delete this?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, update it!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: `/update_proposal_status`,
-                    method: 'POST',
-                    data: {
-                        proposal_id : '{{ $proposal->id }}',
-                        status : e.value,
-                        project_id : '{{ $proposal->project_id }}',
-                        _token: '{{ csrf_token()}}'
-                    },
-                    success: function (response) {
-                        if(response.status == 201) {
-                            Swal.fire(
-                                "Update!",
-                                "Record has been updated.",
-                                "success"
-                            ).then((result) => {
-                                if (result.isConfirmed) {
-                                    location.reload();
-                                }
-                            });
-                        } else {
-                            Swal.fire(
-                                "Error!",
-                                "Error updating status.",
-                                "error"
-                            ).then((result) => {
-                                if (result.isConfirmed) {
-                                    location.reload();
-                                }
-                            });
-                        }
-                    },
-                });
-            }
-        });
-    }
-</script>
+<script src="../../../js/project-chat.js"></script>
 @endpush

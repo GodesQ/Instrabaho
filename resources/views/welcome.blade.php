@@ -372,12 +372,12 @@
     </div>
 </section>
 
- <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+ {{-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
  <script>
      // Enable pusher logging - don't include this in production
      Pusher.logToConsole = true;
     let backendBaseUrl = "http://192.168.100.71:8000";
-    let session_id = 11;
+    let session_id = 12;
 
     var pusher = new Pusher('0a303fc13dbe529739fa', {
         cluster: 'ap1',
@@ -403,5 +403,5 @@
 
     });
 
- </script>
+ </script> --}}
 @endsection
