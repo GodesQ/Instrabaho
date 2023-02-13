@@ -26,7 +26,7 @@ inputField.onkeyup = ()=>{
 
 chat_form.onsubmit = (e) => {
     e.preventDefault();
-    if(message != '' && message != null) {
+    if(message_input.value != '' && message_input.value != null) {
         output +=  `<div class="chat outgoing">
                                     <div class="details">
                                         <p>${message_input.value}</p>
@@ -68,7 +68,7 @@ chat_form.onsubmit = (e) => {
 
 function scrollToBottom(){
     chatBox.scrollTop = chatBox.scrollHeight;
-  }
+}
 
 
 function getChats() {
@@ -117,7 +117,7 @@ var channel = pusher.subscribe('private-project-chats.' + sender_user_id);
 
 channel.bind('new-project-chats', function(data) {
     let message_data = data.message;
-    if(message_data.status == 'outgoing') {
+    if (message_data.status == 'outgoing') {
         output += `<div class="chat outgoing">
                         <div class="details">
                             <p>${message_data.message}</p>
@@ -134,11 +134,11 @@ channel.bind('new-project-chats', function(data) {
     scrollToBottom();
 });
 
-var channel = pusher.subscribe('private-project-chats.' + sender_user_id);
+// var channel = pusher.subscribe('private-project-chats.' + sender_user_id);
 
-channel.bind('new-project-chats', function(data) {
+// channel.bind('new-project-chats', function(data) {
 
-});
+// });
 
 
 channel.bind('pusher:subscription_succeeded', function(members) {});
