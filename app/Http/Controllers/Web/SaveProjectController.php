@@ -22,7 +22,7 @@ class SaveProjectController extends Controller
         //check first, if the follower has an account of freelancer before following project
         $user_id = session()->get('id');
         $freelancerExist = Freelancer::where('user_id', $user_id)->first();
-        if(!$freelancerExist) return back()->with('fail', 'You need to create a freelancer account before following projects');
+        if(!$freelancerExist) return back()->with('fail', 'You need to create a freelancer account before saving projects');
 
         //check if the owner_id exist in employer_table
         $owner = Employer::find($owner_id);
@@ -33,8 +33,11 @@ class SaveProjectController extends Controller
         if(!$project) return back()->with('fail', "This Project or Employer doesn't exist.");
 
         // check if the user already save the project
-        $saved_project_exist = SaveProject::where('project_id', $project_id)->where('follower_id', $freelancerExist->id)->exists();
-        if($saved_project_exist) return back()->with('fail', 'You are already follow this project');
+        $saved_project_exist = SaveProject::where('project_id', $project_id)->where('follower_id', $freelancerExist->id)->first();
+        if($saved_project_exist) {
+            $saved_project_exist->delete();
+            return back()->with('success', 'Unsaved Successfully');
+        }
 
         $create = SaveProject::create([
             'project_id' => $project_id,
@@ -43,7 +46,7 @@ class SaveProjectController extends Controller
         ]);
 
         if($create) {
-            return back()->with('success', 'Follow Successfully');
+            return back()->with('success', 'Saved Successfully');
         }
         return back()->with('fail', 'Fail! Something went wrong');
     }
@@ -73,17 +76,12 @@ class SaveProjectController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('project', function($row) {
-                return $row->project->title;
+                return optional($row->project)->title;
             })
             ->addColumn('project_owner', function($row) {
-                return $row->owner->display_name;
+                return optional($row->owner)->display_name;
             })
             ->addColumn('followers', function($row) {
-                // $followers_div = '';
-                // foreach ($row->followers as $key => $follower) {
-                //     $followers_div .= '<img src=".../../../images/user/profile/'.$follower->user->profile_image.'" alt="" class="avatar avatar-sm" style="margin-left: -10px;">';
-                // }
-
                 $follower_label = $row->followers->count() > 1 ? 'Followers' : 'Follower';
                 return $row->followers->count() . ' ' . $follower_label;
             })

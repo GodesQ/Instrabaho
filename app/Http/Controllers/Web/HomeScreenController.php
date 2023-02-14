@@ -139,7 +139,7 @@ class HomeScreenController extends Controller
 
         $service_categories = ServiceCategory::toBase()->get();
         $skills = Skill::toBase()->get();
-        return view('CustomerScreens.home_screens.project.project-search', compact('projects', 'service_categories', 'skills'));
+        return view('CustomerScreens.home_screens.project.project-search', compact('projects', 'service_categories', 'skills', 'user'));
     }
 
     public function fetch_projects(Request $request) {
@@ -180,7 +180,10 @@ class HomeScreenController extends Controller
         ->latest('id')
         ->paginate(12);
 
-        $view_data = view('CustomerScreens.home_screens.project.projects', compact('projects'))->render();
+        $user_id = session()->get('id');
+        $user = session()->get('role') == 'freelancer' ? Freelancer::where('user_id', $user_id)->first() : Employer::where('user_id', $user_id)->first();
+
+        $view_data = view('CustomerScreens.home_screens.project.projects', compact('projects', 'user'))->render();
 
         return response()->json([
             'view_data' => $view_data,

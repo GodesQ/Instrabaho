@@ -200,7 +200,6 @@ class UserFundsController extends Controller
         switch ($paymentIntent->status) {
             case 'awaiting_next_action':
                 return redirect()->route('card-payment.security_check', $transaction->id);
-
             case 'succeeded':
                 return back()->with('success', 'Deposit Successfully.');
             case 'awaiting_payment_method':
@@ -214,9 +213,7 @@ class UserFundsController extends Controller
 
                 $paymentIntent =  Paymongo::paymentIntent()->find($cardPayment->pi_id);
 
-                if ($paymentIntent->status == 'awaiting_next_action') {
-                    return redirect()->route('card-payment.security_check', $transaction->id);
-                }
+                if ($paymentIntent->status == 'awaiting_next_action') return redirect()->route('card-payment.security_check', $transaction->id);
 
                 $transaction->update([
                     'status' => $paymentIntent->status,

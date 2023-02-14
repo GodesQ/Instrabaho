@@ -16,7 +16,6 @@ address = document.querySelector('#address');
     // });
 
     function initialize() {
-
         $(document).on('click', '.pagination .page-item a', function(event) {
             event.preventDefault();
             let page = $(this).attr('href').split('page=')[1];
@@ -233,18 +232,18 @@ address = document.querySelector('#address');
                 draggable: true,
             })
 
-            // circle = new google.maps.Circle({
-            //     center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
-            //     radius: Number(radius) * 1000,
-            //     strokeColor: '#04bbff',
-            //     strokeOpacity: 1,
-            //     strokeWeight: 1,
-            //     fillColor: '#e6f0ff',
-            //     fillOpacity: 0.3,
-            //     map: map
-            // })
-            // circle.bindTo('center', my_marker, 'position');
-            // map.setZoom( 13 );
+            circle = new google.maps.Circle({
+                center: latEl.value == '' ? new google.maps.LatLng( 14.5995124, 120.9842195 ) : new google.maps.LatLng(Number(latEl.value), Number(longEl.value) ),
+                radius: Number(radius) * 1000,
+                strokeColor: '#04bbff',
+                strokeOpacity: 1,
+                strokeWeight: 1,
+                fillColor: '#e6f0ff',
+                fillOpacity: 0.3,
+                map: map
+            })
+            circle.bindTo('center', my_marker, 'position');
+            map.setZoom( 13 );
 
             google.maps.event.addListener( my_marker, "dragend", function ( event ) {
                 var lat, long, address, resultArray;
