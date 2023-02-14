@@ -14,7 +14,7 @@ class SaveProject extends Model
     protected $guarded = [];
 
     public function project() {
-        return $this->belongsTo(Project::class, 'project_id', 'id');
+        return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
     public function owner() {

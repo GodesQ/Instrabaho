@@ -116,6 +116,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link d-flex" id="account-pill-saved-projects" data-toggle="pill" href="#account-vertical-saved-projects" aria-expanded="false">
+                                <i class="feather icon-bookmark"></i>
+                                Saved Projects
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link d-flex" id="account-pill-notifications" data-toggle="pill" href="#account-vertical-notifications" aria-expanded="false">
                                 <i class="feather icon-settings"></i>
                                 Settings
@@ -146,6 +152,15 @@
                                     </div>
                                     <div class="tab-pane fade" id="account-vertical-connections" role="tabpanel" aria-labelledby="account-pill-connections" aria-expanded="false">
                                         @include('UserAuthScreens.user.freelancer.educations-form', [$freelancer])
+                                    </div>
+                                    <div class="tab-pane fade" id="account-vertical-saved-projects" role="tabpanel" aria-labelledby="account-pill-saved-projects" aria-expanded="false">
+                                        @forelse ($freelancer->saved_projects as $saved_project)
+                                            <ul>
+                                                <li>{{ optional($saved_project->project)->title }}</li>
+                                            </ul>
+                                        @empty
+
+                                        @endforelse
                                     </div>
                                     <div class="tab-pane fade" id="account-vertical-notifications" role="tabpanel" aria-labelledby="account-pill-notifications" aria-expanded="false">
                                         <div class="card">

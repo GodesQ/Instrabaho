@@ -43,12 +43,14 @@
                                 </ul>
                                 <h2>{{ $project->title }}</h2>
                                 <div class="fr-project-style">
-                                    <a href="{{ $save_project ? 'javascript:void(0)' : '/freelancer/save_project/' . $project->id . '/' . $project->employer_id }}"
-                                        class="mark_fav protip" data-post-id="225" data-pt-position="top"
-                                        data-pt-scheme="black" data-pt-title="Save Project">
-                                        <i class="{{ $save_project ? 'fa' : 'far' }} fa-heart text-danger"></i>
-                                    </a>
-                                    <a href="#fr-bid-form" class="btn btn-theme scroll"> Send Proposal</a>
+                                    @if(session()->get('role') == 'freelancer')
+                                        <a href="{{ $save_project ? 'javascript:void(0)' : '/freelancer/save_project/' . $project->id . '/' . $project->employer_id }}"
+                                            class="mark_fav protip" data-post-id="225" data-pt-position="top"
+                                            data-pt-scheme="black" data-pt-title="Save Project">
+                                            <i class="{{ $save_project ? 'fa' : 'far' }} fa-heart text-danger"></i>
+                                        </a>
+                                        <a href="#fr-bid-form" class="btn btn-theme scroll"> Send Proposal</a>
+                                    @endif
                                 </div>
                             </div>
                             <div class="fr-project-product-features">

@@ -114,7 +114,7 @@ class FreelancerController extends Controller
         $id = session()->get('id');
         $role = session()->get('role');
         $skills = Skill::all();
-        $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations', 'projects')->first();
+        $freelancer = Freelancer::where('user_id', $id)->with('user', 'certificates', 'experiences', 'educations', 'projects', 'saved_projects.project')->first();
         return view('UserAuthScreens.user.freelancer.freelancer-profile', compact('freelancer', 'skills'));
     }
 
@@ -125,8 +125,6 @@ class FreelancerController extends Controller
 
         $data = $request->except('_token', 'id', 'username', 'email', 'firstname', 'lastname');
         $freelancer = Freelancer::where('user_id', $request->id)->first();
-        event(new ProjectMessageEvent($request->firstname, 12));
-
         $freelancer->update($data);
         $freelancer->user()->update([
             'firstname' => $request->firstname,

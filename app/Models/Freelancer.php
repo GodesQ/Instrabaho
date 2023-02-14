@@ -14,7 +14,7 @@ class Freelancer extends Model
 
     protected $casts = ['user_id', 'hourly_rate'];
 
-    protected $appends = ['rate', 'total_reviews'];
+    protected $appends = ['rate', 'total_reviews', 'saved_project_ids'];
 
     public function user() {
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -42,6 +42,10 @@ class Freelancer extends Model
 
     public function projects() {
         return $this->hasMany(FreelancerProject::class, 'freelancer_id');
+    }
+
+    public function saved_projects() {
+        return $this->hasMany(SaveProject::class, 'follower_id');
     }
 
     public function freelancer_skills() {
@@ -116,6 +120,17 @@ class Freelancer extends Model
 
     public function total_reviews() {
         return FreelancerReview::where('freelancer_id', $this->id)->count();
+    }
+
+    public function getSavedProjectIdsAttribute() {
+        return $this->saved_projects_ids();
+    }
+
+    public function saved_projects_ids() {
+        $saved_projects = SaveProject::where('follower_id', $this->id)->get();
+        $saved_project_ids = [];
+        foreach ($saved_projects as $key => $saved_project) array_push($saved_project_ids, $saved_project->project_id);
+        return $saved_project_ids;
     }
 
 }
