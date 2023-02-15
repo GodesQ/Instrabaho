@@ -8,7 +8,7 @@
             </button>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.skills.store') }}" method="POST">
+            <form action="/admin/skills/store" method="POST">
                 @csrf
                 <div class="modal-body">
                     <label>Skill: </label>
