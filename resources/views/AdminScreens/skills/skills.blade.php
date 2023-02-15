@@ -110,7 +110,6 @@
             url: `/admin/skills/edit?id=${id}`,
             method: 'GET',
             success: function(response) {
-                console.log(response.skill_name);
                 $('#edit_skill_name').val(response.skill_name);
                 $('#edit_skill_id').val(response.id);
             }

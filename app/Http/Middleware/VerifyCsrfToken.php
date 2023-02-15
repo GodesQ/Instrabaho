@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        'http://127.0.0.1:8000/transaction-postback'
+        'http://192.168.100.71:8000/broadcasting/auth'
     ];
 }

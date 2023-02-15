@@ -154,13 +154,58 @@
                                         @include('UserAuthScreens.user.freelancer.educations-form', [$freelancer])
                                     </div>
                                     <div class="tab-pane fade" id="account-vertical-saved-projects" role="tabpanel" aria-labelledby="account-pill-saved-projects" aria-expanded="false">
-                                        @forelse ($freelancer->saved_projects as $saved_project)
-                                            <ul>
-                                                <li>{{ optional($saved_project->project)->title }}</li>
-                                            </ul>
-                                        @empty
-
-                                        @endforelse
+                                        <div class="row">
+                                            @forelse ($freelancer->saved_projects as $saved_project)
+                                                <div class="col-xxl-4 col-xl-6 col-12 col-md-6 py-1">
+                                                    <a href="/projects/{{ optional($saved_project->project)->id }}/{{ optional($saved_project->project)->title }}">
+                                                        <div class="p-2" style="box-shadow: 5px 5px 5px 0px rgba(181, 230, 250, 0.22);">
+                                                            <div class="d-flex justify-content-between align-items-start">
+                                                                <div style="width: 30%">
+                                                                    @if (optional($saved_project->project)->employer->user->profile_image)
+                                                                        <img class=""
+                                                                            src="../../../images/user/profile/{{ optional($saved_project->project)->employer->user->profile_image }}"
+                                                                            alt="profile image"
+                                                                            style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover;">
+                                                                    @else
+                                                                        <img src="../../../images/user-profile.png" alt=""
+                                                                            style="width: 65px; height: 65px; border-radius: 50%;">
+                                                                    @endif
+                                                                </div>
+                                                                <div style="width: 70%" class="fr-project-content">
+                                                                    <div class="fr-project-f-des"
+                                                                        style="background: transparent !important; padding: 0 !important; min-height: 140px; max-height: 200px;">
+                                                                        <div style="margin: 0 !important;" class="h6">
+                                                                            <a href="/projects/{{ optional($saved_project->project)->id }}/{{ optional($saved_project->project)->title }}"
+                                                                                style="color: black; font-weight: 500; font-size: 15px;">{{ strlen(optional($saved_project->project)->title) > 50 ? substr(optional($saved_project->project)->title, 0, 50) . '...' : optional($saved_project->project)->title }}</a>
+                                                                        </div>
+                                                                        <div style="color: rgb(99, 99, 99); padding: 0;">
+                                                                            {{ optional($saved_project->project)->employer->user->firstname . ' ' . optional($saved_project->project)->employer->user->lastname }}
+                                                                        </div>
+                                                                        <div class="my-1">
+                                                                            <div class="font-weight-medium"><i
+                                                                                    class="feather icon-target warning"></i> Actively Looking for</div>
+                                                                            <ul class="fr-project-skills">
+                                                                                @foreach (optional($saved_project->project)->project_skills as $skill)
+                                                                                    <li class="badge badge-warning p-50 my-50 font-weight-normal"
+                                                                                        style="background: #004E88 !important;">
+                                                                                        {{ $skill->skill_name }}</li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <a href="/projects/{{ optional($saved_project->project)->id }}/{{ optional($saved_project->project)->title }}"
+                                                                    class="btn btn-outline-primary primary">Apply Now <i class="fa fa-send"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            @empty
+                                                <h4 class="text-center">No Saved Projects Found</h4>
+                                            @endforelse
+                                        </div>
                                     </div>
                                     <div class="tab-pane fade" id="account-vertical-notifications" role="tabpanel" aria-labelledby="account-pill-notifications" aria-expanded="false">
                                         <div class="card">

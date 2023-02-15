@@ -40,6 +40,7 @@ use App\Http\Controllers\Web\EWalletCallBackController;
 use App\Http\Controllers\Web\ProjectPayJobController;
 use App\Http\Controllers\Web\CardPaymentCallBackController;
 use App\Http\Controllers\Web\WithdrawalController;
+use App\Http\Controllers\Web\DepositController;
 
 use App\Http\Controllers\Web\Accounting\AccountingAuthController;
 use App\Http\Controllers\Web\Accounting\AccountingController;
@@ -250,6 +251,12 @@ use Pusher\Pusher;
         Route::post('/update_addon', [AddonsController::class, 'update'])->name('addon.update');
         Route::delete('/destroy_addon', [AddonsController::class, 'destroy'])->name('addon.destroy');
 
+        // # carts
+        // Route::get('/all_carts', function() {
+        //     $all_carts = Cart::all();
+        //     return response();
+        // });
+
         # services
         Route::post('/store_service', [ServicesController::class, 'store'])->name('service.store');
         Route::post('/update_service', [ServicesController::class, 'update'])->name('service.update')->middleware('plan.expiration', 'admin.access');
@@ -291,7 +298,7 @@ use Pusher\Pusher;
         Route::post('/chat_typing', [ProjectChatController::class, 'chat_typing'])->name('chat_typing');
 
         Route::get('/user_fund', [UserFundsController::class, 'user_funds'])->name('user_funds');
-        Route::post('/deposit', [UserFundsController::class, 'deposit'])->name('deposit');
+        Route::post('/deposit', [DepositController::class, 'deposit'])->name('deposit');
         Route::post('/withdrawals', [WithdrawalController::class, 'withdrawals'])->name('withdrawals');
 
         Route::get('/project_pay_job/{type}/{id}', [ProjectPayJobController::class, 'view_pay_job'])->name('view_pay_job')->middleware('employer.access');

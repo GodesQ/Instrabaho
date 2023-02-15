@@ -79,9 +79,7 @@ class FreelancerController extends Controller
         })->limit(5)->get();
 
         $projects_schedule_week = ProjectContract::where('freelancer_id', $freelancer->id)
-        ->whereBetween('start_date',
-                        [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
-                    )
+        ->whereBetween('start_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
         ->with('project', 'proposal')
         ->whereHas('project', function($q) {
             return $q->approved();
@@ -100,7 +98,7 @@ class FreelancerController extends Controller
             * cos(radians(projects.latitude))
             * cos(radians(projects.longitude) - radians(" . $freelancer->longitude . "))
             + sin(radians(" .$freelancer->latitude. "))
-            * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $freelancer->id)->where('status', 'pending');
+            * sin(radians(projects.latitude))) AS distance"))->having('distance', '<=', '10')->orderBy("distance",'asc')->where('id', '!=', $freelancer->id);
         })
         ->pending()
         ->with('category', 'employer')
@@ -131,6 +129,7 @@ class FreelancerController extends Controller
             'lastname' => $request->lastname,
             'username' => $request->username
         ]);
+
         return back()->with('success', 'Profile update successfully');
     }
 
@@ -139,7 +138,7 @@ class FreelancerController extends Controller
         $request->validate([
             "certificate"    => "required",
             "certificate_date"  => "required|date",
-            "certificate_image"  => "file|max:8192|mimes:png,jpg,jpeg,pdf,docs",
+            "certificate_image"  => "file|max:8192|mimes:png,jpg,jpeg,pdf,docx",
         ]);
 
         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;
@@ -183,7 +182,7 @@ class FreelancerController extends Controller
         $request->validate([
             "project_name"    => "required",
             "project_url"  => "nullable|url",
-            "project_image"  => "file|max:8192|mimes:png,jpg,jpeg,pdf,docs",
+            "project_image"  => "file|max:8192|mimes:png,jpg,jpeg,pdf,docx",
         ]);
 
         $user_id = session()->get('role') == 'freelancer' ? session()->get('id') : $request->user_id;

@@ -41,17 +41,8 @@ class WithdrawalController extends Controller
         });
 
         $transaction_code = 'TXN-ID' . '-' . strtoupper(Str::random(16));
-        $transaction = Transaction::create([
-            'name_of_transaction' => 'Withdrawal',
-            'transaction_type' => 'withdraw',
-            'transaction_code' => $transaction_code,
-            'amount' => $amount,
-            'sub_amount' => $amount,
-            'from_id' => $user->id,
-            'to_id' => 0,
-            'payment_method' => $request->payment_method,
-            'status' => 'pending'
-        ]);
+
+        $transaction = Transaction::create_transaction($request, $transaction_code, $user, 0, $amount, 'Withdrawal', 'withdraw');
 
         $reference_no = 'REF-NO' . '-' . strtoupper(Str::random(16));
         $withdrawal = Withdrawal::create([
