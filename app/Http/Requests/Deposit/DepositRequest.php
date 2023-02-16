@@ -25,7 +25,7 @@ class DepositRequest extends FormRequest
     {
         return [
             'user_id' => 'required|exists:user,id',
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|min:200',
             'payment_method' => 'required|in:gcash,grab_pay,card,paymaya'
         ];
     }

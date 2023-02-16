@@ -42,7 +42,6 @@
                 font-size: 15px;
                 border-radius: 10px;
             }
-
             .second-span {
                 font-size: 10px;
                 font-weight: 400;

@@ -141,10 +141,7 @@
                                                     <label style="font-size: 18px !important;">Your Price <span
                                                             class="text-danger">*</span></label>
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" id="bidding-price"
-                                                            name="offer_price"
-                                                            data-smk-msg="Provide your price in numbers only"
-                                                            data-smk-type="number">
+                                                        <input type="number" class="form-control" id="bidding-price" name="offer_price" min="1">
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">₱ </div>
                                                         </div>

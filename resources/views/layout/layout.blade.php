@@ -58,6 +58,9 @@
         <!-- PRETTY CHECK BOX CSS -->
         <link href="{{ URL::asset('css/pretty-checkbox.min.css') }}" rel="stylesheet" />
 
+        <!-- RANGE SLIDER CSS -->
+	    <link rel="stylesheet" href="{{ URL::asset('css/rangeslider.min.css') }}">
+
         {{-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"> --}}
 
         <!-- POPPINS FONT -->
@@ -131,11 +134,8 @@
                             <li class="">
                                 <a href="/contact-us">Contact Us</a>
                             </li>
-                            @php
-                                $user_role = ['employer', 'freelancer'];
-                            @endphp
+                            @php $user_role = ['employer', 'freelancer']; @endphp
                             @if(!Session::get('role') && !Session::get('id') || !in_array(Session::get('role'), $user_role))
-
                                 <li class="fr-list">
                                     <a href="/register" class="btn-theme-warning style-1" style="padding: 0.7rem 1rem !important;">
                                         Register
@@ -150,7 +150,7 @@
                                                 <img class="brand-text" style="width: 30px; height: 30px; object-fit: cover;" src="../../../images/user/profile/{{ Session::get('profile_image') }}" alt="Avatar Image">
                                             @else
                                                 <img class="brand-text" src="../../../images/user-profile.png" style="width: 30px; height: 30px; object-fit: cover;" alt="Avatar Image">
-                                            @endif<i></i>
+                                            @endif
                                         </div>
                                         <div style="color: #000000 !important;" class="mx-2">
                                             {{ Session::get('username') }} <br>
@@ -169,11 +169,7 @@
                                         <a href="{{ session()->get('role') == 'freelancer' ? route('freelancer.profile') : route('employer.profile')}}" class="dropdown-item" style="color: #000000 !important;">
                                             <i class="fa fa-user"></i> Edit Profile
                                         </a>
-                                        @if(Session::get('role') == 'employer')
-                                            <a class="dropdown-item" href="/change_login" style="color: #000000 !important;"><i class="feather icon-log-in"></i> Login as Freelancer</a>
-                                        @else
-                                            <a class="dropdown-item" href="/change_login" style="color: #000000 !important;"><i class="feather icon-log-in"></i> Login as Employer</a>
-                                        @endif
+                                        <a class="dropdown-item" href="/change_login" style="color: #000000 !important;"><i class="feather icon-log-in"></i> Login as {{ session()->get('role') == 'employer' ? 'Freelancer' : 'Emloyer' }}</a>
                                         <a href="/logout" class="dropdown-item" style="color: #000000 !important;">
                                             <i class="feather icon-log-out"></i> Logout
                                         </a>

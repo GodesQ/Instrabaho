@@ -386,7 +386,6 @@ use Pusher\Pusher;
         Route::get('projects/data_table', [ProjectsController::class, 'data_table'])->name('projects.data_table');
         Route::get('projects/edit/{id}', [ProjectsController::class, 'admin_edit'])->name('projects.edit');
         Route::get('projects/create', [ProjectsController::class, 'admin_create'])->name('projects.create');
-
         Route::get('skills', [SkillsController::class, 'index'])->name('skills');
         Route::get('skills/data_table', [SkillsController::class, 'data_table'])->name('skills.data_table');
         Route::get('skills/edit', [SkillsController::class, 'edit'])->name('skills.edit');
@@ -412,8 +411,6 @@ use Pusher\Pusher;
 
         Route::get('employers_followers', [FollowEmployerController::class, 'admin_index'])->name('employers_followers');
         Route::get('employers_followers/data_table', [FollowEmployerController::class, 'data_table'])->name('employers_followers.datatables');
-
-        // Route::get('verified_freelancers', );
 
         Route::get('saved_services', [SaveServiceController::class, 'admin_index'])->name('saved_services');
 

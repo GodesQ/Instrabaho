@@ -86,14 +86,6 @@
                             </div>
                             <div class="col-md-12 my-50 d-flex justify-content-center align-items-center">
                                 <div class="icon bg-primary d-flex justify-content-center align-items-center icon-con-circle">
-                                    <div class="feather icon-anchor text-white"></div>
-                                </div>
-                                <div class="col-md-10">
-                                    <h6>{{ $employer->tagline }}</h6>
-                                </div>
-                            </div>
-                            <div class="col-md-12 my-50 d-flex justify-content-center align-items-center">
-                                <div class="icon bg-primary d-flex justify-content-center align-items-center icon-con-circle">
                                     <div class="feather icon-phone text-white"></div>
                                 </div>
                                 <div class="col-md-10">
