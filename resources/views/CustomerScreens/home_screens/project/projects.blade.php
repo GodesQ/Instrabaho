@@ -14,11 +14,11 @@
                                 style="width: 65px; height: 65px; border-radius: 50%;">
                         @endif
                         {{-- <div class="d-flex">
-                        @for ($i = 0; $i < round($project->employer->rate); $i++)
-                            <i class="fas fa-star my-2" style="color: #04bbff !important; font-size: 9px;" aria-hidden="true"></i>
-                        @endfor
-                    </div>
-                    <div style="font-size: 9px;">{{ $project->employer->total_reviews }} Reviews</div> --}}
+                            @for ($i = 0; $i < round($project->employer->rate); $i++)
+                                <i class="fas fa-star my-2" style="color: #04bbff !important; font-size: 9px;" aria-hidden="true"></i>
+                            @endfor
+                        </div>
+                        <div style="font-size: 9px;">{{ $project->employer->total_reviews }} Reviews</div> --}}
                     </div>
                     <div style="width: 65%" class="fr-project-content">
                         <div class="fr-project-f-des"

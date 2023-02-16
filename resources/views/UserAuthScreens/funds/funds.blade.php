@@ -71,16 +71,21 @@
                                                         </div>
                                                         <form action="{{ route('withdrawals') }}" method="POST">
                                                             @csrf
-                                                            <input type="hidden" name="payment_method" value="{{ $user->prefer_payment_method }}">
+                                                            <input type="hidden" name="payment_method"
+                                                                value="{{ $user->prefer_payment_method }}">
                                                             <div class="modal-body">
                                                                 @if ($user->prefer_payment_method == 'gcash' || $user->prefer_payment_method == 'grab_pay')
                                                                     <label>Number: </label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
                                                                             <div class="input-group-prepend">
-                                                                                <span class="input-group-text" id="basic-addon3">+63</span>
+                                                                                <span class="input-group-text"
+                                                                                    id="basic-addon3">+63</span>
                                                                             </div>
-                                                                            <input type="text" maxlength="10" class="form-control" placeholder="eg. 9123456490" name="gcash_number">
+                                                                            <input type="text" maxlength="10"
+                                                                                max="10" class="form-control"
+                                                                                placeholder="eg. 9123456490"
+                                                                                name="gcash_number">
                                                                         </div>
                                                                     </div>
                                                                 @endif
@@ -169,9 +174,12 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <input type="hidden" name="payment_method" value="{{ $user->prefer_payment_method }}">
-                                                                <input type="reset" class="btn btn-secondary" data-dismiss="modal" value="close">
-                                                                <input type="submit" class="btn btn-primary" name="action" value="Withdraw">
+                                                                <input type="hidden" name="payment_method"
+                                                                    value="{{ $user->prefer_payment_method }}">
+                                                                <input type="reset" class="btn btn-secondary"
+                                                                    data-dismiss="modal" value="close">
+                                                                <input type="submit" class="btn btn-primary"
+                                                                    name="action" value="Withdraw">
                                                             </div>
                                                         </form>
                                                     </div>
@@ -368,7 +376,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <form action="/update_payment_method" method="POST">
+                                        <form action="/update_payment_method" method="POST" id="form_payment_method">
                                             @csrf
                                             <div class="row my-2">
                                                 <div class="col-md-12">
@@ -389,7 +397,7 @@
                                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                                         <fieldset>
                                                                             <input type="radio" name="payment_method"
-                                                                                value="gcash"
+                                                                                value="gcash" class="payment-method-radio"
                                                                                 {{ $user->prefer_payment_method == 'gcash' ? 'checked' : null }}
                                                                                 id="input-radio-14">
                                                                             <label for="input-radio-14">G CASH</label>
@@ -401,7 +409,7 @@
                                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                                         <fieldset>
                                                                             <input type="radio" name="payment_method"
-                                                                                value="grab_pay" id="input-radio-18"
+                                                                                value="grab_pay" id="input-radio-18" class="payment-method-radio"
                                                                                 {{ $user->prefer_payment_method == 'grab_pay' ? 'checked' : null }}>
                                                                             <label for="input-radio-18">GRAB PAY</label>
                                                                         </fieldset>
@@ -419,7 +427,7 @@
                                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                                         <fieldset>
                                                                             <input type="radio" name="payment_method"
-                                                                                value="card" id="input-radio-16"
+                                                                                value="card" id="input-radio-16" class="payment-method-radio"
                                                                                 {{ $user->prefer_payment_method == 'card' ? 'checked' : null }}>
                                                                             <label for="input-radio-16">CARD</label>
                                                                         </fieldset>
@@ -497,5 +505,11 @@
             // Create the chart
             var doughnutSimpleChart = new Chart(ctx, config);
         });
+
+        $(".payment-method-radio").change(function(e) {
+            console.log(e);
+            $('#form_payment_method').submit();
+        })
+
     </script>
 @endpush

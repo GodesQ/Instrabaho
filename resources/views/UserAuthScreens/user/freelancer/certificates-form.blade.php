@@ -37,7 +37,7 @@
                                     <input type="date" name="certificate_date" id="certificate_date" class="form-control">
                                 </div>
                                 <div class="form-group my-1">
-                                    <div class="form-label font-weight-bold">Certificate Attachment</div>
+                                    <div class="form-label font-weight-bold">Certificate Attachment <span style="font-style: italic; font-size: 10px;">(e.g. jpg,jpeg,png,docx,pdf)</span></div>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="certificate_image" id="inputGroupFile01">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
@@ -75,88 +75,6 @@
                     <h3 class="text-center">No Certificates Found</h3>
                 @endforelse
             </div>
-            {{-- <div class="repeater-default">
-                <form action="/store_certificates" enctype="multipart/form-data" method="POST" novalidate>
-                    @csrf
-                    <div data-repeater-list="certificates">
-                        @forelse($freelancer->certificates as $certificate)
-                            <div data-repeater-item="">
-                                <div class="row">
-                                    <div class="form-group mb-1 col-sm-12 col-md-4">
-                                        <label for="email-addr">Awards / Certificate</label>
-                                        <br>
-                                        <input type="hidden" name="old_image" value="{{ $certificate->certificate_image }}">
-                                        <input type="text" class="form-control" id="pass" name="certificate" placeholder="Certificate" value="{{ $certificate->certificate }}" required>
-                                        <span class="text-danger danger">@error('certificate'){{ $message }}@enderror</span>
-                                    </div>
-                                    <div class="form-group mb-1 col-sm-12 col-md-3">
-                                        <label for="pass">Date</label>
-                                        <br>
-                                        <input type="date" class="form-control" id="pass" name="certificate_date" placeholder="Date" value="{{ $certificate->certificate_date }}" required>
-                                        <span class="text-danger danger">@error('certificate_date'){{ $message }}@enderror</span>
-                                    </div>
-                                    <div class="form-group mb-1 col-sm-12 col-md-3">
-                                        <label for="pass">Image</label>
-                                        <br>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="certificate_image" id="inputGroupFile01">
-                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                        </div>
-                                        <span class="text-danger danger">@error('certificate_image'){{ $message }}@enderror</span>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-2 text-center mt-2">
-                                        <button type="button" class="btn btn-danger" data-repeater-delete=""> <i class="feather icon-x"></i> Delete</button>
-                                    </div>
-                                </div>
-                                    <div class="">
-                                        <img width="100" src="../../../images/freelancer_certificates/{{ $certificate->certificate_image }}" alt=""> <br>
-                                    </div>
-                                <hr>
-                            </div>
-                        @empty
-                            <div data-repeater-item="">
-                                <div class="row">
-                                    <div class="form-group mb-1 col-sm-12 col-md-4">
-                                        <label for="email-addr">Awards / Certificate</label>
-                                        <br>
-                                        <input type="text" class="form-control" id="pass" name="certificate" placeholder="Certificate" required>
-                                        <span class="text-danger danger">@error('certificate'){{ $message }}@enderror</span>
-                                    </div>
-                                    <div class="form-group mb-1 col-sm-12 col-md-3">
-                                        <label for="pass">Date</label>
-                                        <br>
-                                        <input type="date" class="form-control" id="pass" name="certificate_date" placeholder="Date" required>
-                                        <span class="text-danger danger">@error('certificate_date'){{ $message }}@enderror</span>
-                                    </div>
-                                    <div class="form-group mb-1 col-sm-12 col-md-3">
-                                        <label for="pass">Image</label>
-                                        <br>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="certificate_image" id="inputGroupFile01">
-                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                        </div>
-                                        <span class="text-danger danger">@error('certificate_image'){{ $message }}@enderror</span>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-2 text-center mt-2">
-                                        <button type="button" class="btn btn-danger" data-repeater-delete=""> <i class="feather icon-x"></i> Delete</button>
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
-                        @endforelse
-                    </div>
-                    <div class="form-group overflow-hidden">
-                        <div class="col-12">
-                            <button type="button" data-repeater-create="" class="btn btn-dark btn-solid">
-                                <i class="icon-plus4"></i> Add Certificate
-                            </button>
-                            <button type="submit" class="btn btn-primary btn-solid">
-                                Save
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div> --}}
         </div>
     </div>
 </div>

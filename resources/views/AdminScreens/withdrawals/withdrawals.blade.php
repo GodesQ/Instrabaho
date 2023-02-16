@@ -15,7 +15,7 @@
                                         <th>Withdrawal Type</th>
                                         <th>User</th>
                                         <th>Status</th>
-                                        <th>Withdrawal Date</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                             </table>

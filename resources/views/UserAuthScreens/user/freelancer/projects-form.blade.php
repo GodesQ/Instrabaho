@@ -37,7 +37,7 @@
                                     <input type="url" name="project_url" id="project_url" class="form-control">
                                 </div>
                                 <div class="form-group my-1">
-                                    <div class="form-label font-weight-bold">Project Attachment</div>
+                                    <div class="form-label font-weight-bold">Project Attachment <span style="font-style: italic; font-size: 10px;">(e.g. jpg,jpeg,png,docx,pdf)</span></div>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="project_image" id="inputGroupFile01">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
@@ -57,7 +57,18 @@
                     <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-12 border my-50">
                         <div class="row p-50 align-items-center">
                             <div class="col-md-4 col-sm-12">
-                                <img style="width: 100%; max-height: 150px; object-fit:cover;" src="../../../images/freelancer_projects/{{ $project->project_image }}" alt="">
+                                @if(pathinfo($project->project_image, PATHINFO_EXTENSION) == "pdf")
+                                    <a href=".../../../images/freelancer_projects/{{ $project->project_image }}">
+                                        <img style="width: 100%; max-height: 150px; object-fit:cover;" src="../../../images/pdf.jpg" alt="">
+                                    </a>
+                                @elseif (pathinfo($project->project_image, PATHINFO_EXTENSION) == "docx")
+                                    <a href=".../../../images/freelancer_projects/{{ $project->project_image }}">
+                                        <img style="width: 100%; max-height: 150px; object-fit:cover;" src="../../../images/docx.png" alt="">
+                                    </a>
+                                @else
+
+                                    <img style="width: 100%; max-height: 150px; object-fit:cover;" src="../../../images/freelancer_projects/{{ $project->project_image }}" alt="">
+                                @endif
                             </div>
                             <div class="col-md-6 col-sm-12 mt-1">
                                 <h5 class="font-weight-bold">{{ $project->project_name }}</h5>
@@ -68,7 +79,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 @empty
                     <h3 class="text-center">No Projects Found</h3>
@@ -86,7 +96,7 @@
                 let service_id = '';
                 let csrf = "{{ csrf_token() }}";
                 Swal.fire({
-                    title: "Remove Image",
+                    title: "Remove Project",
                     text: "Are you sure you want to remove this?",
                     icon: "warning",
                     showCancelButton: true,
