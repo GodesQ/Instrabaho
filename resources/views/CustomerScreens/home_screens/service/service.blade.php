@@ -147,14 +147,14 @@
                                             @php
                                                 $attachments = json_decode($service->attachments);
                                             @endphp
-                                                <li class="clone " aria-hidden="true">
-                                                    <a data-fancybox="services"
-                                                        href="../../../images/services/{{ $attachments[0] }}"
-                                                        target="_blank"><img
-                                                            style="width: 100%; min-height: 300px !important; max-height: 400px; object-fit: cover;"
-                                                            src="../../../images/services/{{ $attachments[0] }}"
-                                                            draggable="false"></a>
-                                                </li>
+                                            <li class="clone " aria-hidden="true">
+                                                <a data-fancybox="services"
+                                                    href="../../../images/services/{{ $attachments[0] }}"
+                                                    target="_blank"><img
+                                                        style="width: 100%; min-height: 300px !important; max-height: 400px; object-fit: cover;"
+                                                        src="../../../images/services/{{ $attachments[0] }}"
+                                                        draggable="false"></a>
+                                            </li>
                                             {{-- @foreach ($attachments as $image)
                                                 <li class="clone " aria-hidden="true">
                                                     <a data-fancybox="services"

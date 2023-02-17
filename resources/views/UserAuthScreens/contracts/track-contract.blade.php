@@ -16,6 +16,7 @@
             justify-content: center;
             align-items: center,
         }
+
         .time-tracker-inner-container {
             width: 100%;
             border-radius: 5px;
@@ -23,13 +24,15 @@
             padding: 1rem;
             box-shadow: 1px 2px 3px rgba(87, 87, 87, 0.25);
         }
-        .timerDisplay{
+
+        .timerDisplay {
             position: relative;
             width: 100%;
             color: #000;
             font-size: 20px;
         }
-        .buttons{
+
+        .buttons {
             width: 90%;
             margin: 30px auto 0 auto;
             display: flex;
@@ -50,7 +53,7 @@
                                 <div class="card-body">
 
                                     @if ($contract->status && $contract->job_done)
-                                        <div class="bs-callout-success callout-bordered my-1" >
+                                        <div class="bs-callout-success callout-bordered my-1">
                                             <div class="media align-items-stretch">
                                                 <div class="d-flex align-items-center bg-success p-2">
                                                     <i class="fa fa-thumbs-o-up white font-medium-5"></i>
@@ -64,66 +67,92 @@
 
                                     @csrf
                                     <input type="hidden" name="contract_id" data-id="{{ $contract->id }}" id="contract_id">
-                                    <input type="hidden" name="status" value="{{ $contract->status == 'stop' ? 'stop' : 'start' }}" id="status">
-                                    <input type="hidden" name="start_date" id="start_date_input" value="{{ optional($contract->tracker)->start_time }}">
-                                    <input type="hidden" name="end_date" id="end_date_input" value="{{ optional($contract->tracker)->stop_time }}">
-                                    <input type="hidden" name="current_minute_input" id="current_minute_input" value="">
-                                    <input type="hidden" name="current_hours_input" id="current_hours_input" value="">
+                                    <input type="hidden" name="status"
+                                        value="{{ $contract->status == 'stop' ? 'stop' : 'start' }}" id="status">
+                                    <input type="hidden" name="start_date" id="start_date_input"
+                                        value="{{ optional($contract->tracker)->start_time }}">
+                                    <input type="hidden" name="end_date" id="end_date_input"
+                                        value="{{ optional($contract->tracker)->stop_time }}">
+                                    <input type="hidden" name="current_minute_input" id="current_minute_input"
+                                        value="">
+                                    <input type="hidden" name="current_hours_input" id="current_hours_input"
+                                        value="">
 
                                     <div class="text-right">
                                         @if (session()->get('role') == 'employer' && $contract->is_start_working && !$contract->status)
-                                            <a href="/project_pay_job/project/{{ $contract->id }}" class="btn btn-primary job-completed-btn">Job Complete</a>
+                                            <a href="/project_pay_job/project/{{ $contract->id }}"
+                                                class="btn btn-primary job-completed-btn">Job Complete</a>
                                         @endif
 
                                         @if (session()->get('role') == 'freelancer' && $contract->cost_type == 'Fixed' && !$contract->is_start_working)
-                                            <button id="start-working-btn" data-id="{{ $contract->id }}" class="btn btn-primary start-working-btn">Start Working</button>
+                                            <button id="start-working-btn" data-id="{{ $contract->id }}"
+                                                class="btn btn-primary start-working-btn">Start Working</button>
                                         @endif
                                     </div>
                                     <hr>
 
-                                    @if($contract->cost_type == 'Fixed')
+                                    @if ($contract->cost_type == 'Fixed')
                                         <div class="container my-2">
                                             <h4 class="font-weight-bold text-uppercase">Fixed Type Project</h4>
                                             <ul class="list-group">
-                                                <li class="list-group-item">Start Working Date: <span class="font-weight-bold working-date-text">{{ $contract->start_working_date ? date_format(new DateTime($contract->start_working_date), 'M d, Y h:i:s A') : 'No Date Found' }}</span></li>
-                                                <li class="list-group-item">Job Done Date: <span class="font-weight-bold job-done-date">{{ $contract->job_done_date ? date_format(new DateTime($contract->job_done_date), 'M d, Y h:i:s A') : 'No Date Found' }}</span></li>
+                                                <li class="list-group-item">Start Working Date: <span
+                                                        class="font-weight-bold working-date-text">{{ $contract->start_working_date ? date_format(new DateTime($contract->start_working_date), 'M d, Y h:i:s A') : 'No Date Found' }}</span>
+                                                </li>
+                                                <li class="list-group-item">Job Done Date: <span
+                                                        class="font-weight-bold job-done-date">{{ $contract->job_done_date ? date_format(new DateTime($contract->job_done_date), 'M d, Y h:i:s A') : 'No Date Found' }}</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     @else
                                         <div class="container my-2">
                                             <h4 class="font-weight-bold text-uppercase">Hourly Type Project</h4>
-                                            @if(session()->get('role') == 'freelancer')
+                                            @if (session()->get('role') == 'freelancer')
                                                 @if (!$contract->status && !$contract->job_done)
                                                     <div class="form-group text-right">
-                                                        <input type="checkbox" id="timer-btn" class="switchery" {{ optional($contract->tracker)->status == 'start' ? 'checked' : null }}/>
+                                                        <input type="checkbox" id="timer-btn" class="switchery"
+                                                            {{ optional($contract->tracker)->status == 'start' ? 'checked' : null }} />
                                                         <span class="timer-btn-label">Start</span>
                                                     </div>
                                                 @endif
                                             @endif
                                             <ul class="list-group my-1">
                                                 {{-- <input type="checkbox" id="timer-btn" hidden/> --}}
-                                                <li class="list-group-item">Start DateTime : <span class="font-weight-bold start_date">{{ $contract->tracker ? date_format(new DateTIme(optional($contract->tracker)->start_time), 'm/d/Y h:i:s A') : null }}</span></li>
-                                                <li class="list-group-item">Stop DateTime : <span class="font-weight-bold end_date">{{ optional($contract->tracker)->status == 'stop' ? date_format(new DateTIme(optional($contract->tracker)->stop_time), 'm/d/Y h:i:s A') : null }}</span></li>
-                                                <li class="list-group-item">Total Hours : <span class="font-weight-bold total-hours-text">{{ optional($contract->tracker)->hours }}</span> hrs</li>
-                                                <li class="list-group-item">Total Minutes : <span class="font-weight-bold total-minutes-text">{{ optional($contract->tracker)->minutes }}</span> min</li>
-                                                <li class="list-group-item">Total Hours Cost : ₱ <span class="font-weight-bold total-hours-cost-text">{{ number_format(optional($contract->tracker)->total_hours_cost, 2) }}</span></li>
+                                                <li class="list-group-item">Start DateTime : <span
+                                                        class="font-weight-bold start_date">{{ $contract->tracker ? date_format(new DateTIme(optional($contract->tracker)->start_time), 'm/d/Y h:i:s A') : null }}</span>
+                                                </li>
+                                                <li class="list-group-item">Stop DateTime : <span
+                                                        class="font-weight-bold end_date">{{ optional($contract->tracker)->status == 'stop' ? date_format(new DateTIme(optional($contract->tracker)->stop_time), 'm/d/Y h:i:s A') : null }}</span>
+                                                </li>
+                                                <li class="list-group-item">Total Hours : <span
+                                                        class="font-weight-bold total-hours-text">{{ optional($contract->tracker)->hours }}</span>
+                                                    hrs</li>
+                                                <li class="list-group-item">Total Minutes : <span
+                                                        class="font-weight-bold total-minutes-text">{{ optional($contract->tracker)->minutes }}</span>
+                                                    min</li>
+                                                <li class="list-group-item">Total Hours Cost : ₱ <span
+                                                        class="font-weight-bold total-hours-cost-text">{{ number_format(optional($contract->tracker)->total_hours_cost, 2) }}</span>
+                                                </li>
                                             </ul>
                                             <div class="text-right">
-                                                <a type="button" href="primary" data-toggle="modal" data-target="#defaultSize">
+                                                <a type="button" href="primary" data-toggle="modal"
+                                                    data-target="#defaultSize">
                                                     Tracker Logs
                                                 </a>
-                                                <div class="modal fade text-left" id="defaultSize" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
+                                                <div class="modal fade text-left" id="defaultSize" tabindex="-1"
+                                                    role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h4 class="modal-title" id="myModalLabel18"><i class="fa fa-file"></i>Tracker Logs</h4>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <h4 class="modal-title" id="myModalLabel18"><i
+                                                                        class="fa fa-file"></i>Tracker Logs</h4>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <ul class="list-group">
-                                                                    @if($contract->tracker)
+                                                                    @if ($contract->tracker)
                                                                         @forelse ($contract->tracker->tracker_logs as $tracker)
                                                                             <li class="list-group-item">
                                                                                 {{ $tracker->log }}
@@ -137,7 +166,9 @@
                                                                 </ul>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="button"
+                                                                    class="btn grey btn-outline-secondary"
+                                                                    data-dismiss="modal">Close</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -162,16 +193,31 @@
                                             <div class="container my-1">
                                                 <h3 class="primary">Project Information</h3>
                                                 <ul class="list-group">
-                                                    <li class="list-group-item">Title of Project: <span class="font-weight-bold">{{ $contract->project->title }}</span></li>
-                                                    <li class="list-group-item">Start Date: <span class="font-weight-bold">{{ date_format(new DateTime($contract->start_date), 'F d, Y') }}</span></li>
-                                                    <li class="list-group-item">End Date: <span class="font-weight-bold">{{ date_format(new DateTime($contract->end_date), 'F d, Y') }}</span></li>
-                                                    @if($contract->cost_type == 'Fixed')
-                                                        <li class="list-group-item">Total Cost: <span class="font-weight-bold">₱ {{ number_format($contract->total_cost, 2) }}</span></li>
+                                                    <li class="list-group-item">Title of Project: <span
+                                                            class="font-weight-bold">{{ $contract->project->title }}</span>
+                                                    </li>
+                                                    <li class="list-group-item">Start Date: <span
+                                                            class="font-weight-bold">{{ date_format(new DateTime($contract->start_date), 'F d, Y') }}</span>
+                                                    </li>
+                                                    <li class="list-group-item">End Date: <span
+                                                            class="font-weight-bold">{{ date_format(new DateTime($contract->end_date), 'F d, Y') }}</span>
+                                                    </li>
+                                                    @if ($contract->cost_type == 'Fixed')
+                                                        <li class="list-group-item">Total Cost: <span
+                                                                class="font-weight-bold">₱
+                                                                {{ number_format($contract->total_cost, 2) }}</span></li>
                                                     @else
-                                                        <li class="list-group-item">Total Cost: <span class="font-weight-bold">The total cost will see after the job completed.</span></li>
+                                                        <li class="list-group-item">Total Cost: <span
+                                                                class="font-weight-bold">The total cost will see after the
+                                                                job completed.</span></li>
                                                     @endif
-                                                    <li class="list-group-item">Project Cost: <span class="font-weight-bold">₱ {{ number_format($contract->cost, 2) }} ({{ $contract->cost_type }})</span></li>
-                                                    <li class="list-group-item">Address: <span class="font-weight-bold">{{ $contract->project->location }}</span></li>
+                                                    <li class="list-group-item">Project Cost: <span
+                                                            class="font-weight-bold">₱
+                                                            {{ number_format($contract->cost, 2) }}
+                                                            ({{ $contract->cost_type }})</span></li>
+                                                    <li class="list-group-item">Address: <span
+                                                            class="font-weight-bold">{{ $contract->project->location }}</span>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -179,19 +225,37 @@
                                             <div class="container my-1">
                                                 <h3 class="primary">Freelancer Information</h3>
                                                 <ul class="list-group">
-                                                    <li class="list-group-item">Freelancer Name: <span class="font-weight-bold">{{ $contract->freelancer->user->firstname }} {{ $contract->freelancer->user->lastname }}</span></li>
-                                                    <li class="list-group-item">Freelancer Display Name: <span class="font-weight-bold">{{ $contract->freelancer->display_name }}</span></li>
-                                                    <li class="list-group-item">Email : <span class="font-weight-bold">{{ $contract->freelancer->user->email }}</span></li>
-                                                    <li class="list-group-item">Contact No. : <span class="font-weight-normal"><a class="primary" href="tel:{{ $contract->freelancer->contactno }}">{{ $contract->freelancer->contactno }}</a></span></li>
+                                                    <li class="list-group-item">Freelancer Name: <span
+                                                            class="font-weight-bold">{{ $contract->freelancer->user->firstname }}
+                                                            {{ $contract->freelancer->user->lastname }}</span></li>
+                                                    <li class="list-group-item">Freelancer Display Name: <span
+                                                            class="font-weight-bold">{{ $contract->freelancer->display_name }}</span>
+                                                    </li>
+                                                    <li class="list-group-item">Email : <span
+                                                            class="font-weight-bold">{{ $contract->freelancer->user->email }}</span>
+                                                    </li>
+                                                    <li class="list-group-item">Contact No. : <span
+                                                            class="font-weight-normal"><a class="primary"
+                                                                href="tel:{{ $contract->freelancer->contactno }}">{{ $contract->freelancer->contactno }}</a></span>
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <div class="container my-2">
                                                 <h3 class="primary">Employer Information</h3>
                                                 <ul class="list-group">
-                                                    <li class="list-group-item">Employer Name: <span class="font-weight-bold">{{ $contract->project->employer->user->firstname }} {{ $contract->project->employer->user->lastname }}</span></li>
-                                                    <li class="list-group-item">Employer Display Name: <span class="font-weight-bold">{{ $contract->project->employer->display_name }}</span></li>
-                                                    <li class="list-group-item">Email : <span class="font-weight-bold">{{ $contract->project->employer->user->email }}</span></li>
-                                                    <li class="list-group-item">Contact No. : <span class="font-weight-normal"><a class="primary" href="tel:{{ $contract->project->employer->contactno }}">{{ $contract->project->employer->contactno }}</a></span></li>
+                                                    <li class="list-group-item">Employer Name: <span
+                                                            class="font-weight-bold">{{ $contract->project->employer->user->firstname }}
+                                                            {{ $contract->project->employer->user->lastname }}</span></li>
+                                                    <li class="list-group-item">Employer Display Name: <span
+                                                            class="font-weight-bold">{{ $contract->project->employer->display_name }}</span>
+                                                    </li>
+                                                    <li class="list-group-item">Email : <span
+                                                            class="font-weight-bold">{{ $contract->project->employer->user->email }}</span>
+                                                    </li>
+                                                    <li class="list-group-item">Contact No. : <span
+                                                            class="font-weight-normal"><a class="primary"
+                                                                href="tel:{{ $contract->project->employer->contactno }}">{{ $contract->project->employer->contactno }}</a></span>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -207,5 +271,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/track-contract.js')}}"></script>
+    <script src="{{ asset('js/track-contract.js') }}"></script>
 @endpush

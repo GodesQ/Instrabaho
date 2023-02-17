@@ -21,16 +21,19 @@
         }
     </style>
 </head>
+
 <body>
     <iframe src="{{ $cardPayment->payment_attach_response['next_action']['redirect']['url'] }}" frameborder="0"></iframe>
-    <form id="frm_update" action="{{ route('card-payment.update', $transaction->id) }}" method="POST" style="display: none">
+    <form id="frm_update" action="{{ route('card-payment.update', $transaction->id) }}" method="POST"
+        style="display: none">
         @csrf
         @method('put')
     </form>
     <script>
-        window.addEventListener('message', function (e) {
+        window.addEventListener('message', function(e) {
             document.getElementById('frm_update').submit();
         });
     </script>
 </body>
+
 </html>

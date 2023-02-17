@@ -27,7 +27,8 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <input type="search" class="search-input" id="title" name="address" placeholder="Search by Keyword...">
+                    <input type="search" class="search-input" id="title" name="address"
+                        placeholder="Search by Keyword...">
                 </div>
                 <div class="col-md-2 d-flex">
                     <button class="btn btn-lg btn-primary btn-block" id="filter-btn">Filter</button>

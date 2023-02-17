@@ -34,7 +34,8 @@
                                 <span>({{ $project->project_cost_type }})</span>
                             </div>
                             <div class="my-2">
-                                <div class="font-weight-medium"><i class="feather icon-target warning"></i> Actively Looking for</div>
+                                <div class="font-weight-medium"><i class="feather icon-target warning"></i> Actively
+                                    Looking for</div>
                                 <ul class="fr-project-skills">
                                     <!-- convert the json array ids into model and get to fetch in blade -->
                                     @foreach ($project->project_skills as $skill)
@@ -44,16 +45,20 @@
                                 </ul>
                             </div>
                             @if ($project->distance)
-                                <div style="color: #004E88;">Distance : <span class="font-weight-bold">{{ number_format($project->distance, 2) }} km</span></div>
+                                <div style="color: #004E88;">Distance : <span
+                                        class="font-weight-bold">{{ number_format($project->distance, 2) }} km</span>
+                                </div>
                             @endif
                         </div>
                     </div>
                     <div style="width: 5%;" class="d-flex justify-content-between flex-row">
-                        @if(session()->get('role') == 'freelancer')
-                            @if(in_array($project->id, $user->saved_project_ids))
-                                <a href="/freelancer/save_project/{{ $project->id . '/' . $project->employer_id }}" class="secondary h5"><i class="fa fa-bookmark primary"></i></a>
+                        @if (session()->get('role') == 'freelancer')
+                            @if (in_array($project->id, $user->saved_project_ids))
+                                <a href="/freelancer/save_project/{{ $project->id . '/' . $project->employer_id }}"
+                                    class="secondary h5"><i class="fa fa-bookmark primary"></i></a>
                             @else
-                                <a href="/freelancer/save_project/{{ $project->id . '/' . $project->employer_id }}" class="secondary h5"><i class="far fa-bookmark primary"></i></a>
+                                <a href="/freelancer/save_project/{{ $project->id . '/' . $project->employer_id }}"
+                                    class="secondary h5"><i class="far fa-bookmark primary"></i></a>
                             @endif
                         @endif
                     </div>

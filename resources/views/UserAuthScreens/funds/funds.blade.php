@@ -397,7 +397,8 @@
                                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                                         <fieldset>
                                                                             <input type="radio" name="payment_method"
-                                                                                value="gcash" class="payment-method-radio"
+                                                                                value="gcash"
+                                                                                class="payment-method-radio"
                                                                                 {{ $user->prefer_payment_method == 'gcash' ? 'checked' : null }}
                                                                                 id="input-radio-14">
                                                                             <label for="input-radio-14">G CASH</label>
@@ -409,7 +410,8 @@
                                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                                         <fieldset>
                                                                             <input type="radio" name="payment_method"
-                                                                                value="grab_pay" id="input-radio-18" class="payment-method-radio"
+                                                                                value="grab_pay" id="input-radio-18"
+                                                                                class="payment-method-radio"
                                                                                 {{ $user->prefer_payment_method == 'grab_pay' ? 'checked' : null }}>
                                                                             <label for="input-radio-18">GRAB PAY</label>
                                                                         </fieldset>
@@ -427,7 +429,8 @@
                                                                         class="list-group-item d-flex justify-content-between align-items-center">
                                                                         <fieldset>
                                                                             <input type="radio" name="payment_method"
-                                                                                value="card" id="input-radio-16" class="payment-method-radio"
+                                                                                value="card" id="input-radio-16"
+                                                                                class="payment-method-radio"
                                                                                 {{ $user->prefer_payment_method == 'card' ? 'checked' : null }}>
                                                                             <label for="input-radio-16">CARD</label>
                                                                         </fieldset>
@@ -510,6 +513,5 @@
             console.log(e);
             $('#form_payment_method').submit();
         })
-
     </script>
 @endpush

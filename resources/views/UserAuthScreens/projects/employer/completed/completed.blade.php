@@ -20,27 +20,35 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <a href="/projects/{{ $completed_project->project->id }}/{{ $completed_project->project->title }}" class="font-weight-bold h4 info">{{ $completed_project->project->title }}</a>
+                                            <a href="/projects/{{ $completed_project->project->id }}/{{ $completed_project->project->title }}"
+                                                class="font-weight-bold h4 info">{{ $completed_project->project->title }}</a>
                                             <h6 class="warning">{{ $completed_project->project->category->name }}</h6>
                                         </div>
                                         <span class="dropdown">
-                                            <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right">
+                                            <a id="btnSearchDrop7" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="true" class="dropdown-toggle dropdown-menu-right">
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </a>
-                                            <span aria-labelledby="btnSearchDrop7" class="dropdown-menu mt-1 dropdown-menu-right">
-                                                <a href="/project/contract/track/{{ $completed_project->contract->id }}" class="dropdown-item"><i class="feather icon-eye primary"></i>View Contract Record</a>
+                                            <span aria-labelledby="btnSearchDrop7"
+                                                class="dropdown-menu mt-1 dropdown-menu-right">
+                                                <a href="/project/contract/track/{{ $completed_project->contract->id }}"
+                                                    class="dropdown-item"><i class="feather icon-eye primary"></i>View
+                                                    Contract Record</a>
                                             </span>
                                         </span>
                                     </div>
-                                    <p>{{ strlen($completed_project->project->description) > 150 ? substr($completed_project->project->description, 0, 150) . '...' : $completed_project->project->description }}</p>
+                                    <p>{{ strlen($completed_project->project->description) > 150 ? substr($completed_project->project->description, 0, 150) . '...' : $completed_project->project->description }}
+                                    </p>
                                     {{-- <ul>
                                         <li><i class="fa fa-calendar mr-1"></i> Start Date : <span class="font-weight-bold">{{ $proposal->contract->start_date ? $proposal->contract->start_date : 'No Start Date' }}</span></li>
                                         <li><i class="fa fa-calendar mr-1"></i> End Date : <span class="font-weight-bold">{{ $proposal->contract->end_date ? $proposal->contract->end_date : 'No End Date' }}</span></li>
                                     </ul> --}}
                                     <div class="text-right">
-                                        <a href="/project/contract/view/{{ $completed_project->contract ? $completed_project->contract->id : null }}" class="info mx-50">View Contract</a>
-                                        @if(!$completed_project->contract->is_employer_review)
-                                            <a href="/review_freelancer/project/{{ $completed_project->contract->id }}" class="btn btn-primary mx-50">Add Review</a>
+                                        <a href="/project/contract/view/{{ $completed_project->contract ? $completed_project->contract->id : null }}"
+                                            class="info mx-50">View Contract</a>
+                                        @if (!$completed_project->contract->is_employer_review)
+                                            <a href="/review_freelancer/project/{{ $completed_project->contract->id }}"
+                                                class="btn btn-primary mx-50">Add Review</a>
                                         @endif
                                     </div>
                                 </div>
@@ -49,7 +57,8 @@
                     @empty
                         <div class="container-fluid">
                             <div class="d-flex justify-content-center align-items-center flex-column">
-                                <img src="../../../images/illustrations/no-data.png" alt="" class="" style="width: 300px !important;">
+                                <img src="../../../images/illustrations/no-data.png" alt="" class=""
+                                    style="width: 300px !important;">
                                 <h3>No Completed Projects Found</h3>
                             </div>
                         </div>

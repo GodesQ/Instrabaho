@@ -57,19 +57,23 @@
                         </div>
                         <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="about-grid-content">
-                                <h2>To start the application process, you will need to create an account and get verified.</h2>
+                                <h2>To start the application process, you will need to create an account and get verified.
+                                </h2>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/user_reg_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/user_reg_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
                                     <div class="col-10">
                                         <h4>User Registration</h4>
-                                        <p>Enter correct and valid credentials, these credentials will serve as your registered account information.</p>
+                                        <p>Enter correct and valid credentials, these credentials will serve as your
+                                            registered account information.</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/email_reg_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/email_reg_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
 
                                     <div class="col-10">
@@ -84,7 +88,8 @@
                                 <h2>Hooray! You have successfully registered and verified your Instrabaho account.</h2>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/user_login_ver.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/user_login_ver.png" alt=""
+                                            class="img-fluid">
                                     </div>
                                     <div class="col-10">
                                         <h4>User Login</h4>
@@ -93,12 +98,14 @@
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/apply_project.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/apply_project.png" alt=""
+                                            class="img-fluid">
                                     </div>
 
                                     <div class="col-10">
                                         <h4>Apply to Project</h4>
-                                        <p>Before applying to project please make sure to review your application or messaging.</p>
+                                        <p>Before applying to project please make sure to review your application or
+                                            messaging.</p>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +129,8 @@
                                 <h2>Send your proposal and get hired online.</h2>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/house_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/house_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
                                     <div class="col-10">
                                         <h4>Skilled worker/Freelancer go to house</h4>
@@ -131,7 +139,8 @@
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/tools_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/tools_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
 
                                     <div class="col-10">
@@ -146,7 +155,8 @@
                                 <h2>Congratulations ka-Instrabaho! <br> Job well done!</h2>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/check_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/check_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
                                     <div class="col-10">
                                         <h4>Check your Completed Tasks</h4>
@@ -155,12 +165,14 @@
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/money_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/money_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
 
                                     <div class="col-10">
                                         <h4>Get your Payment Credited</h4>
-                                        <p>Make sure to check if the payment you have received is exact to the payment expected.</p>
+                                        <p>Make sure to check if the payment you have received is exact to the payment
+                                            expected.</p>
                                     </div>
                                 </div>
                             </div>
@@ -185,19 +197,23 @@
                         </div>
                         <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="about-grid-content">
-                                <h2>To start the application process, you will need to create an account and get verified.</h2>
+                                <h2>To start the application process, you will need to create an account and get verified.
+                                </h2>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/user_reg_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/user_reg_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
                                     <div class="col-10">
                                         <h4>User Registration</h4>
-                                        <p>Enter correct and valid credentials, these credentials will serve as your registered account information.</p>
+                                        <p>Enter correct and valid credentials, these credentials will serve as your
+                                            registered account information.</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/email_reg_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/email_reg_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
 
                                     <div class="col-10">
@@ -212,7 +228,8 @@
                                 <h2>Hooray! You have successfully registered and verified your Instrabaho account.</h2>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/user_login_ver.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/user_login_ver.png" alt=""
+                                            class="img-fluid">
                                     </div>
                                     <div class="col-10">
                                         <h4>User Login</h4>
@@ -231,7 +248,8 @@
                         <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="about-grid-margin">
                                 <div class="about-grid-img">
-                                    <img src="../../../images/process-icons/gty_icon.png" alt="" class="img-fluid">
+                                    <img src="../../../images/process-icons/gty_icon.png" alt=""
+                                        class="img-fluid">
                                 </div>
                             </div>
                         </div>
@@ -240,7 +258,8 @@
                                 <h2>Time to getting to know each other.</h2>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/searc_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/searc_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
                                     <div class="col-10">
                                         <h4>Search for skilled worker.</h4>
@@ -249,7 +268,8 @@
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/house_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/house_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
 
                                     <div class="col-10">
@@ -264,7 +284,8 @@
                                 <h2>Congratulations ka-Instrabaho! <br> Job well done!</h2>
                                 <div class="row">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/check_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/check_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
                                     <div class="col-10">
                                         <h4>Check the Job</h4>
@@ -273,12 +294,14 @@
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-2">
-                                        <img src="../../../images/process-icons/money_icon.png" alt="" class="img-fluid">
+                                        <img src="../../../images/process-icons/money_icon.png" alt=""
+                                            class="img-fluid">
                                     </div>
 
                                     <div class="col-10">
                                         <h4>Payment Transfer to Skilled Worker</h4>
-                                        <p>Make sure to check if the payment you transfer is exact to the payment required.</p>
+                                        <p>Make sure to check if the payment you transfer is exact to the payment required.
+                                        </p>
                                     </div>
                                 </div>
                             </div>

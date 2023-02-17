@@ -4,24 +4,25 @@
 
 @section('content')
 
-@if(Session::get('success'))
-    @push('scripts')
-        <script>
-            toastr.success("{{ Session::get('success') }}", 'Sucess');
-        </script>
-    @endpush
-@endif
+    @if (Session::get('success'))
+        @push('scripts')
+            <script>
+                toastr.success("{{ Session::get('success') }}", 'Sucess');
+            </script>
+        @endpush
+    @endif
 
-@if(Session::get('fail'))
-    @push('scripts')
-        <script>
-            toastr.error("{{ Session::get('fail') }}", 'Error');
-        </script>
-    @endpush
-@endif
+    @if (Session::get('fail'))
+        @push('scripts')
+            <script>
+                toastr.error("{{ Session::get('fail') }}", 'Error');
+            </script>
+        @endpush
+    @endif
 
     <div class="container-fluid">
-        <h2 class="font-weight-bold">Welcome <span class="primary h2 font-weight-bold">{{ $employer->display_name }}</span>!</h2>
+        <h2 class="font-weight-bold">Welcome <span class="primary h2 font-weight-bold">{{ $employer->display_name }}</span>!
+        </h2>
         <h6>Hope you're having a great time finding workers.</h6>
     </div>
     <div class="row my-2">
@@ -53,10 +54,12 @@
                 <div class="card-body">
                     @forelse ($recent_workers as $recent_worker)
                         <div class="d-flex justify-content-start align-items-center mt-25 mb-2" style="gap: 20px;">
-                            <img class="avatar avatar-lg" src="{{'../../../images/user/profile/' . $recent_worker->freelancer->user->profile_image }}" />
+                            <img class="avatar avatar-lg"
+                                src="{{ '../../../images/user/profile/' . $recent_worker->freelancer->user->profile_image }}" />
                             <div>
                                 <h5 class="font-weight-bold">{{ $recent_worker->freelancer->display_name }}</h5>
-                                <div class="">{{ substr($recent_worker->freelancer->user->email, 0, 25) }} {{ strlen($recent_worker->freelancer->user->email) > 25 ? '...' : null }}</div>
+                                <div class="">{{ substr($recent_worker->freelancer->user->email, 0, 25) }}
+                                    {{ strlen($recent_worker->freelancer->user->email) > 25 ? '...' : null }}</div>
                             </div>
                         </div>
                     @empty
@@ -96,83 +99,81 @@
 @endsection
 
 @push('scripts')
-<script>
+    <script>
+        // Column chart
+        // ------------------------------
+        $(window).on("load", function() {
+            //Get the context of the Chart canvas element we want to select
+            var ctx = $("#total-projects-chart");
 
-// Column chart
-// ------------------------------
-$(window).on("load", function(){
-    //Get the context of the Chart canvas element we want to select
-    var ctx = $("#total-projects-chart");
-
-    // Chart Options
-    var chartOptions = {
-        // Elements options apply to all of the options unless overridden in a dataset
-        // In this case, we are setting the border of each bar to be 2px wide and green
-        elements: {
-            rectangle: {
-                borderWidth: 2,
-                borderColor: '#000000',
-                borderSkipped: 'bottom'
-            }
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        responsiveAnimationDuration:500,
-        legend: {
-            position: 'top',
-        },
-        scales: {
-            xAxes: [{
-                display: true,
-                gridLines: {
-                    color: "#f3f3f3",
-                    drawTicks: false,
+            // Chart Options
+            var chartOptions = {
+                // Elements options apply to all of the options unless overridden in a dataset
+                // In this case, we are setting the border of each bar to be 2px wide and green
+                elements: {
+                    rectangle: {
+                        borderWidth: 2,
+                        borderColor: '#000000',
+                        borderSkipped: 'bottom'
+                    }
                 },
-                scaleLabel: {
-                    display: true,
-                }
-            }],
-            yAxes: [{
-                display: true,
-                gridLines: {
-                    color: "#f3f3f3",
-                    drawTicks: false,
+                responsive: true,
+                maintainAspectRatio: false,
+                responsiveAnimationDuration: 500,
+                legend: {
+                    position: 'top',
                 },
-                scaleLabel: {
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        gridLines: {
+                            color: "#f3f3f3",
+                            drawTicks: false,
+                        },
+                        scaleLabel: {
+                            display: true,
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        gridLines: {
+                            color: "#f3f3f3",
+                            drawTicks: false,
+                        },
+                        scaleLabel: {
+                            display: true,
+                        }
+                    }]
+                },
+                title: {
                     display: true,
+                    text: 'Total Projects'
                 }
-            }]
-        },
-        title: {
-            display: true,
-            text: 'Total Projects'
-        }
-    };
+            };
 
-    // Chart Data
-    var chartData = {
-        labels: ["January", "February",],
-        datasets: [{
-            label: "Projects Per Month",
-            data: [65, 59, 80, 81, 56],
-            backgroundColor: "#04bbff",
-            hoverBackgroundColor: "#04bbff",
-            borderColor: "transparent"
-        }]
-    };
+            // Chart Data
+            var chartData = {
+                labels: ["January", "February", ],
+                datasets: [{
+                    label: "Projects Per Month",
+                    data: [65, 59, 80, 81, 56],
+                    backgroundColor: "#04bbff",
+                    hoverBackgroundColor: "#04bbff",
+                    borderColor: "transparent"
+                }]
+            };
 
-    var config = {
-        type: 'bar',
+            var config = {
+                type: 'bar',
 
-        // Chart Options
-        options : chartOptions,
+                // Chart Options
+                options: chartOptions,
 
-        data : chartData
-    };
+                data: chartData
+            };
 
-    // Create the chart
-    var lineChart = new Chart(ctx, config);
-    });
-</script>
+            // Create the chart
+            var lineChart = new Chart(ctx, config);
+        });
+    </script>
 @endpush
-
