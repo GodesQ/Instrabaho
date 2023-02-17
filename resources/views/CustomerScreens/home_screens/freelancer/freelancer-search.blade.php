@@ -8,9 +8,11 @@
             <div class="row my-3 align-items-center">
                 <div class="my-1 col-xl-3 col-sm-6 col-12">
                     <div class="input-group">
-                        <input type="search" class="form-control" id="address" name="address" placeholder="Search by Location...">
+                        <input type="search" class="form-control" id="address" name="address"
+                            placeholder="Search by Location...">
                         <div class="input-group-append" id="button-addon2">
-                            <button class="btn btn-primary" type="button" id="get-current-location">Current Location    </button>
+                            <button class="btn btn-primary" type="button" id="get-current-location">Current Location
+                            </button>
                         </div>
                     </div>
                     <input type="hidden" name="latitude" class="form-control latitude">

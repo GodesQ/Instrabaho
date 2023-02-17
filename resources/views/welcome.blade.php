@@ -42,6 +42,7 @@
                 font-size: 15px;
                 border-radius: 10px;
             }
+
             .second-span {
                 font-size: 10px;
                 font-weight: 400;
@@ -99,50 +100,66 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
-                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
-                                <img src="../../../assets/images/services-icons/plumber.png" alt="" style="width: 20%;">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column"
+                                style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/plumber.png" alt=""
+                                    style="width: 20%;">
                                 <div class="mt-3" style="color: #000;">PLUMBER</div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
-                            <div class="p-3 d-flex justify-content-center align-items-center flex-column"" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
-                                <img src="../../../assets/images/services-icons/electrician.png" alt="" style="width: 20%;">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column""
+                                style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/electrician.png" alt=""
+                                    style="width: 20%;">
                                 <div class="mt-3" style="color: #000;">ELECTRICIAN</div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
-                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
-                                <img src="../../../assets/images/services-icons/painter.png" alt="" style="width: 20%;">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column"
+                                style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/painter.png" alt=""
+                                    style="width: 20%;">
                                 <div class="mt-3" style="color: #000;">PAINTER</div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
-                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
-                                <img src="../../../assets/images/services-icons/technician.png" alt="" style="width: 20%;">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column"
+                                style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/technician.png" alt=""
+                                    style="width: 20%;">
                                 <div class="mt-3" style="color: #000;">TECHNICIAN</div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
-                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
-                                <img src="../../../assets/images/services-icons/barber.png" alt="" style="width: 20%;">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column"
+                                style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/barber.png" alt=""
+                                    style="width: 20%;">
                                 <div class="mt-3" style="color: #000;">BARBER</div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
-                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
-                                <img src="../../../assets/images/services-icons/driver.png" alt="" style="width: 20%;">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column"
+                                style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/driver.png" alt=""
+                                    style="width: 20%;">
                                 <div class="mt-3" style="color: #000;">DRIVER</div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
-                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
-                                <img src="../../../assets/images/services-icons/welder.png" alt="" style="width: 20%;">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column"
+                                style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/welder.png" alt=""
+                                    style="width: 20%;">
                                 <div class="mt-3" style="color: #000;">WELDER</div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-4 col-6 my-4">
-                            <div class="p-3 d-flex justify-content-center align-items-center flex-column" style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
-                                <img src="../../../assets/images/services-icons/carpenter.png" alt="" style="width: 20%;">
+                            <div class="p-3 d-flex justify-content-center align-items-center flex-column"
+                                style="box-shadow: 3px 3px 5px 2px rgba(181, 230, 250, 0.22); height: 120px;">
+                                <img src="../../../assets/images/services-icons/carpenter.png" alt=""
+                                    style="width: 20%;">
                                 <div class="mt-3" style="color: #000;">CARPENTER</div>
                             </div>
                         </div>
@@ -204,8 +221,17 @@
                                                 </div>
                                             </div>
                                             <div style="width: 5%;" class="d-flex justify-content-between flex-row">
-                                                <a href="" class="secondary h5"><i
-                                                        class="far fa-bookmark primary"></i></a>
+                                                @if (session()->get('role') == 'freelancer')
+                                                    @if (in_array($project->id, $user->saved_project_ids))
+                                                        <a href="/freelancer/save_project/{{ $project->id . '/' . $project->employer_id }}"
+                                                            class="secondary h5"><i
+                                                                class="fa fa-bookmark primary"></i></a>
+                                                    @else
+                                                        <a href="/freelancer/save_project/{{ $project->id . '/' . $project->employer_id }}"
+                                                            class="secondary h5"><i
+                                                                class="far fa-bookmark primary"></i></a>
+                                                    @endif
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="text-right">
@@ -300,7 +326,8 @@
                                                 </div>
                                                 <div class="text-center">
                                                     @if ($freelancer->rate)
-                                                        <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
+                                                        <span
+                                                            class="primary">{{ number_format($freelancer->rate, 1) }}</span>
                                                         @for ($i = 0; $i < round($freelancer->rate); $i++)
                                                             <i class="fas fa-star"
                                                                 style="color: #04bbff !important; font-size: 12px;"
@@ -308,13 +335,16 @@
                                                         @endfor
                                                         @for ($i = 0; $i < 5 - $freelancer->rate; $i++)
                                                             <i class="far fa-star"
-                                                            style="color: #04bbff !important; font-size: 12px;"
-                                                            aria-hidden="true"></i>
+                                                                style="color: #04bbff !important; font-size: 12px;"
+                                                                aria-hidden="true"></i>
                                                         @endfor
                                                     @else
-                                                        <span class="primary">{{ number_format($freelancer->rate, 1) }}</span>
+                                                        <span
+                                                            class="primary">{{ number_format($freelancer->rate, 1) }}</span>
                                                         @for ($i = 0; $i < 5; $i++)
-                                                            <i class="far fa-star" style="color: #04bbff !important; font-size: 12px;" aria-hidden="true"></i>
+                                                            <i class="far fa-star"
+                                                                style="color: #04bbff !important; font-size: 12px;"
+                                                                aria-hidden="true"></i>
                                                         @endfor
                                                     @endif
                                                 </div>
@@ -326,7 +356,9 @@
                                                                 {{ $skill->skill->skill_name }}</li>
                                                             @if ($key === 1)
                                                                 <li class="badge badge-warning p-50 my-50 font-weight-normal"
-                                                                style="background: #004E88 !important;">{{ ($freelancer->skills->count() - 2 > 0 ? '+ ' . ($freelancer->skills->count() - 2) : null) }}</li>
+                                                                    style="background: #004E88 !important;">
+                                                                    {{ $freelancer->skills->count() - 2 > 0 ? '+ ' . ($freelancer->skills->count() - 2) : null }}
+                                                                </li>
                                                             @break
                                                         @endif
                                                     @empty
@@ -339,39 +371,42 @@
                                         </div>
 
                                         <div class="mt-3">
-                                            <div class="p-3 rounded" style="background: rgb(236, 236, 236) !important;">
+                                            <div class="p-3 rounded"
+                                                style="background: rgb(236, 236, 236) !important;">
                                                 <div class="row justify-content-center">
                                                     <div class="col-6">
                                                         <a href="/freelancers/{{ $freelancer->user->username }}"
                                                             class="btn"
-                                                            style="width: 100% !important; background: #fff;">View Profile
+                                                            style="width: 100% !important; background: #fff;">View
+                                                            Profile
                                                         </a>
                                                     </div>
                                                     <div class="col-6">
                                                         <a href="/employer/offer/create_offer/{{ $freelancer->display_name }}"
-                                                            class="btn btn-primary" style="width: 100% !important;">Send
+                                                            class="btn btn-primary"
+                                                            style="width: 100% !important;">Send
                                                             Offer </a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
+                            </a>
                         </div>
-                    @empty
-
-                    @endforelse
                 </div>
+            @empty
+
+                @endforelse
             </div>
         </div>
-        <div class="text-center mt-2">
-            <a href="/search_freelancers" class="primary text-underline">View all Available Workers</a>
-        </div>
+    </div>
+    <div class="text-center mt-2">
+        <a href="/search_freelancers" class="primary text-underline">View all Available Workers</a>
+    </div>
     </div>
 </section>
 
- {{-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+{{-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
  <script>
      // Enable pusher logging - don't include this in production
      Pusher.logToConsole = true;

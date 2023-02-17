@@ -14,7 +14,7 @@
             <div class="repeater-default">
                 <form action="/store_skills" method="POST" novalidate>
                     @csrf
-                    @if(session()->get('role') == 'admin')
+                    @if (session()->get('role') == 'admin')
                         <input type="number" hidden name="user_id" value="{{ $freelancer->user_id }}">
                     @endif
                     <div data-repeater-list="skills">
@@ -26,22 +26,36 @@
                                         <br>
                                         <select name="skill" class=" form-control" id="profession">
                                             <option value="">Select Skills</option>
-                                            @foreach($skills as $skill)
-                                                <option {{ $skill->id == $freelancer_skill->skill_id ? 'selected' : null }} value="{{ $skill->id }}">{{ $skill->skill_name }}</option>
+                                            @foreach ($skills as $skill)
+                                                <option
+                                                    {{ $skill->id == $freelancer_skill->skill_id ? 'selected' : null }}
+                                                    value="{{ $skill->id }}">{{ $skill->skill_name }}</option>
                                             @endforeach
                                         </select>
-                                        <span class="text-danger danger">@error('skill'){{ $message }}@enderror</span>
+                                        <span class="text-danger danger">
+                                            @error('skill')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                                     </div>
                                     <div class="form-group mb-1 col-sm-12 col-md-5">
                                         <label for="pass">Skill Percentage
-                                            <span class="text-primary" style="font-size: 12px; font-style: italic;">(Up to 100%)</span>
+                                            <span class="text-primary" style="font-size: 12px; font-style: italic;">(Up
+                                                to 100%)</span>
                                         </label>
                                         <br>
-                                        <input type="number" max="100" min="1" value="{{ $freelancer_skill->skill_percentage }}" class="form-control" id="pass" name="skill_percentage" placeholder="Skill Percentage">
-                                        <span class="text-danger danger">@error('skill_percentage'){{ $message }}@enderror</span>
+                                        <input type="number" max="100" min="1"
+                                            value="{{ $freelancer_skill->skill_percentage }}" class="form-control"
+                                            id="pass" name="skill_percentage" placeholder="Skill Percentage">
+                                        <span class="text-danger danger">
+                                            @error('skill_percentage')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-2 text-center mt-2">
-                                        <button type="button" class="btn btn-danger" data-repeater-delete=""> <i class="feather icon-x"></i> Delete</button>
+                                        <button type="button" class="btn btn-danger" data-repeater-delete=""> <i
+                                                class="feather icon-x"></i> Delete</button>
                                     </div>
                                 </div>
                                 <hr>
@@ -54,22 +68,33 @@
                                         <br>
                                         <select name="skill" class="select2 form-control" required id="profession">
                                             <option value="">Select Skills</option>
-                                            @foreach($skills as $skill)
+                                            @foreach ($skills as $skill)
                                                 <option value="{{ $skill->id }}">{{ $skill->skill_name }}</option>
                                             @endforeach
                                         </select>
-                                        <span class="text-danger danger">@error('skill'){{ $message }}@enderror</span>
+                                        <span class="text-danger danger">
+                                            @error('skill')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                                     </div>
                                     <div class="form-group mb-1 col-sm-12 col-md-5">
                                         <label for="pass">Skill Percentage
-                                            <span class="text-primary" style="font-size: 12px; font-style: italic;">(Up to 100%)</span>
+                                            <span class="text-primary" style="font-size: 12px; font-style: italic;">(Up
+                                                to 100%)</span>
                                         </label>
                                         <br>
-                                        <input type="number" max="100" class="form-control" required id="pass" name="skill_percentage" placeholder="Skill Percentage">
-                                        <span class="text-danger danger">@error('skill_percentage'){{ $message }}@enderror</span>
+                                        <input type="number" max="100" class="form-control" required
+                                            id="pass" name="skill_percentage" placeholder="Skill Percentage">
+                                        <span class="text-danger danger">
+                                            @error('skill_percentage')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-2 text-center mt-2">
-                                        <button type="button" class="btn btn-danger" data-repeater-delete=""> <i class="feather icon-x"></i> Delete</button>
+                                        <button type="button" class="btn btn-danger" data-repeater-delete=""> <i
+                                                class="feather icon-x"></i> Delete</button>
                                     </div>
                                 </div>
                                 <hr>

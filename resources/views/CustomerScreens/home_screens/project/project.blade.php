@@ -43,7 +43,7 @@
                                 </ul>
                                 <h2>{{ $project->title }}</h2>
                                 <div class="fr-project-style">
-                                    @if(session()->get('role') == 'freelancer')
+                                    @if (session()->get('role') == 'freelancer')
                                         <a href="{{ $save_project ? 'javascript:void(0)' : '/freelancer/save_project/' . $project->id . '/' . $project->employer_id }}"
                                             class="mark_fav protip" data-post-id="225" data-pt-position="top"
                                             data-pt-scheme="black" data-pt-title="Save Project">
@@ -117,10 +117,10 @@
                                     @endforeach
                                 </div>
                                 <!-- <div class="fr-project-ids">
-                          <p>
-                             Project ID: {{ $project->id }}
-                          </p>
-                       </div> -->
+                                  <p>
+                                     Project ID: {{ $project->id }}
+                                  </p>
+                               </div> -->
                             </div>
                         </div>
                         <div class="fl-advert-box">
@@ -141,7 +141,8 @@
                                                     <label style="font-size: 18px !important;">Your Price <span
                                                             class="text-danger">*</span></label>
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" id="bidding-price" name="offer_price" min="1">
+                                                        <input type="number" class="form-control" id="bidding-price"
+                                                            name="offer_price" min="1">
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">₱ </div>
                                                         </div>

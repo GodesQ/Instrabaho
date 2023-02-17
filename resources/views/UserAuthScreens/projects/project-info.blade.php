@@ -14,16 +14,20 @@
                     </div>
                     <ul class="nav nav-tabs nav-underline no-hover-bg" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="base-tab31" data-toggle="tab" aria-controls="tab31" href="#tab31" role="tab" aria-selected="true">Project Info</a>
+                            <a class="nav-link active" id="base-tab31" data-toggle="tab" aria-controls="tab31"
+                                href="#tab31" role="tab" aria-selected="true">Project Info</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="base-tab34" data-toggle="tab" aria-controls="tab34" href="#tab34" role="tab" aria-selected="false">Recommend Freelancers</a>
+                            <a class="nav-link" id="base-tab34" data-toggle="tab" aria-controls="tab34" href="#tab34"
+                                role="tab" aria-selected="false">Recommend Freelancers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="base-tab32" data-toggle="tab" aria-controls="tab32" href="#tab32" role="tab" aria-selected="false">Proposals</a>
+                            <a class="nav-link" id="base-tab32" data-toggle="tab" aria-controls="tab32" href="#tab32"
+                                role="tab" aria-selected="false">Proposals</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="base-tab33" data-toggle="tab" aria-controls="tab33" href="#tab33" role="tab" aria-selected="false">Offers</a>
+                            <a class="nav-link" id="base-tab33" data-toggle="tab" aria-controls="tab33" href="#tab33"
+                                role="tab" aria-selected="false">Offers</a>
                         </li>
 
                     </ul>
@@ -55,7 +59,7 @@
             let url_string = location.href;
             let url = new URL(url_string);
             var action = url.searchParams.get("act");
-            if(action == 'offers') {
+            if (action == 'offers') {
                 $('#baseProposal-tab').click();
             }
         });
@@ -78,16 +82,16 @@
 
                 let errors = [];
                 // validation
-                if(min > max) errors.push('It shows that the minimum cost is greater than maximum cost');
-                if(!project) errors.push('Project is required.');
+                if (min > max) errors.push('It shows that the minimum cost is greater than maximum cost');
+                if (!project) errors.push('Project is required.');
 
-                if(errors.length != 0) return errors.forEach(error => {
+                if (errors.length != 0) return errors.forEach(error => {
                     toastr.warning(error, 'Fail');
                 });
 
                 $.ajax({
-                    url: "/employer/proposals/fetch_data?page="+page,
-                    success: function (data) {
+                    url: "/employer/proposals/fetch_data?page=" + page,
+                    success: function(data) {
                         $('.proposals').html(data.view_data);
                         $('.protip-container').remove();
                     }

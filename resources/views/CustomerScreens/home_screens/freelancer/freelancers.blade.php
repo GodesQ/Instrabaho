@@ -3,7 +3,7 @@
         <div class="col-xs-12 col-xl-6 col-lg-4 col-md-6 col-xxl-4 grid-item">
             <div class="fr-latest-grid py-3">
                 <div class="d-flex justify-content-between align-items-center">
-                        <h6>₱ {{ number_format($freelancer->hourly_rate, 2) }}</h6>
+                    <h6>₱ {{ number_format($freelancer->hourly_rate, 2) }}</h6>
                     <a href="" class="secondary h5"><i class="far fa-bookmark primary"></i></a>
                 </div>
                 <div class="fr-latest-img d-flex justify-content-center">
@@ -61,8 +61,10 @@
                                     Found</li>
                             @endforelse
                         </ul>
-                        @if($freelancer->distance)
-                            <h6 class="font-weight-bold text-center my-1" style="font-size: 12px;"><i class="fas fa-map-marker"></i> Distance : {{ number_format($freelancer->distance, 2) }} km</h6>
+                        @if ($freelancer->distance)
+                            <h6 class="font-weight-bold text-center my-1" style="font-size: 12px;"><i
+                                    class="fas fa-map-marker"></i> Distance :
+                                {{ number_format($freelancer->distance, 2) }} km</h6>
                         @endif
                     </div>
                 </div>
@@ -76,7 +78,8 @@
                                 </a>
                             </div>
                             <div class="col-6">
-                                <a href="/employer/offer/create_offer/{{ $freelancer->display_name }}" class="btn btn-primary" style="width: 100% !important;">Send Offer </a>
+                                <a href="/employer/offer/create_offer/{{ $freelancer->display_name }}"
+                                    class="btn btn-primary" style="width: 100% !important;">Send Offer </a>
                             </div>
                         </div>
                     </div>

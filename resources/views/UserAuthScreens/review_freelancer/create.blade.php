@@ -11,27 +11,33 @@
             height: 100px;
             object-fit: cover;
         }
+
         .review-header {
             padding: 1rem 0;
             border-bottom: 1px solid lightgray;
         }
+
         .review-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .review-header-content h4 {
             font-size: 20px;
         }
+
         .review-content {
             padding: 1.5rem 0;
         }
-        .ratings{
+
+        .ratings {
             display: flex;
             justify-content: flex-start;
             width: 30%;
             border-radius: 25px;
         }
+
         .star {
             font-size: 50px;
             cursor: pointer;
@@ -43,11 +49,13 @@
                 height: 80px;
                 object-fit: cover;
             }
+
             .review-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
             }
+
             .review-header-content h4 {
                 font-size: 15px;
             }
@@ -66,24 +74,31 @@
                         <div class="card-body">
                             <div class="review-header">
                                 <div class="d-flex justify-content-start align-items-center flex-sm-row" style="gap: 10px;">
-                                    @if($contract->freelancer->user->profile_image)
-                                        <img class="border-primary freelancer-image" src="../../../images/user/profile/{{ $contract->freelancer->user->profile_image }}" alt="">
+                                    @if ($contract->freelancer->user->profile_image)
+                                        <img class="border-primary freelancer-image"
+                                            src="../../../images/user/profile/{{ $contract->freelancer->user->profile_image }}"
+                                            alt="">
                                     @else
-                                        <img class="border-primary freelancer-image" src="../../../images/user-profile.png" alt="">
+                                        <img class="border-primary freelancer-image" src="../../../images/user-profile.png"
+                                            alt="">
                                     @endif
                                     <div class="review-header-content">
-                                        <h4 class="font-weight-bold">{{ $contract->freelancer->user->firstname }} {{ $contract->freelancer->user->lastname }}</h4>
-                                        <h6>{{ $contract->freelancer->tagline}}</h6>
+                                        <h4 class="font-weight-bold">{{ $contract->freelancer->user->firstname }}
+                                            {{ $contract->freelancer->user->lastname }}</h4>
+                                        <h6>{{ $contract->freelancer->tagline }}</h6>
                                     </div>
                                 </div>
                                 <div>
-                                    <h5 class="font-weight-normal">Job Type: <span class="font-weight-bold text-uppercase">{{ $job_type }}</span></h5>
-                                    @if($job_type == 'project')
-                                        <h5 class="font-weight-normal">Job Title: <span class="font-weight-bold ">{{ $contract->project->title }}</span></h5>
+                                    <h5 class="font-weight-normal">Job Type: <span
+                                            class="font-weight-bold text-uppercase">{{ $job_type }}</span></h5>
+                                    @if ($job_type == 'project')
+                                        <h5 class="font-weight-normal">Job Title: <span
+                                                class="font-weight-bold ">{{ $contract->project->title }}</span></h5>
                                     @endif
                                 </div>
                             </div>
-                            <form action="{{ route('post-review.freelancer' )}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('post-review.freelancer') }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="job_type" value="{{ $job_type }}">
                                 <input type="hidden" name="job_id" value="{{ $contract->id }}">
@@ -105,22 +120,37 @@
                                     </div> --}}
                                     <div class="rate-container my-25">
                                         <div class="d-md-flex justify-content-start align-items-center">
-                                            <h3 class="font-weight-bold">Freelancer Rate : <span class="danger">*</span> </h3>
+                                            <h3 class="font-weight-bold">Freelancer Rate : <span class="danger">*</span>
+                                            </h3>
                                             <div class="ratings mx-2">
-                                                <div class="freelancer-star star" id="1" style="color: rgb(255, 166, 0);">&#9734;</div>
-                                                <div class="freelancer-star star" id="2" style="color: rgb(255, 166, 0);">&#9734;</div>
-                                                <div class="freelancer-star star" id="3" style="color: rgb(255, 166, 0);">&#9734;</div>
-                                                <div class="freelancer-star star" id="4" style="color: rgb(255, 166, 0);">&#9734;</div>
-                                                <div class="freelancer-star star" id="5" style="color: rgb(255, 166, 0);">&#9734;</div>
+                                                <div class="freelancer-star star" id="1"
+                                                    style="color: rgb(255, 166, 0);">&#9734;</div>
+                                                <div class="freelancer-star star" id="2"
+                                                    style="color: rgb(255, 166, 0);">&#9734;</div>
+                                                <div class="freelancer-star star" id="3"
+                                                    style="color: rgb(255, 166, 0);">&#9734;</div>
+                                                <div class="freelancer-star star" id="4"
+                                                    style="color: rgb(255, 166, 0);">&#9734;</div>
+                                                <div class="freelancer-star star" id="5"
+                                                    style="color: rgb(255, 166, 0);">&#9734;</div>
                                             </div>
                                             <input type="hidden" name="freelancer_rate" id="freelancer_rate">
                                         </div>
-                                        <span class="danger text-danger p-1">@error('freelancer_rate'){{$message}}@enderror</span>
+                                        <span class="danger text-danger p-1">
+                                            @error('freelancer_rate')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                                     </div>
                                     <div class="form-group">
                                         <h3 class="font-weight-bold">Review</h3>
-                                        <textarea name="review" id="" cols="30" rows="10" class="form-control" placeholder="Write your review here...">{{ old('review') }}</textarea>
-                                        <span class="danger text-danger p-1">@error('review'){{$message}}@enderror</span>
+                                        <textarea name="review" id="" cols="30" rows="10" class="form-control"
+                                            placeholder="Write your review here...">{{ old('review') }}</textarea>
+                                        <span class="danger text-danger p-1">
+                                            @error('review')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                                     </div>
                                     <div class="form-group">
                                         <h3 class="font-weight-bold">Upload Attachment</h3>
@@ -160,11 +190,11 @@
         let freelancer_rate = document.querySelector('#freelancer_rate');
         let currentActiveFreelancerStar = 0;
         freelancer_stars.forEach((star, i) => {
-            star.onclick = function () {
+            star.onclick = function() {
                 currentActiveFreelancerStar = this.id;
                 freelancer_rate.value = currentActiveFreelancerStar;
                 freelancer_stars.forEach((star, i) => {
-                    if(currentActiveFreelancerStar >= i + 1) {
+                    if (currentActiveFreelancerStar >= i + 1) {
                         star.innerHTML = '&#9733;';
                     } else {
                         star.innerHTML = '&#9734;';

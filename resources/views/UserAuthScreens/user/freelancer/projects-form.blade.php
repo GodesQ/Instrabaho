@@ -12,13 +12,16 @@
     <div class="card-content collapse show">
         <div class="card-body">
             <div class="text-right my-1">
-                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#freelancer_projects_modal">
+                <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                    data-target="#freelancer_projects_modal">
                     Add Project
                 </button>
             </div>
-            <div class="modal fade text-left" id="freelancer_projects_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+            <div class="modal fade text-left" id="freelancer_projects_modal" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel17" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
-                    <form action="{{ route('freelancer.store_projects') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('freelancer.store_projects') }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="modal-content">
                             <div class="modal-header">
@@ -33,19 +36,25 @@
                                     <input type="text" name="project_name" id="project_name" class="form-control">
                                 </div>
                                 <div class="form-group my-1">
-                                    <div class="form-label font-weight-bold">Project Url <span class="text-italic primary" style="font-size: 10px !important;">(Optional)</span></div>
+                                    <div class="form-label font-weight-bold">Project Url <span
+                                            class="text-italic primary"
+                                            style="font-size: 10px !important;">(Optional)</span></div>
                                     <input type="url" name="project_url" id="project_url" class="form-control">
                                 </div>
                                 <div class="form-group my-1">
-                                    <div class="form-label font-weight-bold">Project Attachment <span style="font-style: italic; font-size: 10px;">(e.g. jpg,jpeg,png,docx,pdf)</span></div>
+                                    <div class="form-label font-weight-bold">Project Attachment <span
+                                            style="font-style: italic; font-size: 10px;">(e.g.
+                                            jpg,jpeg,png,docx,pdf)</span></div>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="project_image" id="inputGroupFile01">
+                                        <input type="file" class="custom-file-input" name="project_image"
+                                            id="inputGroupFile01">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn grey btn-outline-secondary"
+                                    data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-outline-primary">Save</button>
                             </div>
                         </div>
@@ -57,17 +66,20 @@
                     <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-12 border my-50">
                         <div class="row p-50 align-items-center">
                             <div class="col-md-4 col-sm-12">
-                                @if(pathinfo($project->project_image, PATHINFO_EXTENSION) == "pdf")
+                                @if (pathinfo($project->project_image, PATHINFO_EXTENSION) == 'pdf')
                                     <a href=".../../../images/freelancer_projects/{{ $project->project_image }}">
-                                        <img style="width: 100%; max-height: 150px; object-fit:cover;" src="../../../images/pdf.jpg" alt="">
+                                        <img style="width: 100%; max-height: 150px; object-fit:cover;"
+                                            src="../../../images/pdf.jpg" alt="">
                                     </a>
-                                @elseif (pathinfo($project->project_image, PATHINFO_EXTENSION) == "docx")
+                                @elseif (pathinfo($project->project_image, PATHINFO_EXTENSION) == 'docx')
                                     <a href=".../../../images/freelancer_projects/{{ $project->project_image }}">
-                                        <img style="width: 100%; max-height: 150px; object-fit:cover;" src="../../../images/docx.png" alt="">
+                                        <img style="width: 100%; max-height: 150px; object-fit:cover;"
+                                            src="../../../images/docx.png" alt="">
                                     </a>
                                 @else
-
-                                    <img style="width: 100%; max-height: 150px; object-fit:cover;" src="../../../images/freelancer_projects/{{ $project->project_image }}" alt="">
+                                    <img style="width: 100%; max-height: 150px; object-fit:cover;"
+                                        src="../../../images/freelancer_projects/{{ $project->project_image }}"
+                                        alt="">
                                 @endif
                             </div>
                             <div class="col-md-6 col-sm-12 mt-1">
@@ -75,7 +87,9 @@
                             </div>
                             <div class="col-md-2 col-sm-12">
                                 <div class="text-right">
-                                    <button id="{{ $project->id }}" class="btn btn-outline-danger remove-project-image-button"><i class="feather icon-x"></i></button>
+                                    <button id="{{ $project->id }}"
+                                        class="btn btn-outline-danger remove-project-image-button"><i
+                                            class="feather icon-x"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -90,8 +104,8 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function () {
-            $(document).on("click", ".remove-project-image-button", function (e) {
+        $(document).ready(function() {
+            $(document).on("click", ".remove-project-image-button", function(e) {
                 let project_id = $(this).attr("id");
                 let service_id = '';
                 let csrf = "{{ csrf_token() }}";
@@ -106,14 +120,14 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '{{ route("freelancer.remove_project") }}',
+                            url: '{{ route('freelancer.remove_project') }}',
                             method: 'DELETE',
-                            data : {
-                                _token : csrf,
+                            data: {
+                                _token: csrf,
                                 project_id
                             },
-                            success: function (response) {
-                                if(response.status == 201) {
+                            success: function(response) {
+                                if (response.status == 201) {
                                     Swal.fire(
                                         "Removed!",
                                         "Record has been removed.",

@@ -9,8 +9,9 @@
                 <div class="container">
                     <ul class="nav nav-tabs nav-top-border no-hover-bg" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="baseProposal-tab" data-toggle="tab" aria-controls="tabProposal" href="#tabProposal" role="tab" aria-selected="true">
-                                 Proposals</a>
+                            <a class="nav-link active" id="baseProposal-tab" data-toggle="tab" aria-controls="tabProposal"
+                                href="#tabProposal" role="tab" aria-selected="true">
+                                Proposals</a>
                         </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link" id="baseIcon-tab12" data-toggle="tab" aria-controls="tabIcon12" href="#tabIcon12" role="tab" aria-selected="false">Submitted Offers</a>
@@ -25,11 +26,13 @@
                                             <div class="card-title">Filter Projects Proposals</div>
                                             <form action="#" class="form" id="filter-project-form" method="POST">
                                                 <div class="form-group">
-                                                    <label for="project" class="form-label font-weight-bold">Select Project</label>
+                                                    <label for="project" class="form-label font-weight-bold">Select
+                                                        Project</label>
                                                     <select name="project" id="project" class="select2">
-                                                            <option value="">Select Project</option>
+                                                        <option value="">Select Project</option>
                                                         @forelse ($projects as $project)
-                                                            <option value="{{ $project->id }}">{{ $project->title }}</option>
+                                                            <option value="{{ $project->id }}">{{ $project->title }}
+                                                            </option>
                                                         @empty
                                                             <option value="">No Projects Found</option>
                                                         @endforelse
@@ -90,7 +93,9 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tabIcon12" role="tabpanel" aria-labelledby="baseIcon-tab12">
-                            <p>Sugar plum tootsie roll biscuit caramels. Liquorice brownie pastry cotton candy oat cake fruitcake jelly chupa chups. Pudding caramels pastry powder cake soufflé wafer caramels. Jelly-o pie cupcake.</p>
+                            <p>Sugar plum tootsie roll biscuit caramels. Liquorice brownie pastry cotton candy oat cake
+                                fruitcake jelly chupa chups. Pudding caramels pastry powder cake soufflé wafer caramels.
+                                Jelly-o pie cupcake.</p>
                         </div>
                     </div>
                 </div>
@@ -100,50 +105,49 @@
 @endsection
 
 @push('scripts')
-<script>
+    <script>
+        window.addEventListener('load', () => {
+            let url_string = location.href;
+            let url = new URL(url_string);
+            var action = url.searchParams.get("act");
+            if (action == 'offers') {
+                $('#baseProposal-tab').click();
+            }
+        });
 
-    window.addEventListener('load', () => {
-        let url_string = location.href;
-        let url = new URL(url_string);
-        var action = url.searchParams.get("act");
-        if(action == 'offers') {
-            $('#baseProposal-tab').click();
-        }
-    });
+        $(document).ready(function() {
 
-    $(document).ready(function() {
-
-        $(document).on('click', '.pagination .page-item a', function(event) {
-            event.preventDefault();
-            let page = $(this).attr('href').split('page=')[1];
-            $('#page_count').val(page);
-            fetchProposals(page);
-        })
-
-        $(document).on('submit', '#filter-project-form', function(event) {
-            event.preventDefault();
-            fetchProposals(1);
-        })
-
-        function fetchProposals(page) {
-
-            let errors = [];
-            // validation
-            if(min > max) errors.push('It shows that the minimum cost is greater than maximum cost');
-            if(!project) errors.push('Project is required.');
-
-            if(errors.length != 0) return errors.forEach(error => {
-                toastr.warning(error, 'Fail');
-            });
-
-            $.ajax({
-                url: "/employer/proposals/fetch_data?page="+page,
-                success: function (data) {
-                    $('.proposals').html(data.view_data);
-                    $('.protip-container').remove();
-                }
+            $(document).on('click', '.pagination .page-item a', function(event) {
+                event.preventDefault();
+                let page = $(this).attr('href').split('page=')[1];
+                $('#page_count').val(page);
+                fetchProposals(page);
             })
-        }
-    })
-</script>
+
+            $(document).on('submit', '#filter-project-form', function(event) {
+                event.preventDefault();
+                fetchProposals(1);
+            })
+
+            function fetchProposals(page) {
+
+                let errors = [];
+                // validation
+                if (min > max) errors.push('It shows that the minimum cost is greater than maximum cost');
+                if (!project) errors.push('Project is required.');
+
+                if (errors.length != 0) return errors.forEach(error => {
+                    toastr.warning(error, 'Fail');
+                });
+
+                $.ajax({
+                    url: "/employer/proposals/fetch_data?page=" + page,
+                    success: function(data) {
+                        $('.proposals').html(data.view_data);
+                        $('.protip-container').remove();
+                    }
+                })
+            }
+        })
+    </script>
 @endpush

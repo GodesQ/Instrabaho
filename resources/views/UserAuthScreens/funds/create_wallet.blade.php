@@ -12,9 +12,15 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <div class="form-label font-weight-bold">Amount <span class="text-warning warning font-weight-light">(Minimum of 200 pesos)</span></div>
+                                    <div class="form-label font-weight-bold">Amount <span
+                                            class="text-warning warning font-weight-light">(Minimum of 200 pesos)</span>
+                                    </div>
                                     <input type="number" class="form-control" name="amount" min="200">
-                                    <span class="text-danger danger">@error('amount'){{ $message }}@enderror</span>
+                                    <span class="text-danger danger">
+                                        @error('amount')
+                                            {{ $message }}
+                                        @enderror
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12">
@@ -23,17 +29,23 @@
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <fieldset>
-                                                <input type="radio" name="payment_method" value="gcash" {{ $user->prefer_payment_method == 'gcash' ? 'checked' : null }} id="input-radio-14">
+                                                <input type="radio" name="payment_method" value="gcash"
+                                                    {{ $user->prefer_payment_method == 'gcash' ? 'checked' : null }}
+                                                    id="input-radio-14">
                                                 <label for="input-radio-14">G-CASH</label>
                                             </fieldset>
-                                            <img src="../../../images/logo/gcash-logo.png" alt="" style="width: 50px;">
+                                            <img src="../../../images/logo/gcash-logo.png" alt=""
+                                                style="width: 50px;">
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <fieldset>
-                                                <input type="radio" name="payment_method" value="grab_pay" id="input-radio-18" {{ $user->prefer_payment_method == 'grab_pay' ? 'checked' : null }}>
+                                                <input type="radio" name="payment_method" value="grab_pay"
+                                                    id="input-radio-18"
+                                                    {{ $user->prefer_payment_method == 'grab_pay' ? 'checked' : null }}>
                                                 <label for="input-radio-18">GRAB PAY</label>
                                             </fieldset>
-                                            <img src="../../../images/logo/grabpay.png" alt="" style="width: 40px;">
+                                            <img src="../../../images/logo/grabpay.png" alt=""
+                                                style="width: 40px;">
                                         </li>
                                         {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <fieldset>
@@ -58,7 +70,11 @@
                                             <img src="../../../images/logo/online-bank.png" alt="" style="width: 50px;">
                                         </li> --}}
                                     </ul>
-                                    <span class="text-danger danger">@error('payment_method'){{ $message }}@enderror</span>
+                                    <span class="text-danger danger">
+                                        @error('payment_method')
+                                            {{ $message }}
+                                        @enderror
+                                    </span>
                                 </div>
                             </div>
                         </div>
