@@ -154,8 +154,11 @@
                                                 alt="Avatar Image">
                                         @endif
                                     </div>
+                                    <div>
+                                        <i class="feather icon-chevron-down"></i>
+                                    </div>
                                     <div style="color: #000000 !important;" class="mx-2">
-                                        <div class="badge badge-primary text-uppercase">{{ Session::get('role') }}
+                                        <div class="badge badge-warning font-weight-normal text-uppercase">{{ Session::get('role') }}
                                         </div>
                                     </div>
 
