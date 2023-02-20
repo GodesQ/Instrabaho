@@ -20,9 +20,12 @@ class ProjectOffersController extends Controller
         $employer = Employer::where('user_id', $user_id)->with('projects')->firstOrFail();
         $freelancer = Freelancer::where('display_name', $request->freelancer)->firstOrFail();
 
-        $pending_projects = $employer->projects()->where('status', 'pending')->get();
+        if($employer->user_id == $freelancer->user_id) {
+            return back()->with('fail', 'Fail, Looks like the freelancer/worker that will send you an offer was also you.');
+        }
 
-        return view('UserAuthScreens.projects_offers.create-offer', compact('employer', 'freelancer', 'pending_projects'));
+        $pending_projects = $employer->projects()->where('status', 'pending')->get();
+        return view('UserAuthScreens.projects_offers.create-offer', compact('employer', 'freelancer', 'pending_projects', 'isOwnUser'));
     }
 
     public function store(StoreProjectOfferRequest $request) {

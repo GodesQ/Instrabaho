@@ -287,6 +287,7 @@ class HomeScreenController extends Controller
         $project = Project::where('title', $request->title)
             ->with('employer', 'category')
             ->firstOrFail();
+
         # if the user is login as freelancer
         $freelancer = Freelancer::where('user_id', session()->get('id'))->first();
 
@@ -294,6 +295,12 @@ class HomeScreenController extends Controller
         if ($freelancer) {
             $isAvailableDate = in_array($project->start_date, $freelancer->notAvailableDates()) || in_array($project->end_date, $freelancer->notAvailableDates()) ? false : true;
         }
+
+        $isOwnUser = false;
+        if($project->employer->user_id == session()->get('id')) {
+            $isOwnUser = true;
+        }
+
 
         $save_project = $freelancer
             ? SaveProject::where('project_id', $project->id)
@@ -306,7 +313,7 @@ class HomeScreenController extends Controller
                 ->first()
             : false;
 
-        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project', 'proposal', 'freelancer', 'isAvailableDate'));
+        return view('CustomerScreens.home_screens.project.project', compact('project', 'save_project', 'proposal', 'freelancer', 'isAvailableDate', 'isOwnUser'));
     }
 
     public function freelancers(Request $request)
