@@ -219,7 +219,8 @@
                                                                     <input type="number" class="form-control"
                                                                         placeholder="Rate your Budget" id="cost"
                                                                         aria-label="Amount (to the nearest dollar)"
-                                                                        name="cost">
+                                                                        name="cost"
+                                                                        min="1">
                                                                     <div class="input-group-append">
                                                                         <span class="input-group-text">.00</span>
                                                                     </div>

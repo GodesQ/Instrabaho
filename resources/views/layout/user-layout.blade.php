@@ -42,7 +42,8 @@
     <!-- END: Theme CSS-->
 
     <!-- BEGIN: Page CSS-->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-gradient.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-callout.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/plugins/file-uploaders/dropzone.css')}}">
@@ -273,6 +274,7 @@
 
 
     <!-- BEGIN: Page Vendor JS-->
+    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/jquery.steps.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/dropzone.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
@@ -316,7 +318,6 @@
     <script src="{{ asset('js/html5-qrcode.min.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/wizard-steps.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/pages/account-setting.js') }}"></script>
-    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/select/form-select2.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/cards/card-statistics.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/cards/card-statistics.js') }}"></script>

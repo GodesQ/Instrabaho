@@ -25,6 +25,7 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'title' => 'required|max:100',
+            'attachments' => 'file|mimes:png,jpg,jpeg,pdf,docx,doc',
             'category_id' => 'required',
             'description' => 'required',
             'project_cost_type' => 'required',

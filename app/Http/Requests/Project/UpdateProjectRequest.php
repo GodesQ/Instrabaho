@@ -25,6 +25,7 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:projects,id',
+            'attachments' => 'file|mimes:png,jpg,jpeg,pdf,docx,doc',
             'title' => 'required|max:100',
             'category_id' => 'required',
             'description' => 'required',

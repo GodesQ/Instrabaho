@@ -49,7 +49,9 @@
                                             data-pt-scheme="black" data-pt-title="Save Project">
                                             <i class="{{ $save_project ? 'fa' : 'far' }} fa-heart text-danger"></i>
                                         </a>
-                                        <a href="#fr-bid-form" class="btn btn-theme scroll"> Send Proposal</a>
+                                        @if(!$isOwnUser)
+                                            <a href="#fr-bid-form" class="btn btn-theme scroll"> Send Proposal</a>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -127,7 +129,7 @@
                             <a href="javascript:void(0)"><img src="../../../images/logo/main-logo.png" width="124"
                                     alt="exertio theme" class="img-fluid"></a>
                         </div>
-                        @if (session()->get('role') == 'freelancer' && !$proposal && $isAvailableDate)
+                        @if (session()->get('role') == 'freelancer' && !$proposal && $isAvailableDate && !$isOwnUser)
                             <div class="fr-project-lastest-product">
                                 <div class="fr-project-place" id="fr-bid-form">
                                     <h3> Send Your Proposal</h3>

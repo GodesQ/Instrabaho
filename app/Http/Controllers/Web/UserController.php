@@ -61,7 +61,7 @@ class UserController extends Controller
 
     public function change_user_picture(Request $request) {
         $request->validate([
-            'new_profile_picture' => 'required|file|max:2192|mimes:png,jpg,jpeg'
+            'new_profile_picture' => 'required|file|max:8192|mimes:png,jpg,jpeg'
         ]);
 
         $profile = User::where('id', $request->id)->first();
