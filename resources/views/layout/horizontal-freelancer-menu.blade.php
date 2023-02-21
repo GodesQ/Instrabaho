@@ -1,12 +1,12 @@
 <div class="navbar-container main-menu-content container center-layout" data-menu="menu-container">
     <!-- include ../../../includes/mixins-->
     <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
-        <li class="dropdown px-2 nav-item {{  Request::path() == 'freelancer/dashboard' ? 'active' : ''  }}">
+        <li class="dropdown px-lg-2 nav-item {{  Request::path() == 'freelancer/dashboard' ? 'active' : ''  }}">
             <a class=" nav-link" href="/freelancer/dashboard" ><i class="feather icon-home"></i>
                 <span data-i18n="Dashboard">Dashboard</span>
             </a>
         </li>
-        <li class="dropdown nav-item" data-menu="dropdown">
+        <li class="dropdown px-lg-2 nav-item" data-menu="dropdown">
             <a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-user"></i><span data-i18n="Profile">Profile</span></a>
             <ul class="dropdown-menu">
                 <li data-menu="" class=""><a class="dropdown-item" href="/freelancers/{{ session()->get('username') }}" target="_blank" data-i18n="View Profile" data-toggle="dropdown">View Profile</a>
@@ -15,7 +15,7 @@
                 </li>
             </ul>
         </li>
-        <li class="dropdown px-2 nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Projects">Projects</span></a>
+        <li class="dropdown px-lg-2 nav-item " data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-layout"></i><span data-i18n="Projects">Projects</span></a>
             <ul class="dropdown-menu">
                 <li class="{{ Request::path() == 'freelancer/proposals' ? 'active' : '' }}">
                     <a class="dropdown-item" href="/freelancer/proposals" data-toggle="dropdown" data-i18n="Proposals">Proposals</a>
@@ -44,7 +44,7 @@
                 </li>
             </ul>
         </li> --}}
-        <li class="dropdown px-2 nav-item {{  Request::path() == 'user_fund' ? 'active' : ''  }}">
+        <li class="dropdown px-lg-2 nav-item {{  Request::path() == 'user_fund' ? 'active' : ''  }}">
             <a class=" nav-link" href="/user_fund" ><i class="fa fa-money"></i>
                 <span data-i18n="Funds">Funds</span>
             </a>

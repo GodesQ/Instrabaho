@@ -62,7 +62,7 @@
                                     <div class="container-fluid">
                                         <div class="row my-2">
                                             <div class="col-md-12">
-                                                <h5 class="font-weight-bold">Payment Option</h5>
+                                                <h5 class="font-weight-bold my-1">Payment Option</h5>
                                             </div>
                                             <div class="col-md-12 col-sm-12">
                                                 <ul class="list-group my-1">

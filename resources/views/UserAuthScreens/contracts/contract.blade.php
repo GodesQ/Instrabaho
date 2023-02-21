@@ -26,12 +26,14 @@
                                     <h6 class="text-center">{{ $contract->project->category->name }}</h6>
                                 </div>
                                 <div class="description my-2">
-                                    <p class="text-center">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                        Officia, mollitia impedit doloremque, id, illum maxime corrupti dolores doloribus
-                                        tenetur nobis animi dolorem nihil harum exercitationem repellat blanditiis quis.
-                                        Aliquid enim accusamus cumque quibusdam mollitia ex qui dolores laboriosam
-                                        praesentium nemo nostrum deleniti ducimus delectus est nam commodi iure,
-                                        necessitatibus suscipit.</p>
+                                    <p class="text-center">This is an agreement between a freelancer and a client. The
+                                        freelancer agrees to provide services to the client to the best of their abilities
+                                        and with the best of intentions. The client will review and approve the services
+                                        before they are completed, and will pay the freelancer for the services provided.
+                                        The freelancer agrees to keep all information about the client's business
+                                        confidential.
+
+                                    </p>
                                 </div>
                             </div>
                             <div class="row text-center">
@@ -52,13 +54,7 @@
                                     <div class="primary">₱ {{ number_format($contract->total_cost, 2) }}</div>
                                 </div>
                             </div>
-                            <div class="description my-2">
-                                <p class="text-center">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia,
-                                    mollitia impedit doloremque, id, illum maxime corrupti dolores doloribus tenetur nobis
-                                    animi dolorem nihil harum exercitationem repellat blanditiis quis. Aliquid enim
-                                    accusamus.</p>
-                            </div>
-                            <div class="row">
+                            <div class="row my-2">
                                 <div class="col-lg-6">
                                     <h3 class="font-weight-bold text-center">
                                         About Freelancer
@@ -89,6 +85,9 @@
                                             </span>{{ $contract->project->employer->address }}</li>
                                     </ul>
                                 </div>
+                            </div>
+                            <div class="description my-2">
+                                <p class="text-center" style="font-style: italic;">Please be aware that this transaction between the client and freelancer is monitored by Instrabaho.</p>
                             </div>
                         </div>
                     </div>

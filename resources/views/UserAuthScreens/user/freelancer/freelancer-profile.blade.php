@@ -216,8 +216,7 @@
                                                                                 <a href="/projects/{{ optional($saved_project->project)->id }}/{{ optional($saved_project->project)->title }}"
                                                                                     style="color: black; font-weight: 500; font-size: 15px;">{{ strlen(optional($saved_project->project)->title) > 50 ? substr(optional($saved_project->project)->title, 0, 50) . '...' : optional($saved_project->project)->title }}</a>
                                                                             </div>
-                                                                            <div
-                                                                                style="color: rgb(99, 99, 99); padding: 0;">
+                                                                            <div style="color: rgb(99, 99, 99); padding: 0;">
                                                                                 {{ optional($saved_project->project)->employer->user->firstname . ' ' . optional($saved_project->project)->employer->user->lastname }}
                                                                             </div>
                                                                             <div class="my-1">

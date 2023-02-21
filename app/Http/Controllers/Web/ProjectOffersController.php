@@ -25,7 +25,7 @@ class ProjectOffersController extends Controller
         }
 
         $pending_projects = $employer->projects()->where('status', 'pending')->get();
-        return view('UserAuthScreens.projects_offers.create-offer', compact('employer', 'freelancer', 'pending_projects', 'isOwnUser'));
+        return view('UserAuthScreens.projects_offers.create-offer', compact('employer', 'freelancer', 'pending_projects'));
     }
 
     public function store(StoreProjectOfferRequest $request) {

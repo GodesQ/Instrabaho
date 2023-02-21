@@ -99,6 +99,7 @@ class UserController extends Controller
 
     public function user_change_password(Request $request) {
         $user = User::where('id', $request->id)->first();
+        if($request->old_password === $request->new_password) return back()->with('fail', 'New password must be different from current password.');
         if(!Hash::check($request->old_password, $user->password)) return back()->with('fail', "Sorry your old password is incorrect.");
         if($request->confirm_password != $request->new_password) return back()->with('fail', "Sorry your password didn't match to confirm password.");
 

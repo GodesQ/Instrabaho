@@ -276,9 +276,7 @@
                                                                     BPI BANK</option>
                                                             </optgroup>
                                                             <optgroup label="Credit Card">
-                                                                <option value="credit_card"
-                                                                    {{ $project->payment_method == 'credit_card' ? 'selected' : null }}>
-                                                                    Credit Card</option>
+                                                                <option value="credit_card" {{ $project->payment_method == 'credit_card' ? 'selected' : null }}>Credit Card</option>
                                                             </optgroup>
                                                         </select>
                                                     </div>
