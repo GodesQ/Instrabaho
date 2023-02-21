@@ -49,7 +49,7 @@
                                             data-pt-scheme="black" data-pt-title="Save Project">
                                             <i class="{{ $save_project ? 'fa' : 'far' }} fa-heart text-danger"></i>
                                         </a>
-                                        @if(!$isOwnUser)
+                                        @if(!$isOwnUser && $project->status != 'completed')
                                             <a href="#fr-bid-form" class="btn btn-theme scroll"> Send Proposal</a>
                                         @endif
                                     @endif
@@ -98,7 +98,6 @@
                             <div class="fr-project-attachments">
                                 <h3>{{ $project->quantity }}</h3>
                                 <div class="attacment-box">
-
                                     @php
                                         //transform json arrays to real arrays
                                         $attachments = json_decode($project->attachments);

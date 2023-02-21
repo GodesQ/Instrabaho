@@ -68,8 +68,7 @@
                                                             @endforeach
                                                         </div>
                                                     </div>
-                                                    <input type="hidden" name="category_id"
-                                                        value="{{ $categories[0]->id }}" id="category_id">
+                                                    <input type="hidden" name="category_id" value="{{ $categories[0]->id }}" id="category_id">
                                                 </fieldset>
 
                                                 <h6>Project Schedule</h6>

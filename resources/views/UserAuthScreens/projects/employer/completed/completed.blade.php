@@ -37,12 +37,10 @@
                                             </span>
                                         </span>
                                     </div>
-                                    <p>{{ strlen($completed_project->project->description) > 150 ? substr($completed_project->project->description, 0, 150) . '...' : $completed_project->project->description }}
-                                    </p>
-                                    {{-- <ul>
-                                        <li><i class="fa fa-calendar mr-1"></i> Start Date : <span class="font-weight-bold">{{ $proposal->contract->start_date ? $proposal->contract->start_date : 'No Start Date' }}</span></li>
-                                        <li><i class="fa fa-calendar mr-1"></i> End Date : <span class="font-weight-bold">{{ $proposal->contract->end_date ? $proposal->contract->end_date : 'No End Date' }}</span></li>
-                                    </ul> --}}
+                                    <div style="height: 80px;">
+                                        <p>{{ strlen($completed_project->project->description) > 150 ? substr($completed_project->project->description, 0, 150) . '...' : $completed_project->project->description }}
+                                        </p>
+                                    </div>
                                     <div class="text-right">
                                         <a href="/project/contract/view/{{ $completed_project->contract ? $completed_project->contract->id : null }}"
                                             class="info mx-50">View Contract</a>

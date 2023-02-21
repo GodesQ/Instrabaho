@@ -39,7 +39,6 @@
 
 @push('scripts')
     <script>
-
         $(document).ready(function () {
             $(document).on("click", ".delete-addon", function (e) {
                 e.preventDefault();

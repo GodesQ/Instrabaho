@@ -170,7 +170,7 @@ use Pusher\Pusher;
             Route::get('save_project/{id}/{owner_id}', [SaveProjectController::class, 'save_project'])->name('save_project');
             Route::get('saved_projects', [SaveProjectController::class, 'freelancer_saved_projects'])->name('freelancer.saved_projects');
             Route::get('proposal_lists', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('freelancer.proposals');
-            Route::get('follow_employer/{employer_id}', [FollowEmployerController::class, 'freleancer.follow_employer']);
+            Route::get('follow_employer/{employer_id}', [FollowEmployerController::class, 'follow_employer']);
             Route::get('followed_employers', [FollowEmployerController::class, 'followed_employers'])->name('freelancer.followed_employer');
 
             Route::get('proposals', [ProjectProposalController::class, 'proposals_for_freelancers'])->name('freelancer.proposals');
