@@ -17,16 +17,24 @@
                 <div class="row">
                     <div class="col-lg-6 rounded">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-header font-weight-bold text-uppercase" 
+                            style="padding: 1.6rem 1rem; border-bottom: 1px solid lightgray"> <h3 class="font-weight-bold">all information</h3> </div>
+
+                            <div class="card-body" style="background: #fefefe !important">
                                 <div class="row">
                                     <div class="col-md-12 my-25">
+
+
+
+                                    
                                         <div class="font-weight-bold">Full Name : <span class="font-weight-normal mx-1">{{ $proposal->freelancer->user->firstname }} {{ $proposal->freelancer->user->lastname }}</span></div>
                                     </div>
                                     <div class="col-md-12 my-25">
                                         <div class="font-weight-bold">Display Name : <span class="font-weight-normal mx-1">{{ $proposal->freelancer->display_name }}</span></div>
                                     </div>
                                 </div>
-                                <h3 class="font-weight-bold my-1">Project Info</h3>
+                                <hr>
+                            
                                 <div class="row">
                                     <div class="col-md-12 my-25">
                                         <div class="font-weight-bold">Title : <span class="font-weight-normal mx-1">{{ $proposal->project->title }}</span></div>
@@ -47,10 +55,11 @@
                                         </div>
                                     </div> --}}
                                 </div>
-                                <h3 class="font-weight-bold my-1">Proposal Info</h3>
+                                <hr>
+
                                 <div class="row">
                                     <div class="col-md-12 my-25">
-                                        <div class="font-weight-bold">Offer Price : <span class="font-weight-normal mx-1" style="font-size: 30px;">₱ {{ number_format($proposal->offer_price, 2) }}</span></div>
+                                        <div class="font-weight-bold">Offer Price : <span class="font-weight-normal mx-1" style="font-size: 22px;">₱ {{ number_format($proposal->offer_price, 2) }}</span></div>
                                     </div>
                                     <div class="col-md-12 my-25">
                                         <div class="font-weight-bold">Address : <span class="font-weight-normal mx-1">{{ $proposal->address }}</span></div>
