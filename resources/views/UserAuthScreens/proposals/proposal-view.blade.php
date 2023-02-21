@@ -6,6 +6,7 @@
 @endsection
 
 @section('content')
+<<<<<<< HEAD
     <div class="page-wrapper">
         <div class="page-content">
             <div class="page-body">
