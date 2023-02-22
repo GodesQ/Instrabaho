@@ -6,7 +6,6 @@
 @endsection
 
 @section('content')
-<<<<<<< HEAD
     <div class="page-wrapper">
         <div class="page-content">
             <div class="page-body">
@@ -17,73 +16,83 @@
                                 <div class="card-header font-weight-bold text-uppercase"
                                     style="padding: 1.6rem 1rem; border-bottom: 1px solid lightgray;">
                                     <h2 class="font-weight-normal">ALL INFORMATION</h2>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="feather icon-minus"></i></a></li>
+                                            <li><a data-action="reload"><i class="feather icon-rotate-cw"></i></a></li>
+                                            <li><a data-action="expand"><i class="feather icon-maximize"></i></a></li>
+                                            <li><a data-action="close"><i class="feather icon-x"></i></a></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="card-body" style="background: #fefefe !important;">
-                                    <div class="row">
-                                        <div class="col-md-12 my-25">
-                                            <div class="font-weight-bold">Full Name : <span class="font-weight-normal mx-1">{{ $proposal->freelancer->user->firstname }}
-                                                    {{ $proposal->freelancer->user->lastname }}</span></div>
-                                        </div>
-                                        <div class="col-md-12 my-25">
-                                            <div class="font-weight-bold">Display Name : <span
-                                                    class="font-weight-normal mx-1">{{ $proposal->freelancer->display_name }}</span>
+                                <div class="card-content collapse show">
+                                    <div class="card-body" style="background: #fefefe !important;">
+                                        <div class="row">
+                                            <div class="col-md-12 my-25">
+                                                <div class="font-weight-bold">Full Name : <span class="font-weight-normal mx-1">{{ $proposal->freelancer->user->firstname }}
+                                                        {{ $proposal->freelancer->user->lastname }}</span></div>
+                                            </div>
+                                            <div class="col-md-12 my-25">
+                                                <div class="font-weight-bold">Display Name : <span
+                                                        class="font-weight-normal mx-1">{{ $proposal->freelancer->display_name }}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-12 my-25">
-                                            <div class="font-weight-bold">Title : <span
-                                                    class="font-weight-normal mx-1">{{ $proposal->project->title }}</span>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-12 my-25">
+                                                <div class="font-weight-bold">Title : <span
+                                                        class="font-weight-normal mx-1">{{ $proposal->project->title }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 my-25">
+                                                <div class="font-weight-bold">Cost Type : <span
+                                                        class="font-weight-normal mx-1">{{ $proposal->project->project_cost_type }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 my-25">
+                                                <div class="font-weight-bold">Duration : <span
+                                                        class="font-weight-normal mx-1">{{ date_format(new DateTime($proposal->project->start_date), 'F d, Y') }}
+                                                        -
+                                                        {{ date_format(new DateTime($proposal->project->end_date), 'F d, Y') }}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 my-25">
-                                            <div class="font-weight-bold">Cost Type : <span
-                                                    class="font-weight-normal mx-1">{{ $proposal->project->project_cost_type }}</span>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-12 my-25">
+                                                <div class="font-weight-bold">Offer Price : <span
+                                                        class="font-weight-normal mx-1" style="font-size: 22px;">₱
+                                                        {{ number_format($proposal->offer_price, 2) }}</span></div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 my-25">
-                                            <div class="font-weight-bold">Duration : <span
-                                                    class="font-weight-normal mx-1">{{ date_format(new DateTime($proposal->project->start_date), 'F d, Y') }}
-                                                    -
-                                                    {{ date_format(new DateTime($proposal->project->end_date), 'F d, Y') }}</span>
+                                            <div class="col-md-12 my-25">
+                                                <div class="font-weight-bold">Address : <span
+                                                        class="font-weight-normal mx-1">{{ $proposal->address }}</span></div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-12 my-25">
-                                            <div class="font-weight-bold">Offer Price : <span
-                                                    class="font-weight-normal mx-1" style="font-size: 22px;">₱
-                                                    {{ number_format($proposal->offer_price, 2) }}</span></div>
-                                        </div>
-                                        <div class="col-md-12 my-25">
-                                            <div class="font-weight-bold">Address : <span
-                                                    class="font-weight-normal mx-1">{{ $proposal->address }}</span></div>
-                                        </div>
-                                        <div class="col-md-12 my-25">
-                                            <div class="font-weight-bold">Project Cost Type : <span
-                                                    class="font-weight-normal mx-1">{{ $proposal->project_cost_type }}</span>
+                                            <div class="col-md-12 my-25">
+                                                <div class="font-weight-bold">Project Cost Type : <span
+                                                        class="font-weight-normal mx-1">{{ $proposal->project_cost_type }}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 my-25 mt-2">
-                                            <div class="font-weight-bold">Attachments :
-                                                @php $attachments = json_decode($proposal->attachments) @endphp
-                                                @forelse($attachments as $attachment)
-                                                    <a href="./../../images/projects/proposal_attachments/{{ $attachment }}"
-                                                        target="_blank"
-                                                        class="badge badge-secondary p-75">{{ $attachment }}</a>
-                                                @empty
-                                                    <span class="font-weight-normal">No Attachment Found</span>
-                                                @endforelse
+                                            <div class="col-md-12 my-25 mt-2">
+                                                <div class="font-weight-bold">Attachments :
+                                                    @php $attachments = json_decode($proposal->attachments) @endphp
+                                                    @forelse($attachments as $attachment)
+                                                        <a href="./../../images/projects/proposal_attachments/{{ $attachment }}"
+                                                            target="_blank"
+                                                            class="badge badge-secondary p-75">{{ $attachment }}</a>
+                                                    @empty
+                                                        <span class="font-weight-normal">No Attachment Found</span>
+                                                    @endforelse
+                                                </div>
                                             </div>
+                                            @if ($proposal->cover_letter)
+                                                <div class="col-md-12 my-1 p-2 rounded" style="background:#f3f5f8;">
+                                                    <div class="font-weight-bold h2 my-1">Described Proposal</div>
+                                                    <div class="font-weight-normal ">@php echo nl2br($proposal->cover_letter); @endphp</div>
+                                                </div>
+                                            @endif
                                         </div>
-                                        @if ($proposal->cover_letter)
-                                            <div class="col-md-12 my-1 p-2 rounded" style="background:#f3f5f8;">
-                                                <div class="font-weight-bold h2 my-1">Described Proposal</div>
-                                                <div class="font-weight-normal ">@php echo nl2br($proposal->cover_letter); @endphp</div>
-                                            </div>
-                                        @endif
                                     </div>
                                 </div>
                             </div>
