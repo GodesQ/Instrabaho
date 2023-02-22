@@ -39,6 +39,8 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/colors.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/components.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/plugins/forms/checkboxes-radios.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/chat-page.css') }}">
+
     <!-- END: Theme CSS-->
 
     <!-- BEGIN: Page CSS-->

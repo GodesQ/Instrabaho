@@ -1,0 +1,22 @@
+.chat-header {
+display: flex;
+justify-content: center;
+align-items: center ;
+
+}
+
+.chat-header > div {
+    background-color: #f1f1f1;
+    width: 50%;
+    text-align: center;
+    line-height: 60px;
+    font-size: 20px;
+
+}
+
+.active-chat-header {
+    background: #04bbff !important;
+    font-weight: 600;
+    color: #fff;
+}
+
