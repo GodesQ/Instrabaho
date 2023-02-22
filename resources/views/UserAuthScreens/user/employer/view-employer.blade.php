@@ -84,8 +84,8 @@
                                 </li>
                                 <li class="fr-style-3">
                                     <div class="fr-c-more-details">
-                                        <span>00</span>
-                                        <p>Followers</p>
+                                        <span>{{ $employer->total_followers }}</span>
+                                        <p>{{ $employer->total_followers > 1 ? 'Followers' : "Follower"}}</p>
                                     </div>
                                 </li>
                             </ul>
@@ -120,7 +120,7 @@
                 <div class="col-lg-8 col-xl-8 col-md-12 col-xs-12 col-sm-12">
                     <div class="fr-product-des-box heading-contents custom-class">
                         <h3>Employer Summary</h3>
-                        {{ $employer->description }}
+                        {{ $employer->description ? $employer->description : 'No Description found.' }}
                     </div>
                     <h6>Completed Projects</h6>
                     @forelse($completed_projects as $completed_project)

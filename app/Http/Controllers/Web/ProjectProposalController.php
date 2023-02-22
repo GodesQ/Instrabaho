@@ -103,6 +103,10 @@ class ProjectProposalController extends Controller
         # get the proposal data
         $proposal = ProjectProposal::where('id', $request->id)->with('employer', 'freelancer', 'project')->firstOrFail();
 
+        if($proposal->employer->user_id == $proposal->freelancer->user_id) {
+            return back()->with('fail', 'Fail, Looks like the user is same as you.');
+        }
+
         # set initial receiver to employer
         $receiver = Employer::where('id', $proposal->employer_id)->with('user')->first();
 

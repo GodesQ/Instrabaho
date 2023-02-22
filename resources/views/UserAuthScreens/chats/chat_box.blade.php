@@ -1,5 +1,7 @@
 @extends('layout.user-layout')
 
+@section('title', 'Chats')
+
 @section('content')
     <div class="page-wrapper">
             <div class="page-content">
@@ -11,15 +13,13 @@
                                     <div class="card-body">
 
                                         <div class="chat-header">
-                                            <div class="active-chat-header"> Projects</div>
-                                                <div> Services </div>
+                                            <div class="active-chat-header">Projects</div>
+                                            <div>Services</div>
 
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
                             <div class="col-xl-6">
                                 <div class="card">
                                     <div class="card-body">
@@ -27,7 +27,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

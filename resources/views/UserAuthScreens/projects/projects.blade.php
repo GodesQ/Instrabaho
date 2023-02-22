@@ -39,13 +39,16 @@
                                                     class="fa fa-ellipsis-v"></i></a>
                                             <span aria-labelledby="btnSearchDrop7"
                                                 class="dropdown-menu mt-1 dropdown-menu-right">
-                                                <a href="#" class="dropdown-item delete-project"
-                                                    id="{{ $project->id }}"><i class="feather icon-x danger"></i> Delete
-                                                    Project</a>
+                                                @if($project->status != 'completed')
+                                                    <a href="#" class="dropdown-item delete-project" id="{{ $project->id }}"><i class="feather icon-x danger"></i>
+                                                        Delete Project</a>
+                                                @endif
                                                 @if ($project->contract)
                                                     <a href="/project/contract/view/{{ $project->contract->id }}"
                                                         class="dropdown-item"><i class="feather icon-file primary"></i>View
                                                         Contract</a>
+                                                    <a href="/project/contract/track/{{ $project->contract->id }}"
+                                                        class="dropdown-item"><i class="feather icon-file primary"></i>View Contract Record</a>
                                                 @endif
                                             </span>
                                         </span>

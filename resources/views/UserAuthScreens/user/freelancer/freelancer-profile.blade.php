@@ -192,8 +192,7 @@
                                                 @forelse ($freelancer->saved_projects as $saved_project)
                                                     <div class="col-xxl-4 col-xl-6 col-12 col-md-6 py-1">
                                                         <a href="/projects/{{ optional($saved_project->project)->id }}/{{ optional($saved_project->project)->title }}">
-                                                            <div class="p-2"
-                                                                style="box-shadow: 5px 5px 5px 0px rgba(181, 230, 250, 0.22);">
+                                                            <div class="p-2" style="box-shadow: 5px 5px 5px 0px rgba(181, 230, 250, 0.22);">
                                                                 <div
                                                                     class="d-flex justify-content-between align-items-start">
                                                                     <div style="width: 30%">
