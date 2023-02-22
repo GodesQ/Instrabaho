@@ -353,8 +353,9 @@
                                                         @forelse($freelancer->skills as $key => $skill)
                                                             <li class="badge badge-warning p-50 my-50 font-weight-normal"
                                                                 style="background: #004E88 !important;">
-                                                                {{ $skill->skill->skill_name }}</li>
-                                                            @if ($key === 1)
+                                                                {{ $skill->skill->skill_name }}
+                                                            </li>
+                                                            @if ($key > 2)
                                                                 <li class="badge badge-warning p-50 my-50 font-weight-normal"
                                                                     style="background: #004E88 !important;">
                                                                     {{ $freelancer->skills->count() - 2 > 0 ? '+ ' . ($freelancer->skills->count() - 2) : null }}
@@ -369,7 +370,6 @@
                                                 </ul>
                                             </div>
                                         </div>
-
                                         <div class="mt-3">
                                             <div class="p-3 rounded"
                                                 style="background: rgb(236, 236, 236) !important;">
@@ -384,8 +384,7 @@
                                                     <div class="col-6">
                                                         <a href="/employer/offer/create_offer/{{ $freelancer->display_name }}"
                                                             class="btn btn-primary"
-                                                            style="width: 100% !important;">Send
-                                                            Offer </a>
+                                                            style="width: 100% !important;">Send Offer</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -402,7 +401,6 @@
     </div>
     <div class="text-center mt-2">
         <a href="/search_freelancers" class="primary text-underline">View all Available Workers</a>
-    </div>
     </div>
 </section>
 

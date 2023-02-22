@@ -3,6 +3,13 @@
 @section('title', 'Worker Proposals')
 
 @section('content')
+    @if (Session::get('fail'))
+        @push('scripts')
+            <script>
+                toastr.error('{{ Session::get('fail') }}', 'Failed');
+            </script>
+        @endpush
+    @endif
     <div class="page-wrapper">
         <div class="page-content">
             <div class="page-body">

@@ -11,7 +11,7 @@ class Employer extends Model
     protected $table = 'user_employer';
     protected $guarded = [];
 
-    protected $appends = ['rate', 'total_reviews'];
+    protected $appends = ['rate', 'total_reviews', 'total_followers'];
 
     public function user() {
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -49,5 +49,10 @@ class Employer extends Model
 
     public function total_reviews() {
         return EmployerReview::where('employer_id', $this->id)->count();
+    }
+
+    public function getTotalFollowersAttribute() {
+        $total_followers = EmployerFollower::where('employer_id', $this->id)->count();
+        return $total_followers;
     }
 }
