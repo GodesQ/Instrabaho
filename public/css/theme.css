@@ -3960,7 +3960,6 @@ fr-hero-m-deails {
 .fr-recent-model .fancy-model {
 	position:relative;
 	overflow:hidden;
-	box-shadow: 1px 0px 20px rgba(0,0,0,0.07);
 	border-radius: 10px;
 }
 .fr-recent-model li:nth-child(3n+3) {

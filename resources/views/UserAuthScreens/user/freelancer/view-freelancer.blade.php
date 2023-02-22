@@ -168,19 +168,28 @@
                     </div>
                     <div class="main-box">
                         <div class="heading-contents">
-                            <h3>Recent Projects</h3>
+                            <h3>Projects</h3>
                         </div>
                         <div class="fr-recent-model">
                             <ul>
                                 @forelse ($freelancer->projects as $project)
                                     <li>
-                                        <div class="fancy-model">
-                                            <a data-fancybox="portfolio" href="{{ $project->project_url }}" data-caption=""
-                                                data-wheel="false">
-                                                <img class="img-fluid"
-                                                    src="../../../images/freelancer_projects/{{ $project->project_image }}"
-                                                    alt="">
-                                            </a>
+                                        <div class="fancy-model text-center">
+                                            @if (pathinfo($project->project_image, PATHINFO_EXTENSION) == 'pdf')
+                                                <a data-fancybox="portfolio" href="{{ $project->project_url }}" data-caption=""  data-wheel="false">
+                                                    <img style="width: 100%; max-height: 150px; object-fit:cover;"
+                                                        src="../../../images/pdf.jpg" alt="">
+                                                </a>
+                                            @elseif (pathinfo($project->project_image, PATHINFO_EXTENSION) == 'docx')
+                                                <a data-fancybox="portfolio" href="{{ $project->project_url }}" data-caption="" data-wheel="false">
+                                                    <img style="width: 50%; max-height: 140px; object-fit:cover;"
+                                                        src="../../../images/docx.png">
+                                                </a>
+                                            @else
+                                                <a data-fancybox="portfolio" href="{{ $project->project_url }}" data-caption="" data-wheel="false">
+                                                    <img class="img-fluid" src="../../../images/freelancer_projects/{{ $project->project_image }}">
+                                                </a>
+                                            @endif
                                         </div>
                                         <div class="figcaption">
                                             <h6><a href="{{ $project->project_url }}"
