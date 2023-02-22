@@ -144,7 +144,7 @@
                                 @else
                                     <a class="dropdown-item" href="/freelancer/profile"><i class="feather icon-user"></i> Edit Profile</a>
                                 @endif
-                                <a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
+                                <a class="dropdown-item" href="/chats"><i class="feather icon-message-square"></i> Chats</a>
                                 @if(Session::get('role') == 'employer')
                                     <div class="dropdown-divider"></div><a class="dropdown-item" href="/change_login"><i class="feather icon-power"></i> Login as Freelancer</a>
                                 @else
