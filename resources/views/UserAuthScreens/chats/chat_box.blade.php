@@ -13,9 +13,100 @@
                                     <div class="card-body">
 
                                         <div class="chat-header">
-                                            <div class="active-chat-header">Projects</div>
-                                            <div>Services</div>
+                                            <div class="active-chat-header chat-header-tab">Projects</div>
+                                            <div class="chat-header-tab">Services</div>
 
+                                        </div>
+                                        <div class="chat-body">
+                                            <ul class="chat-list">
+                                                <li class="chat-list-item">
+                                                    <div class="chat-user">
+                                                        <img src="../../../images/user-profile.png" alt="" class="chat-user-image">
+                                                        <div class="chat-user-name">
+                                                            James "Ultra Full Stack Developer" Garnfil
+                                                            <div class="chat-user-message"> Miss na kita baby james</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="chat-list-item">
+                                                    <div class="chat-user">
+                                                        <img src="../../../images/user-profile.png" alt="" class="chat-user-image">
+                                                        <div class="chat-user-name">
+                                                            Boss James Garfield
+                                                            <div class="chat-user-message"> Miss na kita baby james</div>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+                                                <li class="chat-list-item">
+                                                    <div class="chat-user">
+                                                        <img src="../../../images/user-profile.png" alt="" class="chat-user-image">
+                                                        <div class="chat-user-name">
+                                                            Boss James Garfield
+                                                            <div class="chat-user-message"> Miss na kita baby james</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="chat-list-item">
+                                                    <div class="chat-user">
+                                                        <img src="../../../images/user-profile.png" alt="" class="chat-user-image">
+                                                        <div class="chat-user-name">
+                                                            Boss James Garfield
+                                                            <div class="chat-user-message"> Miss na kita baby james</div>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+                                                <li class="chat-list-item">
+                                                    <div class="chat-user">
+                                                        <img src="../../../images/user-profile.png" alt="" class="chat-user-image">
+                                                        <div class="chat-user-name">
+                                                            Boss James Garfield
+                                                            <div class="chat-user-message"> Miss na kita baby james</div>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+                                                <li class="chat-list-item">
+                                                    <div class="chat-user">
+                                                        <img src="../../../images/user-profile.png" alt="" class="chat-user-image">
+                                                        <div class="chat-user-name">
+                                                            Boss James Garfield
+                                                            <div class="chat-user-message"> Miss na kita baby james</div>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+                                                <li class="chat-list-item">
+                                                    <div class="chat-user">
+                                                        <img src="../../../images/user-profile.png" alt="" class="chat-user-image">
+                                                        <div class="chat-user-name">
+                                                            Boss James Garfield
+                                                            <div class="chat-user-message"> Miss na kita baby james</div>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+                                                <li class="chat-list-item">
+                                                    <div class="chat-user">
+                                                        <img src="../../../images/user-profile.png" alt="" class="chat-user-image">
+                                                        <div class="chat-user-name">
+                                                            Boss James Garfield
+                                                            <div class="chat-user-message"> Miss na kita baby james</div>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+                                                <li class="chat-list-item">
+                                                    <div class="chat-user">
+                                                        <img src="../../../images/user-profile.png" alt="" class="chat-user-image">
+                                                        <div class="chat-user-name">
+                                                            Boss James Garfield
+                                                            <div class="chat-user-message"> Miss na kita baby james</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -23,6 +114,30 @@
                             <div class="col-xl-6">
                                 <div class="card">
                                     <div class="card-body">
+
+                                        {{-- <div class="wrapper">
+                                            <section class="chat-area">
+                                                <header class="header">
+                                                    <div style="width: 60%"
+                                                        class="d-flex align-items-center justify-content-start header-content">
+
+                                                            <img src="../../../images/user-profile.png" alt="" width="80"/>
+
+                                                        <div class="details">
+                                                            <span>James Pogi</span>
+                                                            <p>Alaga ni Yaya Mia</p>
+                                                        </div>
+                                                    </div>
+                                                </header>
+                                                <div class="chat-box"></div>
+                                                <form action="#" class="typing-area">
+                                                    @csrf
+                                                    <input type="text" name="message" class="input-field" id="message_input"
+                                                        placeholder="Type a message here..." />
+                                                    <button><i class="fa fa-send"></i></button>
+                                                </form>
+                                            </section>
+                                        </div> --}}
 
                                     </div>
                                 </div>
@@ -34,3 +149,6 @@
     </div>
 @endsection
 
+@push('scripts')
+<script src="../../../app-assets/js/scripts/chat-page.js"></script>
+@endpush
