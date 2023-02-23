@@ -18,8 +18,10 @@
     background: #04bbff !important;
     font-weight: 600;
     color: #fff;
+}
 
-
+.active-chat-header1 {
+    background: #EDEDEC !important;
 }
 
 .chat-body {
@@ -71,7 +73,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: white;
+    background: white !important;
     box-shadow: 2px 2px 2px 2px lightgray;
 }
 
