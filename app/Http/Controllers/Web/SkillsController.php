@@ -48,10 +48,7 @@ class SkillsController extends Controller
     }
 
     public function store(StoreSkillRequest $request, Skill $skill) {
-        // $save = $skill->create($request->validated());
-
-
-
+        $save = $skill->create($request->validated());
         if($save) return back()->with('success', 'Skill Added Successfully');
     }
 

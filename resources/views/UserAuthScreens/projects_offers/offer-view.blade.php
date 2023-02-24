@@ -154,7 +154,7 @@
                                                 @csrf
                                                 <input type="hidden" value="{{ $project_offer->id }}" id="msg_id"
                                                     name="msg_id" />
-                                                <input type="hidden" value="{{ base64_encode('offer') }}" id="type"
+                                                <input type="hidden" value="offer" id="type"
                                                     name="type">
                                                 <input type="text" class="incoming_id" name="incoming_id"
                                                     value="{{ $incoming_msg_id }}" hidden />
