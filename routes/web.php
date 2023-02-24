@@ -158,6 +158,7 @@ use Pusher\Pusher;
         Route::post('/store_package_checkout', [PackageCheckoutController::class, 'store_package_checkout'])->name('store_package_checkout');
 
         Route::get('/chats', [ChatController::class, 'chats'])->name("chats");
+        Route::get('/chats/get_users', [ChatController::class, 'get_users'])->name('chats.get_users');
 
         Route::group(['prefix'=> 'freelancer', 'middleware'=>['freelancer.access']], function(){
             Route::get('dashboard', [FreelancerController::class, 'dashboard'])->name('freelancer.dashboard');

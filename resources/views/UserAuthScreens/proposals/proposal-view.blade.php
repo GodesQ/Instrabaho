@@ -29,7 +29,8 @@
                                     <div class="card-body" style="background: #fefefe !important;">
                                         <div class="row">
                                             <div class="col-md-12 my-25">
-                                                <div class="font-weight-bold">Full Name : <span class="font-weight-normal mx-1">{{ $proposal->freelancer->user->firstname }}
+                                                <div class="font-weight-bold">Full Name : <span
+                                                        class="font-weight-normal mx-1">{{ $proposal->freelancer->user->firstname }}
                                                         {{ $proposal->freelancer->user->lastname }}</span></div>
                                             </div>
                                             <div class="col-md-12 my-25">
@@ -67,7 +68,8 @@
                                             </div>
                                             <div class="col-md-12 my-25">
                                                 <div class="font-weight-bold">Address : <span
-                                                        class="font-weight-normal mx-1">{{ $proposal->address }}</span></div>
+                                                        class="font-weight-normal mx-1">{{ $proposal->address }}</span>
+                                                </div>
                                             </div>
                                             <div class="col-md-12 my-25">
                                                 <div class="font-weight-bold">Project Cost Type : <span
@@ -101,15 +103,11 @@
                             <div class="wrapper">
                                 <section class="chat-area">
                                     <header class="header">
-                                        <div style="width: 60%"
-                                            class="d-flex align-items-center justify-content-start header-content">
+                                        <div style="width: 60%" class="d-flex align-items-center justify-content-start header-content">
                                             @if ($proposal->freelancer->user->profile_image)
-                                                <img src="../../../images/user/profile/{{ $receiver->user->profile_image }}"
-                                                    alt="" />
+                                                <img src="../../../images/user/profile/{{ $receiver->user->profile_image }}" alt="" />
                                             @else
-                                                <img src="../../../images/user-profile.png" alt="" width="80"
-                                                    height="80"
-                                                    style="object-fit: cover; border-radius: 50px; border: 1px solid black;">
+                                                <img src="../../../images/user-profile.png" alt="" width="80" height="80" style="object-fit: cover; border-radius: 50px; border: 1px solid black;">
                                             @endif
                                             <div class="details">
                                                 <span>{{ $receiver->user->firstname }}
@@ -122,19 +120,12 @@
                                     <form action="#" class="typing-area">
                                         @csrf
                                         <input type="hidden" value="{{ $proposal->id }}" id="msg_id" name="msg_id" />
-                                        <input type="hidden" name="receiver_user_id" value="{{ $receiver->user->id }}"
-                                            id="receiver_user_id">
-                                        <input type="hidden" name="sender_user_id" value="{{ session()->get('id') }}"
-                                            id="sender_user_id">
-                                        <input type="hidden" value="{{ base64_encode('proposal') }}" id="type"
-                                            name="type">
-                                        <input type="text" class="incoming_id" name="incoming_id"
-                                            value="{{ $incoming_msg_id }}" hidden />
-                                        <input type="text" class="outgoing_id" name="outgoing_id"
-                                            value="{{ $outgoing_msg_id }}" hidden />
-                                        {{-- <textarea name="message" class="form-control" cols="100" rows="2" id="message_input"></textarea> --}}
-                                        <input type="text" name="message" class="input-field" id="message_input"
-                                            placeholder="Type a message here..." />
+                                        <input type="hidden" name="receiver_user_id" value="{{ $receiver->user->id }}" id="receiver_user_id">
+                                        <input type="hidden" name="sender_user_id" value="{{ session()->get('id') }}"id="sender_user_id">
+                                        <input type="hidden" value="proposal" id="type" name="type">
+                                        <input type="text" class="incoming_id" name="incoming_id" value="{{ $incoming_msg_id }}" hidden />
+                                        <input type="text" class="outgoing_id" name="outgoing_id" value="{{ $outgoing_msg_id }}" hidden />
+                                        <input type="text" name="message" class="input-field" id="message_input" placeholder="Type a message here..." />
                                         <button><i class="fa fa-send"></i></button>
                                     </form>
                                 </section>

@@ -15,7 +15,7 @@ use App\Events\ChatTypingEvent;
 class ProjectChatController extends Controller
 {
     public function project_get_chat(Request $request) {
-        $type = base64_decode($request->type);
+        $type = $request->type;
         $messages = ProjectMessage::where('msg_id', $request->id)->where('message_type', $type)->get();
         $user_model = session()->get('role') == 'freelancer' ? Freelancer::class : Employer::class;
         $user = $user_model::where('user_id', session()->get('id'))->first();
@@ -40,7 +40,7 @@ class ProjectChatController extends Controller
             'incoming_msg_id' => $request->incoming_id,
             'outgoing_msg_id' => $request->outgoing_id,
             'msg_id' => $request->msg_id,
-            'message_type' => base64_decode($request->type),
+            'message_type' => $request->type,
             'message' => $request->message,
             'role' => session()->get('role')
         ]);
@@ -54,9 +54,7 @@ class ProjectChatController extends Controller
             'status' => $message_status,
             'message' => $request->message
         ];
-
         event(new ProjectMessageEvent($message_data, $receiver_user_id));
-
         return response()->json([
             'status' => 201,
             'message' => 'Message Successfully Sent'

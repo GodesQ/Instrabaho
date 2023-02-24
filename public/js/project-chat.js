@@ -70,7 +70,6 @@ function scrollToBottom(){
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-
 function getChats() {
     $.ajax({
         url: `/project_get_chat/${msg_id}/${type}`,

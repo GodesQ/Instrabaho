@@ -338,66 +338,6 @@
     <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.3/evo-calendar/js/evo-calendar.min.js"></script>
 
     @stack('scripts')
-    <script>
-        window.addEventListener('load', function() {
-            fetchNotifications();
-        })
-
-        // function fetchNotifications() {
-        //     let notifications = '';
-        //     $.ajax({
-        //         url: `{{ route('get.notifications') }}`,
-        //         method: 'GET',
-        //         success: function (response) {
-        //             if(response.length > 0) {
-        //                 response.forEach(notification => {
-        //                 notifications += `<a href="javascript:void(0)">
-        //                                 <div class="media" data-id=${notification.id}>
-        //                                     <div class="media-left align-self-center"><i class="feather icon-bell icon-bg-circle bg-primary bg-darken-1"></i></div>
-        //                                     <div class="media-body">
-        //                                         <h6 class="media-heading">${notification.entity.type}</h6>
-        //                                         <p class="notification-text font-small-3 text-muted">${notification.notification_message}</p><small>
-        //                                     </div>
-        //                                 </div>
-        //                             </a>`;
-        //                 });
-        //             } else {
-        //                 notifications = '<div class="text-center p-1" style="font-size: 13px;">No Notification Found</div>'
-        //             }
-
-        //             $('.media-list').html(notifications);
-        //             $('.badge-up').html(response.length);
-        //         },
-        //     });
-        // }
-
-        // $('.dropdown-notification').on('click', function() {
-        //     // set initial notification ids
-        //     let notification_ids = [];
-        //     let notification_elements = document.querySelectorAll('.media');
-
-        //     if(notification_elements.length > 0) {
-        //         notification_elements.forEach(notification => {
-        //             // get the id of the notification
-        //             let notification_id = notification.getAttribute('data-id');
-
-        //             // then push it to notification ids array
-        //             notification_ids.push(notification_id);
-        //         });
-
-        //         $.ajax({
-        //             url: `{{ route('put.mark_as_read') }}`,
-        //             method: "PUT",
-        //             data: {
-        //                 _token : '{{ csrf_token() }}',
-        //                 notification_ids,
-        //             }
-        //         });
-        //     }
-        // })
-
-        // setInterval(fetchNotifications(), 10000);
-    </script>
 </body>
 <!-- END: Body-->
 
