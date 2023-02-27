@@ -100,7 +100,6 @@ function getChats() {
 
 Pusher.logToConsole = false;
 let backendBaseUrl = "http://192.168.100.71:8000";
-let session_id = 12;
 
 var pusher = new Pusher('0a303fc13dbe529739fa', {
     cluster: 'ap1',

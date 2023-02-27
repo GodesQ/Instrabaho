@@ -54,6 +54,7 @@ class ProjectChatController extends Controller
             'status' => $message_status,
             'message' => $request->message
         ];
+
         event(new ProjectMessageEvent($message_data, $receiver_user_id));
         return response()->json([
             'status' => 201,

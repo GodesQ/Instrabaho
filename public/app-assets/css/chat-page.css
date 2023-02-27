@@ -39,6 +39,11 @@
     padding: 1rem;
 }
 
+.active-user-chat {
+    background: #EDEDEC;
+    border-radius: 5px;
+}
+
 .chat-list-item:hover {
     background: #EDEDEC;
     border-radius: 5px;
