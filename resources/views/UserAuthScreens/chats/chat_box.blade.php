@@ -45,8 +45,13 @@
                                     <div class="chat-box"></div>
                                     <form action="#" class="typing-area">
                                         @csrf
-                                        <input type="text" name="message" class="input-field" id="message_input"
-                                            placeholder="Type a message here..." />
+                                        <input type="hidden" value="" id="msg_id_input" name="msg_id" />
+                                        <input type="hidden" name="receiver_user_id" value="" id="receiver_user_id_input">
+                                        <input type="hidden" value="proposal" id="type_input" name="type">
+                                        <input type="hidden" id="incoming_id_input" name="incoming_id" value="">
+                                        <input type="hidden" id="outgoing_id_input" name="outgoing_id" value="">
+                                        <input type="hidden" name="sender_user_id" id="sender_user_id" value="{{ session()->get('id') }}">
+                                        <input type="text" name="message" class="input-field" id="message_input" placeholder="Type a message here..." />
                                         <button><i class="fa fa-send"></i></button>
                                     </form>
                                     <input type="hidden" id="chat_type" name="chat_type" value="projects">
@@ -61,5 +66,6 @@
 @endsection
 
 @push('scripts')
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script src="../../../app-assets/js/scripts/chat-page.js"></script>
 @endpush

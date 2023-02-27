@@ -47,8 +47,4 @@ class ChatController extends Controller
 
         return response()->json($user_chats);
     }
-
-    public function get_chats(Request $request) {
-
-    }
 }
