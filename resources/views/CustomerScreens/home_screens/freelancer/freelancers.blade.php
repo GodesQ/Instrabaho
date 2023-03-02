@@ -79,7 +79,7 @@
                             </div>
                             <div class="col-6">
                                 <a href="/employer/offer/create_offer/{{ $freelancer->display_name }}"
-                                    class="btn btn-primary" style="width: 100% !important;">Send Offer </a>
+                                    class="btn btn-primary {{ session()->get('role') == 'freelancer' ? 'disabled' : null }}" style="width: 100% !important;">Send Offer </a>
                             </div>
                         </div>
                     </div>

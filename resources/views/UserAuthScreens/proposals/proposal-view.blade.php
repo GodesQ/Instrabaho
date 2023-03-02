@@ -91,7 +91,7 @@
                                             @if ($proposal->cover_letter)
                                                 <div class="col-md-12 my-1 p-2 rounded" style="background:#f3f5f8;">
                                                     <div class="font-weight-bold h2 my-1">Described Proposal</div>
-                                                    <div class="font-weight-normal ">@php echo nl2br($proposal->cover_letter); @endphp</div>
+                                                    <div class="font-weight-normal">@php echo nl2br($proposal->cover_letter); @endphp</div>
                                                 </div>
                                             @endif
                                         </div>
@@ -103,16 +103,19 @@
                             <div class="wrapper">
                                 <section class="chat-area">
                                     <header class="header">
-                                        <div style="width: 60%" class="d-flex align-items-center justify-content-start header-content">
+                                        <div style="width: 60%"
+                                            class="d-flex align-items-center justify-content-start header-content">
                                             @if ($proposal->freelancer->user->profile_image)
-                                                <img src="../../../images/user/profile/{{ $receiver->user->profile_image }}" alt="" />
+                                                <img src="../../../images/user/profile/{{ $receiver->user->profile_image }}"
+                                                    alt="" />
                                             @else
-                                                <img src="../../../images/user-profile.png" alt="" width="80" height="80" style="object-fit: cover; border-radius: 50px; border: 1px solid black;">
+                                                <img src="../../../images/user-profile.png" alt="" width="80"
+                                                    height="80"
+                                                    style="object-fit: cover; border-radius: 50px; border: 1px solid black;">
                                             @endif
                                             <div class="details">
                                                 <span>{{ $receiver->user->firstname }}
                                                     {{ $receiver->user->lastname }}</span>
-                                                <p>{{ $receiver->tagline }}</p>
                                             </div>
                                         </div>
                                     </header>
@@ -120,12 +123,17 @@
                                     <form action="#" class="typing-area">
                                         @csrf
                                         <input type="hidden" value="{{ $proposal->id }}" id="msg_id" name="msg_id" />
-                                        <input type="hidden" name="receiver_user_id" value="{{ $receiver->user->id }}" id="receiver_user_id">
-                                        <input type="hidden" name="sender_user_id" value="{{ session()->get('id') }}"id="sender_user_id">
+                                        <input type="hidden" name="receiver_user_id" value="{{ $receiver->user->id }}"
+                                            id="receiver_user_id">
+                                        <input type="hidden" name="sender_user_id"
+                                            value="{{ session()->get('id') }}"id="sender_user_id">
                                         <input type="hidden" value="proposal" id="type" name="type">
-                                        <input type="text" class="incoming_id" name="incoming_id" value="{{ $incoming_msg_id }}" hidden />
-                                        <input type="text" class="outgoing_id" name="outgoing_id" value="{{ $outgoing_msg_id }}" hidden />
-                                        <input type="text" name="message" class="input-field" id="message_input" placeholder="Type a message here..." />
+                                        <input type="text" class="incoming_id" name="incoming_id"
+                                            value="{{ $incoming_msg_id }}" hidden />
+                                        <input type="text" class="outgoing_id" name="outgoing_id"
+                                            value="{{ $outgoing_msg_id }}" hidden />
+                                        <input type="text" name="message" class="input-field" id="message_input"
+                                            placeholder="Type a message here..." />
                                         <button><i class="fa fa-send"></i></button>
                                     </form>
                                 </section>

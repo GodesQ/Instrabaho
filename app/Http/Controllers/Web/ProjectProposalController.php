@@ -65,10 +65,8 @@ class ProjectProposalController extends Controller
         # if the request was not ajax
         abort_if(!$request->ajax(), 404);
 
-        #get the request data
         $project_id = $request->input('project_id');
 
-        # get the proposal lists and create pagination
         $proposals = ProjectProposal::where('project_id', $project_id)->with('freelancer')->paginate(10);
 
         # create a html to render in proposals lists
