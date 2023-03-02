@@ -66,8 +66,7 @@
                                         </li>
                                         <li><span class="font-weight-bold">Display Name:
                                             </span>{{ $contract->freelancer->display_name }}</li>
-                                        <li><span class="font-weight-bold">Address:
-                                            </span>{{ $contract->freelancer->address }}</li>
+                                        <li><span class="font-weight-bold">Address: </span>{{ $contract->freelancer->address }}</li>
                                     </ul>
                                 </div>
                                 <div class="col-lg-6">
@@ -87,7 +86,8 @@
                                 </div>
                             </div>
                             <div class="description my-2">
-                                <p class="text-center" style="font-style: italic;">Please be aware that this transaction between the client and freelancer is monitored by Instrabaho.</p>
+                                <p class="text-center" style="font-style: italic;">Please be aware that this transaction
+                                    between the client and freelancer is monitored by Instrabaho.</p>
                             </div>
                         </div>
                     </div>

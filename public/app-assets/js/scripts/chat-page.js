@@ -12,11 +12,9 @@ outgoing_id = document.querySelector("#outgoing_id_input").value,
 receiver_user_id = document.querySelector('#receiver_user_id_input').value,
 sender_user_id = document.querySelector('#sender_user_id').value,
 inputField = document.querySelector(".input-field"),
-sendBtn = document.querySelector("button"),
-type = document.querySelector('#type_input').value;
+sendBtn = document.querySelector("button");
 
 const token =  document.querySelector('input[name="_token"]').value;
-const msg_id = document.querySelector('#msg_id_input').value;
 let output = '';
 
 
@@ -25,10 +23,9 @@ chat_header_tabs.forEach(tab => {
         chat_header_tabs.forEach(single_tab => {
             single_tab.classList.remove('active-chat-header');
         });
-
         this.classList.add('active-chat-header');
     })
-})
+});
 
 // Hide the content of the wrapper by default
 wrapper.style.display = 'none';

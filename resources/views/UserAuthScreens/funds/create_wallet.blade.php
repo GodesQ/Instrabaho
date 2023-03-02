@@ -61,7 +61,6 @@
                                             </fieldset>
                                             <img src="../../../images/logo/credit-card.png" alt="" style="width: 50px;">
                                         </li> --}}
-
                                         {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <fieldset>
                                                 <input type="radio" name="payment_method" value="online_bank" id="input-radio-17" {{ $user->prefer_payment_method == 'online_bank' ? 'checked' : null }}>
