@@ -58,10 +58,19 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix'=> 'freelancer', 'middleware'=> ['freelancer.access']], function(){
         Route::post('/update_profile', [FreelancersController::class, 'update_profile'])->name('freelancer.update_profile');
         Route::get('/freelancer_skills', [FreelancersController::class, 'fetch_freelancer_skills']);
+        Route::post('/freelancer_skills', [FreelancersController::class, 'store_freelancer_skills']);
+
         Route::get('/freelancer_projects', [FreelancersController::class, 'fetch_freelancer_projects']);
+        Route::post('/freelancer_projects', [FreelancersController::class, 'store_freelancer_projects']);
+
         Route::get('/freelancer_certificates', [FreelancersController::class, 'fetch_freelancer_certificates']);
+        Route::post('/freelancer_certificates', [FreelancersController::class, 'store_freelancer_certificates']);
+
         Route::get('/freelancer_experiences', [FreelancersController::class, 'fetch_freelancer_experiences']);
+        Route::post('/freelancer_experiences', [FreelancersController::class, 'store_freelancer_experiences']);
+
         Route::get('/freelancer_educations', [FreelancersController::class, 'fetch_freelancer_educations']);
+        Route::post('/freelancer_educations', [FreelancersController::class, 'store_freelancer_educations']);
 
         Route::get('/projects/ongoing', [ProjectsController::class, 'freelancer_ongoing_projects']);
         Route::get('/projects/completed', [ProjectsController::class, 'freelancer_completed_projects']);

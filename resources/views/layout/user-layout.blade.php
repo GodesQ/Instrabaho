@@ -168,7 +168,7 @@
 
 
     <!-- BEGIN: Main Menu-->
-    <div class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-static navbar-light navbar-without-dd-arrow navbar-shadow menu-border" role="navigation" data-menu="menu-wrapper">
+    <div class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-fixed navbar-light navbar-without-dd-arrow navbar-shadow menu-border" role="navigation" data-menu="menu-wrapper">
         <!-- Horizontal menu content-->
         @if(Session::get('role') == 'employer')
             @include('layout.horizontal-employer-menu')
@@ -273,7 +273,6 @@
     <!-- BEGIN: Vendor JS-->
     <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
     <!-- BEGIN Vendor JS-->
-
 
     <!-- BEGIN: Page Vendor JS-->
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
