@@ -46,7 +46,7 @@ class EmployersController extends Controller
     }
 
     public function update_profile(UpdateProfileRequest $request) {
-        if($request->header('user_id')) return response()->json(['status' => false, 'message' => 'Forbidden'], 403);
+        if(!$request->header('user_id')) return response()->json(['status' => false, 'message' => 'Forbidden.'], 403);
         $employer = Employer::where('user_id', $request->header('user_id'))->firstOr(function() {
             return response()->json([
                 'status' => false,
