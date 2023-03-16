@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::group(['prefix'=> 'employer', 'middleware'=> ['employer.access']], function(){
         Route::post('/update_profile', [EmployersController::class, 'update_profile'])->name('employer.update_profile');
+
         # Routes for projects
         Route::get('/projects', [ProjectsController::class, 'employer_projects']);
         Route::get('/projects/ongoing', [ProjectsController::class, 'employer_ongoing_projects']);
