@@ -66,6 +66,6 @@ class EmployersController extends Controller
         ]);
 
         if($employer_update && $employer_user_update) return response()->json(['status' => true, 'message' => 'User updated successfully.']);
-        return response()->json(['status' => false, 'message' => 'Something went wrong']);
+        return response()->json(['status' => false, 'message' => 'No Changes Applied.']);
     }
 }
