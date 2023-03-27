@@ -125,8 +125,7 @@
                                         <input type="hidden" value="{{ $proposal->id }}" id="msg_id" name="msg_id" />
                                         <input type="hidden" name="receiver_user_id" value="{{ $receiver->user->id }}"
                                             id="receiver_user_id">
-                                        <input type="hidden" name="sender_user_id"
-                                            value="{{ session()->get('id') }}"id="sender_user_id">
+                                        <input type="hidden" name="sender_user_id" value="{{ session()->get('id') }}"id="sender_user_id">
                                         <input type="hidden" value="proposal" id="type" name="type">
                                         <input type="text" class="incoming_id" name="incoming_id"
                                             value="{{ $incoming_msg_id }}" hidden />

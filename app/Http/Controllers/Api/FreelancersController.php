@@ -170,7 +170,7 @@ class FreelancersController extends Controller
         $save = null;
 
         foreach ($request->skills as $key => $skill) {
-            $save = $create = FreelancerSkill::create([
+            $save = FreelancerSkill::create([
                 'freelancer_id' => $freelancer->id,
                 'skill_id' => $skill['skill'],
                 'skill_percentage' =>$skill['skill_percentage']
@@ -321,7 +321,7 @@ class FreelancersController extends Controller
             return response()->json(['status' => false, 'message' => 'Freelancer Not Found'], 406);
         });
 
-        $save = FreelancerExperience::create(array_merge($request->validated(), ['freelancer_id' => $freelancer->id]));
+        $save = FreelancerEducation::create(array_merge($request->validated(), ['freelancer_id' => $freelancer->id]));
         if($save) return response()->json(['status' => true, 'message' => 'Education Added Successfully']);
 
     }
